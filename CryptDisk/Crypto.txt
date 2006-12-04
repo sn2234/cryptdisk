@@ -1,0 +1,12 @@
+1. RNG:
+ - Add more random data sources
+ +/? Analyze Yarrow and compare
+ 
+2. Key files:
+ + New key file concept (read)
+ + Make password builder which gather data from user password and different keyfiles
+ + Make random key files generator
+
+3. Password test for weakness / strong passwords generator
+ + Analyze PasswordSafe and KeePass
+ 

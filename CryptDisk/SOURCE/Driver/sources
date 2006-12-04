@@ -1,0 +1,39 @@
+# SOURCES for use with BUILD command
+
+TARGETNAME=CryptDisk30
+TARGETPATH=obj
+TARGETTYPE=DRIVER
+
+!IF ("$(DDKBUILDENV)"=="chk") || ("$(DDKBUILDENV)"=="checked")
+BUILDTYPE = CHECKED
+CRYPTLIB=Crypto_d.lib
+!ELSE
+BUILDTYPE = FREE
+CRYPTLIB=Crypto.lib
+NTDEBUG=
+MSC_OPTIMIZATION = /Og /O2 /Oi /Ot /Ob2
+!ENDIF
+
+BUFFER_OVERFLOW_CHECKS = CHK
+USER_C_FLAGS = /Fa"$(TARGETPATH)/" /FAs
+
+TARGETLIBS=$(BASEDIR)\lib\wnet\i386\ntoskrnl.lib \
+	$(BASEDIR)\lib\wnet\i386\hal.lib \
+	$(BASEDIR)\lib\wnet\i386\BufferOverflowK.lib \
+	$(TARGETPATH)\..\..\..\$(CRYPTLIB)
+
+RCNOFONTMAP=1
+LINK_LIB_IGNORE=4210
+
+PRECOMPILED_INCLUDE=StdAfx.h
+PRECOMPILED_CXX=1
+
+INCLUDES= $(BASEDIR)\inc\wnet;
+
+SOURCES= \
+	DiskCipher.cpp \
+	DiskHeader.cpp \
+	main.cpp \
+	Tools.cpp \
+	DisksManager.cpp \
+	VirtualDisk.cpp

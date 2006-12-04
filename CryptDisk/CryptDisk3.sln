@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Driver", "SOURCE\Driver\Driver.vcproj", "{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Manager", "SOURCE\Manager\Manager.vcproj", "{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrvTool", "SOURCE\Tools\DrvTool\DrvTool.vcproj", "{5850E1DF-338A-4816-977C-16E74CE3A71E}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "SOURCE\Installer\Installer.vdproj", "{E6D8DF38-F812-43DC-B59E-72C3E5343931}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Analyze|Win32 = Analyze|Win32
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}.Analyze|Win32.ActiveCfg = Debug|Win32
+		{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}.Analyze|Win32.Build.0 = Debug|Win32
+		{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}.Debug|Win32.Build.0 = Debug|Win32
+		{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}.Release|Win32.ActiveCfg = Release|Win32
+		{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}.Release|Win32.Build.0 = Release|Win32
+		{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}.Analyze|Win32.ActiveCfg = Analyze|Win32
+		{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}.Analyze|Win32.Build.0 = Analyze|Win32
+		{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}.Debug|Win32.Build.0 = Debug|Win32
+		{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}.Release|Win32.ActiveCfg = Release|Win32
+		{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}.Release|Win32.Build.0 = Release|Win32
+		{5850E1DF-338A-4816-977C-16E74CE3A71E}.Analyze|Win32.ActiveCfg = Release|Win32
+		{5850E1DF-338A-4816-977C-16E74CE3A71E}.Analyze|Win32.Build.0 = Release|Win32
+		{5850E1DF-338A-4816-977C-16E74CE3A71E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5850E1DF-338A-4816-977C-16E74CE3A71E}.Debug|Win32.Build.0 = Debug|Win32
+		{5850E1DF-338A-4816-977C-16E74CE3A71E}.Release|Win32.ActiveCfg = Release|Win32
+		{5850E1DF-338A-4816-977C-16E74CE3A71E}.Release|Win32.Build.0 = Release|Win32
+		{E6D8DF38-F812-43DC-B59E-72C3E5343931}.Analyze|Win32.ActiveCfg = Release
+		{E6D8DF38-F812-43DC-B59E-72C3E5343931}.Debug|Win32.ActiveCfg = Debug
+		{E6D8DF38-F812-43DC-B59E-72C3E5343931}.Release|Win32.ActiveCfg = Release
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

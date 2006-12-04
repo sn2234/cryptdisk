@@ -1,0 +1,8 @@
+SOURCE\
+	Crypto\			; All headers from CryptoLib
+	Driver\			; Driver code (some shared with other modules)
+		Common.h
+	Manager\		; User mode manager
+		Common.h
+	Test\			; Tests
+		TestCrypto\	; Test cryptographic primitives

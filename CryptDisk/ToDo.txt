@@ -1,0 +1,21 @@
+Driver:
++ Test mounmgr mounting !
++ Add feature do not image last access/modify time
++ Driver code revision
+
+User interface:
++ User interface using MFC
++ Add basic password generation and testing features
++ Add favorites
++ Add random keyfile generation
+?/- Add more options on keyfiles generation
++ Check when add item to favorits, if olready exists
++ Add percents to progress bar (formate image)
++ Display a warning when image file is encrypted or commpressed by FS
+
+All:
++ Key files
++ Add tool to install/remove driver
+- Add command line support
++ Add installer
+- Header backup
