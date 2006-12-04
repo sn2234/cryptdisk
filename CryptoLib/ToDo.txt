@@ -1,0 +1,4 @@
+- Add CheckProcessor() function to check if we can run on this processor
+- Add HMAC support
+- Add more encryption modes
+- Add more tests
