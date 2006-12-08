@@ -46,6 +46,8 @@
 #include "DiskImage.h"
 #include "DiskImageNONE.h"
 
+#include "SecureHeap.h"
+
 #include "DNDriverControl.h"
 #include "DriverManager.h"
 

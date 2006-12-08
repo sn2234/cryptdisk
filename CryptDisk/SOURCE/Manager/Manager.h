@@ -57,3 +57,4 @@ public:
 
 extern CManagerApp theApp;
 extern CFavManager g_favorites;
+extern CSecureHeap g_heap;

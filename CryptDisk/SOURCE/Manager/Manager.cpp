@@ -39,6 +39,8 @@
 
 CFavManager		g_favorites;
 
+CSecureHeap		g_heap;
+
 // CManagerApp
 
 BEGIN_MESSAGE_MAP(CManagerApp, CWinApp)
@@ -86,6 +88,8 @@ BOOL CManagerApp::InitInstance()
 		}
 
 		g_favorites.Load(_T("Favorites.dat"));
+
+		g_heap.Init(0x100000);
 
 		CManagerDlg dlg;
 		m_pMainWnd = &dlg;

@@ -53,8 +53,8 @@ protected:
 protected:
 	enum	DISK_SIZE_UNITS
 	{
-		UNIT_KILOBYTE=0,
-		UNIT_MAGABYTE=1
+		UNIT_MEGABYTE=0,
+		UNIT_GIGABYTE=1
 	};
 
 	CComboBox m_comboSize;
@@ -67,11 +67,11 @@ public:
 	{
 		switch(m_units)
 		{
-		case UNIT_KILOBYTE:
-			return (UINT64)m_dwSize*1024;
-			break;
-		case UNIT_MAGABYTE:
+		case UNIT_MEGABYTE:
 			return (UINT64)m_dwSize*1024*1024;
+			break;
+		case UNIT_GIGABYTE:
+			return (UINT64)m_dwSize*1024*1024*1024;
 			break;
 		}
 

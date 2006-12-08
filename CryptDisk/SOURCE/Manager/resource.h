@@ -31,6 +31,7 @@
 #define IDC_PROGRESS1                   1005
 #define IDC_PROGRESS_RANDOM             1005
 #define IDC_PROGRESS_QUALITY            1005
+#define IDC_BUTTON5                     1005
 #define IDC_EDIT_PATH                   1006
 #define IDC_EDIT_PASSWORD               1008
 #define IDC_EDIT_LETTER                 1009

@@ -580,6 +580,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\SRC\SecureHeap.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\SRC\SecureHeap.h"
+				>
+			</File>
+			<File
 				RelativePath="..\Version.h"
 				>
 			</File>

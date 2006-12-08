@@ -105,6 +105,7 @@ BEGIN_MESSAGE_MAP(CManagerDlg, CDialog)
 	ON_COMMAND(ID_FILE_OPENIMAGE, &CManagerDlg::OnFileOpenimage)
 	ON_COMMAND(ID_FILE_NEWIMAGE, &CManagerDlg::OnFileNewimage)
 	ON_COMMAND(ID_FILE_CREATEKEYFILE, &CManagerDlg::OnFileCreatekeyfile)
+	ON_BN_CLICKED(IDC_BUTTON5, &CManagerDlg::OnBnClickedNewImage)
 END_MESSAGE_MAP()
 
 
@@ -370,5 +371,15 @@ void CManagerDlg::OnFileCreatekeyfile()
 		CNewKeyFileDlg	dlg;
 
 		dlg.DoModal();
+	}
+}
+
+void CManagerDlg::OnBnClickedNewImage()
+{
+	if(InitRandom(AfxGetApp()->m_hInstance, GetSafeHwnd()))
+	{
+		CWizCreate	wiz(_T("123"));
+
+		wiz.DoModal();
 	}
 }

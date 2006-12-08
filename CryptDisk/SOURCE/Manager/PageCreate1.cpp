@@ -43,7 +43,7 @@ CPageCreate1::CPageCreate1()
 	, m_dwSize(0)
 	, m_bQuick(FALSE)
 	, m_strPath(_T(""))
-	, m_units(UNIT_MAGABYTE)
+	, m_units(UNIT_MEGABYTE)
 	, m_bDontAddToRecent(TRUE)
 {
 	m_psp.dwFlags &= ~PSP_HASHELP;
@@ -85,10 +85,10 @@ BOOL CPageCreate1::OnInitDialog()
 {
 	CPropertyPage::OnInitDialog();
 
-	m_comboSize.InsertString(0, _T("KB"));
-	m_comboSize.InsertString(1, _T("MB"));
-	m_comboSize.SetCurSel(1);
-	m_units=UNIT_MAGABYTE;
+	m_comboSize.InsertString(0, _T("MB"));
+	m_comboSize.InsertString(1, _T("GB"));
+	m_comboSize.SetCurSel(0);
+	m_units=UNIT_MEGABYTE;
 
 	return TRUE;
 }
@@ -155,10 +155,10 @@ void CPageCreate1::OnCbnSelchangeComboSize()
 	switch(m_comboSize.GetCurSel())
 	{
 	case 0:
-		m_units=UNIT_KILOBYTE;
+		m_units=UNIT_MEGABYTE;
 		break;
 	case 1:
-		m_units=UNIT_MAGABYTE;
+		m_units=UNIT_GIGABYTE;
 		break;
 	}
 }

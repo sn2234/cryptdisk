@@ -33,6 +33,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_620337F84F48451EA963F29351653348"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E340F28AED32D51D701F5EE21C24EFC3"
         "OwnerKey" = "8:_612873D5F92A41BB8250E172DD8CC3BB"
         "MsmSig" = "8:_UNDEFINED"
@@ -148,6 +154,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_620337F84F48451EA963F29351653348"
+            {
+            "SourcePath" = "8:..\\..\\License.rtf"
+            "TargetName" = "8:License.rtf"
+            "Tag" = "8:"
+            "Folder" = "8:_5EFFDDC570C44675ABA094C13FAB764B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E340F28AED32D51D701F5EE21C24EFC3"
             {
             "SourcePath" = "8:ntoskrnl.exe"
@@ -244,7 +270,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Installer"
         "ProductCode" = "8:{9DA44855-FA8B-4BAB-AFE1-E8C85AF9162E}"
-        "PackageCode" = "8:{6A47BC2B-D577-4734-9921-74CC110AC525}"
+        "PackageCode" = "8:{3C31CCD8-B32B-4E1E-9B26-FDC40B745E05}"
         "UpgradeCode" = "8:{1BAF650E-D983-4F49-A4BE-E151C1703AB1}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -341,12 +367,12 @@
             "Arguments" = "8:"
             "Description" = "8:CryptDisk Manager"
             "ShowCmd" = "3:1"
-            "IconIndex" = "3:0"
+            "IconIndex" = "3:128"
             "Transitive" = "11:FALSE"
             "Target" = "8:_355D144B54BE4462A3373AF47566CDF0"
             "Folder" = "8:_01AB8AA10DBA4D0493269E16739F207C"
             "WorkingFolder" = "8:_5EFFDDC570C44675ABA094C13FAB764B"
-            "Icon" = "8:"
+            "Icon" = "8:_355D144B54BE4462A3373AF47566CDF0"
             "Feature" = "8:"
             }
         }
@@ -705,9 +731,56 @@
                             "Type" = "3:3"
                             "ContextData" = "8:"
                             "Attributes" = "3:0"
-                            "Setting" = "3:1"
-                            "Value" = "8:#1203"
+                            "Setting" = "3:2"
+                            "Value" = "8:The installer will guide you through the steps required to install CryptDisk on your computer."
                             "DefaultValue" = "8:#1203"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_520F88C7B5134CEC9F069EE5C1D1D1E9"
+                    {
+                    "Sequence" = "3:110"
+                    "DisplayName" = "8:License Agreement"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdLicenseDlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "EulaText"
+                            {
+                            "Name" = "8:EulaText"
+                            "DisplayName" = "8:#1008"
+                            "Description" = "8:#1108"
+                            "Type" = "3:6"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:_620337F84F48451EA963F29351653348"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Sunken"
+                            {
+                            "Name" = "8:Sunken"
+                            "DisplayName" = "8:#1007"
+                            "Description" = "8:#1107"
+                            "Type" = "3:5"
+                            "ContextData" = "8:4;True=4;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:4"
+                            "DefaultValue" = "3:4"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
