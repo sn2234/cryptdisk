@@ -87,7 +87,7 @@ BOOL CWizMount::OnFinish()
 	memcpy(info.UserKey, m_userKey, sizeof(info.UserKey));
 	info.wAlgoId=m_algoId;
 
-	info.DriveLetter=m_page2.m_szLetter[0];
+	info.DriveLetter=m_page2.m_driveLetter;
 	info.MountOptions=0;
 	if(m_page2.m_bReadOnly)
 		info.MountOptions|=MOUNT_READ_ONLY;

@@ -57,6 +57,8 @@
 #define IDC_STATIC_PERCENT              1029
 #define IDC_EDIT2                       1031
 #define IDC_EDIT1                       1033
+#define IDC_COMBO1                      1035
+#define IDC_COMBO_DRIVE                 1035
 #define ID_HELP_ABOUT                   32771
 #define ID_FILE_EXIT                    32772
 #define IDC_ABOUT                       32773
@@ -72,7 +74,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        143
 #define _APS_NEXT_COMMAND_VALUE         32779
-#define _APS_NEXT_CONTROL_VALUE         1035
+#define _APS_NEXT_CONTROL_VALUE         1036
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif

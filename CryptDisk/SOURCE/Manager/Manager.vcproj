@@ -316,6 +316,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DrivesCombo.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\KeyFilesDlg.cpp"
 				>
 			</File>
@@ -423,6 +427,10 @@
 			</File>
 			<File
 				RelativePath=".\DlgRandom.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DrivesCombo.h"
 				>
 			</File>
 			<File

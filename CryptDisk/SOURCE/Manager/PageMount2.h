@@ -23,6 +23,7 @@
 */
 
 #pragma once
+#include "drivescombo.h"
 
 
 // CPageMount2 dialog
@@ -47,10 +48,11 @@ protected:
 	BOOL OnSetActive();
 	BOOL OnWizardFinish();
 public:
-	CString m_szLetter;
+	TCHAR m_driveLetter;
 	BOOL m_bReadOnly;
 	BOOL m_bRemovable;
 	BOOL m_bUseMountManager;
 	BOOL m_bTime;
 	BOOL m_bAddToFav;
+	CDrivesCombo m_driveCombo;
 };

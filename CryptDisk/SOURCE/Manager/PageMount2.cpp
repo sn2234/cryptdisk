@@ -40,7 +40,6 @@ IMPLEMENT_DYNAMIC(CPageMount2, CPropertyPage)
 
 CPageMount2::CPageMount2()
 	: CPropertyPage(CPageMount2::IDD)
-	, m_szLetter(_T(""))
 	, m_bReadOnly(FALSE)
 	, m_bRemovable(FALSE)
 	, m_bUseMountManager(TRUE)
@@ -57,12 +56,12 @@ CPageMount2::~CPageMount2()
 void CPageMount2::DoDataExchange(CDataExchange* pDX)
 {
 	CPropertyPage::DoDataExchange(pDX);
-	DDX_Text(pDX, IDC_EDIT_LETTER, m_szLetter);
 	DDX_Check(pDX, IDC_CHECK1, m_bReadOnly);
 	DDX_Check(pDX, IDC_CHECK2, m_bRemovable);
 	DDX_Check(pDX, IDC_CHECK3, m_bUseMountManager);
 	DDX_Check(pDX, IDC_CHECK4, m_bTime);
 	DDX_Check(pDX, IDC_CHECK5, m_bAddToFav);
+	DDX_Control(pDX, IDC_COMBO_DRIVE, m_driveCombo);
 }
 
 
@@ -73,10 +72,11 @@ END_MESSAGE_MAP()
 // CPageMount2 message handlers
 BOOL CPageMount2::OnInitDialog()
 {
-	// Limit edit box to single char
-	static_cast<CEdit*>(GetDlgItem(IDC_EDIT_LETTER))->SetLimitText(1);
+	CPropertyPage::OnInitDialog();
 
-	return CPropertyPage::OnInitDialog();
+	m_driveCombo.FillList();
+
+	return TRUE;
 }
 
 BOOL CPageMount2::OnSetActive()
@@ -94,14 +94,9 @@ BOOL CPageMount2::OnWizardFinish()
 
 	UpdateData(TRUE);
 
-	if(!m_szLetter.GetLength())
-	{
-		MessageBox(_T("You must enter drive letter"),
-			_T("Error"), MB_ICONERROR);
-		return FALSE;
-	}
+	m_driveLetter=m_driveCombo.GetCurDrive();
 
-	if((m_szLetter[0] < _T('A')) || (m_szLetter[0] > _T('Z')))
+	if((m_driveLetter < _T('A')) || m_driveLetter > _T('Z'))
 	{
 		MessageBox(_T("Bad drive letter"),
 			_T("Error"), MB_ICONERROR);
