@@ -55,7 +55,7 @@ CDlgGenPass::~CDlgGenPass()
 {
 	if(m_pPasswordBuff)
 	{
-		delete[] m_pPasswordBuff;
+		g_heap.Free(m_pPasswordBuff);
 		m_pPasswordBuff=NULL;
 	}
 }
@@ -99,7 +99,7 @@ void CDlgGenPass::OnCancel()
 	if(m_pPasswordBuff)
 	{
 		RtlSecureZeroMemory(m_pPasswordBuff, m_nPasswordLength);
-		delete[] m_pPasswordBuff;
+		g_heap.Free(m_pPasswordBuff);
 		m_pPasswordBuff=NULL;
 	}
 
@@ -113,7 +113,7 @@ void CDlgGenPass::OnBnGenerate()
 	if(m_pPasswordBuff)
 	{
 		RtlSecureZeroMemory(m_pPasswordBuff, m_passwordLength);
-		delete[] m_pPasswordBuff;
+		g_heap.Free(m_pPasswordBuff);
 		m_pPasswordBuff=NULL;
 	}
 
@@ -150,7 +150,7 @@ void CDlgGenPass::OnBnGenerate()
 	}
 
 	// Alloc buffer
-	m_pPasswordBuff=new char[m_nPasswordLength+1];
+	m_pPasswordBuff=(char*)g_heap.Alloc(m_nPasswordLength+1);
 	m_passwordLength=m_nPasswordLength;
 
 	memset(m_pPasswordBuff, 0, m_nPasswordLength+1);
@@ -159,7 +159,8 @@ void CDlgGenPass::OnBnGenerate()
 		&params, &g_randomSource))
 	{
 		RtlSecureZeroMemory(m_pPasswordBuff, m_passwordLength);
-		delete[] m_pPasswordBuff;
+		g_heap.Free(m_pPasswordBuff);
+
 		m_pPasswordBuff=NULL;
 		m_passwordLength=0;
 

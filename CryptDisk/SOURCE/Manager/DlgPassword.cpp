@@ -48,7 +48,7 @@ CDlgPassword::~CDlgPassword()
 {
 	if(m_pPassword)
 	{
-		delete[] m_pPassword;
+		g_heap.Free(m_pPassword);
 		m_pPassword=NULL;
 	}
 }
@@ -106,7 +106,7 @@ void CDlgPassword::OnOK()
 		passLength=SHA256_DIDGEST_SIZE;
 		passLength+=GetDlgItem(IDC_EDIT_PASSWORD)->GetWindowTextLength();
 
-		pPassword=new UCHAR[passLength+1];
+		pPassword=(UCHAR*)g_heap.Alloc(passLength+1);
 
 		keyFilesCollector.GetKey(pPassword);
 
@@ -117,7 +117,7 @@ void CDlgPassword::OnOK()
 	{
 		passLength=GetDlgItem(IDC_EDIT_PASSWORD)->GetWindowTextLength();
 
-		pPassword=new UCHAR[passLength+1];
+		pPassword=(UCHAR*)g_heap.Alloc(passLength+1);
 
 		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, (char*)pPassword,
 			passLength+1);

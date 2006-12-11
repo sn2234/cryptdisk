@@ -127,13 +127,13 @@ void CDlgChangePassword::OnEnChangeEditPassword()
 
 	if(len)
 	{
-		buff=new char[len+1];
+		buff=(char*)g_heap.Alloc(len+1);
 		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, buff, len+1);
 
 		bits=CPWTools::GetEntropy(buff, len);
 
 		RtlSecureZeroMemory(buff, len+1);
-		delete[] buff;
+		g_heap.Free(buff);
 	}
 
 	m_barQuality.SetPos(bits);
@@ -156,7 +156,7 @@ void CDlgChangePassword::OnOK()
 	if(m_pPassword)
 	{
 		RtlSecureZeroMemory(m_pPassword, m_passwordLength);
-		delete[] m_pPassword;
+		g_heap.Free(m_pPassword);
 		m_pPassword=NULL;
 		m_passwordLength=0;
 	}
@@ -182,19 +182,19 @@ void CDlgChangePassword::OnOK()
 
 	if(passwordLength)
 	{
-		pPassword=new UCHAR[passwordLength+1];
+		pPassword=(UCHAR*) g_heap.Alloc((passwordLength+1)*sizeof(UCHAR));
 		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, (LPSTR)pPassword, passwordLength+1);
 
-		pConfirm=new UCHAR[confirmLen+1];
+		pConfirm=(UCHAR*) g_heap.Alloc((confirmLen+1)*sizeof(UCHAR));
 		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_CONFIRM, (LPSTR)pConfirm, confirmLen+1);
 
 		if(memcmp(pConfirm, pPassword, passwordLength))
 		{
 			RtlSecureZeroMemory(pPassword, passwordLength);
-			delete[] pPassword;
+			g_heap.Free(pPassword);
 
 			RtlSecureZeroMemory(pConfirm, confirmLen);
-			delete[] pConfirm;
+			g_heap.Free(pConfirm);
 
 			MessageBox(_T("Confirmation failed"),
 				_T("Error"), MB_OK|MB_ICONERROR);
@@ -202,7 +202,7 @@ void CDlgChangePassword::OnOK()
 		}
 
 		RtlSecureZeroMemory(pConfirm, confirmLen);
-		delete[] pConfirm;
+		g_heap.Free(pConfirm);
 	}
 	else
 	{
@@ -226,7 +226,7 @@ void CDlgChangePassword::OnOK()
 				MessageBox(m_keyFiles[i], _T("Unable to open file"), MB_ICONERROR);
 
 				RtlSecureZeroMemory(pPassword, passwordLength);
-				delete[] pPassword;
+				g_heap.Free(pPassword);
 
 				return;
 			}
@@ -238,7 +238,7 @@ void CDlgChangePassword::OnOK()
 	if(bKeyFilesPresent)
 	{
 		m_passwordLength=passwordLength+SHA256_DIDGEST_SIZE;
-		m_pPassword=new UCHAR[m_passwordLength+1];
+		m_pPassword=(UCHAR*)g_heap.Alloc(m_passwordLength+1);
 
 		keyFilesCollector.GetKey(m_pPassword);
 		keyFilesCollector.Clear();
@@ -246,7 +246,7 @@ void CDlgChangePassword::OnOK()
 		memcpy(m_pPassword+SHA256_DIDGEST_SIZE, pPassword, passwordLength);
 
 		RtlSecureZeroMemory(pPassword, passwordLength);
-		delete[] pPassword;
+		g_heap.Free(pPassword);
 	}
 	else
 	{

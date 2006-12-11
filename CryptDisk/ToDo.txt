@@ -12,9 +12,9 @@ User interface:
 + Check when add item to favorits, if olready exists
 + Add percents to progress bar (formate image)
 + Display a warning when image file is encrypted or commpressed by FS
-- Restrict minimum image size
-- Drive letter from combo
-- Key file button
++ Restrict(recommend) minimum image size
++ Drive letter from combo
++ Key file button
 
 All:
 + Key files
@@ -22,5 +22,5 @@ All:
 - Add command line support
 + Add installer
 - Header backup
-- Secure heap
-- Add license to install
++ Secure heap
++ Add license to install

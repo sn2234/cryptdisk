@@ -131,7 +131,7 @@ LRESULT CPageMount1::OnWizardNext()
 	bResult=image.Open(m_filePath.GetBuffer(), pPassword, passLength);
 
 	RtlSecureZeroMemory(pPassword, passLength);
-	delete[] pPassword;
+	g_heap.Free(pPassword);
 
 	if(!bResult)
 	{
@@ -226,7 +226,7 @@ void CPageMount1::OnBnClickedButton2()
 
 _proc_exit:
 	RtlSecureZeroMemory(pPassword, passLength);
-	delete[] pPassword;
+	g_heap.Free(pPassword);
 }
 
 // Manage keyfiles
@@ -270,7 +270,7 @@ BOOL CPageMount1::CollectPassword(UCHAR **ppPassword, ULONG *pPaswordLength)
 		passLength=SHA256_DIDGEST_SIZE;
 		passLength+=GetDlgItem(IDC_EDIT_PASSWORD)->GetWindowTextLength();
 
-		pPassword=new UCHAR[passLength+1];
+		pPassword=(UCHAR*)g_heap.Alloc(passLength+1);
 
 		keyFilesCollector.GetKey(pPassword);
 		keyFilesCollector.Clear();
@@ -282,7 +282,7 @@ BOOL CPageMount1::CollectPassword(UCHAR **ppPassword, ULONG *pPaswordLength)
 	{
 		passLength=GetDlgItem(IDC_EDIT_PASSWORD)->GetWindowTextLength();
 
-		pPassword=new UCHAR[passLength+1];
+		pPassword=(UCHAR*)g_heap.Alloc(passLength+1);
 
 		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, (char*)pPassword,
 			passLength+1);

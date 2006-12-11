@@ -89,7 +89,7 @@ BOOL CManagerApp::InitInstance()
 
 		g_favorites.Load(_T("Favorites.dat"));
 
-		g_heap.Init(0x100000);
+		g_heap.Init(0x10000);
 
 		CManagerDlg dlg;
 		m_pMainWnd = &dlg;

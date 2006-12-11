@@ -152,17 +152,17 @@ BEGIN
     LTEXT           "100.0%",IDC_STATIC_PERCENT,162,25,27,8
 END
 
-IDD_DIALOG_CHANGE_PASSWORD DIALOGEX 0, 0, 218, 119
+IDD_DIALOG_CHANGE_PASSWORD DIALOGEX 0, 0, 242, 113
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
 CAPTION "Dialog"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     EDITTEXT        IDC_EDIT_PASSWORD,19,19,138,12,ES_PASSWORD | ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_CONFIRM,19,47,138,12,ES_PASSWORD | ES_AUTOHSCROLL
-    PUSHBUTTON      "&Key files",IDC_BUTTON_KEYFILES,161,19,50,12
-    PUSHBUTTON      "&Generate password",IDC_BUTTON_GEN_PASS,19,96,74,12
-    DEFPUSHBUTTON   "OK",IDOK,102,96,50,12
-    PUSHBUTTON      "Cancel",IDCANCEL,161,96,50,12
+    PUSHBUTTON      "&Key files",IDC_BUTTON_KEYFILES,19,94,50,12
+    PUSHBUTTON      "&Generate password",IDC_BUTTON_GEN_PASS,161,19,74,12
+    DEFPUSHBUTTON   "OK",IDOK,131,94,50,12
+    PUSHBUTTON      "Cancel",IDCANCEL,185,94,50,12
     LTEXT           "Password",IDC_STATIC,7,7,32,8
     LTEXT           "Confirm password",IDC_STATIC,7,35,58,8
     LTEXT           "Password quality",IDC_STATIC,7,63,55,8
@@ -232,8 +232,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 3,0,0,0
- PRODUCTVERSION 3,0,0,0
+ FILEVERSION 3,0,0,1
+ PRODUCTVERSION 3,0,0,1
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
@@ -250,14 +250,14 @@ BEGIN
         BEGIN
             VALUE "Comments", "CryptDisk GUI Manager"
             VALUE "FileDescription", "CryptDisk GUI Manager"
-            VALUE "FileVersion", "3.0.0.0"
+            VALUE "FileVersion", "3.0.0.1"
             VALUE "InternalName", "Manager.exe"
             VALUE "LegalCopyright", " (c) nobody"
             VALUE "OriginalFilename", "Manager.exe"
-            VALUE "PrivateBuild", "1"
+            VALUE "PrivateBuild", "2"
             VALUE "ProductName", "CryptDisk30"
-            VALUE "ProductVersion", "3.0.0.0"
-            VALUE "SpecialBuild", "1"
+            VALUE "ProductVersion", "3.0.0.1"
+            VALUE "SpecialBuild", "2"
         END
     END
     BLOCK "VarFileInfo"
@@ -326,9 +326,9 @@ BEGIN
     IDD_DIALOG_CHANGE_PASSWORD, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 211
+        RIGHTMARGIN, 235
         TOPMARGIN, 7
-        BOTTOMMARGIN, 112
+        BOTTOMMARGIN, 106
     END
 
     IDD_DIALOG_NEW_KEYFILE, DIALOG

@@ -69,6 +69,8 @@ void CNewKeyFileDlg::OnBnClickedButton1()
 	OPENFILENAME	ofn;
 	TCHAR			filePath[MAX_PATH];
 
+	UpdateData(TRUE);
+
 	memset(&ofn,0,sizeof(ofn));
 	memset(&filePath,0,sizeof(filePath));
 	ofn.lStructSize=sizeof(ofn);

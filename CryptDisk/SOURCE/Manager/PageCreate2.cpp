@@ -56,7 +56,7 @@ CPageCreate2::~CPageCreate2()
 	if(m_pPassword)
 	{
 		RtlSecureZeroMemory(m_pPassword, m_passwordLength);
-		delete[] m_pPassword;
+		g_heap.Free(m_pPassword);
 		m_pPassword=NULL;
 	}
 }
@@ -167,7 +167,7 @@ BOOL CPageCreate2::OnWizardFinish()
 
 	if(m_pPassword)
 	{
-		delete[] m_pPassword;
+		g_heap.Free(m_pPassword);
 		m_pPassword=NULL;
 	}
 
@@ -192,8 +192,8 @@ BOOL CPageCreate2::OnWizardFinish()
 
 			return FALSE;
 		}
-		pwBuff1=new char[pwLen+1];
-		pwBuff2=new char[pwLen+1];
+		pwBuff1=(char*)g_heap.Alloc(pwLen+1);
+		pwBuff2=(char*)g_heap.Alloc(pwLen+1);
 		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, pwBuff1, pwLen+1);
 		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_CONFIRM, pwBuff2, pwLen+1);
 
@@ -204,8 +204,8 @@ BOOL CPageCreate2::OnWizardFinish()
 
 			RtlSecureZeroMemory(pwBuff1, pwLen);
 			RtlSecureZeroMemory(pwBuff2, pwLen);
-			delete[] pwBuff1;
-			delete[] pwBuff2;
+			g_heap.Free(pwBuff1);
+			g_heap.Free(pwBuff2);
 
 			return FALSE;
 		}
@@ -223,15 +223,15 @@ BOOL CPageCreate2::OnWizardFinish()
 
 					RtlSecureZeroMemory(pwBuff1, pwLen);
 					RtlSecureZeroMemory(pwBuff2, pwLen);
-					delete[] pwBuff1;
-					delete[] pwBuff2;
+					g_heap.Free(pwBuff1);
+					g_heap.Free(pwBuff2);
 
 					return FALSE;
 				}
 			}
 
 			m_passwordLength=pwLen+SHA256_DIDGEST_SIZE;
-			m_pPassword=new char[m_passwordLength];
+			m_pPassword=(char*)g_heap.Alloc(m_passwordLength);
 
 			keyFilesCollector.GetKey(m_pPassword);
 			keyFilesCollector.Clear();
@@ -240,14 +240,14 @@ BOOL CPageCreate2::OnWizardFinish()
 		else
 		{
 			m_passwordLength=pwLen;
-			m_pPassword=new char[m_passwordLength];
+			m_pPassword=(char*)g_heap.Alloc(m_passwordLength);
 			memcpy(m_pPassword, pwBuff1, pwLen);
 		}
 
 		RtlSecureZeroMemory(pwBuff1, pwLen);
 		RtlSecureZeroMemory(pwBuff2, pwLen);
-		delete[] pwBuff1;
-		delete[] pwBuff2;
+		g_heap.Free(pwBuff1);
+		g_heap.Free(pwBuff2);
 	}
 	else
 	{
@@ -272,7 +272,7 @@ BOOL CPageCreate2::OnWizardFinish()
 		}
 
 		m_passwordLength=pwLen+SHA256_DIDGEST_SIZE;
-		m_pPassword=new char[m_passwordLength];
+		m_pPassword=(char*)g_heap.Alloc(m_passwordLength);
 		keyFilesCollector.GetKey(m_pPassword);
 		keyFilesCollector.Clear();
 	}
@@ -300,7 +300,7 @@ BOOL CPageCreate2::OnWizardFinish()
 	if(m_pPassword)
 	{
 		RtlSecureZeroMemory(m_pPassword, m_passwordLength);
-		delete[] m_pPassword;
+		g_heap.Free(m_pPassword);
 		m_pPassword=NULL;
 	}
 }
