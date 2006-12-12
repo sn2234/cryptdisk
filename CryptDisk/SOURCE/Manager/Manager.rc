@@ -204,8 +204,7 @@ BEGIN
     CONTROL         "Mount as &read-only",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,70,78,10
     CONTROL         "Mount as remo&vable media",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,86,101,10
     CONTROL         "&Use mount manager",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,103,80,10
-    CONTROL         "Don'&t change image access/modify time",IDC_CHECK4,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,121,141,10
+    CONTROL         "&Preserve image timestamp",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,121,100,10
     PUSHBUTTON      "Action",IDOK,175,126,50,14
     EDITTEXT        IDC_EDIT1,7,18,201,14,ES_AUTOHSCROLL | ES_READONLY
     LTEXT           "Drive letter",IDC_STATIC,32,41,37,8
@@ -439,8 +438,7 @@ BEGIN
     CONTROL         "Mount as &read-only",IDC_CHECK1,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,40,78,10
     CONTROL         "Mount as remo&vable media",IDC_CHECK2,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,57,101,10
     CONTROL         "&Use mount manager",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,74,80,10
-    CONTROL         "Don'&t change image access/modify time",IDC_CHECK4,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,91,141,10
+    CONTROL         "&Preserve image timestamp",IDC_CHECK4,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,14,91,100,10
     CONTROL         "&Add to favorites",IDC_CHECK5,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,118,68,10
     LTEXT           "Choose drive letter",IDC_STATIC,41,9,62,8
     GROUPBOX        "Mount options",IDC_STATIC,7,27,155,83
