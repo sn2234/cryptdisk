@@ -5,12 +5,10 @@
 	Name="Manager"
 	ProjectGUID="{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}"
 	RootNamespace="Manager"
-	Keyword="MFCProj"
-	>
+	Keyword="MFCProj">
 	<Platforms>
 		<Platform
-			Name="Win32"
-		/>
+			Name="Win32"/>
 	</Platforms>
 	<ToolFiles>
 	</ToolFiles>
@@ -21,26 +19,20 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
-			CharacterSet="1"
-			>
+			CharacterSet="1">
 			<Tool
-				Name="VCPreBuildEventTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCCustomBuildTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="false"
-				ValidateParameters="false"
-			/>
+				ValidateParameters="false"/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -50,54 +42,42 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
 				UsePrecompiledHeader="2"
+				AssemblerOutput="4"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="4"
-			/>
+				DebugInformationFormat="3"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
+				Name="VCManagedResourceCompilerTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
-			/>
+				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(SolutionDir)\Crypto_d.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				TargetMachine="1"
-			/>
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCALinkTool"/>
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCManifestTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCXDCMakeTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCBscMakeTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCFxCopTool"/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCAppVerifierTool"/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
+				Name="VCWebDeploymentTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
@@ -106,28 +86,23 @@
 			ConfigurationType="1"
 			UseOfMFC="1"
 			CharacterSet="1"
-			WholeProgramOptimization="1"
-			>
+			WholeProgramOptimization="1">
 			<Tool
-				Name="VCPreBuildEventTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCCustomBuildTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="NDEBUG"
 				MkTypLibCompatible="false"
-				ValidateParameters="false"
-			/>
+				ValidateParameters="false"/>
 			<Tool
 				Name="VCCLCompilerTool"
+				WholeProgramOptimization="true"
 				AdditionalIncludeDirectories="&quot;$(ProjectDir)\SRC&quot;;&quot;$(ProjectDir)&quot;;&quot;$(SolutionDir)\SOURCE\Crypto&quot;;&quot;$(SolutionDir)\SOURCE\Driver&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="false"
@@ -135,54 +110,42 @@
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
-				DebugInformationFormat="3"
-			/>
+				DebugInformationFormat="0"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
+				Name="VCManagedResourceCompilerTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="NDEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
-			/>
+				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(SolutionDir)\Crypto.lib"
 				LinkIncremental="1"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				TargetMachine="1"
-			/>
+				SetChecksum="true"
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCALinkTool"/>
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCManifestTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCXDCMakeTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCBscMakeTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCFxCopTool"/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCAppVerifierTool"/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
+				Name="VCWebDeploymentTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 		</Configuration>
 		<Configuration
 			Name="Analyze|Win32"
@@ -190,26 +153,20 @@
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
 			UseOfMFC="1"
-			CharacterSet="1"
-			>
+			CharacterSet="1">
 			<Tool
-				Name="VCPreBuildEventTool"
-			/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
-				Name="VCCustomBuildTool"
-			/>
+				Name="VCCustomBuildTool"/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
+				Name="VCXMLDataGeneratorTool"/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
+				Name="VCWebServiceProxyGeneratorTool"/>
 			<Tool
 				Name="VCMIDLTool"
 				PreprocessorDefinitions="_DEBUG"
 				MkTypLibCompatible="false"
-				ValidateParameters="false"
-			/>
+				ValidateParameters="false"/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
@@ -223,52 +180,39 @@
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="true"
 				DebugInformationFormat="4"
-				EnablePREfast="true"
-			/>
+				EnablePREfast="true"/>
 			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
+				Name="VCManagedResourceCompilerTool"/>
 			<Tool
 				Name="VCResourceCompilerTool"
 				PreprocessorDefinitions="_DEBUG"
 				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"
-			/>
+				AdditionalIncludeDirectories="$(IntDir)"/>
 			<Tool
-				Name="VCPreLinkEventTool"
-			/>
+				Name="VCPreLinkEventTool"/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="$(SolutionDir)\Crypto_d.lib"
 				LinkIncremental="2"
 				GenerateDebugInformation="true"
 				SubSystem="2"
-				TargetMachine="1"
-			/>
+				TargetMachine="1"/>
 			<Tool
-				Name="VCALinkTool"
-			/>
+				Name="VCALinkTool"/>
 			<Tool
-				Name="VCManifestTool"
-			/>
+				Name="VCManifestTool"/>
 			<Tool
-				Name="VCXDCMakeTool"
-			/>
+				Name="VCXDCMakeTool"/>
 			<Tool
-				Name="VCBscMakeTool"
-			/>
+				Name="VCBscMakeTool"/>
 			<Tool
-				Name="VCFxCopTool"
-			/>
+				Name="VCFxCopTool"/>
 			<Tool
-				Name="VCAppVerifierTool"
-			/>
+				Name="VCAppVerifierTool"/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
+				Name="VCWebDeploymentTool"/>
 			<Tool
-				Name="VCPostBuildEventTool"
-			/>
+				Name="VCPostBuildEventTool"/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -277,438 +221,331 @@
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
-			>
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\AppRandom.cpp"
-				>
+				RelativePath=".\AppRandom.cpp">
 			</File>
 			<File
-				RelativePath=".\ColorProgress.cpp"
-				>
+				RelativePath=".\ColorProgress.cpp">
 			</File>
 			<File
-				RelativePath=".\DlgChangePassword.cpp"
-				>
+				RelativePath=".\DlgChangePassword.cpp">
 			</File>
 			<File
-				RelativePath=".\DlgFavItem.cpp"
-				>
+				RelativePath=".\DlgFavItem.cpp">
 			</File>
 			<File
-				RelativePath=".\DlgFavorites.cpp"
-				>
+				RelativePath=".\DlgFavorites.cpp">
 			</File>
 			<File
-				RelativePath=".\DlgFormat.cpp"
-				>
+				RelativePath=".\DlgFormat.cpp">
 			</File>
 			<File
-				RelativePath=".\DlgGenPass.cpp"
-				>
+				RelativePath=".\DlgGenPass.cpp">
 			</File>
 			<File
-				RelativePath=".\DlgPassword.cpp"
-				>
+				RelativePath=".\DlgPassword.cpp">
 			</File>
 			<File
-				RelativePath=".\DlgRandom.cpp"
-				>
+				RelativePath=".\DlgRandom.cpp">
 			</File>
 			<File
-				RelativePath=".\DrivesCombo.cpp"
-				>
+				RelativePath=".\DrivesCombo.cpp">
 			</File>
 			<File
-				RelativePath=".\KeyFilesDlg.cpp"
-				>
+				RelativePath=".\KeyFilesDlg.cpp">
 			</File>
 			<File
-				RelativePath=".\Manager.cpp"
-				>
+				RelativePath=".\Manager.cpp">
 			</File>
 			<File
-				RelativePath=".\ManagerDlg.cpp"
-				>
+				RelativePath=".\ManagerDlg.cpp">
 			</File>
 			<File
-				RelativePath=".\NewKeyFileDlg.cpp"
-				>
+				RelativePath=".\NewKeyFileDlg.cpp">
 			</File>
 			<File
-				RelativePath=".\PageCreate1.cpp"
-				>
+				RelativePath=".\PageCreate1.cpp">
 			</File>
 			<File
-				RelativePath=".\PageCreate2.cpp"
-				>
+				RelativePath=".\PageCreate2.cpp">
 			</File>
 			<File
-				RelativePath=".\PageMount1.cpp"
-				>
+				RelativePath=".\PageMount1.cpp">
 			</File>
 			<File
-				RelativePath=".\PageMount2.cpp"
-				>
+				RelativePath=".\PageMount2.cpp">
 			</File>
 			<File
-				RelativePath=".\stdafx.cpp"
-				>
+				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
-					Name="Debug|Win32"
-					>
+					Name="Debug|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32"
-					>
+					Name="Release|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Analyze|Win32"
-					>
+					Name="Analyze|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"
-					/>
+						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\WizCreate.cpp"
-				>
+				RelativePath=".\WizCreate.cpp">
 			</File>
 			<File
-				RelativePath=".\WizMount.cpp"
-				>
+				RelativePath=".\WizMount.cpp">
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
-			>
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\AppRandom.h"
-				>
+				RelativePath=".\AppRandom.h">
 			</File>
 			<File
-				RelativePath=".\ColorProgress.h"
-				>
+				RelativePath=".\ColorProgress.h">
 			</File>
 			<File
-				RelativePath=".\DlgChangePassword.h"
-				>
+				RelativePath=".\DlgChangePassword.h">
 			</File>
 			<File
-				RelativePath=".\DlgFavItem.h"
-				>
+				RelativePath=".\DlgFavItem.h">
 			</File>
 			<File
-				RelativePath=".\DlgFavorites.h"
-				>
+				RelativePath=".\DlgFavorites.h">
 			</File>
 			<File
-				RelativePath=".\DlgFormat.h"
-				>
+				RelativePath=".\DlgFormat.h">
 			</File>
 			<File
-				RelativePath=".\DlgGenPass.h"
-				>
+				RelativePath=".\DlgGenPass.h">
 			</File>
 			<File
-				RelativePath=".\DlgPassword.h"
-				>
+				RelativePath=".\DlgPassword.h">
 			</File>
 			<File
-				RelativePath=".\DlgRandom.h"
-				>
+				RelativePath=".\DlgRandom.h">
 			</File>
 			<File
-				RelativePath=".\DrivesCombo.h"
-				>
+				RelativePath=".\DrivesCombo.h">
 			</File>
 			<File
-				RelativePath=".\KeyFilesDlg.h"
-				>
+				RelativePath=".\KeyFilesDlg.h">
 			</File>
 			<File
-				RelativePath=".\Manager.h"
-				>
+				RelativePath=".\Manager.h">
 			</File>
 			<File
-				RelativePath=".\ManagerDlg.h"
-				>
+				RelativePath=".\ManagerDlg.h">
 			</File>
 			<File
-				RelativePath=".\NewKeyFileDlg.h"
-				>
+				RelativePath=".\NewKeyFileDlg.h">
 			</File>
 			<File
-				RelativePath=".\PageCreate1.h"
-				>
+				RelativePath=".\PageCreate1.h">
 			</File>
 			<File
-				RelativePath=".\PageCreate2.h"
-				>
+				RelativePath=".\PageCreate2.h">
 			</File>
 			<File
-				RelativePath=".\PageMount1.h"
-				>
+				RelativePath=".\PageMount1.h">
 			</File>
 			<File
-				RelativePath=".\PageMount2.h"
-				>
+				RelativePath=".\PageMount2.h">
 			</File>
 			<File
-				RelativePath=".\Resource.h"
-				>
+				RelativePath=".\Resource.h">
 			</File>
 			<File
-				RelativePath=".\stdafx.h"
-				>
+				RelativePath=".\stdafx.h">
 			</File>
 			<File
-				RelativePath=".\WizCreate.h"
-				>
+				RelativePath=".\WizCreate.h">
 			</File>
 			<File
-				RelativePath=".\WizMount.h"
-				>
+				RelativePath=".\WizMount.h">
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
-			>
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
 			<File
-				RelativePath=".\res\Manager.ico"
-				>
+				RelativePath=".\res\Manager.ico">
 			</File>
 			<File
-				RelativePath=".\Manager.rc"
-				>
+				RelativePath=".\Manager.rc">
 			</File>
 			<File
-				RelativePath=".\res\Manager.rc2"
-				>
+				RelativePath=".\res\Manager.rc2">
 			</File>
 		</Filter>
 		<Filter
-			Name="SRC"
-			>
+			Name="SRC">
 			<File
-				RelativePath=".\SRC\Common.h"
-				>
+				RelativePath=".\SRC\Common.h">
 			</File>
 			<File
-				RelativePath="..\Driver\disk.h"
-				>
+				RelativePath="..\Driver\disk.h">
 			</File>
 			<File
-				RelativePath="..\Driver\DiskCipher.cpp"
-				>
+				RelativePath="..\Driver\DiskCipher.cpp">
 			</File>
 			<File
-				RelativePath="..\Driver\DiskCipher.h"
-				>
+				RelativePath="..\Driver\DiskCipher.h">
 			</File>
 			<File
-				RelativePath="..\Driver\DiskHeader.cpp"
-				>
+				RelativePath="..\Driver\DiskHeader.cpp">
 			</File>
 			<File
-				RelativePath="..\Driver\DiskHeader.h"
-				>
+				RelativePath="..\Driver\DiskHeader.h">
 			</File>
 			<File
-				RelativePath=".\SRC\DiskImage.cpp"
-				>
+				RelativePath=".\SRC\DiskImage.cpp">
 			</File>
 			<File
-				RelativePath=".\SRC\DiskImage.h"
-				>
+				RelativePath=".\SRC\DiskImage.h">
 			</File>
 			<File
-				RelativePath=".\SRC\DiskImageNONE.cpp"
-				>
+				RelativePath=".\SRC\DiskImageNONE.cpp">
 			</File>
 			<File
-				RelativePath=".\SRC\DiskImageNONE.h"
-				>
+				RelativePath=".\SRC\DiskImageNONE.h">
 			</File>
 			<File
-				RelativePath=".\SRC\DNDriverControl.cpp"
-				>
+				RelativePath=".\SRC\DNDriverControl.cpp">
 			</File>
 			<File
-				RelativePath=".\SRC\DNDriverControl.h"
-				>
+				RelativePath=".\SRC\DNDriverControl.h">
 			</File>
 			<File
-				RelativePath=".\SRC\DriverManager.cpp"
-				>
+				RelativePath=".\SRC\DriverManager.cpp">
 			</File>
 			<File
-				RelativePath=".\SRC\DriverManager.h"
-				>
+				RelativePath=".\SRC\DriverManager.h">
 			</File>
 			<File
-				RelativePath=".\SRC\FavManager.cpp"
-				>
+				RelativePath=".\SRC\FavManager.cpp">
 			</File>
 			<File
-				RelativePath=".\SRC\FavManager.h"
-				>
+				RelativePath=".\SRC\FavManager.h">
 			</File>
 			<File
-				RelativePath="..\Driver\format.h"
-				>
+				RelativePath="..\Driver\format.h">
 			</File>
 			<File
-				RelativePath=".\SRC\KeyFileCollector.cpp"
-				>
+				RelativePath=".\SRC\KeyFileCollector.cpp">
 			</File>
 			<File
-				RelativePath=".\SRC\KeyFileCollector.h"
-				>
+				RelativePath=".\SRC\KeyFileCollector.h">
 			</File>
 			<File
-				RelativePath=".\SRC\PWTools.cpp"
-				>
+				RelativePath=".\SRC\PWTools.cpp">
 			</File>
 			<File
-				RelativePath=".\SRC\PWTools.h"
-				>
+				RelativePath=".\SRC\PWTools.h">
 			</File>
 			<File
-				RelativePath=".\SRC\SecureHeap.cpp"
-				>
+				RelativePath=".\SRC\SecureHeap.cpp">
 			</File>
 			<File
-				RelativePath=".\SRC\SecureHeap.h"
-				>
+				RelativePath=".\SRC\SecureHeap.h">
 			</File>
 			<File
-				RelativePath="..\Version.h"
-				>
+				RelativePath="..\Version.h">
 			</File>
 		</Filter>
 		<Filter
-			Name="Crypto"
-			>
+			Name="Crypto">
 			<File
-				RelativePath="..\Crypto\CryptoLib.h"
-				>
+				RelativePath="..\Crypto\CryptoLib.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\DNAES.h"
-				>
+				RelativePath="..\Crypto\DNAES.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\DNRandomPool.h"
-				>
+				RelativePath="..\Crypto\DNRandomPool.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\DNRndSafe.h"
-				>
+				RelativePath="..\Crypto\DNRndSafe.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\DNTwofish.h"
-				>
+				RelativePath="..\Crypto\DNTwofish.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\LRWAES.h"
-				>
+				RelativePath="..\Crypto\LRWAES.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\LRWMath.h"
-				>
+				RelativePath="..\Crypto\LRWMath.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\LRWMode.h"
-				>
+				RelativePath="..\Crypto\LRWMode.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\LRWTwofish.h"
-				>
+				RelativePath="..\Crypto\LRWTwofish.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\PBKDRF2.h"
-				>
+				RelativePath="..\Crypto\PBKDRF2.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\Random.h"
-				>
+				RelativePath="..\Crypto\Random.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\RandomSeed.h"
-				>
+				RelativePath="..\Crypto\RandomSeed.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\rc4.h"
-				>
+				RelativePath="..\Crypto\rc4.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\RC4_CIPHER_ENGINE.h"
-				>
+				RelativePath="..\Crypto\RC4_CIPHER_ENGINE.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\RijndaelEngine.h"
-				>
+				RelativePath="..\Crypto\RijndaelEngine.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\rj_opt.h"
-				>
+				RelativePath="..\Crypto\rj_opt.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\RndGenerator.h"
-				>
+				RelativePath="..\Crypto\RndGenerator.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\RndPool.h"
-				>
+				RelativePath="..\Crypto\RndPool.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\RndSampler.h"
-				>
+				RelativePath="..\Crypto\RndSampler.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\sha256.h"
-				>
+				RelativePath="..\Crypto\sha256.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\SHA256_HASH.h"
-				>
+				RelativePath="..\Crypto\SHA256_HASH.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\SymmetricCipher.h"
-				>
+				RelativePath="..\Crypto\SymmetricCipher.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\SymmetricCipherLRW.h"
-				>
+				RelativePath="..\Crypto\SymmetricCipherLRW.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\Twofish.h"
-				>
+				RelativePath="..\Crypto\Twofish.h">
 			</File>
 			<File
-				RelativePath="..\Crypto\TwofishEngine.h"
-				>
+				RelativePath="..\Crypto\TwofishEngine.h">
 			</File>
 		</Filter>
 	</Files>
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="Manager.rc"
-		/>
+			Value="Manager.rc"/>
 	</Globals>
 </VisualStudioProject>

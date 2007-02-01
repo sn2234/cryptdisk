@@ -153,8 +153,6 @@ static LRESULT CALLBACK MouseHookProc(int code,WPARAM wParam,LPARAM lParam)
 	MSLLHOOKSTRUCT		*pData;
 	RND_MOUSE_EVENT		mouseEvent;
 
-	static	BYTE	count;
-
 	pData=(MSLLHOOKSTRUCT*)lParam;
 
 	if( ! (pData->flags&LLMHF_INJECTED))	// Skip injected events
@@ -175,7 +173,7 @@ static LRESULT CALLBACK KeyboardHookProc(int code,WPARAM wParam,LPARAM lParam)
 	KBDLLHOOKSTRUCT		*pData;
 	RND_KEYBOARD_EVENT	keyboardEvent;
 
-	static	BYTE	TimeTemp,temp_count,PrevChar;
+	static	BYTE	PrevChar;
 
 	pData=(KBDLLHOOKSTRUCT*)lParam;
 	memset(&keyboardEvent, 0, sizeof(keyboardEvent));

@@ -22,39 +22,23 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef	_LRW_MATH_H_INCLUDED_
-#define	_LRW_MATH_H_INCLUDED_
+/*********************************************************************
+	
+	Key derivation function based on SHA-256
+	
+*********************************************************************/
 
+#ifndef _DERIVEKEY_H_INCLUDED
+#define _DERIVEKEY_H_INCLUDED
+
+#if defined (_MSC_VER) && (_MSC_VER >= 1000)
 #pragma once
-
-#ifdef __cplusplus
-extern "C"{
 #endif
 
-#pragma pack(push,16)
-typedef __declspec(align(16)) struct LRW_CONTEXT
-{
-	UCHAR	m_gfTable[2048];	// table for optimized GF multiplication
-	UCHAR	m_lrwTable[2048];	// table for optimized consecutive numbers multiplication
-	UCHAR	m_key[16];			// tweak key
-	UCHAR	m_currentTweak[16];	// current tweak value
-	UCHAR	m_currentIndex[16];	// current index
-}LRW_CONTEXT;
-#pragma pack(pop)
+void __stdcall DeriveKey(void *Password,unsigned long PasswordLength,
+			   void *Salt,unsigned long SaltLength,
+			   void *Key,unsigned long KeyLength,
+			   unsigned long Iterations);
 
-void __stdcall GFMult(void *pDest, void *pC, void *pY);
-void __stdcall GFPrepareTable(void *pTable, void *pConstant);
-void __stdcall GFMultTable(void *pTable, void *pDest, void *pSrc);
-void __stdcall LRWPrepareTable(void *pTable, void *pKeyTable);
-void __stdcall LRWMult(void *pTable, void *pNumber, void *pBuff);
+#endif	//_DERIVEKEY_H_INCLUDED
 
-void __stdcall LRWInitContext(OUT LRW_CONTEXT *pCtx, IN void *tweakKey);
-void __stdcall LRWStartSequence(IN OUT LRW_CONTEXT *pCtx, IN void *indexBegin);
-void __stdcall LRWXorTweak(IN LRW_CONTEXT *pCtx, OUT void *pBuff);
-void __stdcall LRWNextTweak(IN LRW_CONTEXT *pCtx);
-
-#ifdef __cplusplus
-};
-#endif
-
-#endif	//_LRW_MATH_H_INCLUDED_

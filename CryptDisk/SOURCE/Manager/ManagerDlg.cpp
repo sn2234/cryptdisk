@@ -159,7 +159,7 @@ BOOL CManagerDlg::OnInitDialog()
 
 	col.pszText=_T("Path");
 	col.iSubItem=3;
-	col.cx=200;
+	col.cx=250;
 	m_imagesListView.InsertColumn(2, &col);
 
 	// Init interface
