@@ -51,6 +51,8 @@ MUL_BYTE	macro	table
 		movzx		eax,ah
 		movzx		edx, &table&_alog[eax]
 		or		edi,edx
+		
+align 16
 @@:
 endm
 
@@ -105,8 +107,11 @@ LOCAL	proc_exit
 		MUL_BYTE	table
 		
 		mov		eax,edi
+align 16
 proc_exit:
 endm
+
+align 16
 MDSMul	proc	uses ebx edi esi ecx edx, a:DWORD,b:DWORD
 ;Perform multiplication each byte of b with byte 0 of a
 
@@ -123,6 +128,7 @@ MDSMul	proc	uses ebx edi esi ecx edx, a:DWORD,b:DWORD
 		ret
 MDSMul	endp
 
+align 16
 MDSEnc	proc	uses ebx edi esi,	x:dword
 ;MDS-encode two bytes k0 and k1
 
@@ -157,6 +163,7 @@ MDSEnc	proc	uses ebx edi esi,	x:dword
 		ret
 MDSEnc	endp
 
+align 16
 RSMul	proc	uses ecx edx, a:DWORD,b:DWORD
 ;Perform multiplication each byte of b with byte 0 of a
 
@@ -173,6 +180,7 @@ RSMul	proc	uses ecx edx, a:DWORD,b:DWORD
 		ret
 RSMul	endp
 
+align 16
 RSEnc	proc	uses ebx edi esi,	k0:dword,k1:dword
 ;RS-encode two bytes k0 and k1
 
@@ -267,6 +275,7 @@ endif
 		mov		edi,ebx
 endm
 
+align 16
 H	proc	uses	edi ebx, x:dword,l:dword
 ;NOTE: This function must NOT change ecx
 		
@@ -298,6 +307,7 @@ H	proc	uses	edi ebx, x:dword,l:dword
 		
 H	endp
 
+align 16
 TwofishSetKey	PROC uses ebx edi esi, pCTX:DWORD,pUserKey:DWORD
 		
 LOCAL	KeyOdd	[4]:DWORD
@@ -331,6 +341,7 @@ I=I+2
 		xor		ecx,ecx
 		xor		ebx,ebx
 		lea		esi,KeyS
+align 16
 @@:
 		push		esi
 		push		ebx
@@ -356,6 +367,7 @@ I=I+2
 		lea		eax,[eax].KeySched
 		assume	eax:nothing
 		mov		KeyPtr,eax
+align 16
 @@:
 		push		esi
 		push		ebx
@@ -401,6 +413,7 @@ I=I+2
 		assume	edi:PTR TWOFISH_CTX
 		
 		xor		ebx,ebx		;ebx - i
+align 16
 @@:
 		mov		al,s0[ebx]
 		push		0EFEF5B01h
@@ -532,6 +545,7 @@ endif
 		
 endm
 
+align 16
 TwofishEncBlock1	PROC uses ebx edi esi, pCTX:DWORD,PlainText:DWORD,CipherText:DWORD
 		
 		mov		ecx,PlainText
@@ -590,6 +604,7 @@ TwofishEncBlock1	PROC uses ebx edi esi, pCTX:DWORD,PlainText:DWORD,CipherText:DW
 		
 TwofishEncBlock1	ENDP
 
+align 16
 TwofishEncBlock2	PROC uses ebx edi esi, pCTX:DWORD,Buff:DWORD
 		
 		mov		ecx,Buff
@@ -648,6 +663,7 @@ TwofishEncBlock2	PROC uses ebx edi esi, pCTX:DWORD,Buff:DWORD
 		
 TwofishEncBlock2	ENDP
 
+align 16
 TwofishXorEnc1		PROC uses ebx edi esi, pCTX:DWORD,XorData:DWORD,PlainText:DWORD,CipherText:DWORD
 		
 		mov		ecx,PlainText
@@ -713,6 +729,7 @@ TwofishXorEnc1		PROC uses ebx edi esi, pCTX:DWORD,XorData:DWORD,PlainText:DWORD,
 		
 TwofishXorEnc1		ENDP
 
+align 16
 TwofishXorEnc2		PROC uses ebx edi esi, pCTX:DWORD,XorData:DWORD,Buff:DWORD
 		
 		mov		ecx,Buff
@@ -849,6 +866,7 @@ DEC_CYCLE	macro	nCycle
 		
 endm
 
+align 16
 TwofishDecBlock1	PROC	uses ebx edi esi, pCTX:DWORD,CipherText:DWORD,PlainText:DWORD
 		
 		mov		ecx,CipherText
@@ -907,6 +925,7 @@ TwofishDecBlock1	PROC	uses ebx edi esi, pCTX:DWORD,CipherText:DWORD,PlainText:DW
 		
 TwofishDecBlock1	ENDP
 
+align 16
 TwofishDecBlock2	PROC	uses ebx edi esi, pCTX:DWORD,Buff:DWORD
 		
 		mov		ecx,Buff
@@ -965,6 +984,7 @@ TwofishDecBlock2	PROC	uses ebx edi esi, pCTX:DWORD,Buff:DWORD
 		
 TwofishDecBlock2	ENDP
 
+align 16
 TwofishDecXor1		PROC uses ebx edi esi, pCTX:DWORD,XorData:DWORD,CipherText:DWORD,PlainText:DWORD
 		
 		mov		ecx,CipherText
@@ -1029,6 +1049,7 @@ TwofishDecXor1		PROC uses ebx edi esi, pCTX:DWORD,XorData:DWORD,CipherText:DWORD
 		
 TwofishDecXor1		ENDP
 
+align 16
 TwofishDecXor2		PROC uses ebx edi esi, pCTX:DWORD,XorData:DWORD,Buff:DWORD
 		
 		mov		ecx,Buff

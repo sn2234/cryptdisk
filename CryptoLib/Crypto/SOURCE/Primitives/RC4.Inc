@@ -22,7 +22,7 @@
 ; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ; 
 
-RC4_KEY_CTX	struct
+RC4_KEY_CTX	struct 16
 
 	State	dd	256/4 dup(?)
 	x	dd	?

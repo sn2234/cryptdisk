@@ -8,15 +8,20 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
+		Profile|Win32 = Profile|Win32
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{8D66C212-D9C8-416C-B774-544EB115D786}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8D66C212-D9C8-416C-B774-544EB115D786}.Debug|Win32.Build.0 = Debug|Win32
+		{8D66C212-D9C8-416C-B774-544EB115D786}.Profile|Win32.ActiveCfg = Profile|Win32
+		{8D66C212-D9C8-416C-B774-544EB115D786}.Profile|Win32.Build.0 = Profile|Win32
 		{8D66C212-D9C8-416C-B774-544EB115D786}.Release|Win32.ActiveCfg = Release|Win32
 		{8D66C212-D9C8-416C-B774-544EB115D786}.Release|Win32.Build.0 = Release|Win32
 		{8C32B2B6-A6D7-4302-948B-09E23860DAA9}.Debug|Win32.ActiveCfg = Debug|Win32
 		{8C32B2B6-A6D7-4302-948B-09E23860DAA9}.Debug|Win32.Build.0 = Debug|Win32
+		{8C32B2B6-A6D7-4302-948B-09E23860DAA9}.Profile|Win32.ActiveCfg = Profile|Win32
+		{8C32B2B6-A6D7-4302-948B-09E23860DAA9}.Profile|Win32.Build.0 = Profile|Win32
 		{8C32B2B6-A6D7-4302-948B-09E23860DAA9}.Release|Win32.ActiveCfg = Release|Win32
 		{8C32B2B6-A6D7-4302-948B-09E23860DAA9}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection

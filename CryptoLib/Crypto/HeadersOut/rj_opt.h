@@ -40,13 +40,14 @@ extern "C"{
 #define	RJ_BLOCK_LEN_BITS		(128)
 #define	RJ_BLOCK_LEN_BYTES		(RJ_BLOCK_LEN_BITS/8)
 
-
-typedef	struct	RIJNDAEL_KEY_CTX{
+#pragma pack(push,16)
+typedef	__declspec(align(16)) struct	RIJNDAEL_KEY_CTX{
 	
 	unsigned char	EncKey[Nb*(Nr+1)*4];
 	unsigned char	DecKey[Nb*(Nr+1)*4];
 	
 }RIJNDAEL_KEY_CTX;
+#pragma pack(pop)
 
 extern void __stdcall SetupKey(RIJNDAEL_KEY_CTX *pCTX, void *pUserKey);
 

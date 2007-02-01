@@ -100,6 +100,7 @@ Const63=0C67178F2h
 
 .code
 
+align 16
 SHA256Init	proc	ctx:dword
 		
 		mov		edx,ctx
@@ -123,12 +124,14 @@ SHA256Init	proc	ctx:dword
 		
 SHA256Init	endp
 
+align 16
 SHA256Update	proc	uses ebx edi esi ,ctx:dword,Input:dword,InputLen:dword
 
 ;setup
 ;	len=InputLen
 		mov		ecx,InputLen
-		jecxz		@@return
+		test		ecx, ecx
+		jz		@@return
 		
 		assume		ebx:PTR SHA256_CTX
 		mov		ebx,ctx
@@ -150,6 +153,7 @@ SHA256Update	proc	uses ebx edi esi ,ctx:dword,Input:dword,InputLen:dword
 		jbe		@F
 		
 		mov		eax,ecx
+align 16
 @@:
 ;	copy(buffer,ptr,bytes_copy)
 		push		ecx
@@ -177,6 +181,7 @@ SHA256Update	proc	uses ebx edi esi ,ctx:dword,Input:dword,InputLen:dword
 		push		eax
 		push		ebx
 		call		SHA256HashBlock
+align 16
 @@no_buffer:
 @@:
 ;while input len >= 64 ,hash data from ptr
@@ -185,6 +190,7 @@ SHA256Update	proc	uses ebx edi esi ,ctx:dword,Input:dword,InputLen:dword
 		adc		[ebx].MessageLength+4,0
 ;	while(len>=64)
 ;	{
+align 16
 @@:
 		cmp		ecx,64
 		jb		@F
@@ -198,6 +204,7 @@ SHA256Update	proc	uses ebx edi esi ,ctx:dword,Input:dword,InputLen:dword
 		sub		ecx,64
 		jmp	short	@B
 ;	}
+align 16
 @@:
 ;copy remainder bytes to the buffer
 ;	if(len)
@@ -207,11 +214,13 @@ SHA256Update	proc	uses ebx edi esi ,ctx:dword,Input:dword,InputLen:dword
 		rep	movsb
 		
 @@return:
+align 16
 		ret
 		
 		assume	ebx:nothing
 SHA256Update	endp
 
+align 16
 SHA256Final	proc	uses ebx esi edi ,ctx:dword,Output:dword
 		
 LOCAL	bitlength[2]:dword
@@ -237,6 +246,7 @@ LOCAL	bitlength[2]:dword
 		jb		@F
 		
 		mov		eax,120
+align 16
 @@:
 		sub		eax,ecx
 @@hash_pad:
@@ -246,6 +256,7 @@ LOCAL	bitlength[2]:dword
 		
 		db		80h
 		db		63 dup(0)
+align 16
 @@:
 		push		ctx
 		call		SHA256Update
@@ -272,6 +283,7 @@ LOCAL	bitlength[2]:dword
 		mov			edi,Output
 		lea			esi,[ebx].State
 		mov			ecx,8
+align 16
 @@:
 		lodsd
 		bswap		eax
@@ -385,6 +397,7 @@ Rr	macro	Wt,j
 		mov		dword ptr [Wt+(j*4)],ebx
 endm
 
+align 16
 SHA256HashBlock	proc	ctx:dword,Input:dword
 LOCAL	W[64]:DWORD
 		
@@ -420,6 +433,7 @@ _h	textequ		<@CatStr(<mm>,%((7-@CatStr(%i))and 7))>
 		mov		esi,Input
 		lea		edi,W
 		mov		ecx,16
+align 16
 @@:
 		lodsd
 		bswap		eax

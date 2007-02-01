@@ -39,8 +39,8 @@ extern "C"{
 #define	TWOFISH_BLOCK_BITS		(128)
 #define	TWOFISH_BLOCK_BYTES		(TWOFISH_BLOCK_BITS/8)
 
-#pragma pack(push,8)
-typedef	__declspec(align(8)) struct TWOFISH_KEY_CTX
+#pragma pack(push,16)
+typedef	__declspec(align(16)) struct TWOFISH_KEY_CTX
 {
 	unsigned long	KeySched[40];
 

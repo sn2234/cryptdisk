@@ -31,6 +31,7 @@ include RC4.inc
 
 .code
 
+align 16
 rc4KeySetup	proc	pCtx:DWORD,pUserKey:DWORD,KeyLength:DWORD
 		
 		pushad
@@ -40,6 +41,7 @@ rc4KeySetup	proc	pCtx:DWORD,pUserKey:DWORD,KeyLength:DWORD
 		mov		esi,pUserKey
 		
 		xor		ecx,ecx
+align 16
 @@:
 		mov		byte ptr [edi+ecx],cl
 		
@@ -55,6 +57,7 @@ rc4KeySetup	proc	pCtx:DWORD,pUserKey:DWORD,KeyLength:DWORD
 		xor		ecx,ecx
 		xor		ebx,ebx
 		xor		edx,edx
+align 16
 swap_loop:
 		add		dl,byte ptr [edi+ecx]
 		add		dl,byte ptr [esi+ebx]
@@ -69,6 +72,7 @@ swap_loop:
 		jb		@F
 		
 		xor		ebx,ebx
+align 16
 @@:
 		inc		ecx
 		cmp		ecx,256
@@ -80,6 +84,7 @@ swap_loop:
 		
 rc4KeySetup	endp
 
+align 16
 rc4Gen		proc		pCtx:DWORD,Buff:DWORD,BuffLength:DWORD
 		
 		pushad
@@ -93,6 +98,7 @@ rc4Gen		proc		pCtx:DWORD,Buff:DWORD,BuffLength:DWORD
 		mov		edi,Buff
 		mov		ecx,BuffLength
 		xor		eax,eax
+align 16
 @@:
 		jecxz		@F
 		
@@ -114,12 +120,14 @@ rc4Gen		proc		pCtx:DWORD,Buff:DWORD,BuffLength:DWORD
 		
 		dec		ecx
 		jmp	short	@B
+align 16
 @@:
 		popad
 		ret
 		
 rc4Gen		endp
 
+align 16
 rc4Xor		proc		pCtx:DWORD,Buff:DWORD,BuffLength:DWORD
 		
 		pushad
@@ -133,6 +141,7 @@ rc4Xor		proc		pCtx:DWORD,Buff:DWORD,BuffLength:DWORD
 		mov		edi,Buff
 		mov		ecx,BuffLength
 		xor		eax,eax
+align 16
 @@:
 		jecxz		@F
 		
@@ -154,12 +163,14 @@ rc4Xor		proc		pCtx:DWORD,Buff:DWORD,BuffLength:DWORD
 		
 		dec		ecx
 		jmp	short	@B
+align 16
 @@:
 		popad
 		ret
 		
 rc4Xor		endp
 
+align 16
 rc4Skip		proc		pCtx:DWORD,SkipLength:DWORD
 		
 		pushad
@@ -172,6 +183,7 @@ rc4Skip		proc		pCtx:DWORD,SkipLength:DWORD
 		
 		mov		ecx,SkipLength
 		xor		eax,eax
+align 16
 @@:
 		jecxz		@F
 		
@@ -190,6 +202,7 @@ rc4Skip		proc		pCtx:DWORD,SkipLength:DWORD
 		
 		dec		ecx
 		jmp	short	@B
+align 16
 @@:
 		popad
 		ret

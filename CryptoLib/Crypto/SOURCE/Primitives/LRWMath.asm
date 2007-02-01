@@ -39,6 +39,7 @@ GF_MULT_STEP	macro
 		xor		[edi+1*4], ebx
 		xor		[edi+2*4], ecx
 		xor		[edi+3*4], edx
+align 16
 @@:
 		shl		eax, 1
 		rcl		ebx, 1
@@ -48,9 +49,11 @@ GF_MULT_STEP	macro
 		jnc		@F
 		
 		xor		eax, 087h
+align 16
 @@:
 		endm
 
+align 16
 GFMult		PROC pDest:DWORD, pC:DWORD, pY:DWORD
 		
 		push		ebx
@@ -75,6 +78,7 @@ GFMult		PROC pDest:DWORD, pC:DWORD, pY:DWORD
 		
 		mov		esi, pY		; !!! using ebp
 		mov		ebp, 128/32
+align 16
 @@loop_begin:
 		push		ebp
 		
@@ -99,6 +103,7 @@ GFMult		PROC pDest:DWORD, pC:DWORD, pY:DWORD
 GFMult		endp
 
 ; NOTE: Table must be zeroed before call this function
+align 16
 GFPrepareTable	PROC pTable:DWORD, pConstant:DWORD
 		
 		push		ebx
@@ -115,6 +120,7 @@ GFPrepareTable	PROC pTable:DWORD, pConstant:DWORD
 		xor		edx, edx
 		
 		mov		ebp, 128
+align 16
 @@loop0_begin:
 		movd		mm0, eax
 		movd		mm1, ebx
@@ -124,6 +130,7 @@ GFPrepareTable	PROC pTable:DWORD, pConstant:DWORD
 		push		ebp
 		
 		mov		ebp, 128/32
+align 16
 @@loop1_begin:
 		push		ebp
 		
@@ -167,6 +174,7 @@ GFPrepareTable	PROC pTable:DWORD, pConstant:DWORD
 		
 GFPrepareTable	ENDP
 
+align 16
 GFMultTable	PROC pTable:DWORD, pDest:DWORD, pSrc:DWORD
 		
 		push		edi
@@ -180,6 +188,7 @@ GFMultTable	PROC pTable:DWORD, pDest:DWORD, pSrc:DWORD
 		pxor		mm1, mm1
 		
 		xor		ecx,ecx
+align 16
 @@loop_begin:
 		mov		edx, dword ptr [esi]
 	rept 32
@@ -188,6 +197,7 @@ GFMultTable	PROC pTable:DWORD, pDest:DWORD, pSrc:DWORD
 		
 		pxor		mm0, qword ptr [edi+ecx+0*8]
 		pxor		mm1, qword ptr [edi+ecx+1*8]
+align 16
 @@:
 		add		ecx, 16
 	endm
@@ -207,6 +217,7 @@ GFMultTable	PROC pTable:DWORD, pDest:DWORD, pSrc:DWORD
 		
 GFMultTable	ENDP
 
+align 16
 LRWPrepareTable	PROC pTable:DWORD, pKeyTable:DWORD
 LOCAL	tmp[16]:BYTE
 		
@@ -225,6 +236,7 @@ LOCAL	tmp[16]:BYTE
 		mov		dword ptr [edi+3*4], eax
 		
 		xor		ecx, ecx
+align 16
 @@loop_begin:
 		bts		[edi], ecx
 		
@@ -251,6 +263,7 @@ LOCAL	tmp[16]:BYTE
 		
 LRWPrepareTable	ENDP
 
+align 16
 LRWMult		PROC pTable:DWORD, pNumber:DWORD, pBuff:DWORD
 		
 		push		ebx
@@ -263,6 +276,7 @@ LRWMult		PROC pTable:DWORD, pNumber:DWORD, pBuff:DWORD
 		bsf		edx, ecx
 		jz		@F
 		jmp		@@zero_found
+align 16
 @@:
 		mov		ecx, dword ptr [edi+1*4]
 		not		ecx
@@ -270,6 +284,7 @@ LRWMult		PROC pTable:DWORD, pNumber:DWORD, pBuff:DWORD
 		jz		@F
 		add		edx, 32*1
 		jmp		@@zero_found
+align 16
 @@:
 		mov		ecx, dword ptr [edi+2*4]
 		not		ecx
@@ -277,6 +292,7 @@ LRWMult		PROC pTable:DWORD, pNumber:DWORD, pBuff:DWORD
 		jz		@F
 		add		edx, 32*2
 		jmp		@@zero_found
+align 16
 @@:
 		mov		ecx, dword ptr [edi+3*4]
 		not		ecx
@@ -284,6 +300,7 @@ LRWMult		PROC pTable:DWORD, pNumber:DWORD, pBuff:DWORD
 		jz		@F
 		add		edx, 32*3
 		jmp		@@zero_found
+align 16
 @@:
 		mov		edx, 127
 @@zero_found:
@@ -323,6 +340,7 @@ LRWMult		PROC pTable:DWORD, pNumber:DWORD, pBuff:DWORD
 		
 LRWMult		ENDP
 
+align 16
 LRWInitContext	PROC pCtx: PTR LRW_CONTEXT, tweakKey:DWORD
 		
 		push		ebx
@@ -370,6 +388,7 @@ LRWInitContext	PROC pCtx: PTR LRW_CONTEXT, tweakKey:DWORD
 		
 LRWInitContext	ENDP
 
+align 16
 LRWStartSequence	PROC pCtx: PTR LRW_CONTEXT, indexBegin:DWORD
 		
 		mov		ecx, pCtx
@@ -397,6 +416,7 @@ LRWStartSequence	PROC pCtx: PTR LRW_CONTEXT, indexBegin:DWORD
 		
 LRWStartSequence	ENDP
 
+align 16
 LRWXorTweak	PROC pCtx: PTR LRW_CONTEXT, pBuff:DWORD
 		
 		mov		ecx, pCtx
@@ -420,6 +440,7 @@ LRWXorTweak	PROC pCtx: PTR LRW_CONTEXT, pBuff:DWORD
 		
 LRWXorTweak	ENDP
 
+align 16
 LRWNextTweak	PROC pCtx: PTR LRW_CONTEXT
 		
 		mov		ecx, pCtx

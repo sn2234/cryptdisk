@@ -32,7 +32,7 @@
 #include "SHA256_HASH.h"
 #include "RC4_CIPHER_ENGINE.h"
 
-#include "PBKDRF2.h"
+#include "DeriveKey.h"
 #include "DNAES.h"
 #include "DNTwofish.h"
 #include "LRWMode.h"

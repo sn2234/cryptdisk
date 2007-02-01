@@ -22,7 +22,7 @@
 ; SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ; 
 
-SHA256_CTX	struct
+SHA256_CTX	struct 16
 	
 	State			dd	8 dup(?)
 	MessageLength		dd	?,?

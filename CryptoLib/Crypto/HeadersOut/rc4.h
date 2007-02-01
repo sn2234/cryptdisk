@@ -29,13 +29,15 @@
 extern "C"{
 #endif 
 
-typedef	struct RC4_KEY_CTX
+#pragma pack(push,16)
+typedef	__declspec(align(16)) struct RC4_KEY_CTX
 {
 	unsigned char State[256];
 	unsigned long x;
 	unsigned long y;
 	
 }RC4_KEY_CTX;
+#pragma pack(pop)
 
 extern void __stdcall rc4KeySetup(RC4_KEY_CTX *pCtx, void *pUserKey, int KeyLengthBytes);
 extern void __stdcall rc4Gen(RC4_KEY_CTX *pCtx, void *Buff, int BuffLen);

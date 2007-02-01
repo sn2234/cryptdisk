@@ -139,6 +139,7 @@ endm
 
 .code
 
+align 16
 SetupKey	proc	pCTX:DWORD,pUserKey:DWORD
 		
 		pushad
@@ -149,6 +150,7 @@ SetupKey	proc	pCTX:DWORD,pUserKey:DWORD
 		lea		edi,(RIJNDAEL_KEY_CTX PTR [eax]).EncKey
 		mov		esi,pUserKey
 		xor		ecx,ecx
+align 16
 @@:
 		cmp		ecx,Nk
 		jae		@F
@@ -159,10 +161,12 @@ SetupKey	proc	pCTX:DWORD,pUserKey:DWORD
 		inc		ecx
 		
 		jmp	short	@B
+align 16
 @@:
 ;//////////////////
 		mov		esi,offset Rcon
 		mov		ebx,offset Se
+align 16
 @@:
 ;for(j=Nk;j<Nb*(Nr+1);j+=Nk)
 		cmp		ecx,Nb*(Nr+1)		;ecx - j
@@ -207,6 +211,7 @@ SetupKey	proc	pCTX:DWORD,pUserKey:DWORD
 		
 		add		ecx,Nk
 		jmp		@B
+align 16
 @@:
 
 ; prepare inverse cipher key shedule
@@ -217,6 +222,7 @@ SetupKey	proc	pCTX:DWORD,pUserKey:DWORD
 ; invert the order of round keys
 		xor		ebx,ebx
 		mov		ecx,(Nb*(Nr+1))*4-Nb*4
+align 16
 @@:
 		cmp		ebx,Nb*(Nr+1)*4
 		jae		@F
@@ -229,12 +235,14 @@ SetupKey	proc	pCTX:DWORD,pUserKey:DWORD
 		add		ebx,Nb*4
 		sub		ecx,Nb*4
 		jmp	short	@B
+align 16
 @@:
 		
 		add		esi,Nb*4
 		mov		ecx,Nr-1
 		mov		ebx,offset Se
 		xor		eax,eax
+align 16
 @@:
 	rept 4
 		lodsb					; byte 0
@@ -260,6 +268,7 @@ SetupKey	proc	pCTX:DWORD,pUserKey:DWORD
 
 SetupKey	endp
 
+align 16
 EncipherBlock1	proc	pCTX:DWORD,PlainText:DWORD,CipherText:DWORD
 		
 		pushad
@@ -309,6 +318,7 @@ EncipherBlock1	proc	pCTX:DWORD,PlainText:DWORD,CipherText:DWORD
 		ret
 EncipherBlock1	endp
 
+align 16
 EncipherBlock2	proc	pCTX:DWORD,Buff:DWORD
 		
 		pushad
@@ -358,6 +368,7 @@ EncipherBlock2	proc	pCTX:DWORD,Buff:DWORD
 		
 EncipherBlock2	endp
 
+align 16
 XorAndEncipher1	proc	pCTX:DWORD,XorData:DWORD,PlainText:DWORD,CipherText:DWORD
 		
 		pushad
@@ -413,6 +424,7 @@ XorAndEncipher1	proc	pCTX:DWORD,XorData:DWORD,PlainText:DWORD,CipherText:DWORD
 		
 XorAndEncipher1	endp
 
+align 16
 XorAndEncipher2	proc	pCTX:DWORD,XorData:DWORD,Buff:DWORD
 		
 		pushad
@@ -467,6 +479,7 @@ mov		eax,pCTX
 		
 XorAndEncipher2	endp
 
+align 16
 DecipherBlock1	proc	pCTX:DWORD,CipherText:DWORD,PlainText:DWORD
 		
 		pushad
@@ -517,6 +530,7 @@ DecipherBlock1	proc	pCTX:DWORD,CipherText:DWORD,PlainText:DWORD
 		
 DecipherBlock1	endp
 
+align 16
 DecipherBlock2	proc	pCTX:DWORD,Buff:DWORD
 		
 		pushad
@@ -566,6 +580,7 @@ DecipherBlock2	proc	pCTX:DWORD,Buff:DWORD
 		
 DecipherBlock2	endp
 
+align 16
 DecipherAndXor1	proc	pCTX:DWORD,XorData:DWORD,CipherText:DWORD,PlainText:DWORD
 		
 		pushad
@@ -627,6 +642,7 @@ DecipherAndXor1	proc	pCTX:DWORD,XorData:DWORD,CipherText:DWORD,PlainText:DWORD
 		
 DecipherAndXor1	endp
 
+align 16
 DecipherAndXor2	proc	pCTX:DWORD,XorData:DWORD,Buff:DWORD
 		
 		pushad

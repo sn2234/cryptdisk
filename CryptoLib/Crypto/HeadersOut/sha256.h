@@ -32,13 +32,15 @@ extern "C" {
 #define	SHA256_DIDGEST_SIZE		32
 #define	SHA256_BLOCK_SIZE		64
 
-typedef	struct	SHA256_CTX
+#pragma pack(push,16)
+typedef	__declspec(align(16)) struct	SHA256_CTX
 {
 	unsigned long State[8];
 	unsigned long MessageLength[2];
 	unsigned char Buffer[64];
 	
 }SHA256_CTX;
+#pragma pack(pop)
 
 extern void __stdcall SHA256Init(SHA256_CTX *ctx);
 extern void __stdcall SHA256Update(SHA256_CTX *ctx,void *Input,unsigned long InputLen);

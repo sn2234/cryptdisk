@@ -24,7 +24,7 @@
 
 ; NOTE !!!
 ; Do not change members order
-LRW_CONTEXT	struct	8
+LRW_CONTEXT	struct	16
 		m_gfTable	DWORD	512 dup(?)	; table for optimized GF multiplication
 		m_lrwTable	DWORD	512 dup(?)	; table for optimized consecutive numbers multiplication
 		m_key		DWORD	4   dup(?)	; tweak key

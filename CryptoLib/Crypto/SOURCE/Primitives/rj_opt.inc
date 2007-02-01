@@ -30,7 +30,7 @@
 	C2	equ	2
 	C3	equ	3
 	
-RIJNDAEL_KEY_CTX	struc
+RIJNDAEL_KEY_CTX	struc 16
 	
 	EncKey		dd	(Nb*(Nr+1))dup(?)
 	DecKey		dd	(Nb*(Nr+1))dup(?)

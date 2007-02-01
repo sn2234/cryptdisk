@@ -31,7 +31,8 @@
 extern "C"{
 #endif
 
-typedef struct LRW_CONTEXT
+#pragma pack(push,16)
+typedef __declspec(align(16)) struct LRW_CONTEXT
 {
 	UCHAR	m_gfTable[2048];	// table for optimized GF multiplication
 	UCHAR	m_lrwTable[2048];	// table for optimized consecutive numbers multiplication
@@ -39,6 +40,7 @@ typedef struct LRW_CONTEXT
 	UCHAR	m_currentTweak[16];	// current tweak value
 	UCHAR	m_currentIndex[16];	// current index
 }LRW_CONTEXT;
+#pragma pack(pop)
 
 void __stdcall GFMult(void *pDest, void *pC, void *pY);
 void __stdcall GFPrepareTable(void *pTable, void *pConstant);
