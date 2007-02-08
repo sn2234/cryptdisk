@@ -71,4 +71,5 @@ public:
 	afx_msg void OnFileCreatekeyfile();
 public:
 	afx_msg void OnBnClickedNewImage();
+	afx_msg void OnHelpUsermanual();
 };

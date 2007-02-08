@@ -1,0 +1,3313 @@
+<?xml version="1.0"  encoding="UTF-8"?>
+<project>
+	<version>2.001000</version>
+	<m_title><![CDATA[CryptDisk]]></m_title>
+	<m_topic><![CDATA[]]></m_topic>
+	<m_next><![CDATA[]]></m_next>
+	<m_prev><![CDATA[window_1_6.html]]></m_prev>
+	<html_export_path><![CDATA[]]></html_export_path>
+	<rtf_header><![CDATA[]]></rtf_header>
+	<rtf_footer><![CDATA[]]></rtf_footer>
+	<rtf_export_path><![CDATA[D:\DN\SRC\MyCrypto\Work\Manual\1\1.rtf]]></rtf_export_path>
+	<chm_export_path><![CDATA[D:\DN\SRC\MyCrypto\Work\Manual\1\]]></chm_export_path>
+	<rtf_export_path_file><![CDATA[]]></rtf_export_path_file>
+	<chm_export_path_file><![CDATA[D:\Prog\Projects\MyCrypto\CryptDisk\Doc\Manual.chm]]></chm_export_path_file>
+	<chm_locale>1033</chm_locale>
+	<chm_index>1</chm_index>
+	<chm_open>1</chm_open>
+	<html_index>1</html_index>
+	<html_open>1</html_open>
+	<rtf_open>1</rtf_open>
+	<chm_silently>0</chm_silently>
+	<keeptempfiles>0</keeptempfiles>
+	<rtf_silently>0</rtf_silently>
+	<uuid><![CDATA[5b67ff9c-3baf-43bc-aedc-fe8aaf5b881a]]></uuid>
+	<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20\par
+}
+]]></m_description>
+	<links>
+	</links>
+	<pages>
+		<module>
+			<id>0</id>
+			<m_visible>1</m_visible>
+			<m_title><![CDATA[Manager]]></m_title>
+			<m_topic><![CDATA[]]></m_topic>
+			<uuid><![CDATA[bcde87bc-0878-47a4-ad42-30c1cf99109e]]></uuid>
+			<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20\par
+}
+]]></m_description>
+	<links>
+	</links>
+	<pages>
+				<window>
+					<id>1</id>
+					<parent_id>0</parent_id>
+					<screen_bits><![CDATA[iVBORw0KGgoAAAANSUhEUgAAAb8AAAEtCAIAAAAX3/ltAAAABmJLR0QA/wD/AP+gvaeTAAAACXBI
+WXMAAA7EAAAOxAGVKw4bAAAPk0lEQVR4nO3d2ZMd1X0H8DMpVV7iMl6IiWPwUuzMSBo2zXhJrBsl
+NkqIIYSXvOQxLyEYMIssg0dCGAQII1z4H8iz4ogKCaokLo1TJpEwi0QkGxtTsbM5cTY7FT8rD1e0
+erp77u3+Tffd9PlINdW3by/n3un7ndPn9O0zd+rEsQRAE3fctWtTSml+69K4SwIwNfbu3ZtS2tR/
+cPrk8bEWBmDKbMqmtt3+x/2Jubm5lFL/R5pLc+fmZc9ls7N/2Qpr1694IttWox3lHq7Zc8WOSiut
+XaYwL7+7c0Us76q8auGJ0n6DOypstdlrL73Jax8WfleNd7Te+1ncUb3XXv9YqvMmt3LQVm1pyLFU
+502ufyzV2VGtY6n2a69/LNV5k1s4aLNtTKwtP/9Gf+LnxlsOgCm1afgiAKP1ezdeUH/hXq939OjR
+Rsv/wROHA3vpr5WRnsAkqtkZc+jwkdjyG1mrb9LT84d/+0hK6UMff2jcBQGmQGXM9d1+603t7qsi
+Pf/ve8/mH77zqj8Kb/3Hrx1IKV107X39h//2yhP5Z3/5xl39iX956bGU0sVLn2+6/bf+Zm9K6dJP
+7snP/N7RL6aUrvi1hwMFBmbV/NalATXNhcXllFL++vfynIJiev7sza+mlN5xxR1re9ba9P4bHkgp
+/ejlx//1W/v7AfqBbZ/fyI7e+saey7bv6U+/eXSllUICU2plpSIE+ldoDnDqxLGFxeWFxeV+XA6N
+zlTzzP1/3/hKSumCq+/86befedc1n/3J6WdSSu+evyul9N+nnk4pvXfz3f/1+pfzq/zi4r3Z9L+/
+9mRK6aLr7s8v8P4bHugH6Ae27crXPf/p2KPZMh/82Bfyq/zgm/tSSh/5lS+WS/j91T2Xbd/75mrx
+Xfvu18+d8l/9G4+klL79l2u2uXDTY/2Jv39hVzZzy2893p848fyaMl/3mQMppVef+1w254bf+XJK
+6VtfuzultO22gy/9yV3bfvdguXjAKMUuYM8CNHs4ePkGVyz99DtfGbrMhVvuuXDr51JK/3HiQDbz
+omvvu+i6++rs4p+PP5pSumR59yUf/cIHP7o2Ol/cl1L6yCeK0Zmdtn9/dSWldHlvzV+YK3fsu2rH
+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]]></screen_bits>
+					<left>286</left>
+					<top>233</top>
+					<width>447</width>
+					<height>301</height>
+					<text><![CDATA[CryptDisk Manager]]></text>
+					<class><![CDATA[#32770]]></class>
+					<style>348784844</style>
+					<style_ex>327937</style_ex>
+					<m_visible>1</m_visible>
+					<m_title><![CDATA[Main window]]></m_title>
+					<m_topic><![CDATA[]]></m_topic>
+					<uuid><![CDATA[3613441b-53ee-408d-ab62-e6abfefcf824]]></uuid>
+					<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_scale>1.000000</m_scale>
+					<controls>
+						<control>
+							<id>2</id>
+							<parent_id>1</parent_id>
+							<left>647</left>
+							<top>285</top>
+							<width>75</width>
+							<height>23</height>
+							<text><![CDATA[&Mount image]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242817</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Mount image button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Mount a new image.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>640</m_left>
+							<m_top>280</m_top>
+							<m_width>85</m_width>
+							<m_height>33</m_height>
+							<m_num>2</m_num>
+							<m_lposx>799</m_lposx>
+							<m_lposy>233</m_lposy>
+							<m_pposx>717</m_pposx>
+							<m_pposy>288</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>3</id>
+							<parent_id>1</parent_id>
+							<left>647</left>
+							<top>313</top>
+							<width>75</width>
+							<height>23</height>
+							<text><![CDATA[&New image]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[New image button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Create new image.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>640</m_left>
+							<m_top>308</m_top>
+							<m_width>85</m_width>
+							<m_height>33</m_height>
+							<m_num>3</m_num>
+							<m_lposx>799</m_lposx>
+							<m_lposy>308</m_lposy>
+							<m_pposx>717</m_pposx>
+							<m_pposy>316</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>4</id>
+							<parent_id>1</parent_id>
+							<left>647</left>
+							<top>341</top>
+							<width>75</width>
+							<height>23</height>
+							<text><![CDATA[&Favorites]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Favorites button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Manage your favorite images.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>640</m_left>
+							<m_top>336</m_top>
+							<m_width>85</m_width>
+							<m_height>33</m_height>
+							<m_num>4</m_num>
+							<m_lposx>799</m_lposx>
+							<m_lposy>383</m_lposy>
+							<m_pposx>717</m_pposx>
+							<m_pposy>344</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>5</id>
+							<parent_id>1</parent_id>
+							<left>647</left>
+							<top>368</top>
+							<width>75</width>
+							<height>23</height>
+							<text><![CDATA[&Unmount]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Unmount button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Unmount any mounted disk.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>640</m_left>
+							<m_top>363</m_top>
+							<m_width>85</m_width>
+							<m_height>33</m_height>
+							<m_num>5</m_num>
+							<m_lposx>799</m_lposx>
+							<m_lposy>458</m_lposy>
+							<m_pposx>717</m_pposx>
+							<m_pposy>371</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>6</id>
+							<parent_id>1</parent_id>
+							<left>647</left>
+							<top>396</top>
+							<width>75</width>
+							<height>23</height>
+							<text><![CDATA[Unmount &All]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Unmount All button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Unmount all mounted disks.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>640</m_left>
+							<m_top>391</m_top>
+							<m_width>85</m_width>
+							<m_height>33</m_height>
+							<m_num>6</m_num>
+							<m_lposx>799</m_lposx>
+							<m_lposy>533</m_lposy>
+							<m_pposx>717</m_pposx>
+							<m_pposy>399</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>7</id>
+							<parent_id>1</parent_id>
+							<left>302</left>
+							<top>285</top>
+							<width>339</width>
+							<height>234</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[SysListView32]]></class>
+							<style>1342277637</style>
+							<style_ex>516</style_ex>
+							<type>7</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[List view]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 List of all mounted disks.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>295</m_left>
+							<m_top>280</m_top>
+							<m_width>349</m_width>
+							<m_height>244</m_height>
+							<m_num>1</m_num>
+							<m_lposx>192</m_lposx>
+							<m_lposy>233</m_lposy>
+							<m_pposx>303</m_pposx>
+							<m_pposy>288</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>8</id>
+							<parent_id>7</parent_id>
+							<left>304</left>
+							<top>287</top>
+							<width>335</width>
+							<height>17</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[SysHeader32]]></class>
+							<style>1342177472</style>
+							<style_ex>0</style_ex>
+							<type>18</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[List headers]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>299</m_left>
+							<m_top>282</m_top>
+							<m_width>345</m_width>
+							<m_height>27</m_height>
+							<m_num>0</m_num>
+							<m_lposx>307</m_lposx>
+							<m_lposy>194</m_lposy>
+							<m_pposx>307</m_pposx>
+							<m_pposy>290</m_pposy>
+							<m_right>1</m_right>
+						</control>
+					</controls>
+					<menus>
+					</menus>
+					<chart>
+						<window_shadow>1</window_shadow>
+						<shape>1</shape>
+						<size>32</size>
+						<color>25855</color>
+						<shadow>0</shadow>
+						<numbered>1</numbered>
+						<font><![CDATA[-13,0,0,0,700,0,0,0,1,3,2,1,34,0xffffff,Arial]]></font>
+						<titled>1</titled>
+						<titlefont><![CDATA[-13,0,0,0,400,0,0,0,1,3,2,1,34,0x000000,Arial]]></titlefont>
+						<label_orientation>0</label_orientation>
+						<screen_align>1</screen_align>
+						<bullet_nolines>0</bullet_nolines>
+					</chart>
+	<pages>
+	</pages>
+				</window>
+				<window>
+					<id>1</id>
+					<parent_id>0</parent_id>
+					<screen_bits><![CDATA[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
+ELRKDPBaDZsAAAAASUVORK5CYII=]]></screen_bits>
+					<left>291</left>
+					<top>241</top>
+					<width>441</width>
+					<height>284</height>
+					<text><![CDATA[Create image]]></text>
+					<class><![CDATA[#32770]]></class>
+					<style>-1798831924</style>
+					<style_ex>65793</style_ex>
+					<m_visible>1</m_visible>
+					<m_title><![CDATA[Create image step 1]]></m_title>
+					<m_topic><![CDATA[]]></m_topic>
+					<uuid><![CDATA[de30abea-51ff-462a-9caf-d2fc78e8620c]]></uuid>
+					<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 At this step your must supply location and size of new image.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_scale>1.000000</m_scale>
+					<controls>
+						<control>
+							<id>3</id>
+							<parent_id>2</parent_id>
+							<left>328</left>
+							<top>307</top>
+							<width>267</width>
+							<height>20</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Edit]]></class>
+							<style>1342242944</style>
+							<style_ex>516</style_ex>
+							<type>3</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Image file path]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Path to image file.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>323</m_left>
+							<m_top>302</m_top>
+							<m_width>277</m_width>
+							<m_height>30</m_height>
+							<m_num>1</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>241</m_lposy>
+							<m_pposx>331</m_pposx>
+							<m_pposy>310</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>4</id>
+							<parent_id>2</parent_id>
+							<left>601</left>
+							<top>307</top>
+							<width>75</width>
+							<height>20</height>
+							<text><![CDATA[&Browse]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Browse button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Opens dialog to select location of image.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>596</m_left>
+							<m_top>302</m_top>
+							<m_width>85</m_width>
+							<m_height>30</m_height>
+							<m_num>6</m_num>
+							<m_lposx>796</m_lposx>
+							<m_lposy>312</m_lposy>
+							<m_pposx>673</m_pposx>
+							<m_pposy>310</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>5</id>
+							<parent_id>2</parent_id>
+							<left>328</left>
+							<top>342</top>
+							<width>173</width>
+							<height>16</height>
+							<text><![CDATA[&Don't add to recent documents]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Don't add to recent documents check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 If selected, created image won't be added to recent documents.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>323</m_left>
+							<m_top>337</m_top>
+							<m_width>183</m_width>
+							<m_height>26</m_height>
+							<m_num>2</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>312</m_lposy>
+							<m_pposx>331</m_pposx>
+							<m_pposy>345</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>6</id>
+							<parent_id>2</parent_id>
+							<left>328</left>
+							<top>393</top>
+							<width>87</width>
+							<height>20</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Edit]]></class>
+							<style>1342251136</style>
+							<style_ex>516</style_ex>
+							<type>3</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Size]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Size of image in selected units.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>323</m_left>
+							<m_top>388</m_top>
+							<m_width>97</m_width>
+							<m_height>30</m_height>
+							<m_num>4</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>454</m_lposy>
+							<m_pposx>331</m_pposx>
+							<m_pposy>396</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>7</id>
+							<parent_id>2</parent_id>
+							<left>424</left>
+							<top>393</top>
+							<width>53</width>
+							<height>21</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[ComboBox]]></class>
+							<style>1342243587</style>
+							<style_ex>4</style_ex>
+							<type>10</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Image size units]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Here you may select units for image size.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>419</m_left>
+							<m_top>388</m_top>
+							<m_width>63</m_width>
+							<m_height>31</m_height>
+							<m_num>3</m_num>
+							<m_lposx>189</m_lposx>
+							<m_lposy>379</m_lposy>
+							<m_pposx>427</m_pposx>
+							<m_pposy>396</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>8</id>
+							<parent_id>2</parent_id>
+							<left>328</left>
+							<top>433</top>
+							<width>86</width>
+							<height>16</height>
+							<text><![CDATA[&Quick format]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Quick format check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 If selected, image won't be initialized. This speeds up image creation, but decreases your security.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>323</m_left>
+							<m_top>428</m_top>
+							<m_width>96</m_width>
+							<m_height>26</m_height>
+							<m_num>5</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>525</m_lposy>
+							<m_pposx>331</m_pposx>
+							<m_pposy>436</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>9</id>
+							<parent_id>2</parent_id>
+							<left>316</left>
+							<top>285</top>
+							<width>48</width>
+							<height>13</height>
+							<text><![CDATA[Image file]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>311</m_left>
+							<m_top>280</m_top>
+							<m_width>58</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>319</m_lposx>
+							<m_lposy>192</m_lposy>
+							<m_pposx>319</m_pposx>
+							<m_pposy>288</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>10</id>
+							<parent_id>2</parent_id>
+							<left>316</left>
+							<top>368</top>
+							<width>53</width>
+							<height>13</height>
+							<text><![CDATA[Image size]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>311</m_left>
+							<m_top>363</m_top>
+							<m_width>63</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>319</m_lposx>
+							<m_lposy>275</m_lposy>
+							<m_pposx>319</m_pposx>
+							<m_pposy>371</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>11</id>
+							<parent_id>2</parent_id>
+							<left>487</left>
+							<top>396</top>
+							<width>147</width>
+							<height>13</height>
+							<text><![CDATA[Recommended minimum 16 Mb]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>482</m_left>
+							<m_top>391</m_top>
+							<m_width>157</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>490</m_lposx>
+							<m_lposy>303</m_lposy>
+							<m_pposx>490</m_pposx>
+							<m_pposy>399</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>12</id>
+							<parent_id>1</parent_id>
+							<left>305</left>
+							<top>274</top>
+							<width>414</width>
+							<height>5</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[SysTabControl32]]></class>
+							<style>1543634944</style>
+							<style_ex>4</style_ex>
+							<type>8</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Tab]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>300</m_left>
+							<m_top>269</m_top>
+							<m_width>424</m_width>
+							<m_height>15</m_height>
+							<m_num>0</m_num>
+							<m_lposx>308</m_lposx>
+							<m_lposy>181</m_lposy>
+							<m_pposx>308</m_pposx>
+							<m_pposy>277</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>13</id>
+							<parent_id>1</parent_id>
+							<left>305</left>
+							<top>475</top>
+							<width>414</width>
+							<height>2</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342181376</style>
+							<style_ex>131076</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>300</m_left>
+							<m_top>470</m_top>
+							<m_width>424</m_width>
+							<m_height>12</m_height>
+							<m_num>0</m_num>
+							<m_lposx>308</m_lposx>
+							<m_lposy>382</m_lposy>
+							<m_pposx>308</m_pposx>
+							<m_pposy>478</m_pposy>
+							<m_right>1</m_right>
+						</control>
+					</controls>
+					<menus>
+					</menus>
+					<chart>
+						<window_shadow>1</window_shadow>
+						<shape>1</shape>
+						<size>32</size>
+						<color>25855</color>
+						<shadow>0</shadow>
+						<numbered>1</numbered>
+						<font><![CDATA[-13,0,0,0,700,0,0,0,1,3,2,1,34,0xffffff,Arial]]></font>
+						<titled>1</titled>
+						<titlefont><![CDATA[-13,0,0,0,400,0,0,0,1,3,2,1,34,0x000000,Arial]]></titlefont>
+						<label_orientation>0</label_orientation>
+						<screen_align>1</screen_align>
+						<bullet_nolines>0</bullet_nolines>
+					</chart>
+	<pages>
+	</pages>
+				</window>
+				<window>
+					<id>1</id>
+					<parent_id>0</parent_id>
+					<screen_bits><![CDATA[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
+/we9o/y4LzVDOwAAAABJRU5ErkJggg==]]></screen_bits>
+					<left>291</left>
+					<top>241</top>
+					<width>441</width>
+					<height>284</height>
+					<text><![CDATA[Create image]]></text>
+					<class><![CDATA[#32770]]></class>
+					<style>-1798831924</style>
+					<style_ex>65793</style_ex>
+					<m_visible>1</m_visible>
+					<m_title><![CDATA[Create image step 2]]></m_title>
+					<m_topic><![CDATA[]]></m_topic>
+					<uuid><![CDATA[7eaef0df-79a7-4af3-b561-344d1d1bdf05]]></uuid>
+					<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 At this step you must provide cryptographic parameters of new image.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_scale>1.000000</m_scale>
+					<controls>
+						<control>
+							<id>3</id>
+							<parent_id>2</parent_id>
+							<left>334</left>
+							<top>305</top>
+							<width>207</width>
+							<height>20</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Edit]]></class>
+							<style>1342242976</style>
+							<style_ex>516</style_ex>
+							<type>3</type>
+							<subtype>5</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Password field]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Type your password here.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>329</m_left>
+							<m_top>300</m_top>
+							<m_width>217</m_width>
+							<m_height>30</m_height>
+							<m_num>1</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>241</m_lposy>
+							<m_pposx>337</m_pposx>
+							<m_pposy>308</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>4</id>
+							<parent_id>2</parent_id>
+							<left>334</left>
+							<top>350</top>
+							<width>207</width>
+							<height>20</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Edit]]></class>
+							<style>1342242976</style>
+							<style_ex>516</style_ex>
+							<type>3</type>
+							<subtype>5</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Password confirmation field]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Confirm your password here, to avoid typing errors.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>329</m_left>
+							<m_top>345</m_top>
+							<m_width>217</m_width>
+							<m_height>30</m_height>
+							<m_num>2</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>335</m_lposy>
+							<m_pposx>337</m_pposx>
+							<m_pposy>353</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>5</id>
+							<parent_id>2</parent_id>
+							<left>550</left>
+							<top>305</top>
+							<width>111</width>
+							<height>20</height>
+							<text><![CDATA[&Generate password]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Generate password button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Here you may create strong password with built-in password generator.\par
+\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>545</m_left>
+							<m_top>300</m_top>
+							<m_width>121</m_width>
+							<m_height>30</m_height>
+							<m_num>5</m_num>
+							<m_lposx>816</m_lposx>
+							<m_lposy>293</m_lposy>
+							<m_pposx>658</m_pposx>
+							<m_pposy>308</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>6</id>
+							<parent_id>2</parent_id>
+							<left>334</left>
+							<top>425</top>
+							<width>74</width>
+							<height>20</height>
+							<text><![CDATA[&Key files]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Key files button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 You may add some keyfiles, to provide additional security.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>329</m_left>
+							<m_top>420</m_top>
+							<m_width>84</m_width>
+							<m_height>30</m_height>
+							<m_num>4</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>523</m_lposy>
+							<m_pposx>337</m_pposx>
+							<m_pposy>428</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>7</id>
+							<parent_id>2</parent_id>
+							<left>541</left>
+							<top>422</top>
+							<width>120</width>
+							<height>21</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[ComboBox]]></class>
+							<style>1342243587</style>
+							<style_ex>4</style_ex>
+							<type>10</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Select cipher algorithm]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Here you may select cipher algotithm.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>536</m_left>
+							<m_top>417</m_top>
+							<m_width>130</m_width>
+							<m_height>31</m_height>
+							<m_num>6</m_num>
+							<m_lposx>820</m_lposx>
+							<m_lposy>360</m_lposy>
+							<m_pposx>658</m_pposx>
+							<m_pposy>425</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>8</id>
+							<parent_id>2</parent_id>
+							<left>316</left>
+							<top>285</top>
+							<width>48</width>
+							<height>13</height>
+							<text><![CDATA[Password]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>311</m_left>
+							<m_top>280</m_top>
+							<m_width>58</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>319</m_lposx>
+							<m_lposy>192</m_lposy>
+							<m_pposx>319</m_pposx>
+							<m_pposy>288</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>9</id>
+							<parent_id>2</parent_id>
+							<left>316</left>
+							<top>331</top>
+							<width>87</width>
+							<height>13</height>
+							<text><![CDATA[Confirm password]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>311</m_left>
+							<m_top>326</m_top>
+							<m_width>97</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>319</m_lposx>
+							<m_lposy>238</m_lposy>
+							<m_pposx>319</m_pposx>
+							<m_pposy>334</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>10</id>
+							<parent_id>2</parent_id>
+							<left>316</left>
+							<top>376</top>
+							<width>83</width>
+							<height>13</height>
+							<text><![CDATA[Password quality]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>311</m_left>
+							<m_top>371</m_top>
+							<m_width>93</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>319</m_lposx>
+							<m_lposy>283</m_lposy>
+							<m_pposx>319</m_pposx>
+							<m_pposy>379</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>11</id>
+							<parent_id>2</parent_id>
+							<left>334</left>
+							<top>396</top>
+							<width>207</width>
+							<height>16</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[msctls_progress32]]></class>
+							<style>1342177281</style>
+							<style_ex>131076</style_ex>
+							<type>14</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Progress bar]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 This progress bar shows your password's quality.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>329</m_left>
+							<m_top>391</m_top>
+							<m_width>217</m_width>
+							<m_height>26</m_height>
+							<m_num>3</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>429</m_lposy>
+							<m_pposx>337</m_pposx>
+							<m_pposy>399</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>12</id>
+							<parent_id>2</parent_id>
+							<left>547</left>
+							<top>398</top>
+							<width>75</width>
+							<height>13</height>
+							<text><![CDATA[10 bits]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>542</m_left>
+							<m_top>393</m_top>
+							<m_width>85</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>550</m_lposx>
+							<m_lposy>305</m_lposy>
+							<m_pposx>550</m_pposx>
+							<m_pposy>401</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>13</id>
+							<parent_id>2</parent_id>
+							<left>493</left>
+							<top>425</top>
+							<width>36</width>
+							<height>13</height>
+							<text><![CDATA[Cipher:]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>488</m_left>
+							<m_top>420</m_top>
+							<m_width>46</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>496</m_lposx>
+							<m_lposy>332</m_lposy>
+							<m_pposx>496</m_pposx>
+							<m_pposy>428</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>14</id>
+							<parent_id>1</parent_id>
+							<left>305</left>
+							<top>274</top>
+							<width>414</width>
+							<height>5</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[SysTabControl32]]></class>
+							<style>1543634944</style>
+							<style_ex>4</style_ex>
+							<type>8</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Tab]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>300</m_left>
+							<m_top>269</m_top>
+							<m_width>424</m_width>
+							<m_height>15</m_height>
+							<m_num>0</m_num>
+							<m_lposx>308</m_lposx>
+							<m_lposy>181</m_lposy>
+							<m_pposx>308</m_pposx>
+							<m_pposy>277</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>15</id>
+							<parent_id>1</parent_id>
+							<left>305</left>
+							<top>475</top>
+							<width>414</width>
+							<height>2</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342181376</style>
+							<style_ex>131076</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>300</m_left>
+							<m_top>470</m_top>
+							<m_width>424</m_width>
+							<m_height>12</m_height>
+							<m_num>0</m_num>
+							<m_lposx>308</m_lposx>
+							<m_lposy>382</m_lposy>
+							<m_pposx>308</m_pposx>
+							<m_pposy>478</m_pposy>
+							<m_right>1</m_right>
+						</control>
+					</controls>
+					<menus>
+					</menus>
+					<chart>
+						<window_shadow>1</window_shadow>
+						<shape>1</shape>
+						<size>32</size>
+						<color>25855</color>
+						<shadow>0</shadow>
+						<numbered>1</numbered>
+						<font><![CDATA[-13,0,0,0,700,0,0,0,1,3,2,1,34,0xffffff,Arial]]></font>
+						<titled>1</titled>
+						<titlefont><![CDATA[-13,0,0,0,400,0,0,0,1,3,2,1,34,0x000000,Arial]]></titlefont>
+						<label_orientation>0</label_orientation>
+						<screen_align>1</screen_align>
+						<bullet_nolines>0</bullet_nolines>
+					</chart>
+	<pages>
+	</pages>
+				</window>
+				<window>
+					<id>1</id>
+					<parent_id>0</parent_id>
+					<screen_bits><![CDATA[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]]></screen_bits>
+					<left>291</left>
+					<top>226</top>
+					<width>441</width>
+					<height>314</height>
+					<text><![CDATA[Mount image]]></text>
+					<class><![CDATA[#32770]]></class>
+					<style>-1798831924</style>
+					<style_ex>65793</style_ex>
+					<m_visible>1</m_visible>
+					<m_title><![CDATA[Mount image step 1]]></m_title>
+					<m_topic><![CDATA[]]></m_topic>
+					<uuid><![CDATA[ee43c40a-fce3-4d75-90dd-6163b353476e]]></uuid>
+					<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_scale>1.000000</m_scale>
+					<controls>
+						<control>
+							<id>3</id>
+							<parent_id>2</parent_id>
+							<left>332</left>
+							<top>288</top>
+							<width>267</width>
+							<height>20</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Edit]]></class>
+							<style>1342242944</style>
+							<style_ex>516</style_ex>
+							<type>3</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Image path]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Path to image file.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>327</m_left>
+							<m_top>283</m_top>
+							<m_width>277</m_width>
+							<m_height>30</m_height>
+							<m_num>1</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>226</m_lposy>
+							<m_pposx>335</m_pposx>
+							<m_pposy>291</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>4</id>
+							<parent_id>2</parent_id>
+							<left>607</left>
+							<top>288</top>
+							<width>75</width>
+							<height>20</height>
+							<text><![CDATA[&Browse]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Browse button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Browse to your image.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>602</m_left>
+							<m_top>283</m_top>
+							<m_width>85</m_width>
+							<m_height>30</m_height>
+							<m_num>5</m_num>
+							<m_lposx>796</m_lposx>
+							<m_lposy>288</m_lposy>
+							<m_pposx>679</m_pposx>
+							<m_pposy>291</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>5</id>
+							<parent_id>2</parent_id>
+							<left>332</left>
+							<top>318</top>
+							<width>173</width>
+							<height>16</height>
+							<text><![CDATA[&Don't add to recent documents]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Don't add to recent documents check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 If selected, created image won't be added to recent documents.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>327</m_left>
+							<m_top>313</m_top>
+							<m_width>183</m_width>
+							<m_height>26</m_height>
+							<m_num>2</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>330</m_lposy>
+							<m_pposx>335</m_pposx>
+							<m_pposy>321</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>6</id>
+							<parent_id>2</parent_id>
+							<left>332</left>
+							<top>363</top>
+							<width>243</width>
+							<height>20</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Edit]]></class>
+							<style>1342242976</style>
+							<style_ex>516</style_ex>
+							<type>3</type>
+							<subtype>5</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Password field]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Password to disk.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>327</m_left>
+							<m_top>358</m_top>
+							<m_width>253</m_width>
+							<m_height>30</m_height>
+							<m_num>3</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>434</m_lposy>
+							<m_pposx>335</m_pposx>
+							<m_pposy>366</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>7</id>
+							<parent_id>2</parent_id>
+							<left>583</left>
+							<top>363</top>
+							<width>99</width>
+							<height>20</height>
+							<text><![CDATA[&Change password]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Change password button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 You may change password here.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>578</m_left>
+							<m_top>358</m_top>
+							<m_width>109</m_width>
+							<m_height>30</m_height>
+							<m_num>6</m_num>
+							<m_lposx>796</m_lposx>
+							<m_lposy>350</m_lposy>
+							<m_pposx>679</m_pposx>
+							<m_pposy>366</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>8</id>
+							<parent_id>2</parent_id>
+							<left>332</left>
+							<top>392</top>
+							<width>75</width>
+							<height>20</height>
+							<text><![CDATA[&Key files]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Key files button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 If you supply key files, when creating disk, select them here.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>327</m_left>
+							<m_top>387</m_top>
+							<m_width>85</m_width>
+							<m_height>30</m_height>
+							<m_num>4</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>538</m_lposy>
+							<m_pposx>335</m_pposx>
+							<m_pposy>395</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>9</id>
+							<parent_id>2</parent_id>
+							<left>316</left>
+							<top>345</top>
+							<width>48</width>
+							<height>13</height>
+							<text><![CDATA[Password]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>311</m_left>
+							<m_top>340</m_top>
+							<m_width>58</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>319</m_lposx>
+							<m_lposy>252</m_lposy>
+							<m_pposx>319</m_pposx>
+							<m_pposy>348</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>10</id>
+							<parent_id>2</parent_id>
+							<left>316</left>
+							<top>270</top>
+							<width>48</width>
+							<height>13</height>
+							<text><![CDATA[Image file]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>311</m_left>
+							<m_top>265</m_top>
+							<m_width>58</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>319</m_lposx>
+							<m_lposy>177</m_lposy>
+							<m_pposx>319</m_pposx>
+							<m_pposy>273</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>11</id>
+							<parent_id>1</parent_id>
+							<left>305</left>
+							<top>259</top>
+							<width>414</width>
+							<height>5</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[SysTabControl32]]></class>
+							<style>1543634944</style>
+							<style_ex>4</style_ex>
+							<type>8</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Tab]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>300</m_left>
+							<m_top>254</m_top>
+							<m_width>424</m_width>
+							<m_height>15</m_height>
+							<m_num>0</m_num>
+							<m_lposx>308</m_lposx>
+							<m_lposy>166</m_lposy>
+							<m_pposx>308</m_pposx>
+							<m_pposy>262</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>12</id>
+							<parent_id>1</parent_id>
+							<left>305</left>
+							<top>490</top>
+							<width>414</width>
+							<height>2</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342181376</style>
+							<style_ex>131076</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>300</m_left>
+							<m_top>485</m_top>
+							<m_width>424</m_width>
+							<m_height>12</m_height>
+							<m_num>0</m_num>
+							<m_lposx>308</m_lposx>
+							<m_lposy>397</m_lposy>
+							<m_pposx>308</m_pposx>
+							<m_pposy>493</m_pposy>
+							<m_right>1</m_right>
+						</control>
+					</controls>
+					<menus>
+					</menus>
+					<chart>
+						<window_shadow>1</window_shadow>
+						<shape>1</shape>
+						<size>32</size>
+						<color>25855</color>
+						<shadow>0</shadow>
+						<numbered>1</numbered>
+						<font><![CDATA[-13,0,0,0,700,0,0,0,1,3,2,1,34,0xffffff,Arial]]></font>
+						<titled>1</titled>
+						<titlefont><![CDATA[-13,0,0,0,400,0,0,0,1,3,2,1,34,0x000000,Arial]]></titlefont>
+						<label_orientation>0</label_orientation>
+						<screen_align>1</screen_align>
+						<bullet_nolines>0</bullet_nolines>
+					</chart>
+	<pages>
+	</pages>
+				</window>
+				<window>
+					<id>1</id>
+					<parent_id>0</parent_id>
+					<screen_bits><![CDATA[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
+AAAAAElFTkSuQmCC]]></screen_bits>
+					<left>291</left>
+					<top>226</top>
+					<width>441</width>
+					<height>314</height>
+					<text><![CDATA[Mount image]]></text>
+					<class><![CDATA[#32770]]></class>
+					<style>-1798831924</style>
+					<style_ex>65793</style_ex>
+					<m_visible>1</m_visible>
+					<m_title><![CDATA[Mount image step 2]]></m_title>
+					<m_topic><![CDATA[]]></m_topic>
+					<uuid><![CDATA[fea63c66-2000-47c7-9635-464e96f27bdf]]></uuid>
+					<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_scale>1.000000</m_scale>
+					<controls>
+						<control>
+							<id>3</id>
+							<parent_id>2</parent_id>
+							<left>326</left>
+							<top>324</top>
+							<width>117</width>
+							<height>16</height>
+							<text><![CDATA[Mount as &read-only]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Mount as read-only check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Mount image as read-only disk. File system must be FAT ro FAT32.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>321</m_left>
+							<m_top>319</m_top>
+							<m_width>127</m_width>
+							<m_height>26</m_height>
+							<m_num>2</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>288</m_lposy>
+							<m_pposx>329</m_pposx>
+							<m_pposy>327</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>4</id>
+							<parent_id>2</parent_id>
+							<left>326</left>
+							<top>352</top>
+							<width>152</width>
+							<height>16</height>
+							<text><![CDATA[Mount as remo&vable media]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Mount as removable media check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Mount image as removable diisk.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>321</m_left>
+							<m_top>347</m_top>
+							<m_width>162</m_width>
+							<m_height>26</m_height>
+							<m_num>3</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>350</m_lposy>
+							<m_pposx>329</m_pposx>
+							<m_pposy>355</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>5</id>
+							<parent_id>2</parent_id>
+							<left>326</left>
+							<top>379</top>
+							<width>120</width>
+							<height>16</height>
+							<text><![CDATA[&Use mount manager]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Use mount manager check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Mount image via Mount manager. Do not clear this unless you have troubles when mounting.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>321</m_left>
+							<m_top>374</m_top>
+							<m_width>130</m_width>
+							<m_height>26</m_height>
+							<m_num>4</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>412</m_lposy>
+							<m_pposx>329</m_pposx>
+							<m_pposy>382</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>6</id>
+							<parent_id>2</parent_id>
+							<left>326</left>
+							<top>407</top>
+							<width>150</width>
+							<height>16</height>
+							<text><![CDATA[&Preserve image timestamp]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Preserve image timestamp check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 If checked, image modify/access time won't be changed.\par
+\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>321</m_left>
+							<m_top>402</m_top>
+							<m_width>160</m_width>
+							<m_height>26</m_height>
+							<m_num>5</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>474</m_lposy>
+							<m_pposx>329</m_pposx>
+							<m_pposy>410</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>7</id>
+							<parent_id>2</parent_id>
+							<left>316</left>
+							<top>451</top>
+							<width>102</width>
+							<height>16</height>
+							<text><![CDATA[&Add to favorites]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Add to favorites check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Add this disk to favorites.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>311</m_left>
+							<m_top>446</m_top>
+							<m_width>112</m_width>
+							<m_height>26</m_height>
+							<m_num>6</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>536</m_lposy>
+							<m_pposx>319</m_pposx>
+							<m_pposy>454</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>8</id>
+							<parent_id>2</parent_id>
+							<left>367</left>
+							<top>274</top>
+							<width>93</width>
+							<height>13</height>
+							<text><![CDATA[Choose drive letter]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>362</m_left>
+							<m_top>269</m_top>
+							<m_width>103</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>370</m_lposx>
+							<m_lposy>181</m_lposy>
+							<m_pposx>370</m_pposx>
+							<m_pposy>277</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>9</id>
+							<parent_id>2</parent_id>
+							<left>316</left>
+							<top>303</top>
+							<width>233</width>
+							<height>135</height>
+							<text><![CDATA[Mount options]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342177287</style>
+							<style_ex>4</style_ex>
+							<type>17</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Mount options Group]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>311</m_left>
+							<m_top>298</m_top>
+							<m_width>243</m_width>
+							<m_height>145</m_height>
+							<m_num>0</m_num>
+							<m_lposx>319</m_lposx>
+							<m_lposy>210</m_lposy>
+							<m_pposx>319</m_pposx>
+							<m_pposy>306</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>10</id>
+							<parent_id>2</parent_id>
+							<left>316</left>
+							<top>270</top>
+							<width>45</width>
+							<height>21</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[ComboBox]]></class>
+							<style>1342243587</style>
+							<style_ex>4</style_ex>
+							<type>10</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Drop down]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Choose letter for new drive.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>311</m_left>
+							<m_top>265</m_top>
+							<m_width>55</m_width>
+							<m_height>31</m_height>
+							<m_num>1</m_num>
+							<m_lposx>195</m_lposx>
+							<m_lposy>226</m_lposy>
+							<m_pposx>319</m_pposx>
+							<m_pposy>273</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>11</id>
+							<parent_id>1</parent_id>
+							<left>305</left>
+							<top>259</top>
+							<width>414</width>
+							<height>5</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[SysTabControl32]]></class>
+							<style>1543634944</style>
+							<style_ex>4</style_ex>
+							<type>8</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Tab]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>300</m_left>
+							<m_top>254</m_top>
+							<m_width>424</m_width>
+							<m_height>15</m_height>
+							<m_num>0</m_num>
+							<m_lposx>308</m_lposx>
+							<m_lposy>166</m_lposy>
+							<m_pposx>308</m_pposx>
+							<m_pposy>262</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>12</id>
+							<parent_id>1</parent_id>
+							<left>305</left>
+							<top>490</top>
+							<width>414</width>
+							<height>2</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342181376</style>
+							<style_ex>131076</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>300</m_left>
+							<m_top>485</m_top>
+							<m_width>424</m_width>
+							<m_height>12</m_height>
+							<m_num>0</m_num>
+							<m_lposx>308</m_lposx>
+							<m_lposy>397</m_lposy>
+							<m_pposx>308</m_pposx>
+							<m_pposy>493</m_pposy>
+							<m_right>1</m_right>
+						</control>
+					</controls>
+					<menus>
+					</menus>
+					<chart>
+						<window_shadow>1</window_shadow>
+						<shape>1</shape>
+						<size>32</size>
+						<color>25855</color>
+						<shadow>0</shadow>
+						<numbered>1</numbered>
+						<font><![CDATA[-13,0,0,0,700,0,0,0,1,3,2,1,34,0xffffff,Arial]]></font>
+						<titled>1</titled>
+						<titlefont><![CDATA[-13,0,0,0,400,0,0,0,1,3,2,1,34,0x000000,Arial]]></titlefont>
+						<label_orientation>0</label_orientation>
+						<screen_align>1</screen_align>
+						<bullet_nolines>0</bullet_nolines>
+					</chart>
+	<pages>
+	</pages>
+				</window>
+				<window>
+					<id>1</id>
+					<parent_id>0</parent_id>
+					<screen_bits><![CDATA[iVBORw0KGgoAAAANSUhEUgAAAUkAAAEyCAIAAAD4DbX9AAAABmJLR0QA/wD/AP+gvaeTAAAACXBI
+WXMAAA7EAAAOxAGVKw4bAAANA0lEQVR4nO3dfbBUdR3H8e82jH+lpk2llWVOigopJo+KyqoQBjXj
+QxZpKg8i8RSYj/iwc/MJxfQq4BOCCuaUkTGTD5ikt1GRq1Bg3ERzGp2ybKZ00v63P36Xw8/zvHfP
+PpzPfb+YYc499+zZs7vnvefsubt7Kju3bzEAWuYvumKImQ07eky7lwRAYbq6usxsiPuhb0dvWxcG
+QMGGBEOjz1prZpWKmVUi/1ulUrH4f96EsZfy/69YJfVX4Rnu+T9uXP//uwcr0UGLHds/Q/9f7Axj
+Lht7uaw7J+Uujb9s5Joz7pyEu9TdlsQ7bs9tSPxVY3eOd9nYG9rwnRN3qYQJEu6GlPUt5rb335aU
+X+Vd3+LunI8tl1voATlqr11u4BMDngWATjYkexIA7TBt1L75J65Wq7Nv2eCPoW2gc+U8ELZ+w8bo
+yMHb9tYNF7uBUWfc3t4lAZoh3Pb/3lhpZnsPne+P/O9rd5rZp4b9qGWL1WzbNvzYzEaeftvuwymF
++d2DF5rZqdPv37RmlplNnLm6yLljsBo+YqyZ+e9GiY4JiT+W9uHrK4JhFzZyOuWCVadMX9XupYAa
+17Dr2XKEbSn75B++vnyfwxd8sCsc9vs7u4PhTx91sZn9e8dP/Qk+9/VL3cC7224JRn5+1BVu4O+9
+N/oTf/m4q83srRevC8YccsK1/gRv9tTM7NBql5m98ey1Zjb0lOvMbNemq4Npjpx0o5n1bbzSzIaf
+ttTMXn3ycjM7esrNO564zMxGTF32x99cesy3bw3dlq2/vnjU6beb2cu/WhSMHPudO8zspUcXmtlx
+311uZi/+fL6ZjZ+20syef2RuMOVJ595jZj3r5phZ9fx7n31o9skX3Bdst900z6yeaWaTZq0xs6dX
+TQ8ue9pFD7qBJ+4+Lxj5rXkPG5Bg5/Ytw0eMDfLOfEdpzHb7k4f175B/sGu5me17xEL/t/sNX7T/
+8MX7f22xmf3n1duC8Z8Zcclnj7nEzP71h2VuzAHHXnbgyMsPHHm5mf3jlaVm9k7vTWZ20NglB41d
+Elzw7c3Xm9nB46/5yvhrzeyvz/8k80a6sI+YeMMRE28wsz//dkn69NsfvzR2/MjT+5d/9Jndo8/s
+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
+0TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00Tag
+ibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYB
+TbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQN
+aKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJt
+QBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNt
+A5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5po
+G9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE
+24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am
+2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY0
+0TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00TagibYBTbQNaKJtQBNtA5poG9BE24Am2gY00Tag
+ibYBTUPqmnpF99K+Hb1NWhQABaqj7Vqt1rzlAFCsOtpmiw2UCK+3AU20DWiibUATbQOaaBvQRNuA
+JtoGNNE2oIm2AU20DWiibUATbQOahphZV1dXuxcDQMEqEyZMaPcyACje/wG+9gKpd3oSLQAAAABJ
+RU5ErkJggg==]]></screen_bits>
+					<left>347</left>
+					<top>230</top>
+					<width>329</width>
+					<height>306</height>
+					<text><![CDATA[Manage your favorites]]></text>
+					<class><![CDATA[#32770]]></class>
+					<style>-1798831924</style>
+					<style_ex>65793</style_ex>
+					<m_visible>1</m_visible>
+					<m_title><![CDATA[Manage your favorites]]></m_title>
+					<m_topic><![CDATA[]]></m_topic>
+					<uuid><![CDATA[fec9ba53-f2dc-46fc-a55e-293e7bdd3a28]]></uuid>
+					<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_scale>1.000000</m_scale>
+					<controls>
+						<control>
+							<id>2</id>
+							<parent_id>1</parent_id>
+							<left>361</left>
+							<top>263</top>
+							<width>221</width>
+							<height>258</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[SysListView32]]></class>
+							<style>1342277645</style>
+							<style_ex>516</style_ex>
+							<type>7</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[List view]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 You can see your favorite disks here.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>356</m_left>
+							<m_top>258</m_top>
+							<m_width>231</m_width>
+							<m_height>268</m_height>
+							<m_num>1</m_num>
+							<m_lposx>251</m_lposx>
+							<m_lposy>230</m_lposy>
+							<m_pposx>364</m_pposx>
+							<m_pposy>266</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>3</id>
+							<parent_id>2</parent_id>
+							<left>363</left>
+							<top>265</top>
+							<width>217</width>
+							<height>17</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[SysHeader32]]></class>
+							<style>1342177472</style>
+							<style_ex>0</style_ex>
+							<type>18</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[List headers]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0
+\viewkind4\uc1\pard\f0\fs17 <TODO>: Insert the description text here ...\par
+}]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>358</m_left>
+							<m_top>260</m_top>
+							<m_width>227</m_width>
+							<m_height>27</m_height>
+							<m_num>0</m_num>
+							<m_lposx>366</m_lposx>
+							<m_lposy>172</m_lposy>
+							<m_pposx>366</m_pposx>
+							<m_pposy>268</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>4</id>
+							<parent_id>1</parent_id>
+							<left>587</left>
+							<top>319</top>
+							<width>75</width>
+							<height>23</height>
+							<text><![CDATA[&Remove]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Remove button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Remove selected disk from favorites.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>582</m_left>
+							<m_top>314</m_top>
+							<m_width>85</m_width>
+							<m_height>33</m_height>
+							<m_num>4</m_num>
+							<m_lposx>740</m_lposx>
+							<m_lposy>536</m_lposy>
+							<m_pposx>659</m_pposx>
+							<m_pposy>322</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>5</id>
+							<parent_id>1</parent_id>
+							<left>587</left>
+							<top>291</top>
+							<width>75</width>
+							<height>23</height>
+							<text><![CDATA[&Edit]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Edit button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Edit selekted disk options.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>582</m_left>
+							<m_top>286</m_top>
+							<m_width>85</m_width>
+							<m_height>33</m_height>
+							<m_num>3</m_num>
+							<m_lposx>740</m_lposx>
+							<m_lposy>383</m_lposy>
+							<m_pposx>659</m_pposx>
+							<m_pposy>294</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>6</id>
+							<parent_id>1</parent_id>
+							<left>587</left>
+							<top>263</top>
+							<width>75</width>
+							<height>23</height>
+							<text><![CDATA[&Mount]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242816</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Mount button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Mount selected disk.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>582</m_left>
+							<m_top>258</m_top>
+							<m_width>85</m_width>
+							<m_height>33</m_height>
+							<m_num>2</m_num>
+							<m_lposx>740</m_lposx>
+							<m_lposy>230</m_lposy>
+							<m_pposx>659</m_pposx>
+							<m_pposy>266</m_pposy>
+							<m_right>1</m_right>
+						</control>
+					</controls>
+					<menus>
+					</menus>
+					<chart>
+						<window_shadow>1</window_shadow>
+						<shape>1</shape>
+						<size>32</size>
+						<color>25855</color>
+						<shadow>0</shadow>
+						<numbered>1</numbered>
+						<font><![CDATA[-13,0,0,0,700,0,0,0,1,3,2,1,34,0xffffff,Arial]]></font>
+						<titled>1</titled>
+						<titlefont><![CDATA[-13,0,0,0,400,0,0,0,1,3,2,1,34,0x000000,Arial]]></titlefont>
+						<label_orientation>0</label_orientation>
+						<screen_align>1</screen_align>
+						<bullet_nolines>0</bullet_nolines>
+					</chart>
+	<pages>
+	</pages>
+				</window>
+				<window>
+					<id>1</id>
+					<parent_id>0</parent_id>
+					<screen_bits><![CDATA[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
+AElFTkSuQmCC]]></screen_bits>
+					<left>334</left>
+					<top>252</top>
+					<width>354</width>
+					<height>262</height>
+					<text><![CDATA[Favorites]]></text>
+					<class><![CDATA[#32770]]></class>
+					<style>-1798831924</style>
+					<style_ex>65793</style_ex>
+					<m_visible>1</m_visible>
+					<m_title><![CDATA[Mount from favorites]]></m_title>
+					<m_topic><![CDATA[]]></m_topic>
+					<uuid><![CDATA[4a591071-18b0-4724-9aed-5c11d0fa3040]]></uuid>
+					<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_scale>1.000000</m_scale>
+					<controls>
+						<control>
+							<id>2</id>
+							<parent_id>1</parent_id>
+							<left>348</left>
+							<top>336</top>
+							<width>26</width>
+							<height>23</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Edit]]></class>
+							<style>1342242952</style>
+							<style_ex>516</style_ex>
+							<type>3</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Edit field]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Drive letter.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>343</m_left>
+							<m_top>331</m_top>
+							<m_width>36</m_width>
+							<m_height>33</m_height>
+							<m_num>2</m_num>
+							<m_lposx>238</m_lposx>
+							<m_lposy>304</m_lposy>
+							<m_pposx>351</m_pposx>
+							<m_pposy>339</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>3</id>
+							<parent_id>1</parent_id>
+							<left>358</left>
+							<top>388</top>
+							<width>117</width>
+							<height>16</height>
+							<text><![CDATA[Mount as &read-only]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Mount as read-only check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Mount image as read-only disk. File system must be FAT ro FAT32.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>353</m_left>
+							<m_top>383</m_top>
+							<m_width>127</m_width>
+							<m_height>26</m_height>
+							<m_num>3</m_num>
+							<m_lposx>238</m_lposx>
+							<m_lposy>356</m_lposy>
+							<m_pposx>361</m_pposx>
+							<m_pposy>391</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>4</id>
+							<parent_id>1</parent_id>
+							<left>358</left>
+							<top>414</top>
+							<width>152</width>
+							<height>16</height>
+							<text><![CDATA[Mount as remo&vable media]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Mount as removable media check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Mount image as removable diisk.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>353</m_left>
+							<m_top>409</m_top>
+							<m_width>162</m_width>
+							<m_height>26</m_height>
+							<m_num>4</m_num>
+							<m_lposx>238</m_lposx>
+							<m_lposy>408</m_lposy>
+							<m_pposx>361</m_pposx>
+							<m_pposy>417</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>5</id>
+							<parent_id>1</parent_id>
+							<left>358</left>
+							<top>441</top>
+							<width>120</width>
+							<height>16</height>
+							<text><![CDATA[&Use mount manager]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Use mount manager check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Mount image via Mount manager. Do not clear this unless you have troubles when mounting.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>353</m_left>
+							<m_top>436</m_top>
+							<m_width>130</m_width>
+							<m_height>26</m_height>
+							<m_num>5</m_num>
+							<m_lposx>238</m_lposx>
+							<m_lposy>460</m_lposy>
+							<m_pposx>361</m_pposx>
+							<m_pposy>444</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>6</id>
+							<parent_id>1</parent_id>
+							<left>358</left>
+							<top>471</top>
+							<width>150</width>
+							<height>16</height>
+							<text><![CDATA[&Preserve image timestamp]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242819</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>3</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Preserve image timestamp check]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 If checked, image modify/access time won't be changed.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>353</m_left>
+							<m_top>466</m_top>
+							<m_width>160</m_width>
+							<m_height>26</m_height>
+							<m_num>6</m_num>
+							<m_lposx>238</m_lposx>
+							<m_lposy>512</m_lposy>
+							<m_pposx>361</m_pposx>
+							<m_pposy>474</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>7</id>
+							<parent_id>1</parent_id>
+							<left>600</left>
+							<top>479</top>
+							<width>75</width>
+							<height>23</height>
+							<text><![CDATA[&Mount]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342242817</style>
+							<style_ex>4</style_ex>
+							<type>2</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Mount button]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Mount image.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>595</m_left>
+							<m_top>474</m_top>
+							<m_width>85</m_width>
+							<m_height>33</m_height>
+							<m_num>7</m_num>
+							<m_lposx>752</m_lposx>
+							<m_lposy>252</m_lposy>
+							<m_pposx>672</m_pposx>
+							<m_pposy>482</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>8</id>
+							<parent_id>1</parent_id>
+							<left>348</left>
+							<top>303</top>
+							<width>302</width>
+							<height>23</height>
+							<text><![CDATA[]]></text>
+							<class><![CDATA[Edit]]></class>
+							<style>1342244992</style>
+							<style_ex>516</style_ex>
+							<type>3</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>1</m_visible>
+							<m_title><![CDATA[Edit field]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Path to image.\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>343</m_left>
+							<m_top>298</m_top>
+							<m_width>312</m_width>
+							<m_height>33</m_height>
+							<m_num>1</m_num>
+							<m_lposx>238</m_lposx>
+							<m_lposy>252</m_lposy>
+							<m_pposx>351</m_pposx>
+							<m_pposy>306</m_pposy>
+							<m_right>0</m_right>
+						</control>
+						<control>
+							<id>9</id>
+							<parent_id>1</parent_id>
+							<left>385</left>
+							<top>341</top>
+							<width>56</width>
+							<height>13</height>
+							<text><![CDATA[Drive letter]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>380</m_left>
+							<m_top>336</m_top>
+							<m_width>66</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>388</m_lposx>
+							<m_lposy>248</m_lposy>
+							<m_pposx>388</m_pposx>
+							<m_pposy>344</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>10</id>
+							<parent_id>1</parent_id>
+							<left>348</left>
+							<top>367</top>
+							<width>233</width>
+							<height>135</height>
+							<text><![CDATA[Mount options]]></text>
+							<class><![CDATA[Button]]></class>
+							<style>1342177287</style>
+							<style_ex>4</style_ex>
+							<type>17</type>
+							<subtype>1</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Mount options Group]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>343</m_left>
+							<m_top>362</m_top>
+							<m_width>243</m_width>
+							<m_height>145</m_height>
+							<m_num>0</m_num>
+							<m_lposx>351</m_lposx>
+							<m_lposy>274</m_lposy>
+							<m_pposx>351</m_pposx>
+							<m_pposy>370</m_pposy>
+							<m_right>1</m_right>
+						</control>
+						<control>
+							<id>11</id>
+							<parent_id>1</parent_id>
+							<left>348</left>
+							<top>285</top>
+							<width>24</width>
+							<height>13</height>
+							<text><![CDATA[Path]]></text>
+							<class><![CDATA[Static]]></class>
+							<style>1342308352</style>
+							<style_ex>4</style_ex>
+							<type>4</type>
+							<subtype>7</subtype>
+							<m_scale_state>0</m_scale_state>
+							<m_desc_orientation>0</m_desc_orientation>
+							<m_visible>0</m_visible>
+							<m_title><![CDATA[Label]]></m_title>
+							<m_anchor><![CDATA[]]></m_anchor>
+							<m_description><![CDATA[{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
+\viewkind4\uc1\pard\lang1049\f0\fs20 <TODO>: Insert the description text here ...\par
+}
+]]></m_description>
+	<links>
+	</links>
+					<m_custom_screen><![CDATA[]]></m_custom_screen>
+							<m_left>343</m_left>
+							<m_top>280</m_top>
+							<m_width>34</m_width>
+							<m_height>23</m_height>
+							<m_num>0</m_num>
+							<m_lposx>351</m_lposx>
+							<m_lposy>192</m_lposy>
+							<m_pposx>351</m_pposx>
+							<m_pposy>288</m_pposy>
+							<m_right>1</m_right>
+						</control>
+					</controls>
+					<menus>
+					</menus>
+					<chart>
+						<window_shadow>1</window_shadow>
+						<shape>1</shape>
+						<size>32</size>
+						<color>25855</color>
+						<shadow>0</shadow>
+						<numbered>1</numbered>
+						<font><![CDATA[-13,0,0,0,700,0,0,0,1,3,2,1,34,0xffffff,Arial]]></font>
+						<titled>1</titled>
+						<titlefont><![CDATA[-13,0,0,0,400,0,0,0,1,3,2,1,34,0x000000,Arial]]></titlefont>
+						<label_orientation>0</label_orientation>
+						<screen_align>1</screen_align>
+						<bullet_nolines>0</bullet_nolines>
+					</chart>
+	<pages>
+	</pages>
+				</window>
+	</pages>
+		</module>
+	</pages>
+	<keywords>
+	</keywords>
+	<project_settings>
+		<application_page>1</application_page>
+		<application_description>1</application_description>
+		<application_subs>1</application_subs>
+		<module_description>1</module_description>
+		<module_subs>1</module_subs>
+		<window_subs>1</window_subs>
+		<window_description>1</window_description>
+		<control_describe>1</control_describe>
+		<control_screenshot>1</control_screenshot>
+		<control_title>1</control_title>
+		<control_description>1</control_description>
+		<control_bullet>1</control_bullet>
+	</project_settings>
+	<html_settings>
+		<make_menu>1</make_menu>
+		<make_top>1</make_top>
+		<make_next>1</make_next>
+		<html_image_directory><![CDATA[]]></html_image_directory>
+		<html_ext><![CDATA[html]]></html_ext>
+		<html_header><![CDATA[<HTML>
+<HEAD>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">]]></html_header>
+		<html_middle><![CDATA[</HEAD>
+<BODY>
+]]></html_middle>
+		<html_footer><![CDATA[
+</BODY>
+</HTML>]]></html_footer>
+		<html_hidestamp>1</html_hidestamp>
+		<custom_css><![CDATA[]]></custom_css>
+		<use_css>0</use_css>
+		<area>0</area>
+	<color_theme>
+				<cs_name><![CDATA[Blue Sky]]></cs_name>
+				<cs_m_is_custom>0</cs_m_is_custom>
+				<cs_mainborder>3628464</cs_mainborder>
+				<cs_menuborder>3628464</cs_menuborder>
+				<cs_menuitemborder>4354518</cs_menuitemborder>
+				<cs_menuitembackground>15134204</cs_menuitembackground>
+				<cs_menuitembackgroundselected>5212157</cs_menuitembackgroundselected>
+				<cs_menuitemtext>3628464</cs_menuitemtext>
+				<cs_menuitemtextactive>16777215</cs_menuitemtextactive>
+				<cs_menuwidth>230</cs_menuwidth>
+				<cs_nextprevbackground>15134204</cs_nextprevbackground>
+				<cs_nextprevtext>3628464</cs_nextprevtext>
+				<cs_contentborder>15134204</cs_contentborder>
+				<cs_maintitle>3628464</cs_maintitle>
+				<cs_controltitle>5212157</cs_controltitle>
+	</color_theme>
+	</html_settings>
+	<rtf_settings>
+		<make_title>1</make_title>
+		<make_contents>1</make_contents>
+		<fit_image>0</fit_image>
+		<paper_width>210000</paper_width>
+		<paper_height>297000</paper_height>
+		<paper_format><![CDATA[]]></paper_format>
+		<font><![CDATA[-13,0,0,0,700,0,0,0,1,3,2,1,34,0xffffff,Arial]]></font>
+	</rtf_settings>
+	<text_strings>
+		<text_apptitle><![CDATA[Application: ]]></text_apptitle>
+		<text_modtitle><![CDATA[Module: ]]></text_modtitle>
+		<text_wintitle><![CDATA[Window: ]]></text_wintitle>
+		<text_manual><![CDATA[The user interface manual]]></text_manual>
+		<text_structapp><![CDATA[The structure of the ]]></text_structapp>
+		<text_structmod><![CDATA[The structure of the ]]></text_structmod>
+		<text_top><![CDATA[Top]]></text_top>
+		<text_next><![CDATA[Next page]]></text_next>
+		<text_prev><![CDATA[Previous page]]></text_prev>
+	</text_strings>
+	<MSHHW_settings>
+		<auto_index>1</auto_index>
+		<compatibility_1_1>1</compatibility_1_1>
+		<display_progress>1</display_progress>
+		<enhanced_decompilation>1</enhanced_decompilation>
+		<search_stop_list_file><![CDATA[]]></search_stop_list_file>
+	</MSHHW_settings>
+</project>

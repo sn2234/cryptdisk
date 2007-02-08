@@ -39,6 +39,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E287E0CE7C9E40F7BD815C451A7B974F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E340F28AED32D51D701F5EE21C24EFC3"
         "OwnerKey" = "8:_612873D5F92A41BB8250E172DD8CC3BB"
         "MsmSig" = "8:_UNDEFINED"
@@ -174,6 +180,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E287E0CE7C9E40F7BD815C451A7B974F"
+            {
+            "SourcePath" = "8:..\\..\\Doc\\Manual.chm"
+            "TargetName" = "8:Manual.chm"
+            "Tag" = "8:"
+            "Folder" = "8:_5EFFDDC570C44675ABA094C13FAB764B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E340F28AED32D51D701F5EE21C24EFC3"
             {
             "SourcePath" = "8:ntoskrnl.exe"
@@ -252,6 +278,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_9127366FFD884C3D8899F5893DCCE6B7"
+                    {
+                    "Name" = "8:CryptDisk"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_877CF4F463724BD18D6899BFD18C4B25"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
         }
@@ -270,7 +307,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CryptDisk"
         "ProductCode" = "8:{9DA44855-FA8B-4BAB-AFE1-E8C85AF9162E}"
-        "PackageCode" = "8:{3C31CCD8-B32B-4E1E-9B26-FDC40B745E05}"
+        "PackageCode" = "8:{09701D16-C734-4D6F-BB47-6DBF67E2DA06}"
         "UpgradeCode" = "8:{1BAF650E-D983-4F49-A4BE-E151C1703AB1}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -361,6 +398,34 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_2B79F523E1B8413096359EA4A753BE76"
+            {
+            "Name" = "8:CryptDisk Manager"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:128"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_355D144B54BE4462A3373AF47566CDF0"
+            "Folder" = "8:_9127366FFD884C3D8899F5893DCCE6B7"
+            "WorkingFolder" = "8:_5EFFDDC570C44675ABA094C13FAB764B"
+            "Icon" = "8:_355D144B54BE4462A3373AF47566CDF0"
+            "Feature" = "8:"
+            }
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_D6CD4EEA6A214A568F27A3C70BBEEE3A"
+            {
+            "Name" = "8:User Manual"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:3"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_E287E0CE7C9E40F7BD815C451A7B974F"
+            "Folder" = "8:_9127366FFD884C3D8899F5893DCCE6B7"
+            "WorkingFolder" = "8:_5EFFDDC570C44675ABA094C13FAB764B"
+            "Icon" = "8:"
+            "Feature" = "8:"
+            }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_F7EEBC2E42EA44D69CA6DCF6141D2BC8"
             {
             "Name" = "8:CryptDisk"
@@ -823,7 +888,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_21DDEA5E1824438BB25FD6C55A655C78"
             {
-            "SourcePath" = "8:..\\..\\release\\DrvTool.exe"
+            "SourcePath" = "8:..\\..\\Release\\DrvTool.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_5EFFDDC570C44675ABA094C13FAB764B"
@@ -851,7 +916,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_355D144B54BE4462A3373AF47566CDF0"
             {
-            "SourcePath" = "8:..\\..\\release\\Manager.exe"
+            "SourcePath" = "8:..\\..\\Release\\Manager.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_5EFFDDC570C44675ABA094C13FAB764B"

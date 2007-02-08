@@ -106,6 +106,7 @@ BEGIN_MESSAGE_MAP(CManagerDlg, CDialog)
 	ON_COMMAND(ID_FILE_NEWIMAGE, &CManagerDlg::OnFileNewimage)
 	ON_COMMAND(ID_FILE_CREATEKEYFILE, &CManagerDlg::OnFileCreatekeyfile)
 	ON_BN_CLICKED(IDC_BUTTON5, &CManagerDlg::OnBnClickedNewImage)
+	ON_COMMAND(ID_HELP_USERMANUAL, &CManagerDlg::OnHelpUsermanual)
 END_MESSAGE_MAP()
 
 
@@ -159,7 +160,7 @@ BOOL CManagerDlg::OnInitDialog()
 
 	col.pszText=_T("Path");
 	col.iSubItem=3;
-	col.cx=250;
+	col.cx=244;
 	m_imagesListView.InsertColumn(2, &col);
 
 	// Init interface
@@ -382,4 +383,10 @@ void CManagerDlg::OnBnClickedNewImage()
 
 		wiz.DoModal();
 	}
+}
+
+void CManagerDlg::OnHelpUsermanual()
+{
+	ShellExecute(GetSafeHwnd(), _T("open"), _T("manual.chm"), NULL,
+		NULL, SW_SHOWMAXIMIZED);
 }

@@ -382,6 +382,7 @@ BEGIN
     END
     POPUP "&Help"
     BEGIN
+        MENUITEM "&User manual",                ID_HELP_USERMANUAL
         MENUITEM "&About",                      ID_HELP_ABOUT
     END
 END
