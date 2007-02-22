@@ -97,6 +97,21 @@ LRESULT CPageCreate1::OnWizardNext()
 {
 	UpdateData(TRUE);
 
+	// Do some validation
+	CPropertySheet* sheet = (CPropertySheet*)GetParent();
+
+	if(m_dwSize == 0)
+	{
+		MessageBox(_T("Incorrect image size"), _T("Error"), MB_OK|MB_ICONERROR);
+		return -1;
+	}
+
+	if(m_strPath.GetLength() == 0)
+	{
+		MessageBox(_T("You must supply image path"), _T("Error"), MB_OK|MB_ICONERROR);
+		return -1;
+	}
+
 	return CPropertyPage::OnWizardNext();
 }
 

@@ -264,7 +264,7 @@ XQyAKTO3ffv2cZcBYPr8PyaFKUdTOqD0AAAAAElFTkSuQmCC]]></screen_bits>
 							<m_title><![CDATA[Unmount button]]></m_title>
 							<m_anchor><![CDATA[]]></m_anchor>
 							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
-\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Unmount any mounted disk.\par
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Unmount any mounted virtual disk.\par
 }
 ]]></m_description>
 	<links>
@@ -300,7 +300,7 @@ XQyAKTO3ffv2cZcBYPr8PyaFKUdTOqD0AAAAAElFTkSuQmCC]]></screen_bits>
 							<m_title><![CDATA[Unmount All button]]></m_title>
 							<m_anchor><![CDATA[]]></m_anchor>
 							<m_description><![CDATA[{\rtf1\ansi\ansicpg1252\deff0{\fonttbl{\f0\fnil\fcharset0 MS Shell Dlg 2;}}
-\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Unmount all mounted disks.\par
+\viewkind4\uc1\pard\lang1049\protect\f0\fs20 Unmount all mounted virtual disks.\par
 }
 ]]></m_description>
 	<links>
