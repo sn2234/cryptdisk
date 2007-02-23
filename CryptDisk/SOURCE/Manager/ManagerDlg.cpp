@@ -57,6 +57,7 @@ public:
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
+	BOOL OnInitDialog();
 // Implementation
 protected:
 	DECLARE_MESSAGE_MAP()
@@ -64,6 +65,39 @@ protected:
 
 CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
 {
+}
+
+BOOL CAboutDlg::OnInitDialog()
+{
+	TCHAR	moduleName[MAX_PATH];
+
+	if(!CDialog::OnInitDialog())
+		return FALSE;
+
+	GetModuleFileName(theApp.m_hInstance, moduleName, _countof(moduleName));
+
+	DWORD	dwSize, dwResult;
+
+	dwSize=GetFileVersionInfoSize(moduleName, &dwResult);
+	BYTE	*pBuff=new BYTE[dwSize];
+	VS_FIXEDFILEINFO	*pVer;
+
+	GetFileVersionInfo(moduleName, 0, dwSize, pBuff);
+	VerQueryValue(pBuff, _T("\\"), (LPVOID*)&pVer, (PUINT)&dwResult);
+
+	CString		strVersion;
+
+	strVersion.Format(_T("CryptDisk4h Manager %d.%d.%d.%d"),
+		pVer->dwProductVersionMS >> 16,
+		pVer->dwProductVersionMS & 0xFFFF,
+		pVer->dwProductVersionLS >> 16,
+		pVer->dwProductVersionLS & 0xFFFF);
+
+	SetDlgItemText(IDC_STATIC_VER, strVersion.GetBuffer());
+
+	delete[] pBuff;
+
+	return TRUE;
 }
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
@@ -254,7 +288,7 @@ void CManagerDlg::OnBnClickedButton2()
 	UpdateList();
 }
 
-// Unmount
+// Dismount
 void CManagerDlg::OnBnClickedButton3()
 {
 	DISK_DELETE_INFO	info;
@@ -269,14 +303,14 @@ void CManagerDlg::OnBnClickedButton3()
 
 		if(!theApp.m_manager.UninstallDisk(&info))
 		{
-			if(MessageBox(_T("This disk may be used by another applications. Do you want to force unmount it?"),
+			if(MessageBox(_T("This disk may be used by another applications. Do you want to force dismount it?"),
 				_T("Warning"),
 				MB_ICONWARNING|MB_YESNO)==IDYES)
 			{
 				info.bForce=TRUE;
 				if(!theApp.m_manager.UninstallDisk(&info))
 				{
-					MessageBox(_T("Can\'t unmount disk"), _T("Error"),
+					MessageBox(_T("Can\'t dismount disk"), _T("Error"),
 						MB_OK|MB_ICONERROR);
 				}
 			}
@@ -286,7 +320,7 @@ void CManagerDlg::OnBnClickedButton3()
 	UpdateList();
 }
 
-// Unmount all
+// Dismount all
 void CManagerDlg::OnBnClickedButton4()
 {
 	DISK_DELETE_INFO	info;
@@ -304,7 +338,7 @@ void CManagerDlg::OnBnClickedButton4()
 
 	if(!bRez)
 	{
-		MessageBox(_T("Unable to unmount some disks"), _T("Warning"),
+		MessageBox(_T("Unable to dismount some disks"), _T("Warning"),
 			MB_ICONWARNING);
 	}
 
@@ -336,7 +370,7 @@ void CManagerDlg::UpdateList()
 			tmp.Format(_T("%I64u"), pDiskInfo[i].FileSize.QuadPart);
 			m_imagesListView.SetItemText(i, 1, tmp);
 
-			tmp.Format(_T("%s"), pDiskInfo[i].FilePath);
+			tmp.Format(_T("%s"), pDiskInfo[i].FilePath+4);
 			m_imagesListView.SetItemText(i, 2, tmp);
 
 			m_imagesListView.SetItemData(i, pDiskInfo[i].DriveLetter);

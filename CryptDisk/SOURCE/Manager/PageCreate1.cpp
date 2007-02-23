@@ -132,6 +132,7 @@ void CPageCreate1::OnBnBrowse()
 	ofn.lpstrFile=filePath;
 	ofn.nMaxFile=sizeof(filePath);
 	ofn.lpstrTitle=_T("Create image");
+	ofn.Flags|=OFN_OVERWRITEPROMPT;
 	if(m_bDontAddToRecent)
 		ofn.Flags|=OFN_DONTADDTORECENT;
 	if(GetSaveFileName(&ofn))

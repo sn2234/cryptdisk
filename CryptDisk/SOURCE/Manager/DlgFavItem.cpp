@@ -104,7 +104,7 @@ BOOL CDlgFavItem::OnInitDialog()
 
 void CDlgFavItem::LoadData(const CFavNode *pNode)
 {
-	m_strPath=pNode->GetFilePath();
+	m_strPath=pNode->GetFilePath()+4;
 	
 	m_bMountMgr=(pNode->GetMountOptions()&MOUNT_VIA_MOUNTMGR) != 0;
 	m_bRemovable=(pNode->GetMountOptions()&MOUNT_AS_REMOVABLE) != 0;

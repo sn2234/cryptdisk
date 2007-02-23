@@ -68,7 +68,7 @@ typedef struct DISK_BASIC_INFO
 #define		MOUNT_READ_ONLY			2		// Mount drive read-only (troubles with NTFS!)
 #define		MOUNT_VIA_MOUNTMGR		4		// Use mount manager to create symbolic links,
 											// otherwise create links itself. This may surprise some software
-#define		MOUNT_SAVE_TIME			8		// Save current file modify/access time and restore it on unmount
+#define		MOUNT_SAVE_TIME			8		// Save current file modify/access time and restore it on dismount
 
 typedef struct DISK_ADD_INFO
 {

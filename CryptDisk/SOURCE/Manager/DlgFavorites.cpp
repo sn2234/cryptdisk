@@ -195,7 +195,7 @@ void CDlgFavorites::RefreshList()
 
 		pNode=(CFavNode*)m_pFavManager->GetNode(i);
 
-		m_listFav.InsertItem(i, pNode->GetFilePath());
+		m_listFav.InsertItem(i, pNode->GetFilePath()+4);
 		// 		strBuff.Empty();
 		// 		if(pNode->GetMountOptions() & MOUNT_AS_REMOVABLE)
 		// 			strBuff+=_T("removable");
