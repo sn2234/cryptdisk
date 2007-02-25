@@ -51,7 +51,7 @@
 #include <dbt.h>
 #include <afxdlgs.h>
 
-
+#include <intrin.h>
 
 
 #ifdef _UNICODE

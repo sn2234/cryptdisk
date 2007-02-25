@@ -39,6 +39,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7FA072857AEA293DB9FB26896F5FF65C"
+        "OwnerKey" = "8:_355D144B54BE4462A3373AF47566CDF0"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E287E0CE7C9E40F7BD815C451A7B974F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -180,6 +186,26 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7FA072857AEA293DB9FB26896F5FF65C"
+            {
+            "SourcePath" = "8:VERSION.dll"
+            "TargetName" = "8:VERSION.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_5EFFDDC570C44675ABA094C13FAB764B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E287E0CE7C9E40F7BD815C451A7B974F"
             {
             "SourcePath" = "8:..\\..\\Doc\\Manual.chm"
@@ -307,7 +333,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CryptDisk"
         "ProductCode" = "8:{9DA44855-FA8B-4BAB-AFE1-E8C85AF9162E}"
-        "PackageCode" = "8:{09701D16-C734-4D6F-BB47-6DBF67E2DA06}"
+        "PackageCode" = "8:{1043F88A-6940-4CBD-8929-058292FB4CDA}"
         "UpgradeCode" = "8:{1BAF650E-D983-4F49-A4BE-E151C1703AB1}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"

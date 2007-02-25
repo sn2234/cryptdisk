@@ -84,13 +84,13 @@ BOOL	RandomOnAppStart(HINSTANCE hInst)
 	
 	// Debug!
 #ifdef _DEBUG
-//	return TRUE;
+	//return TRUE;
 #endif
 
 	// Setup hooks
-	if(hMouseHook=SetWindowsHookEx(WH_MOUSE_LL,&MouseHookProc,hInst,0))
+	if(hMouseHook=SetWindowsHookEx(WH_MOUSE,&MouseHookProc,hInst,GetCurrentThreadId()))
 	{
-		if(hKeyboardHook=SetWindowsHookEx(WH_KEYBOARD_LL,&KeyboardHookProc,hInst,0))
+		if(hKeyboardHook=SetWindowsHookEx(WH_KEYBOARD,&KeyboardHookProc,hInst,GetCurrentThreadId()))
 		{
 			preInit=TRUE;
 		}
@@ -150,17 +150,16 @@ BOOL	IsInitialized()
 
 static LRESULT CALLBACK MouseHookProc(int code,WPARAM wParam,LPARAM lParam)
 {
-	MSLLHOOKSTRUCT		*pData;
+	MOUSEHOOKSTRUCT		*pData;
 	RND_MOUSE_EVENT		mouseEvent;
 
-	pData=(MSLLHOOKSTRUCT*)lParam;
+	pData=(MOUSEHOOKSTRUCT*)lParam;
 
-	if( ! (pData->flags&LLMHF_INJECTED))	// Skip injected events
 	{
 		memset(&mouseEvent, 0, sizeof(mouseEvent));
 
 		mouseEvent.position=LOWORD(pData->pt.x)|(LOWORD(pData->pt.y)<<16);
-		mouseEvent.time=pData->time;
+		mouseEvent.time=(DWORD)(__rdtsc()&0xFFFFFFFF);
 		g_randomSource.AddMouseEvent(&mouseEvent);
 		seed_col++;
 		ShowProgress();
@@ -170,23 +169,21 @@ static LRESULT CALLBACK MouseHookProc(int code,WPARAM wParam,LPARAM lParam)
 
 static LRESULT CALLBACK KeyboardHookProc(int code,WPARAM wParam,LPARAM lParam)
 {
-	KBDLLHOOKSTRUCT		*pData;
 	RND_KEYBOARD_EVENT	keyboardEvent;
 
 	static	BYTE	PrevChar;
 
-	pData=(KBDLLHOOKSTRUCT*)lParam;
 	memset(&keyboardEvent, 0, sizeof(keyboardEvent));
 
 
-	if((PrevChar!=pData->scanCode) && !(pData->flags&LLKHF_INJECTED))
+	if(PrevChar!=wParam)
 	{
-		keyboardEvent.flags=pData->flags;
-		keyboardEvent.scanCode=pData->scanCode;
-		keyboardEvent.time=pData->time;
-		keyboardEvent.vkCode=pData->vkCode;
+		keyboardEvent.flags=(DWORD)lParam;
+		keyboardEvent.scanCode=(BYTE)((lParam>>16)&0xFF);
+		keyboardEvent.time=(DWORD)(__rdtsc()&0xFFFFFFFF);
+		keyboardEvent.vkCode=LOBYTE(wParam);
 
-		PrevChar=LOBYTE(pData->scanCode);
+		PrevChar=LOBYTE(wParam);
 
 		g_randomSource.AddKeyboardEvent(&keyboardEvent);
 

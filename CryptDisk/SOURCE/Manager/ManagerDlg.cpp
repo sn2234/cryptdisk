@@ -87,7 +87,7 @@ BOOL CAboutDlg::OnInitDialog()
 
 	CString		strVersion;
 
-	strVersion.Format(_T("CryptDisk4h Manager %d.%d.%d.%d"),
+	strVersion.Format(_T("CryptDisk.4h Manager %d.%d.%d.%d"),
 		pVer->dwProductVersionMS >> 16,
 		pVer->dwProductVersionMS & 0xFFFF,
 		pVer->dwProductVersionLS >> 16,

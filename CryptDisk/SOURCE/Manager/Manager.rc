@@ -85,7 +85,7 @@ END
 IDD_MANAGER_DIALOG DIALOGEX 0, 0, 319, 178
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "CryptDisk4h Manager"
+CAPTION "CryptDisk.4h Manager"
 MENU IDR_MENU1
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
@@ -247,8 +247,8 @@ BEGIN
     BEGIN
         BLOCK "000004e4"
         BEGIN
-            VALUE "Comments", "CryptDisk4h GUI Manager"
-            VALUE "FileDescription", "CryptDisk4h GUI Manager"
+            VALUE "Comments", "CryptDisk.4h GUI Manager"
+            VALUE "FileDescription", "CryptDisk.4h GUI Manager"
             VALUE "FileVersion", "3.0.0.1"
             VALUE "InternalName", "Manager.exe"
             VALUE "LegalCopyright", " (c) nobody"
