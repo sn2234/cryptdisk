@@ -67,6 +67,8 @@ void CPageCreate1::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CPageCreate1, CPropertyPage)
 	ON_BN_CLICKED(IDC_BUTTON1, &CPageCreate1::OnBnBrowse)
 	ON_CBN_SELCHANGE(IDC_COMBO_SIZE, &CPageCreate1::OnCbnSelchangeComboSize)
+	ON_EN_CHANGE(IDC_EDIT_PATH, &CPageCreate1::OnEnChangeEditPath)
+	ON_EN_CHANGE(IDC_EDIT_SIZE, &CPageCreate1::OnEnChangeEditSize)
 END_MESSAGE_MAP()
 
 
@@ -74,9 +76,14 @@ END_MESSAGE_MAP()
 
 BOOL CPageCreate1::OnSetActive( )
 {
-	CWizCreate* pWizard= static_cast<CWizCreate*>(GetParent());
+	UpdateData(TRUE);
 
-	pWizard->SetWizardButtons(PSWIZB_NEXT);
+	if(CheckNextConditions())
+	{
+		CWizCreate* pWizard= static_cast<CWizCreate*>(GetParent());
+
+		pWizard->SetWizardButtons(PSWIZB_NEXT);
+	}
 
 	return CPropertyPage::OnSetActive();
 }
@@ -89,6 +96,11 @@ BOOL CPageCreate1::OnInitDialog()
 	m_comboSize.InsertString(1, _T("GB"));
 	m_comboSize.SetCurSel(0);
 	m_units=UNIT_MEGABYTE;
+
+	// Disable "Next" button
+
+	CPropertySheet* sheet = (CPropertySheet*)GetParent();
+	sheet->SetWizardButtons(0);
 
 	return TRUE;
 }
@@ -177,4 +189,36 @@ void CPageCreate1::OnCbnSelchangeComboSize()
 		m_units=UNIT_GIGABYTE;
 		break;
 	}
+}
+
+void CPageCreate1::OnEnChangeEditPath()
+{
+	if(CheckNextConditions())
+	{
+		CWizCreate* pWizard= static_cast<CWizCreate*>(GetParent());
+		pWizard->SetWizardButtons(PSWIZB_NEXT);
+	}
+}
+
+void CPageCreate1::OnEnChangeEditSize()
+{
+	if(CheckNextConditions())
+	{
+		CWizCreate* pWizard= static_cast<CWizCreate*>(GetParent());
+		pWizard->SetWizardButtons(PSWIZB_NEXT);
+	}
+}
+
+BOOL CPageCreate1::CheckNextConditions()
+{
+	UpdateData(TRUE);
+
+	if(((m_strPath.Find(_T('\\'),0) != -1) ||
+		(m_strPath.Find(_T('/'),0) != -1)) &&
+		(m_dwSize != 0))
+	{
+		return TRUE;
+	}	
+
+	return FALSE;
 }

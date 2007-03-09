@@ -170,15 +170,17 @@ DWORD __stdcall ThreadProc(LPVOID pParam)
 					goto _loop_exit;
 				}
 
+				_mm_empty();
+
 				curSector+=writeSectors;
 				sectorsLeft-=writeSectors;
-				
-				_mm_empty();
-				pParent->m_percentComplete=((float)curSector/(float)sectors)*100.0f;
-				SendMessage(pParent->GetSafeHwnd(), WM_UPDATEPROGRESS, 0, 0);
 
+				pParent->m_percentComplete=((float)curSector/(float)sectors)*100.0f;
+				
 				if(pParent->m_bStopThread)
 					goto _loop_exit;
+				else
+					SendMessage(pParent->GetSafeHwnd(), WM_UPDATEPROGRESS, 0, 0);
 			}
 
 			if(sectorsLeft)
@@ -192,7 +194,7 @@ DWORD __stdcall ThreadProc(LPVOID pParam)
 
 				_mm_empty();
 				pParent->m_percentComplete=((float)curSector/(float)sectors)*100.0f;
-				SendMessage(pParent->GetSafeHwnd(), WM_UPDATEPROGRESS, 0, 0);
+				PostMessage(pParent->GetSafeHwnd(), WM_UPDATEPROGRESS, 0, 0);
 			}
 _loop_exit:
 			RtlSecureZeroMemory(buff, 0x10000);

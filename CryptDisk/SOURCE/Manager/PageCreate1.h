@@ -49,7 +49,12 @@ protected:
 	BOOL OnInitDialog();
 	LRESULT OnWizardNext();
 
+	BOOL CheckNextConditions();
+
 	afx_msg void OnBnBrowse();
+	afx_msg void OnCbnSelchangeComboSize();
+	afx_msg void OnEnChangeEditPath();
+	afx_msg void OnEnChangeEditSize();
 protected:
 	enum	DISK_SIZE_UNITS
 	{
@@ -60,6 +65,7 @@ protected:
 	CComboBox m_comboSize;
 	DISK_SIZE_UNITS		m_units;
 	DWORD m_dwSize;
+	BOOL m_bDontAddToRecent;
 public:
 	BOOL m_bQuick;
 	CString m_strPath;
@@ -77,8 +83,4 @@ public:
 
 		return 0;
 	}
-public:
-	afx_msg void OnCbnSelchangeComboSize();
-protected:
-	BOOL m_bDontAddToRecent;
 };

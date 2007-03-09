@@ -81,7 +81,7 @@ BOOL DiskImage::Create(const TCHAR *filePath, IMAGE_CREATE_INFO *pCreateInfo, CR
 	}
 
 	// Set file size and calculate sectors count
-	sectorsCount=(ULONG)imageParams.diskSize.QuadPart/BYTES_PER_SECTOR;
+	sectorsCount=(ULONG)(imageParams.diskSize.QuadPart/BYTES_PER_SECTOR);
 	temp.QuadPart=imageParams.diskSize.QuadPart+sizeof(DISK_HEADER);
 	if(SetFilePointerEx(hFile, temp,
 		&temp, FILE_BEGIN))

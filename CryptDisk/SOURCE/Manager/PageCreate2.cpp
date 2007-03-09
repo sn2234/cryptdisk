@@ -288,13 +288,15 @@ BOOL CPageCreate2::OnWizardFinish()
 		break;
 	}
 
+	BOOL bRez;
+
 	if(pWizard->OnFinish())
 	{
-		return CPropertyPage::OnWizardFinish();
+		bRez=CPropertyPage::OnWizardFinish();
 	}
 	else
 	{
-		return FALSE;
+		bRez=FALSE;
 	}
 
 	if(m_pPassword)
@@ -303,4 +305,6 @@ BOOL CPageCreate2::OnWizardFinish()
 		g_heap.Free(m_pPassword);
 		m_pPassword=NULL;
 	}
+
+	return bRez;
 }
