@@ -32,6 +32,8 @@
 #include "Manager.h"
 #include "ManagerDlg.h"
 
+#include "CmdLineParser.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -80,33 +82,43 @@ BOOL CManagerApp::InitInstance()
 
 	if(RandomOnAppStart(m_hInstance))
 	{
-		if(!m_manager.Open())
-		{
-			MessageBox(NULL, _T("Unable to start CryptDisk driver.\r\nAll driver-related functions will be disabled"),
-				_T("Warning"), MB_OK|MB_ICONWARNING);
-			m_bDriverOk=FALSE;
-		}
-
-		g_favorites.Load(_T("Favorites.dat"));
-
 		g_heap.Init(0x10000);
 
-		CManagerDlg dlg;
-		m_pMainWnd = &dlg;
-		INT_PTR nResponse = dlg.DoModal();
-		if (nResponse == IDOK)
-		{
-			// TODO: Place code here to handle when the dialog is
-			//  dismissed with OK
-		}
-		else if (nResponse == IDCANCEL)
-		{
-			// TODO: Place code here to handle when the dialog is
-			//  dismissed with Cancel
-		}
+		m_bDriverOk=m_manager.Open();
 
-		g_favorites.Save();
-		g_favorites.Close();
+		if(__argc > 1)
+		{
+			CCmdLineParser	parser;
+
+			parser.Parse(__argc, __targv);
+		}
+		else
+		{
+			if(!m_bDriverOk)
+			{
+				MessageBox(NULL, _T("Unable to start CryptDisk driver.\r\nAll driver-related functions will be disabled"),
+					_T("Warning"), MB_OK|MB_ICONWARNING);
+			}
+
+			g_favorites.Load(_T("Favorites.dat"));
+
+			CManagerDlg dlg;
+			m_pMainWnd = &dlg;
+			INT_PTR nResponse = dlg.DoModal();
+			if (nResponse == IDOK)
+			{
+				// TODO: Place code here to handle when the dialog is
+				//  dismissed with OK
+			}
+			else if (nResponse == IDCANCEL)
+			{
+				// TODO: Place code here to handle when the dialog is
+				//  dismissed with Cancel
+			}
+
+			g_favorites.Save();
+			g_favorites.Close();
+		}
 
 		if(m_bDriverOk)
 		{

@@ -287,6 +287,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\CmdLineParser.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ColorProgress.cpp"
 				>
 			</File>
@@ -398,6 +402,10 @@
 			>
 			<File
 				RelativePath=".\AppRandom.h"
+				>
+			</File>
+			<File
+				RelativePath=".\CmdLineParser.h"
 				>
 			</File>
 			<File
