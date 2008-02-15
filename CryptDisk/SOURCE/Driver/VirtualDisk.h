@@ -29,39 +29,10 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-// Structures and constants, required for work in Windows XP, but not defined in DDK 2000
-#include "XPStuff.h"
-
 class	VirtualDisk
 {
+	friend class DisksManager;
 public:
-	BOOL				Initialized;
-	
-	// Saved time
-	FILE_BASIC_INFORMATION	fileBasicInfo;
-
-	// Device parameters
-	DISK_BASIC_INFO		DiskInfo;
-	BOOL				bRemovable;
-	BOOL				bReadOnly;
-	BOOL				bMountMgr;	// used by DisksManager
-	BOOL				bSaveTime;
-	int					nDiskNumber;
-
-	// Image parameters
-	HANDLE				hImageFile;
-	PFILE_OBJECT		pFileObject;
-
-	// Cryptographic parameters
-	DiskCipher			Cipher;
-
-	// Worker thread and IRP queue
-	PVOID				pWorkerThread;
-	KSEMAPHORE			Semaphore;
-	LIST_ENTRY			IrpQueueHead;
-	KSPIN_LOCK			QueueLock;
-	BOOL				bTerminateThread;
-
 	// Generic functions
 	NTSTATUS			Init(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice);
 	NTSTATUS			Close(BOOL bForce);
@@ -78,7 +49,49 @@ public:
 	// Worker thread
 	static	void __stdcall VirtualDiskThread(PVOID param);
 	// IRP_MJ_DEVICE_CONTROL handler, in context of worker thread
-	NTSTATUS	VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp);
+	NTSTATUS	ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp);
+
+	// Acessors
+	const DISK_BASIC_INFO& GetDiskInfo() const {return m_diskInfo;}
+protected:
+	// Internal functions
+	NTSTATUS SetFlags(DISK_ADD_INFO *pInfo);
+	NTSTATUS OpenFile(DISK_ADD_INFO *pInfo);
+	NTSTATUS InitCipher(DISK_ADD_INFO *pInfo);
+
+protected:
+	BOOL				m_bInitialized;
+
+	PDEVICE_OBJECT		m_pDevice;
+
+	// Saved time
+	FILE_BASIC_INFORMATION	m_fileBasicInfo;
+
+	// Device parameters
+	DISK_BASIC_INFO		m_diskInfo;
+
+	// Flags
+	BOOL				m_bRemovable;
+	BOOL				m_bReadOnly;
+	BOOL				m_bMountMgr;	// used by DisksManager
+	BOOL				m_bSaveTime;
+	BOOL				m_bMountDevice;
+
+	int					m_nDiskNumber;
+
+	// Image parameters
+	HANDLE				m_hImageFile;
+	PFILE_OBJECT		m_pFileObject;
+
+	// Cryptographic parameters
+	DiskCipher			m_cipher;
+
+	// Worker thread and IRP queue
+	PVOID				m_pWorkerThread;
+	KSEMAPHORE			m_queueSemaphore;
+	LIST_ENTRY			m_irpQueueHead;
+	KSPIN_LOCK			m_irpQueueLock;
+	BOOL				m_bTerminateThread;
 };
 
 #endif	//_VIRTUAL_DISK_H_INCLUDED

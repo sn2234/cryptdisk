@@ -36,6 +36,8 @@ ZwWaitForSingleObject (
 					   IN PLARGE_INTEGER   Timeout OPTIONAL
 					   );
 
+#define	CACHE_BUFF_SIZE		0x10000
+
 typedef	struct VDISK_THREAD_INIT_PARAMS
 {
 	DISK_ADD_INFO	Info;
@@ -50,23 +52,6 @@ NTSTATUS	VirtualDisk::Init(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice)
 	HANDLE						hThread;
 	NTSTATUS					status=STATUS_UNSUCCESSFUL;
 
-	if(Info->MountOptions&MOUNT_AS_REMOVABLE)
-	{
-		bRemovable=TRUE;
-	}
-	if(Info->MountOptions&MOUNT_READ_ONLY)
-	{
-		bReadOnly=TRUE;
-	}
-	else
-	{
-		// Do not save time for read-only images
-		if(Info->MountOptions&MOUNT_SAVE_TIME)
-		{
-			bSaveTime=TRUE;
-		}
-	}
-
 	threadParams.Info=*Info;
 	threadParams.pDevice=pDevice;
 	threadParams.statusReturned=STATUS_UNSUCCESSFUL;
@@ -76,7 +61,7 @@ NTSTATUS	VirtualDisk::Init(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice)
 	if(NT_SUCCESS(status))
 	{
 		status=ObReferenceObjectByHandle(hThread,THREAD_ALL_ACCESS,
-			0,KernelMode,&pWorkerThread,NULL);
+			0,KernelMode,&m_pWorkerThread,NULL);
 		if(NT_SUCCESS(status))
 		{
 			KeWaitForSingleObject(&threadParams.syncEvent,Executive,
@@ -84,7 +69,7 @@ NTSTATUS	VirtualDisk::Init(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice)
 			status=threadParams.statusReturned;
 			if(!NT_SUCCESS(status))
 			{
-				ObDereferenceObject(pWorkerThread);
+				ObDereferenceObject(m_pWorkerThread);
 			}
 		}
 		ZwClose(hThread);
@@ -92,7 +77,7 @@ NTSTATUS	VirtualDisk::Init(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice)
 	return status;
 }
 
-NTSTATUS VirtualDisk::InternalInit(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice)
+NTSTATUS VirtualDisk::InternalInit(DISK_ADD_INFO *pInfo, PDEVICE_OBJECT pDevice)
 {
 	NTSTATUS					status=STATUS_UNSUCCESSFUL;
 	IO_STATUS_BLOCK				io_status;
@@ -105,122 +90,52 @@ NTSTATUS VirtualDisk::InternalInit(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice)
 
 	CDiskHeader					header;
 
-	if(Initialized)
+	if(m_bInitialized)
 	{
 		return STATUS_UNSUCCESSFUL;
 	}
 
-	DiskInfo.OpenCount=0;
+	m_diskInfo.OpenCount=0;
 	// Set drive letter
-	DiskInfo.DriveLetter=Info->DriveLetter;
+	m_diskInfo.DriveLetter=pInfo->DriveLetter;
+
+	m_pDevice=pDevice;
+	m_pFileObject=NULL;
 
 	// Copy file name
-	wcsncpy(DiskInfo.FilePath,Info->FilePath,MAXIMUM_FILENAME_LENGTH);
+	wcsncpy(m_diskInfo.FilePath,pInfo->FilePath,MAXIMUM_FILENAME_LENGTH);
 
-	// Prepare object attributes
-	RtlInitUnicodeString(&usFileName,DiskInfo.FilePath);
-	InitializeObjectAttributes(&obj_attr,&usFileName,
-		OBJ_CASE_INSENSITIVE|OBJ_KERNEL_HANDLE,NULL,NULL);
+	status = SetFlags(pInfo);
 
-	// Open file
-	status=ZwCreateFile(&hImageFile, bReadOnly ? GENERIC_READ : GENERIC_READ|GENERIC_WRITE,
-		&obj_attr,&io_status, 0, FILE_ATTRIBUTE_NORMAL, 0, FILE_OPEN,
-		FILE_NON_DIRECTORY_FILE|FILE_RANDOM_ACCESS|
-		FILE_NO_INTERMEDIATE_BUFFERING|FILE_SYNCHRONOUS_IO_NONALERT,
-		0, 0);
-	if(NT_SUCCESS(status))
+	if(!NT_SUCCESS(status))
 	{
-		if(bSaveTime)
-		{
-			status=ZwQueryInformationFile(hImageFile, &io_status, &fileBasicInfo,
-				sizeof(FILE_BASIC_INFORMATION), FileBasicInformation);
-			if(!NT_SUCCESS(status))
-			{
-				ZwClose(hImageFile);
-				return status;
-			}
-		}
-
-		status=ObReferenceObjectByHandle(hImageFile, bReadOnly ? GENERIC_READ : GENERIC_READ|GENERIC_WRITE,
-			*IoFileObjectType, KernelMode, (PVOID*)&pFileObject, NULL);
-		if(NT_SUCCESS(status))
-		{
-			// Get related FS Device
-			pFSD=IoGetRelatedDeviceObject(pFileObject);
-			if(pFSD)
-			{
-				pDevice->StackSize=pFSD->StackSize+1;
-			}
-
-			// Get file size
-			status=ZwQueryInformationFile(hImageFile, &io_status,
-				&file_info,	sizeof(FILE_STANDARD_INFORMATION),
-				FileStandardInformation);
-			if(NT_SUCCESS(status)&&NT_SUCCESS(io_status.Status))
-			{
-				DiskInfo.FileSize.QuadPart=file_info.EndOfFile.QuadPart;
-
-				// Read disk header
-				if(pDiskHeader=(DISK_HEADER*)ExAllocatePool(NonPagedPool,
-					sizeof(DISK_HEADER)))
-				{
-					Offset.QuadPart=0;
-					status=ZwReadFile(hImageFile,0,0,0,&io_status,
-						pDiskHeader,sizeof(DISK_HEADER),&Offset,0);
-
-					if(NT_SUCCESS(status)&&NT_SUCCESS(io_status.Status)&&
-						(io_status.Information==sizeof(DISK_HEADER)))
-					{
-						header.Init(pDiskHeader);
-						if(header.Open(Info->UserKey, (DISK_CIPHER)Info->wAlgoId))
-						{
-							// Init disk cipher
-							Cipher.Init(pDiskHeader, header.GetAlgoId());
-
-							header.Clear();
-
-							InitializeListHead(&IrpQueueHead);
-							KeInitializeSemaphore(&Semaphore,0,10000);
-							KeInitializeSpinLock(&QueueLock);
-
-							Initialized=TRUE;
-							status=STATUS_SUCCESS;
-						}
-						else
-						{
-							Cipher.Clear();
-							ObDereferenceObject(pFileObject);
-							ZwClose(hImageFile);
-							status=STATUS_WRONG_PASSWORD;
-						}
-					}
-					else
-					{
-						ObDereferenceObject(pFileObject);
-						ZwClose(hImageFile);
-						status=io_status.Status;
-					}
-					memset(pDiskHeader,0,sizeof(DISK_HEADER));
-					ExFreePool(pDiskHeader);
-				}
-				else
-				{
-					ObDereferenceObject(pFileObject);
-					ZwClose(hImageFile);
-				}
-			}
-			else
-			{
-				ObDereferenceObject(pFileObject);
-				ZwClose(hImageFile);
-				status=io_status.Status;
-			}
-		}
-		else
-		{
-			ZwClose(hImageFile);
-		}
+		return status;
 	}
+
+	status = OpenFile(pInfo);
+
+	if(!NT_SUCCESS(status))
+	{
+		return status;
+	}
+
+	status = InitCipher(pInfo);
+
+	if(!NT_SUCCESS(status))
+	{
+		ObDereferenceObject(m_pFileObject);
+		ZwClose(m_hImageFile);
+
+		return status;
+	}
+
+	// Success initialization
+	InitializeListHead(&m_irpQueueHead);
+	KeInitializeSemaphore(&m_queueSemaphore,0,10000);
+	KeInitializeSpinLock(&m_irpQueueLock);
+
+	m_bInitialized=TRUE;
+
 	return status;
 }
 
@@ -228,19 +143,19 @@ NTSTATUS VirtualDisk::Close(BOOL bForce)
 {
 	NTSTATUS			status=STATUS_UNSUCCESSFUL;
 
-	if(!Initialized)
+	if(!m_bInitialized)
 	{
 		return STATUS_SUCCESS;
 	}
-	DnPrint("VirtualDisk.Close");	
+	KdPrint(("VirtualDisk::Close()"));
 
-	bTerminateThread=TRUE;
-	KeReleaseSemaphore(&Semaphore,0,1,TRUE);
-	KeWaitForSingleObject(pWorkerThread,Executive,KernelMode,FALSE,0);
-	ObDereferenceObject(pWorkerThread);
+	m_bTerminateThread=TRUE;
+	KeReleaseSemaphore(&m_queueSemaphore,0,1,TRUE);
+	KeWaitForSingleObject(m_pWorkerThread,Executive,KernelMode,FALSE,0);
+	ObDereferenceObject(m_pWorkerThread);
 
-	Cipher.Clear();
-	Initialized=FALSE;
+	m_cipher.Clear();
+	m_bInitialized=FALSE;
 
 	status=STATUS_SUCCESS;
 
@@ -256,7 +171,7 @@ NTSTATUS VirtualDisk::IoReadWrite(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 	LARGE_INTEGER		FileOffset;
 
 	pDisk=(VirtualDisk*)(DeviceObject->DeviceExtension);
-	if(!pDisk->Initialized)
+	if(!pDisk->m_bInitialized)
 	{
 		Irp->IoStatus.Information=0;
 		Irp->IoStatus.Status=status;
@@ -280,10 +195,10 @@ NTSTATUS VirtualDisk::IoReadWrite(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 				status=STATUS_PENDING;
 
 				ExInterlockedInsertTailList(
-					&pDisk->IrpQueueHead,
+					&pDisk->m_irpQueueHead,
 					&Irp->Tail.Overlay.ListEntry,
-					&pDisk->QueueLock);
-				KeReleaseSemaphore(&pDisk->Semaphore,8,1,FALSE);
+					&pDisk->m_irpQueueLock);
+				KeReleaseSemaphore(&pDisk->m_queueSemaphore,8,1,FALSE);
 			}
 		}
 	}
@@ -298,7 +213,7 @@ NTSTATUS VirtualDisk::IoCreateClose(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 	NTSTATUS			status=STATUS_INVALID_DEVICE_REQUEST;
 
 	pDisk=(VirtualDisk*)(DeviceObject->DeviceExtension);
-	if(!pDisk->Initialized)
+	if(!pDisk->m_bInitialized)
 	{
 		Irp->IoStatus.Information=0;
 		Irp->IoStatus.Status=status;
@@ -311,14 +226,14 @@ NTSTATUS VirtualDisk::IoCreateClose(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 	{
 	case IRP_MJ_CREATE:
 		DnPrint("Create");
-		pDisk->DiskInfo.OpenCount++;
+		pDisk->m_diskInfo.OpenCount++;
 		status=STATUS_SUCCESS;
 		break;
 	case IRP_MJ_CLOSE:
-		if(pDisk->DiskInfo.OpenCount)
+		if(pDisk->m_diskInfo.OpenCount)
 		{
 			DnPrint("Close");
-			pDisk->DiskInfo.OpenCount--;
+			pDisk->m_diskInfo.OpenCount--;
 			status=STATUS_SUCCESS;
 		}
 #if DBG
@@ -337,7 +252,7 @@ NTSTATUS VirtualDisk::IoCreateClose(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 }
 
 
-NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
+NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 {
 	NTSTATUS			status=STATUS_INVALID_DEVICE_REQUEST;
 	PIO_STACK_LOCATION	ioStack;
@@ -347,7 +262,7 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 	ULONG				sizeRequired;
 
 	pDisk=(VirtualDisk*)(DeviceObject->DeviceExtension);
-	if(!pDisk->Initialized)
+	if(!pDisk->m_bInitialized)
 	{
 		Irp->IoStatus.Information=0;
 		Irp->IoStatus.Status=status;
@@ -365,7 +280,7 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 	{
 	case IOCTL_DISK_IS_WRITABLE:
 		status=Irp->IoStatus.Status=
-			pDisk->bReadOnly ? STATUS_MEDIA_WRITE_PROTECTED : STATUS_SUCCESS;
+			pDisk->m_bReadOnly ? STATUS_MEDIA_WRITE_PROTECTED : STATUS_SUCCESS;
 		Irp->IoStatus.Information=0;
 		break;
 
@@ -395,9 +310,9 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 
 			((PDISK_GEOMETRY)Buffer)->BytesPerSector=BYTES_PER_SECTOR;
 			((PDISK_GEOMETRY)Buffer)->Cylinders.QuadPart=
-				pDisk->DiskInfo.FileSize.QuadPart>>15;
+				pDisk->m_diskInfo.FileSize.QuadPart>>15;
 			((PDISK_GEOMETRY)Buffer)->MediaType=
-				pDisk->bRemovable?RemovableMedia:FixedMedia;
+				pDisk->m_bRemovable?RemovableMedia:FixedMedia;
 			((PDISK_GEOMETRY)Buffer)->SectorsPerTrack=
 				SECTORS_PER_TRACK;
 			((PDISK_GEOMETRY)Buffer)->TracksPerCylinder=
@@ -419,7 +334,7 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PPARTITION_INFORMATION)Buffer)->BootIndicator=FALSE;
 			((PPARTITION_INFORMATION)Buffer)->HiddenSectors=1;
 			((PPARTITION_INFORMATION)Buffer)->PartitionLength.QuadPart=
-				pDisk->DiskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
+				pDisk->m_diskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
 			((PPARTITION_INFORMATION)Buffer)->PartitionNumber=-1;
 			((PPARTITION_INFORMATION)Buffer)->PartitionType=0;
 			((PPARTITION_INFORMATION)Buffer)->RecognizedPartition=TRUE;
@@ -449,7 +364,7 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			UNICODE_STRING	usDeviceName;
 
 			memset(buff,0,sizeof(buff));
-			DisksManager::GetNtName(pDisk->DiskInfo.DriveLetter,buff);
+			DisksManager::GetNtName(pDisk->m_diskInfo.DriveLetter,buff);
 			RtlInitUnicodeString(&usDeviceName,buff);
 
 			sizeRequired=usDeviceName.Length+sizeof(((PMOUNTDEV_NAME)Buffer)->NameLength);
@@ -489,7 +404,7 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			UNICODE_STRING	usSymLink;
 
 			memset(buff,0,sizeof(buff));
-			DisksManager::GetDosName(pDisk->DiskInfo.DriveLetter,buff);
+			DisksManager::GetDosName(pDisk->m_diskInfo.DriveLetter,buff);
 			RtlInitUnicodeString(&usSymLink,buff);
 
 			sizeRequired=usSymLink.Length
@@ -535,7 +450,7 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 		UNICODE_STRING	usUniqueId;
 
 		memset(buff,0,sizeof(buff));
-		DisksManager::GetUniqueId(pDisk->DiskInfo.DriveLetter,buff);
+		DisksManager::GetUniqueId(pDisk->m_diskInfo.DriveLetter,buff);
 		RtlInitUnicodeString(&usUniqueId,buff);
 
 		sizeRequired=usUniqueId.Length
@@ -564,7 +479,7 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 		if(OutputSize>=sizeof(GET_LENGTH_INFORMATION))
 		{
 			((PGET_LENGTH_INFORMATION)Buffer)->Length.QuadPart=
-				pDisk->DiskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
+				pDisk->m_diskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
 			Irp->IoStatus.Information=sizeof(GET_LENGTH_INFORMATION);
 			status=STATUS_SUCCESS;
 		}
@@ -580,7 +495,7 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PPARTITION_INFORMATION_EX)Buffer)->PartitionStyle=PARTITION_STYLE_MBR;
 			((PPARTITION_INFORMATION_EX)Buffer)->StartingOffset.QuadPart=0;
 			((PPARTITION_INFORMATION_EX)Buffer)->PartitionLength.QuadPart=
-				pDisk->DiskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
+				pDisk->m_diskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
 			((PPARTITION_INFORMATION_EX)Buffer)->PartitionNumber=-1;
 			((PPARTITION_INFORMATION_EX)Buffer)->RewritePartition=FALSE;
 			((PPARTITION_INFORMATION_EX)Buffer)->Mbr.PartitionType=PARTITION_FAT_16;
@@ -607,7 +522,7 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].PartitionStyle=PARTITION_STYLE_MBR;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].StartingOffset.QuadPart=0;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].PartitionLength.QuadPart=
-				pDisk->DiskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
+				pDisk->m_diskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].PartitionNumber=-1;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].RewritePartition=FALSE;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].Mbr.BootIndicator=FALSE;
@@ -630,7 +545,7 @@ NTSTATUS	VirtualDisk::VirtualDiskIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionCount=1;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->Signature=12345678;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].PartitionLength.QuadPart=
-				pDisk->DiskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
+				pDisk->m_diskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].PartitionNumber=-1;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].RewritePartition=FALSE;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].StartingOffset.QuadPart=0;
@@ -663,7 +578,7 @@ NTSTATUS VirtualDisk::IoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 	NTSTATUS			status=STATUS_INVALID_DEVICE_STATE;
 
 	pDisk=(VirtualDisk*)(DeviceObject->DeviceExtension);
-	if(!pDisk->Initialized)
+	if(!pDisk->m_bInitialized)
 	{
 		Irp->IoStatus.Information=0;
 		Irp->IoStatus.Status=status;
@@ -677,10 +592,10 @@ NTSTATUS VirtualDisk::IoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 	status=STATUS_PENDING;
 
 	ExInterlockedInsertTailList(
-		&pDisk->IrpQueueHead,
+		&pDisk->m_irpQueueHead,
 		&Irp->Tail.Overlay.ListEntry,
-		&pDisk->QueueLock);
-	KeReleaseSemaphore(&pDisk->Semaphore,0,1,FALSE);
+		&pDisk->m_irpQueueLock);
+	KeReleaseSemaphore(&pDisk->m_queueSemaphore,0,1,FALSE);
 
 	return status;
 }
@@ -689,28 +604,26 @@ void VirtualDisk::Cleanup()
 {
 	NTSTATUS			status;
 
-	if(!Initialized)
+	if(!m_bInitialized)
 	{
 		return;
 	}
-	DnPrint("VirtualDisk.Cleanup");
+	KdPrint(("VirtualDisk::Cleanup()"));
 
-	ObDereferenceObject(pFileObject);
-	if(bSaveTime)
+	ObDereferenceObject(m_pFileObject);
+	if(m_bSaveTime)
 	{
 		IO_STATUS_BLOCK	io_status;
 
-		status=ZwSetInformationFile(hImageFile, &io_status, &fileBasicInfo,
+		status=ZwSetInformationFile(m_hImageFile, &io_status, &m_fileBasicInfo,
 			sizeof(FILE_BASIC_INFORMATION), FileBasicInformation);
 		if(!NT_SUCCESS(status))
 		{
 			KdPrint(("\nCryptDisk: VirtualDisk::Cleanup ZwSetInformationFile status: %08X", status));
 		}
 	}
-	ZwClose(hImageFile);
+	ZwClose(m_hImageFile);
 }
-
-#define	CACHE_BUFF_SIZE		0x10000
 
 void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 {
@@ -740,7 +653,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 	pDisk=(VirtualDisk*)(pDeviceObject->DeviceExtension);
 	
 	// Allocate cache buffer
-	cacheBuff=(UCHAR*)ExAllocatePool(PagedPool,CACHE_BUFF_SIZE);
+	cacheBuff=(UCHAR*)ExAllocatePoolWithTag(PagedPool, CACHE_BUFF_SIZE, MEM_TAG);
 	if(!cacheBuff)
 	{
 		threadParams->statusReturned=STATUS_INSUFFICIENT_RESOURCES;
@@ -765,18 +678,18 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 	// Main loop
 	for(;;)
 	{
-		KeWaitForSingleObject(&pDisk->Semaphore,Executive,KernelMode,
+		KeWaitForSingleObject(&pDisk->m_queueSemaphore,Executive,KernelMode,
 			FALSE,0);
-		if(pDisk->bTerminateThread)
+		if(pDisk->m_bTerminateThread)
 		{
 			pDisk->Cleanup();
-			ExFreePool(cacheBuff);
+			ExFreePoolWithTag(cacheBuff, MEM_TAG);
 			PsTerminateSystemThread(STATUS_SUCCESS);
 		}
 
 		// Get IRP from queue
 		while(Element=ExInterlockedRemoveHeadList(
-			&pDisk->IrpQueueHead,&pDisk->QueueLock))
+			&pDisk->m_irpQueueHead,&pDisk->m_irpQueueLock))
 		{
 			status=STATUS_INVALID_DEVICE_REQUEST;
 
@@ -806,7 +719,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 								if(pDataBuff=MmGetSystemAddressForMdlSafe(Irp->MdlAddress,NormalPagePriority))
 								{
 									if((FileOffset.QuadPart+RequestLength)<=
-										pDisk->DiskInfo.FileSize.QuadPart)
+										pDisk->m_diskInfo.FileSize.QuadPart)
 									{
 										beginSector=(ULONG)(FileOffset.QuadPart/BYTES_PER_SECTOR-1);
 										Sectors=RequestLength/BYTES_PER_SECTOR;
@@ -820,13 +733,13 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 													FileOffset.QuadPart-sizeof(DISK_HEADER),
 													RequestLength));
 												{
-													if(NT_SUCCESS(status=ZwReadFile(pDisk->hImageFile,NULL,NULL,NULL,
+													if(NT_SUCCESS(status=ZwReadFile(pDisk->m_hImageFile,NULL,NULL,NULL,
 														&IoStatus,pDataBuff,RequestLength,
 														&FileOffset,NULL)))
 													{
 														if(status==STATUS_PENDING)
 														{
-															ZwWaitForSingleObject(pDisk->hImageFile,
+															ZwWaitForSingleObject(pDisk->m_hImageFile,
 																FALSE,NULL);
 														}
 													}
@@ -838,7 +751,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 													if(NT_SUCCESS(IoStatus.Status))
 													{
 														// Decipher buffer
-														pDisk->Cipher.DecipherSectors(beginSector,Sectors,pDataBuff);
+														pDisk->m_cipher.DecipherSectors(beginSector,Sectors,pDataBuff);
 													}
 													status=IoStatus.Status;
 													Irp->IoStatus.Information=IoStatus.Information;
@@ -848,7 +761,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 
 										case IRP_MJ_WRITE:
 											{
-												if(pDisk->bReadOnly)
+												if(pDisk->m_bReadOnly)
 												{
 													status=STATUS_MEDIA_WRITE_PROTECTED;
 													Irp->IoStatus.Information=0;
@@ -864,15 +777,15 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 												// If request length less then cache buffer we use it
 												if(RequestLength<=CACHE_BUFF_SIZE)
 												{
-													pDisk->Cipher.EncipherSectors(beginSector,Sectors,pDataBuff,cacheBuff);
+													pDisk->m_cipher.EncipherSectors(beginSector,Sectors,pDataBuff,cacheBuff);
 
-													if(NT_SUCCESS(status=ZwWriteFile(pDisk->hImageFile,NULL,NULL,NULL,
+													if(NT_SUCCESS(status=ZwWriteFile(pDisk->m_hImageFile,NULL,NULL,NULL,
 														&IoStatus,cacheBuff,RequestLength,
 														&FileOffset,NULL)))
 													{
 														if(status==STATUS_PENDING)
 														{
-															ZwWaitForSingleObject(pDisk->hImageFile,
+															ZwWaitForSingleObject(pDisk->m_hImageFile,
 																FALSE,NULL);
 														}
 													}
@@ -888,18 +801,18 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 												else
 												{
 													// Allocate buffer - one page
-													if(Buff=(UCHAR*)ExAllocatePool(PagedPool,RequestLength))
+													if(Buff=(UCHAR*)ExAllocatePoolWithTag(PagedPool, RequestLength, MEM_TAG))
 													{
-														pDisk->Cipher.EncipherSectors(beginSector,Sectors,pDataBuff,Buff);
+														pDisk->m_cipher.EncipherSectors(beginSector, Sectors, pDataBuff, Buff);
 
-														if(NT_SUCCESS(status=ZwWriteFile(pDisk->hImageFile,NULL,NULL,NULL,
-															&IoStatus,Buff,RequestLength,
-															&FileOffset,NULL)))
+														if(NT_SUCCESS(status=ZwWriteFile(pDisk->m_hImageFile, NULL, NULL, NULL,
+															&IoStatus, Buff, RequestLength,
+															&FileOffset, NULL)))
 														{
 															if(status==STATUS_PENDING)
 															{
-																ZwWaitForSingleObject(pDisk->hImageFile,
-																	FALSE,NULL);
+																ZwWaitForSingleObject(pDisk->m_hImageFile,
+																	FALSE, NULL);
 															}
 														}
 														else
@@ -912,7 +825,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 														status=IoStatus.Status;
 
 														memset(Buff,0,RequestLength);
-														ExFreePool(Buff);
+														ExFreePoolWithTag(Buff, MEM_TAG);
 													}
 													else
 													{
@@ -946,7 +859,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 					}
 					break;
 				case IRP_MJ_DEVICE_CONTROL:
-					status=pDisk->VirtualDiskIoControl(pDeviceObject,Irp);
+					status=pDisk->ThreadIoControl(pDeviceObject,Irp);
 					break;
 				}
 			}
@@ -956,4 +869,202 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 				NT_SUCCESS(status)?IO_DISK_INCREMENT:IO_NO_INCREMENT);
 		}
 	}
+}
+
+NTSTATUS VirtualDisk::SetFlags(DISK_ADD_INFO *pInfo)
+{
+	if(pInfo->MountOptions&MOUNT_AS_REMOVABLE)
+	{
+		m_bRemovable=TRUE;
+	}
+
+	if(pInfo->MountOptions&MOUNT_READ_ONLY)
+	{
+		m_bReadOnly=TRUE;
+	}
+
+	// Do not save time for read-only images and devices
+	if((pInfo->MountOptions&MOUNT_SAVE_TIME) &&
+		((pInfo->MountOptions&(MOUNT_READ_ONLY|MOUNT_DEVICE)) == 0)
+		)
+	{
+		m_bSaveTime=TRUE;
+	}
+
+	return STATUS_SUCCESS;
+}
+
+NTSTATUS VirtualDisk::OpenFile(DISK_ADD_INFO *pInfo)
+{
+	NTSTATUS					status;
+	IO_STATUS_BLOCK				io_status;
+	OBJECT_ATTRIBUTES			obj_attr;
+	UNICODE_STRING				usFileName;
+
+	BOOL						bFileOpened=FALSE;
+
+	// Prepare object attributes
+	RtlInitUnicodeString(&usFileName, pInfo->FilePath);
+
+	InitializeObjectAttributes(&obj_attr,&usFileName,
+		OBJ_CASE_INSENSITIVE|OBJ_KERNEL_HANDLE,NULL,NULL);
+
+	ULONG	fileAcess;
+	ULONG	fileAttributes;
+
+	fileAcess = m_bReadOnly ? GENERIC_READ : GENERIC_READ|GENERIC_WRITE;
+	fileAttributes = FILE_NON_DIRECTORY_FILE|
+		FILE_RANDOM_ACCESS|FILE_NO_INTERMEDIATE_BUFFERING|FILE_SYNCHRONOUS_IO_NONALERT;
+
+	// Open file
+	status = ZwCreateFile(&m_hImageFile, fileAcess,
+		&obj_attr,&io_status, 0, FILE_ATTRIBUTE_NORMAL, 0, FILE_OPEN,
+		fileAttributes,
+		0, 0);
+	if(NT_SUCCESS(status))
+	{
+		bFileOpened=TRUE;
+
+		if( m_bSaveTime && !m_bMountDevice )
+		{
+			status = ZwQueryInformationFile(m_hImageFile, &io_status, &m_fileBasicInfo,
+				sizeof(FILE_BASIC_INFORMATION), FileBasicInformation);
+			if(!NT_SUCCESS(status))
+			{
+				ZwClose(m_hImageFile);
+				return status;
+			}
+		}
+
+		status = ObReferenceObjectByHandle(m_hImageFile, fileAcess,
+			*IoFileObjectType, KernelMode, (PVOID*)&m_pFileObject, NULL);
+		if(NT_SUCCESS(status))
+		{
+			PDEVICE_OBJECT				pFSD;
+
+			// Get related FS Device
+			pFSD = IoGetRelatedDeviceObject(m_pFileObject);
+			if(pFSD)
+			{
+				m_pDevice->StackSize = pFSD->StackSize+1;
+			}
+
+			// Get file size
+			if(m_bMountDevice)
+			{
+				GET_LENGTH_INFORMATION	lengthInfo;
+				ULONG					retLength;
+
+				status = DNDeviceIoControl(pFSD, IOCTL_DISK_GET_LENGTH_INFO,
+					NULL, 0, &lengthInfo, sizeof(lengthInfo), &retLength);
+				if(NT_SUCCESS(status))
+				{
+					m_diskInfo.FileSize.QuadPart=lengthInfo.Length.QuadPart;
+				}
+				else
+				{
+					// If IOCTL_DISK_GET_LENGTH_INFO not supported,
+					// try to use IOCTL_DISK_GET_DRIVE_GEOMETRY
+					DISK_GEOMETRY	geometryInfo;
+
+					status = DNDeviceIoControl(pFSD, IOCTL_DISK_GET_DRIVE_GEOMETRY,
+						NULL, 0, &geometryInfo, sizeof(geometryInfo), &retLength);
+					if(NT_SUCCESS(status))
+					{
+						m_diskInfo.FileSize.QuadPart =
+							geometryInfo.Cylinders.QuadPart *
+							geometryInfo.TracksPerCylinder *
+							geometryInfo.SectorsPerTrack *
+							geometryInfo.BytesPerSector;
+					}
+				}
+			}
+			else
+			{
+				FILE_STANDARD_INFORMATION	file_info;
+
+				status = ZwQueryInformationFile(m_hImageFile, &io_status,
+					&file_info,	sizeof(FILE_STANDARD_INFORMATION),
+					FileStandardInformation);
+				if(NT_SUCCESS(status) && NT_SUCCESS(io_status.Status))
+				{
+					m_diskInfo.FileSize.QuadPart = file_info.EndOfFile.QuadPart;
+				}
+				else
+				{
+					if(NT_SUCCESS(status))
+					{
+						status=io_status.Status;
+					}
+				}
+			}
+		}
+	}
+
+	if(!NT_SUCCESS(status))
+	{
+		// Cleanup on error
+		if(m_pFileObject)
+		{
+			ObDereferenceObject(m_pFileObject);
+			m_pFileObject=NULL;
+		}
+		if(bFileOpened)
+		{
+			ZwClose(m_hImageFile);
+		}
+	}
+	return status;
+}
+
+NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
+{
+	NTSTATUS			status;
+	DISK_HEADER			*pDiskHeader=NULL;
+
+	// Read disk header
+	if(pDiskHeader = (DISK_HEADER*)ExAllocatePoolWithTag(NonPagedPool,
+		sizeof(DISK_HEADER), MEM_TAG))
+	{
+		LARGE_INTEGER		fileOffset;
+		IO_STATUS_BLOCK		io_status;
+
+		fileOffset.QuadPart=0;
+		status = ZwReadFile(m_hImageFile, 0, 0, 0, &io_status,
+			pDiskHeader, sizeof(DISK_HEADER), &fileOffset, 0);
+
+		if(NT_SUCCESS(status)&&NT_SUCCESS(io_status.Status)&&
+			(io_status.Information == sizeof(DISK_HEADER)))
+		{
+			CDiskHeader			header;
+
+			header.Init(pDiskHeader);
+			if(header.Open(pInfo->UserKey, (DISK_CIPHER)pInfo->wAlgoId))
+			{
+				// Init disk cipher
+				m_cipher.Init(pDiskHeader, header.GetAlgoId());
+
+				header.Clear();
+
+				status = STATUS_SUCCESS;
+			}
+			else
+			{
+				status = STATUS_WRONG_PASSWORD;
+			}
+		}
+		memset(pDiskHeader, 0, sizeof(DISK_HEADER));
+		ExFreePoolWithTag(pDiskHeader, MEM_TAG);
+	}
+	else
+	{
+		status = STATUS_INSUFFICIENT_RESOURCES;
+	}
+
+	if(!NT_SUCCESS(status))
+	{
+		m_cipher.Clear();
+	}
+
+	return status;
 }

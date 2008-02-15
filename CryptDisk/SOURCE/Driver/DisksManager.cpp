@@ -44,7 +44,8 @@ NTSTATUS DisksManager::Init(DISKS_MANAGER_INIT_INFO *Info)
 	DisksCountMax=Info->MaxDisks;
 	DisksCount=0;
 
-	if(VirtualDisks=(PDEVICE_OBJECT*)ExAllocatePool(NonPagedPool,DisksCountMax*sizeof(PDEVICE_OBJECT)))
+	if(VirtualDisks=(PDEVICE_OBJECT*)ExAllocatePoolWithTag(NonPagedPool,
+		DisksCountMax*sizeof(PDEVICE_OBJECT), MEM_TAG))
 	{
 		memset(VirtualDisks,0,DisksCountMax*sizeof(PDEVICE_OBJECT));
 		Initialized=1;
@@ -96,7 +97,7 @@ NTSTATUS DisksManager::MountDisk(PUNICODE_STRING pusSymLinkName,PUNICODE_STRING 
 		structSize=sizeof(pTargetName->DeviceNameLength)+pusDeviceName->Length;
 
 		if(pTargetName=(PMOUNTMGR_TARGET_NAME)
-			ExAllocatePool(PagedPool,structSize+4*sizeof(WCHAR)))
+			ExAllocatePoolWithTag(PagedPool, structSize+4*sizeof(WCHAR), MEM_TAG))
 		{
 			memset(pTargetName,0,structSize);
 			pTargetName->DeviceNameLength=pusDeviceName->Length;
@@ -105,7 +106,7 @@ NTSTATUS DisksManager::MountDisk(PUNICODE_STRING pusSymLinkName,PUNICODE_STRING 
 			status=DNDeviceIoControl(pDeviceObject,IOCTL_MOUNTMGR_VOLUME_ARRIVAL_NOTIFICATION,
 				pTargetName,structSize,NULL,0,NULL);
 
-			ExFreePool(pTargetName);
+			ExFreePoolWithTag(pTargetName, MEM_TAG);
 		}
 		else
 		{
@@ -119,7 +120,7 @@ NTSTATUS DisksManager::MountDisk(PUNICODE_STRING pusSymLinkName,PUNICODE_STRING 
 				sizeof(MOUNTMGR_CREATE_POINT_INPUT);
 
 			if(pCreatePoint=(PMOUNTMGR_CREATE_POINT_INPUT)
-				ExAllocatePool(PagedPool,structSize+4*sizeof(WCHAR)))
+				ExAllocatePoolWithTag(PagedPool, structSize+4*sizeof(WCHAR), MEM_TAG))
 			{
 				memset(pCreatePoint,0,structSize);
 
@@ -140,7 +141,7 @@ NTSTATUS DisksManager::MountDisk(PUNICODE_STRING pusSymLinkName,PUNICODE_STRING 
 
 				KdPrint(("\nCryptDisk: DisksManager::MountDisk info: IOCTL_MOUNTMGR_CREATE_POINT status %08X", status));
 
-				ExFreePool(pCreatePoint);
+				ExFreePoolWithTag(pCreatePoint, MEM_TAG);
 			}
 			else
 			{
@@ -228,11 +229,12 @@ NTSTATUS DisksManager::UnmountDisk(DISK_DELETE_INFO *Info)
 				if(NT_SUCCESS(status))
 				{
 					structSize=sizeof(MOUNTMGR_MOUNT_POINT)+usSymLinkName.Length;
-					pMountPoint=(PMOUNTMGR_MOUNT_POINT)ExAllocatePool(PagedPool,structSize+2*sizeof(WCHAR));
+					pMountPoint=(PMOUNTMGR_MOUNT_POINT)ExAllocatePoolWithTag(PagedPool,
+						structSize+2*sizeof(WCHAR), MEM_TAG);
 					if(pMountPoint)
 					{
 						// Allocate buffer for output
-						if(pBuff=ExAllocatePool(PagedPool,PAGE_SIZE))
+						if(pBuff=ExAllocatePoolWithTag(PagedPool, PAGE_SIZE, MEM_TAG))
 						{
 							memset(pMountPoint,0,structSize+2*sizeof(WCHAR));
 
@@ -244,9 +246,9 @@ NTSTATUS DisksManager::UnmountDisk(DISK_DELETE_INFO *Info)
 								pMountPoint,structSize,pBuff,PAGE_SIZE,NULL);
 							KdPrint(("\nCryptDisk: DisksManager::UnmountDisk IOCTL_MOUNTMGR_DELETE_POINTS status=%08X",status));
 
-							ExFreePool(pBuff);
+							ExFreePoolWithTag(pBuff, MEM_TAG);
 						}
-						ExFreePool(pMountPoint);
+						ExFreePoolWithTag(pMountPoint, MEM_TAG);
 					}
 					else
 					{
@@ -364,8 +366,8 @@ NTSTATUS DisksManager::InstallDisk(DISK_ADD_INFO *Info)
 
 		memset(VirtualDisks[i]->DeviceExtension, 0, sizeof(VirtualDisk));
 
-		((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->Initialized=FALSE;
-		((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->nDiskNumber=i;
+		((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_bInitialized=FALSE;
+		((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_nDiskNumber=i;
 
 		status=((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->Init(Info,VirtualDisks[i]);
 		if(!NT_SUCCESS(status))
@@ -384,14 +386,14 @@ NTSTATUS DisksManager::InstallDisk(DISK_ADD_INFO *Info)
 				// Mount disk
 				status=MountDisk(&usSymLinkName,&usDeviceName);
 
-				((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->bMountMgr=TRUE;
+				((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_bMountMgr=TRUE;
 				// If MountMgr fail to create symbolic link, we do it here
 				if(!NT_SUCCESS(status))
 				{
 					KdPrint(("\nCryptDisk: DisksManager::InstallDisk error: MountDisk failed with status %08X", status));
 					status=IoCreateSymbolicLink(&usSymLinkName,&usDeviceName);
 					KdPrint(("\nCryptDisk: DisksManager::InstallDisk info: IoCreateSymbolicLink status %08X", status));
-					((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->bMountMgr=FALSE;
+					((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_bMountMgr=FALSE;
 				}
 			}
 			else
@@ -399,7 +401,7 @@ NTSTATUS DisksManager::InstallDisk(DISK_ADD_INFO *Info)
 				KdPrint(("\nCryptDisk: DisksManager::InstallDisk info: mounting without MountMgr"));
 				status=IoCreateSymbolicLink(&usSymLinkName,&usDeviceName);
 				KdPrint(("\nCryptDisk: DisksManager::InstallDisk info: IoCreateSymbolicLink status %08X", status));
-				((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->bMountMgr=FALSE;
+				((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_bMountMgr=FALSE;
 			}
 
 			DisksCount++;
@@ -425,7 +427,7 @@ NTSTATUS DisksManager::UninstallDisk(DISK_DELETE_INFO *Info)
 	{
 		if(VirtualDisks[i])
 		{
-			if(((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->DiskInfo.DriveLetter==Info->DriveLetter)
+			if(((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_diskInfo.DriveLetter==Info->DriveLetter)
 			{
 				break;
 			}
@@ -473,7 +475,7 @@ NTSTATUS DisksManager::Close(BOOL bForce)
 		if(VirtualDisks[i])
 		{
 			info.bForce=bForce;
-			info.DriveLetter=((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->DiskInfo.DriveLetter;
+			info.DriveLetter=((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_diskInfo.DriveLetter;
 			status=UninstallDisk(&info);
 			if(!NT_SUCCESS(status))
 			{
@@ -484,7 +486,7 @@ NTSTATUS DisksManager::Close(BOOL bForce)
 
 	if(bAllDevicesDeleted)
 	{
-		ExFreePool(VirtualDisks);
+		ExFreePoolWithTag(VirtualDisks, MEM_TAG);
 	}
 
 	Initialized=FALSE;
@@ -566,7 +568,7 @@ NTSTATUS DisksManager::IoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 					if(VirtualDisks[i])
 					{
 						pDisk=(VirtualDisk*)(VirtualDisks[i]->DeviceExtension);
-						pInfo[j++]=pDisk->DiskInfo;
+						pInfo[j++]=pDisk->m_diskInfo;
 					}
 				}
 				Irp->IoStatus.Information=sizeof(DISK_BASIC_INFO)*j;

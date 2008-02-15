@@ -53,6 +53,8 @@ public:
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedButton2();
 	afx_msg void OnBnClickedButton3();
+	afx_msg void OnBnClickedButtonBackup();
+	afx_msg void OnBnClickedButtonRestore();
 protected:
 	BOOL m_bDontAddToRecent;
 };

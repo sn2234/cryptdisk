@@ -123,10 +123,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\ntifs.h"
-				>
-			</File>
-			<File
 				RelativePath=".\resource.h"
 				>
 			</File>
@@ -144,10 +140,6 @@
 			</File>
 			<File
 				RelativePath=".\VirtualDisk.h"
-				>
-			</File>
-			<File
-				RelativePath=".\XPStuff.h"
 				>
 			</File>
 		</Filter>

@@ -62,6 +62,8 @@ BEGIN_MESSAGE_MAP(CPageMount1, CPropertyPage)
 	ON_BN_CLICKED(IDC_BUTTON1, &CPageMount1::OnBnClickedButton1)
 	ON_BN_CLICKED(IDC_BUTTON2, &CPageMount1::OnBnClickedButton2)
 	ON_BN_CLICKED(IDC_BUTTON3, &CPageMount1::OnBnClickedButton3)
+	ON_BN_CLICKED(IDC_BUTTON4, &CPageMount1::OnBnClickedButtonBackup)
+	ON_BN_CLICKED(IDC_BUTTON5, &CPageMount1::OnBnClickedButtonRestore)
 END_MESSAGE_MAP()
 
 
@@ -298,3 +300,13 @@ BOOL CPageMount1::CollectPassword(UCHAR **ppPassword, ULONG *pPaswordLength)
 	return FALSE;
 }
 
+
+void CPageMount1::OnBnClickedButtonBackup()
+{
+	
+}
+
+void CPageMount1::OnBnClickedButtonRestore()
+{
+	
+}

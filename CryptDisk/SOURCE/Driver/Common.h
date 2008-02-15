@@ -40,10 +40,11 @@ typedef		long	BOOL;
 #include "..\Crypto\LRWTwofish.h"
 #include "..\Crypto\SHA256_HASH.h"
 
+#define	MEM_TAG		('sDrC')
+
 // Driver includes
 #include "..\Version.h"
 #include "format.h"
-#include "XPStuff.h"
 #include "disk.h"
 #include "DiskCipher.h"
 #include "DiskHeader.h"

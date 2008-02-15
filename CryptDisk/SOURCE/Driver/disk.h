@@ -64,11 +64,12 @@ typedef struct DISK_BASIC_INFO
 }DISK_BASIC_INFO;
 
 // Flags for MountOptions
-#define		MOUNT_AS_REMOVABLE		1		// Mount drive as removable media
-#define		MOUNT_READ_ONLY			2		// Mount drive read-only (troubles with NTFS!)
-#define		MOUNT_VIA_MOUNTMGR		4		// Use mount manager to create symbolic links,
+#define		MOUNT_AS_REMOVABLE		0x01	// Mount drive as removable media
+#define		MOUNT_READ_ONLY			0x02	// Mount drive read-only (troubles with NTFS!)
+#define		MOUNT_VIA_MOUNTMGR		0x04	// Use mount manager to create symbolic links,
 											// otherwise create links itself. This may surprise some software
-#define		MOUNT_SAVE_TIME			8		// Save current file modify/access time and restore it on dismount
+#define		MOUNT_SAVE_TIME			0x08	// Save current file modify/access time and restore it on dismount
+#define		MOUNT_DEVICE			0x16	// FilePath is partition device name
 
 typedef struct DISK_ADD_INFO
 {

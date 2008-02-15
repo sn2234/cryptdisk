@@ -259,7 +259,7 @@ BOOL CDiskHeader::Open(UCHAR *pUserKey, DISK_CIPHER algoId)
 		{
 			DNAES	*pCipher;
 
-			pCipher=(DNAES*)ExAllocatePool(PagedPool, sizeof(DNAES));
+			pCipher=(DNAES*)ExAllocatePoolWithTag(PagedPool, sizeof(DNAES), MEM_TAG);
 			if(!pCipher)
 			{
 				return FALSE;
@@ -272,14 +272,15 @@ BOOL CDiskHeader::Open(UCHAR *pUserKey, DISK_CIPHER algoId)
 			pCipher->DecipherDataECB(DISK_HEADER_ENC_SIZE/AES_BLOCK_SIZE,
 				header.TweakKey);
 
-			ExFreePool(pCipher);
+			ExFreePoolWithTag(pCipher, MEM_TAG);
 		}
 		break;
 	case DISK_CIPHER_TWOFISH:
 		{
 			DNTwofish	*pCipher;
 
-			pCipher=(DNTwofish*)ExAllocatePool(PagedPool, sizeof(DNTwofish));
+			pCipher=(DNTwofish*)ExAllocatePoolWithTag(PagedPool,
+				sizeof(DNTwofish), MEM_TAG);
 			if(!pCipher)
 			{
 				return FALSE;
@@ -292,7 +293,7 @@ BOOL CDiskHeader::Open(UCHAR *pUserKey, DISK_CIPHER algoId)
 			pCipher->DecipherDataECB(DISK_HEADER_ENC_SIZE/AES_BLOCK_SIZE,
 				header.TweakKey);
 
-			ExFreePool(pCipher);
+			ExFreePoolWithTag(pCipher, MEM_TAG);
 		}
 		break;
 	}

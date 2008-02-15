@@ -19,8 +19,17 @@ User interface:
 All:
 + Key files
 + Add tool to install/remove driver
-- Add command line support
++ Add command line support
 + Add installer
-- Header backup
 + Secure heap
 + Add license to install
+
+===============================================================================
+
+- Header backup
+- Mount partitions
+- Add option to clear MRU
+- Portable version (minimize traces on system)
+- x64 version (?)
+- when uninstall show warning about open disks
+- In favorites dialog make Mount button default
