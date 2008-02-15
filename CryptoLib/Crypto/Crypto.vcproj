@@ -240,6 +240,30 @@
 			<File
 				RelativePath=".\SOURCE\Primitives\LRWMath.asm"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Profile|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\SOURCE\Primitives\LRWMath.h"
@@ -253,10 +277,27 @@
 				RelativePath=".\SOURCE\Primitives\RC4.Asm"
 				>
 				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
 					Name="Profile|Win32"
 					>
 					<Tool
 						Name="MASM"
+						UseSafeExceptionHandlers="true"
 					/>
 				</FileConfiguration>
 			</File>
@@ -271,6 +312,30 @@
 			<File
 				RelativePath=".\SOURCE\Primitives\rj_opt.asm"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Profile|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\SOURCE\Primitives\rj_opt.h"
@@ -287,6 +352,30 @@
 			<File
 				RelativePath=".\SOURCE\Primitives\sha256.asm"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Profile|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\SOURCE\Primitives\sha256.h"
@@ -299,6 +388,30 @@
 			<File
 				RelativePath=".\SOURCE\Primitives\Twofish.asm"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Profile|Win32"
+					>
+					<Tool
+						Name="MASM"
+						UseSafeExceptionHandlers="true"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\SOURCE\Primitives\Twofish.h"
