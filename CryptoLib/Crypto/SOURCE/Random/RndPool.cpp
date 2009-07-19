@@ -29,6 +29,8 @@
 
 #include "RndPool.h"
 
+namespace CryptoLib
+{
 void CRndPool::AddData(void *pData)
 {
 	PUINT64	ptr;
@@ -98,3 +100,4 @@ void CRndPool::GetKeyInternal(void *pKey)
 	hash.Update(m_pool, POOL_SIZE);
 	hash.Final(pKey);
 }
+};

@@ -45,10 +45,6 @@ typedef	__declspec(align(16)) struct	SHA256_CTX
 extern void __stdcall SHA256Init(SHA256_CTX *ctx);
 extern void __stdcall SHA256Update(SHA256_CTX *ctx,void *Input,unsigned long InputLen);
 extern void __stdcall SHA256Final(SHA256_CTX *ctx,void *Didgest);
-
-// Internal
-extern void __stdcall SHA256HashBlock(SHA256_CTX *ctx,void *Input);
-
 #ifdef	__cplusplus
 }
 #endif

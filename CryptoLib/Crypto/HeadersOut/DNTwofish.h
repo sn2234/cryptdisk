@@ -31,21 +31,16 @@
 
 #include "TwofishEngine.h"
 
-#define		ENGINE_BLOCK_SIZE	TWOFISH_BLOCK_BYTES
-#define		ENGINE_KEY_SIZE		TWOFISH_KEY_BYTES
-
 #define		TWOFISH_KEY_SIZE		TWOFISH_KEY_BYTES
 #define		TWOFISH_BLOCK_SIZE		TWOFISH_BLOCK_BYTES
 
 #include "SymmetricCipher.h"
 
-
+namespace CryptoLib
+{
 class DNTwofish : public SymmetricCipher<TwofishEngine>
 {
 };
-
-#undef		ENGINE_BLOCK_SIZE
-#undef		ENGINE_KEY_SIZE
-//typedef	SymmetricCipher<RijndaelEngine> DNAES;
+};
 
 #endif // !defined(AFX_TWOFISH_H__EBDC7B04_4609_11D9_B507_005056C00008__INCLUDED_)

@@ -38,6 +38,9 @@ Key derivation function based on SHA-256
 
 #pragma intrinsic(memset,memcpy)
 
+namespace CryptoLib
+{
+
 static void __fastcall ProcessRound(void *Password,unsigned long PasswordLength,
 						void *Salt,unsigned long SaltLength,
 						void *Output,
@@ -103,3 +106,5 @@ void __fastcall ProcessRound(void *Password,unsigned long PasswordLength,
 	hash.Clear();
 	memset(temp,0,sizeof(temp));
 }
+
+};

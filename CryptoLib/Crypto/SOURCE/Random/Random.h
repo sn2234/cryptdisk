@@ -27,6 +27,8 @@
 
 #define	SEED_FILE_SIZE	4096
 
+namespace CryptoLib
+{
 struct RND_MOUSE_EVENT
 {
 	DWORD		position;	// 4
@@ -94,6 +96,7 @@ protected:
 	CRndPool			m_pool;
 	CRndGenerator		m_gen;
 	TCHAR				m_seedFileName[MAX_PATH];
+};
 };
 
 #endif /* RANDOM_H_HEADER_INCLUDED_BAEC765F */

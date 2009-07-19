@@ -35,10 +35,14 @@
 #pragma once
 #endif
 
+namespace CryptoLib
+{
+
 void __stdcall DeriveKey(void *Password,unsigned long PasswordLength,
 			   void *Salt,unsigned long SaltLength,
 			   void *Key,unsigned long KeyLength,
 			   unsigned long Iterations);
+};
 
 #endif	//_DERIVEKEY_H_INCLUDED
 

@@ -45,5 +45,8 @@
 
 #include "Random.h"
 
+#include "EncryptionModes.h"
+#include "Hmac.h"
+#include "Pkcs5.h"
 
 #endif	//_CRYPT_LIB_H_INCLUDED_

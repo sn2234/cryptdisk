@@ -27,6 +27,8 @@
 
 #include "TestTwofish.h"
 
+using namespace CryptoLib;
+
 typedef struct TWOFISH_TEST{
 	BYTE key[TWOFISH_KEY_SIZE];
 	BYTE plaintext[TWOFISH_BLOCK_SIZE];

@@ -36,6 +36,8 @@ These defines must be declared
 #pragma once
 #pragma	intrinsic(memset,memcpy)
 
+namespace CryptoLib
+{
 template<class SymmetricCipherEngine>
 class SymmetricCipherLRW
 {
@@ -102,7 +104,7 @@ public:
 	__forceinline void DecipherFirstBlock(UCHAR *blockNumber, void *pPlain, void *pCipher)
 	{
 		m_LRW.StartSequence(blockNumber);
-		memcpy(pCipher, pPlain, ENGINE_BLOCK_SIZE);
+		memcpy(pCipher, pPlain, SymmetricCipherEngine::BlockSize);
 		m_LRW.XorTweak(pCipher);
 		m_Engine.DecipherAndXor(m_LRW.GetTweak(), pCipher);
 	}
@@ -110,10 +112,11 @@ public:
 	__forceinline void DecipherNextBlock(void *pPlain, void *pCipher)
 	{
 		m_LRW.NextTweak();
-		memcpy(pCipher, pPlain, ENGINE_BLOCK_SIZE);
+		memcpy(pCipher, pPlain, SymmetricCipherEngine::BlockSize);
 		m_LRW.XorTweak(pCipher);
 		m_Engine.XorAndEncipher(m_LRW.GetTweak(), pCipher);
 	}
+};
 };
 
 #endif	//_SYMMETRIC_CIPHER_LRW_H_INCLUDED_

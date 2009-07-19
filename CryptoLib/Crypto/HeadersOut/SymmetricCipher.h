@@ -28,16 +28,10 @@
 #ifndef _INC_SYMMETRICCIPHER_41A9E0CD012A_INCLUDED
 #define _INC_SYMMETRICCIPHER_41A9E0CD012A_INCLUDED
 
-/*
-	These defines must be declared
-
-#define		ENGINE_BLOCK_SIZE
-#define		ENGINE_KEY_SIZE	
-
-*/
-
 #pragma	intrinsic(memset,memcpy)
 
+namespace CryptoLib
+{
 //##ModelId=41A9E0CD012A
 template<class SymmetricCipherEngine>
 class SymmetricCipher 
@@ -67,8 +61,8 @@ public:
 		for(;BlocksCount;BlocksCount--)
 		{
 			Engine.EncipherBlock(in, out);
-			in+=ENGINE_BLOCK_SIZE;
-			out+=ENGINE_BLOCK_SIZE;
+			in+=SymmetricCipherEngine::BlockSize;
+			out+=SymmetricCipherEngine::BlockSize;
 		}
 	}
 
@@ -81,7 +75,7 @@ public:
 		for(;BlocksCount;BlocksCount--)
 		{
 			Engine.EncipherBlock(buff);
-			buff+=ENGINE_BLOCK_SIZE;
+			buff+=SymmetricCipherEngine::BlockSize;
 		}
 	}
 
@@ -105,10 +99,10 @@ public:
 		for(;BlocksCount;BlocksCount--)
 		{
 			Engine.XorAndEncipher(out,
-				in+ENGINE_BLOCK_SIZE,
-				out+ENGINE_BLOCK_SIZE);
-			in+=ENGINE_BLOCK_SIZE;
-			out+=ENGINE_BLOCK_SIZE;
+				in+SymmetricCipherEngine::BlockSize,
+				out+SymmetricCipherEngine::BlockSize);
+			in+=SymmetricCipherEngine::BlockSize;
+			out+=SymmetricCipherEngine::BlockSize;
 		}
 	}
 
@@ -129,8 +123,8 @@ public:
 		BlocksCount--;
 		for(;BlocksCount;BlocksCount--)
 		{
-			Engine.XorAndEncipher(buff, buff+ENGINE_BLOCK_SIZE);
-			buff+=ENGINE_BLOCK_SIZE;
+			Engine.XorAndEncipher(buff, buff+SymmetricCipherEngine::BlockSize);
+			buff+=SymmetricCipherEngine::BlockSize;
 		}
 	}
 
@@ -144,8 +138,8 @@ public:
 		for(;BlocksCount;BlocksCount--)
 		{
 			Engine.DecipherBlock(in,out);
-			in+=ENGINE_BLOCK_SIZE;
-			out+=ENGINE_BLOCK_SIZE;
+			in+=SymmetricCipherEngine::BlockSize;
+			out+=SymmetricCipherEngine::BlockSize;
 		}
 
 	}
@@ -159,7 +153,7 @@ public:
 		for(;BlocksCount;BlocksCount--)
 		{
 			Engine.DecipherBlock(buff);
-			buff+=ENGINE_BLOCK_SIZE;
+			buff+=SymmetricCipherEngine::BlockSize;
 		}
 	}
 
@@ -181,18 +175,18 @@ public:
 		for(;BlocksCount;BlocksCount--)
 		{
 			Engine.DecipherAndXor(in,
-				in+ENGINE_BLOCK_SIZE,
-				out+ENGINE_BLOCK_SIZE);
-			in+=ENGINE_BLOCK_SIZE;
-			out+=ENGINE_BLOCK_SIZE;
+				in+SymmetricCipherEngine::BlockSize,
+				out+SymmetricCipherEngine::BlockSize);
+			in+=SymmetricCipherEngine::BlockSize;
+			out+=SymmetricCipherEngine::BlockSize;
 		}
 	}
 
 	//##ModelId=41B1D4450301
 	void DecipherDataCBC(long BlocksCount, void * InitVector, void * Data)
 	{
-		unsigned char	Buff1[ENGINE_BLOCK_SIZE];
-		unsigned char	Buff2[ENGINE_BLOCK_SIZE];
+		unsigned char	Buff1[SymmetricCipherEngine::BlockSize];
+		unsigned char	Buff2[SymmetricCipherEngine::BlockSize];
 		unsigned char	*ptr1,*ptr2,*tmp,*data_ptr;
 
 		if(!BlocksCount)
@@ -203,16 +197,16 @@ public:
 		ptr1=Buff1;
 		ptr2=Buff2;
 
-		memcpy(ptr1,Data,ENGINE_BLOCK_SIZE);
+		memcpy(ptr1,Data,SymmetricCipherEngine::BlockSize);
 		Engine.DecipherAndXor(InitVector,Data);
 
-		data_ptr=(unsigned char*)Data+ENGINE_BLOCK_SIZE;
+		data_ptr=(unsigned char*)Data+SymmetricCipherEngine::BlockSize;
 		BlocksCount--;
 		for(;BlocksCount;BlocksCount--)
 		{
-			memcpy(ptr2,data_ptr,ENGINE_BLOCK_SIZE);
+			memcpy(ptr2,data_ptr,SymmetricCipherEngine::BlockSize);
 			Engine.DecipherAndXor(ptr1,data_ptr);
-			data_ptr+=ENGINE_BLOCK_SIZE;
+			data_ptr+=SymmetricCipherEngine::BlockSize;
 			tmp=ptr1;
 			ptr1=ptr2;
 			ptr2=tmp;
@@ -223,6 +217,7 @@ protected:
 	//##ModelId=41A9E5CB016D
 	SymmetricCipherEngine Engine;
 
+};
 };
 
 #endif /* _INC_SYMMETRICCIPHER_41A9E0CD012A_INCLUDED */

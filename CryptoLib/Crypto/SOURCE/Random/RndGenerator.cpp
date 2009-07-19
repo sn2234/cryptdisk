@@ -29,7 +29,10 @@
 
 #include "RndGenerator.h"
 
-void CRndGenerator::Init(void *pKey)
+namespace CryptoLib
+{
+
+	void CRndGenerator::Init(void *pKey)
 {
 	m_cipher.SetupKey(pKey);
 	memset(m_counter, 0, sizeof(m_counter));
@@ -67,3 +70,4 @@ void CRndGenerator::Clear()
 	m_cipher.Clear();
 	RtlSecureZeroMemory(m_counter, sizeof(m_counter));
 }
+};

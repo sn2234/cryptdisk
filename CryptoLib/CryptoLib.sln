@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Crypto", "Crypto\Crypto.vcproj", "{8D66C212-D9C8-416C-B774-544EB115D786}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CryptoLibTest", "CryptoLibTest\CryptoLibTest.vcproj", "{350EBD73-28B5-47AE-9569-865B3C61F226}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8D66C212-D9C8-416C-B774-544EB115D786} = {8D66C212-D9C8-416C-B774-544EB115D786}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Profile|Win32 = Profile|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D66C212-D9C8-416C-B774-544EB115D786}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8D66C212-D9C8-416C-B774-544EB115D786}.Debug|Win32.Build.0 = Debug|Win32
+		{8D66C212-D9C8-416C-B774-544EB115D786}.Profile|Win32.ActiveCfg = Profile|Win32
+		{8D66C212-D9C8-416C-B774-544EB115D786}.Profile|Win32.Build.0 = Profile|Win32
+		{8D66C212-D9C8-416C-B774-544EB115D786}.Release|Win32.ActiveCfg = Release|Win32
+		{8D66C212-D9C8-416C-B774-544EB115D786}.Release|Win32.Build.0 = Release|Win32
+		{350EBD73-28B5-47AE-9569-865B3C61F226}.Debug|Win32.ActiveCfg = Debug|Win32
+		{350EBD73-28B5-47AE-9569-865B3C61F226}.Debug|Win32.Build.0 = Debug|Win32
+		{350EBD73-28B5-47AE-9569-865B3C61F226}.Profile|Win32.ActiveCfg = Release|Win32
+		{350EBD73-28B5-47AE-9569-865B3C61F226}.Profile|Win32.Build.0 = Release|Win32
+		{350EBD73-28B5-47AE-9569-865B3C61F226}.Release|Win32.ActiveCfg = Release|Win32
+		{350EBD73-28B5-47AE-9569-865B3C61F226}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

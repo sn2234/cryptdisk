@@ -32,24 +32,26 @@
 
 #pragma intrinsic(memset)
 
+namespace CryptoLib
+{
 //##ModelId=41ACDCE40261
 class RC4_CIPHER_ENGINE 
 {
 public:
 	//##ModelId=41ACDD2A032A
-	__forceinline void SetupKey(void * UserKey, int KeyLengthBytes)
+	__forceinline void SetupKey(const void *UserKey, int KeyLengthBytes)
 	{
-		rc4KeySetup(&Context,UserKey,KeyLengthBytes);
+		rc4KeySetup(&Context, const_cast<void*>(UserKey), KeyLengthBytes);
 	}
 
 	//##ModelId=41ACDD7E0281
-	__forceinline void Generate(void * Buff, int BuffLen)
+	__forceinline void Generate(void *Buff, int BuffLen)
 	{
 		rc4Gen(&Context,Buff,BuffLen);
 	}
 
 	//##ModelId=41ACDDF7031B
-	__forceinline void Xor(void * Buff, int BuffLen)
+	__forceinline void Xor(void *Buff, int BuffLen)
 	{
 		rc4Xor(&Context,Buff,BuffLen);
 	}
@@ -78,6 +80,7 @@ protected:
 	//##ModelId=41ACDD0E0302
 	RC4_KEY_CTX Context;
 
+};
 };
 
 #endif /* _INC_RC4_CIPHER_ENGINE_41ACDCE40261_INCLUDED */

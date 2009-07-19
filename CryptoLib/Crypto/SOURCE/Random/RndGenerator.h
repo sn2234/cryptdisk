@@ -27,6 +27,8 @@
 
 #pragma once
 
+namespace CryptoLib
+{
 class CRndGenerator
 {
 public:
@@ -65,6 +67,7 @@ protected:
 	DNAES m_cipher;
 
 	UCHAR m_counter[AES_BLOCK_SIZE];
+};
 };
 
 #endif /* RNDGENERATOR_H_HEADER_INCLUDED_BAEC1B09 */

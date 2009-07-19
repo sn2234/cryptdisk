@@ -31,52 +31,62 @@
 
 #include "Twofish.h"
 
+namespace CryptoLib
+{
 class TwofishEngine 
 {
 public:
-	__forceinline void SetupKey(void * UserKey)
+	enum
 	{
-		TwofishSetKey(&Context,UserKey);
+		BlockSize = TWOFISH_BLOCK_BYTES,
+		KeySize = TWOFISH_KEY_BYTES
+	};
+public:
+	__forceinline void SetupKey(const void *UserKey)
+	{
+		TwofishSetKey(&Context, const_cast<void*>(UserKey));
 	}
 
-	__forceinline void EncipherBlock(void * InputBlock, void * OutputBlock)
+	__forceinline void EncipherBlock(const void *InputBlock, void *OutputBlock)
 	{
-		TwofishEncBlock1(&Context,InputBlock,OutputBlock);
+		TwofishEncBlock1(&Context, const_cast<void*>(InputBlock), OutputBlock);
 	}
 
-	__forceinline void EncipherBlock(void * Block)
+	__forceinline void EncipherBlock(void *Block)
 	{
-		TwofishEncBlock2(&Context,Block);
+		TwofishEncBlock2(&Context, Block);
 	}
 
-	__forceinline void XorAndEncipher(void * XorData, void * InputBlock, void * OutputBlock)
+	__forceinline void XorAndEncipher(const void *XorData, const void *InputBlock, void *OutputBlock)
 	{
-		TwofishXorEnc1(&Context,XorData,InputBlock,OutputBlock);
+		TwofishXorEnc1(&Context, const_cast<void*>(XorData),
+			const_cast<void*>(InputBlock), OutputBlock);
 	}
 
-	__forceinline void XorAndEncipher(void * XorData, void * Block)
+	__forceinline void XorAndEncipher(const void *XorData, void *Block)
 	{
-		TwofishXorEnc2(&Context,XorData,Block);
+		TwofishXorEnc2(&Context, const_cast<void*>(XorData), Block);
 	}
 
-	__forceinline void DecipherBlock(void * InputBlock, void * OutputBlock)
+	__forceinline void DecipherBlock(const void *InputBlock, void *OutputBlock)
 	{
-		TwofishDecBlock1(&Context,InputBlock,OutputBlock);
+		TwofishDecBlock1(&Context, const_cast<void*>(InputBlock), OutputBlock);
 	}
 
-	__forceinline void DecipherBlock(void * Block)
+	__forceinline void DecipherBlock(void *Block)
 	{
-		TwofishDecBlock2(&Context,Block);
+		TwofishDecBlock2(&Context, Block);
 	}
 
-	__forceinline void DecipherAndXor(void * XorData, void * InputBlock, void * OutputBlock)
+	__forceinline void DecipherAndXor(const void *XorData, const void *InputBlock, void *OutputBlock)
 	{
-		TwofishDecXor1(&Context,XorData,InputBlock,OutputBlock);
+		TwofishDecXor1(&Context, const_cast<void*>(XorData),
+			const_cast<void*>(InputBlock), OutputBlock);
 	}
 
-	__forceinline void DecipherAndXor(void * XorData, void * Block)
+	__forceinline void DecipherAndXor(const void *XorData, void *Block)
 	{
-		TwofishDecXor2(&Context,XorData,Block);
+		TwofishDecXor2(&Context, const_cast<void*>(XorData), Block);
 	}
 
 	__forceinline void Clear()
@@ -96,6 +106,6 @@ protected:
 	TWOFISH_KEY_CTX Context;
 
 };
-
+};
 
 #endif	//_TWOFISH_ENGINE_H_INCLUDED_

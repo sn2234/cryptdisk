@@ -29,6 +29,8 @@
 
 #include "LRWMath.h"
 
+namespace CryptoLib
+{
 class LRWMode
 {
 public:
@@ -71,6 +73,7 @@ public:
 			i--;
 		}
 	}
+};
 };
 
 #endif	//_LRW_MODE_H_INCLUDED_

@@ -27,6 +27,8 @@
 
 #include "TestAES.h"
 
+using namespace CryptoLib;
+
 typedef struct AES_TEST{
 	BYTE key[AES_KEY_SIZE];
 	BYTE plaintext[AES_BLOCK_SIZE];

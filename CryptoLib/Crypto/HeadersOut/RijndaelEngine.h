@@ -31,63 +31,72 @@
 #include "rj_opt.h"
 
 #pragma intrinsic(memset)
-
+namespace CryptoLib
+{
 //##ModelId=41A9DE6C0304
 class RijndaelEngine 
 {
 public:
-	//##ModelId=41A9DEB30220
-	__forceinline void SetupKey(void * UserKey)
+	enum
 	{
-		::SetupKey(&Context,UserKey);
+		BlockSize = RJ_BLOCK_LEN_BYTES,
+		KeySize = RJ_KEY_LEN_BYTES
+	};
+public:
+	//##ModelId=41A9DEB30220
+	__forceinline void SetupKey(const void *UserKey)
+	{
+		::SetupKey(&Context, const_cast<void*>(UserKey));
 	}
 
 	//##ModelId=41A9DF0C021E
-	__forceinline void EncipherBlock(void * InputBlock, void * OutputBlock)
+	__forceinline void EncipherBlock(const void *InputBlock, void *OutputBlock)
 	{
-		EncipherBlock1(&Context,InputBlock,OutputBlock);
+		EncipherBlock1(&Context, const_cast<void*>(InputBlock), OutputBlock);
 	}
 
 	//##ModelId=41A9DF6F028F
-	__forceinline void EncipherBlock(void * Block)
+	__forceinline void EncipherBlock(void *Block)
 	{
-		EncipherBlock2(&Context,Block);
+		EncipherBlock2(&Context, Block);
 	}
 
 	//##ModelId=41A9DF8300FD
-	__forceinline void XorAndEncipher(void * XorData, void * InputBlock, void * OutputBlock)
+	__forceinline void XorAndEncipher(const void *XorData, const void *InputBlock, void *OutputBlock)
 	{
-		XorAndEncipher1(&Context,XorData,InputBlock,OutputBlock);
+		XorAndEncipher1(&Context, const_cast<void*>(XorData),
+			const_cast<void*>(InputBlock), OutputBlock);
 	}
 
 	//##ModelId=41A9DFCD0149
-	__forceinline void XorAndEncipher(void * XorData, void * Block)
+	__forceinline void XorAndEncipher(void *XorData, void *Block)
 	{
-		XorAndEncipher2(&Context,XorData,Block);
+		XorAndEncipher2(&Context, XorData, Block);
 	}
 
 	//##ModelId=41A9DFE9012C
-	__forceinline void DecipherBlock(void * InputBlock, void * OutputBlock)
+	__forceinline void DecipherBlock(const void *InputBlock, void *OutputBlock)
 	{
-		DecipherBlock1(&Context,InputBlock,OutputBlock);
+		DecipherBlock1(&Context, const_cast<void*>(InputBlock), OutputBlock);
 	}
 
 	//##ModelId=41A9DFF202DD
-	__forceinline void DecipherBlock(void * Block)
+	__forceinline void DecipherBlock(void *Block)
 	{
-		DecipherBlock2(&Context,Block);
+		DecipherBlock2(&Context, Block);
 	}
 
 	//##ModelId=41A9E007030F
-	__forceinline void DecipherAndXor(void * XorData, void * InputBlock, void * OutputBlock)
+	__forceinline void DecipherAndXor(const void *XorData, const void *InputBlock, void *OutputBlock)
 	{
-		DecipherAndXor1(&Context,XorData,InputBlock,OutputBlock);
+		DecipherAndXor1(&Context, const_cast<void*>(XorData),
+			const_cast<void*>(InputBlock), OutputBlock);
 	}
 
 	//##ModelId=41A9E0180206
-	__forceinline void DecipherAndXor(void * XorData, void * Block)
+	__forceinline void DecipherAndXor(const void *XorData, void *Block)
 	{
-		DecipherAndXor2(&Context,XorData,Block);
+		DecipherAndXor2(&Context, const_cast<void*>(XorData), Block);
 	}
 
 	//##ModelId=41A9E0540130
@@ -108,6 +117,7 @@ protected:
 	//##ModelId=41A9DE9A012A
 	RIJNDAEL_KEY_CTX Context;
 
+};
 };
 
 #endif /* _INC_RIJNDAELENGINE_41A9DE6C0304_INCLUDED */

@@ -31,9 +31,17 @@
 #include "sha256.h"
 #pragma	intrinsic(memset)
 
+namespace CryptoLib
+{
 //##ModelId=41A9DCB4038E
 class SHA256_HASH 
 {
+public:
+	enum
+	{
+		blockSize = SHA256_BLOCK_SIZE,
+		didgestSize = SHA256_DIDGEST_SIZE
+	};
 public:
 	//##ModelId=41A9DD6D00A5
 	__forceinline void Init()
@@ -42,15 +50,15 @@ public:
 	}
 
 	//##ModelId=41A9DD6D0362
-	__forceinline void Update(void * Data, unsigned long DataLength)
+	__forceinline void Update(const void *Data, unsigned long DataLength)
 	{
-		SHA256Update(&Context,Data,DataLength);
+		SHA256Update(&Context, const_cast<void*>(Data), DataLength);
 	}
 
 	//##ModelId=41A9DD6E01E7
-	__forceinline void Final(void * Didgest)
+	__forceinline void Final(void *Didgest)
 	{
-		SHA256Final(&Context,Didgest);
+		SHA256Final(&Context, Didgest);
 	}
 
 	//##ModelId=41A9DDE5030A
@@ -71,6 +79,7 @@ protected:
 	//##ModelId=41A9DDF70003
 	SHA256_CTX Context;
 
+};
 };
 
 #endif /* _INC_SHA256_HASH_41A9DCB4038E_INCLUDED */

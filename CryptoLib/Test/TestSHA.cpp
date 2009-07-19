@@ -27,6 +27,8 @@
 
 #include "TestSHA.h"
 
+using namespace CryptoLib;
+
 typedef struct SHA_TEST{
 	char *data;							/* Data to hash */
 	int length;							/* Length of data */

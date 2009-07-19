@@ -29,20 +29,22 @@
 
 #include "TwofishEngine.h"
 
-#define		ENGINE_BLOCK_SIZE	TWOFISH_BLOCK_BYTES
-#define		ENGINE_KEY_SIZE		TWOFISH_KEY_BYTES
-
-#define		TWOFISH_KEY_SIZE		TWOFISH_KEY_BYTES
-#define		TWOFISH_BLOCK_SIZE		TWOFISH_BLOCK_BYTES
+// #define		ENGINE_BLOCK_SIZE	TWOFISH_BLOCK_BYTES
+// #define		ENGINE_KEY_SIZE		TWOFISH_KEY_BYTES
+// 
+ #define		TWOFISH_KEY_SIZE		TWOFISH_KEY_BYTES
+ #define		TWOFISH_BLOCK_SIZE		TWOFISH_BLOCK_BYTES
 
 #include "SymmetricCipherLRW.h"
 
-
+namespace CryptoLib
+{
 class LRWTwofish : public SymmetricCipherLRW<TwofishEngine>
 {
 };
+};
 
-#undef		ENGINE_BLOCK_SIZE
-#undef		ENGINE_KEY_SIZE
+// #undef		ENGINE_BLOCK_SIZE
+// #undef		ENGINE_KEY_SIZE
 
 #endif	//_LRW_TWOFISH_H_INCLUDED_

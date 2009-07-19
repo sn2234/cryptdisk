@@ -25,6 +25,8 @@
 #ifndef RNDSAMPLER_H_HEADER_INCLUDED_BAEC28AF
 #define RNDSAMPLER_H_HEADER_INCLUDED_BAEC28AF
 
+namespace CryptoLib
+{
 class CRndSampler
 {
 public:
@@ -67,7 +69,7 @@ protected:
 	ULONG m_entropyEstimated;
 
 };
-
+};
 
 
 #endif /* RNDSAMPLER_H_HEADER_INCLUDED_BAEC28AF */

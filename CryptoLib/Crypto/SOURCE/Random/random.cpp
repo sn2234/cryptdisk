@@ -29,12 +29,16 @@
 #include "DNAES.h"
 #include "SHA256_HASH.h"
 
+#include "EncryptionModes.h"
+
 #include "RndGenerator.h"
 #include "RndSampler.h"
 #include "RndPool.h"
 
 #include "Random.h"
 
+namespace CryptoLib
+{
 void CRandom::AddMouseEvent(RND_MOUSE_EVENT *pEvent)
 {
 	LARGE_INTEGER	timestamp;
@@ -279,3 +283,4 @@ BOOL CRandom::GenRandom(void *pBuff, ULONG size)
 
 	return TRUE;
 }
+};

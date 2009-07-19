@@ -37,8 +37,11 @@
 
 #include "SymmetricCipherLRW.h"
 
+namespace CryptoLib
+{
 class LRWAES: public SymmetricCipherLRW<RijndaelEngine>
 {
+};
 };
 
 #undef		ENGINE_BLOCK_SIZE

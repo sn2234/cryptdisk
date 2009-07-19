@@ -27,6 +27,8 @@
 
 #include "TestRC4.h"
 
+using namespace CryptoLib;
+
 static const  BYTE testRC4key1[] =
 { 0x01, 0x23, 0x45, 0x67, 0x89, 0xAB, 0xCD, 0xEF };
 static const  BYTE testRC4plaintext1[] =

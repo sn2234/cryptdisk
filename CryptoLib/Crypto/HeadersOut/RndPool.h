@@ -29,6 +29,8 @@
 #define	POOL_BLOCK_SIZE		SHA256_DIDGEST_SIZE
 #define	POOL_SIZE			(POOL_BLOCKS*POOL_BLOCK_SIZE)
 
+namespace CryptoLib
+{
 class CRndPool
 {
 public:
@@ -58,7 +60,7 @@ protected:
 	
 	UCHAR	m_pool[POOL_SIZE];
 };
-
+};
 
 
 #endif /* RNDPOOL_H_HEADER_INCLUDED_BAEC29C7 */

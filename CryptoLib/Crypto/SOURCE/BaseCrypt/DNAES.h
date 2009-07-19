@@ -31,21 +31,22 @@
 
 #include "RijndaelEngine.h"
 
-#define		ENGINE_BLOCK_SIZE	RJ_BLOCK_LEN_BYTES
-#define		ENGINE_KEY_SIZE		RJ_KEY_LEN_BYTES
-
-#define		AES_KEY_SIZE		RJ_KEY_LEN_BYTES
-#define		AES_BLOCK_SIZE		RJ_BLOCK_LEN_BYTES
+// #define		ENGINE_BLOCK_SIZE	RJ_BLOCK_LEN_BYTES
+// #define		ENGINE_KEY_SIZE		RJ_KEY_LEN_BYTES
+// 
+ #define		AES_KEY_SIZE		RJ_KEY_LEN_BYTES
+ #define		AES_BLOCK_SIZE		RJ_BLOCK_LEN_BYTES
 
 #include "SymmetricCipher.h"
 
-
+namespace CryptoLib
+{
 class DNAES : public SymmetricCipher<RijndaelEngine>  
 {
 };
+};
 
-#undef		ENGINE_BLOCK_SIZE
-#undef		ENGINE_KEY_SIZE
-//typedef	SymmetricCipher<RijndaelEngine> DNAES;
+// #undef		ENGINE_BLOCK_SIZE
+// #undef		ENGINE_KEY_SIZE
 
 #endif // !defined(AFX_DNAES_H__EBDC7B04_4609_11D9_B507_005056C00008__INCLUDED_)
