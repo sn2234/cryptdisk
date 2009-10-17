@@ -308,38 +308,38 @@ NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 		{
 			// Fill information
 
-			((PDISK_GEOMETRY)Buffer)->BytesPerSector=BYTES_PER_SECTOR;
-			((PDISK_GEOMETRY)Buffer)->Cylinders.QuadPart=
-				pDisk->m_diskInfo.FileSize.QuadPart>>15;
-			((PDISK_GEOMETRY)Buffer)->MediaType=
-				pDisk->m_bRemovable?RemovableMedia:FixedMedia;
-			((PDISK_GEOMETRY)Buffer)->SectorsPerTrack=
+			((PDISK_GEOMETRY)Buffer)->BytesPerSector = BYTES_PER_SECTOR;
+			((PDISK_GEOMETRY)Buffer)->Cylinders.QuadPart =
+				pDisk->m_diskInfo.FileSize.QuadPart >> 15;
+			((PDISK_GEOMETRY)Buffer)->MediaType =
+				pDisk->m_bRemovable ? RemovableMedia : FixedMedia;
+			((PDISK_GEOMETRY)Buffer)->SectorsPerTrack =
 				SECTORS_PER_TRACK;
-			((PDISK_GEOMETRY)Buffer)->TracksPerCylinder=
+			((PDISK_GEOMETRY)Buffer)->TracksPerCylinder =
 				TRACKS_PER_CYLINDER;
 
 			status=STATUS_SUCCESS;
-			Irp->IoStatus.Information=sizeof(DISK_GEOMETRY);
+			Irp->IoStatus.Information = sizeof(DISK_GEOMETRY);
 		}
 		else
 		{
 			status=STATUS_BUFFER_OVERFLOW;
-			Irp->IoStatus.Information=sizeof(DISK_GEOMETRY);
+			Irp->IoStatus.Information = sizeof(DISK_GEOMETRY);
 		}
 		break;
 
 	case IOCTL_DISK_GET_PARTITION_INFO:
 		if(OutputSize>=sizeof(PARTITION_INFORMATION))
 		{
-			((PPARTITION_INFORMATION)Buffer)->BootIndicator=FALSE;
-			((PPARTITION_INFORMATION)Buffer)->HiddenSectors=1;
-			((PPARTITION_INFORMATION)Buffer)->PartitionLength.QuadPart=
+			((PPARTITION_INFORMATION)Buffer)->BootIndicator = FALSE;
+			((PPARTITION_INFORMATION)Buffer)->HiddenSectors = 1;
+			((PPARTITION_INFORMATION)Buffer)->PartitionLength.QuadPart =
 				pDisk->m_diskInfo.FileSize.QuadPart-sizeof(DISK_HEADER);
-			((PPARTITION_INFORMATION)Buffer)->PartitionNumber=-1;
-			((PPARTITION_INFORMATION)Buffer)->PartitionType=0;
-			((PPARTITION_INFORMATION)Buffer)->RecognizedPartition=TRUE;
-			((PPARTITION_INFORMATION)Buffer)->RewritePartition=0;
-			((PPARTITION_INFORMATION)Buffer)->StartingOffset.QuadPart=0;
+			((PPARTITION_INFORMATION)Buffer)->PartitionNumber = -1;
+			((PPARTITION_INFORMATION)Buffer)->PartitionType = 0;
+			((PPARTITION_INFORMATION)Buffer)->RecognizedPartition = TRUE;
+			((PPARTITION_INFORMATION)Buffer)->RewritePartition = 0;
+			((PPARTITION_INFORMATION)Buffer)->StartingOffset.QuadPart = 0;
 
 			status=STATUS_SUCCESS;
 			Irp->IoStatus.Information=sizeof(PARTITION_INFORMATION);
@@ -611,7 +611,7 @@ void VirtualDisk::Cleanup()
 	KdPrint(("VirtualDisk::Cleanup()"));
 
 	ObDereferenceObject(m_pFileObject);
-	if(m_bSaveTime)
+	if(m_bPreserveTimestamp)
 	{
 		IO_STATUS_BLOCK	io_status;
 
@@ -670,6 +670,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 
 	if(!NT_SUCCESS(status))
 	{
+		ExFreePoolWithTag(cacheBuff, MEM_TAG);
 		PsTerminateSystemThread(status);
 	}
 
@@ -873,23 +874,13 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 
 NTSTATUS VirtualDisk::SetFlags(DISK_ADD_INFO *pInfo)
 {
-	if(pInfo->MountOptions&MOUNT_AS_REMOVABLE)
-	{
-		m_bRemovable=TRUE;
-	}
-
-	if(pInfo->MountOptions&MOUNT_READ_ONLY)
-	{
-		m_bReadOnly=TRUE;
-	}
+	m_bRemovable = (pInfo->MountOptions&MOUNT_AS_REMOVABLE) != 0;
+	m_bReadOnly = (pInfo->MountOptions&MOUNT_READ_ONLY) != 0;
+	m_bMountDevice = (pInfo->MountOptions&MOUNT_DEVICE) != 0;
 
 	// Do not save time for read-only images and devices
-	if((pInfo->MountOptions&MOUNT_SAVE_TIME) &&
-		((pInfo->MountOptions&(MOUNT_READ_ONLY|MOUNT_DEVICE)) == 0)
-		)
-	{
-		m_bSaveTime=TRUE;
-	}
+	m_bPreserveTimestamp = (pInfo->MountOptions&MOUNT_SAVE_TIME) &&
+		((pInfo->MountOptions&(MOUNT_READ_ONLY|MOUNT_DEVICE)) == 0);
 
 	return STATUS_SUCCESS;
 }
@@ -925,7 +916,7 @@ NTSTATUS VirtualDisk::OpenFile(DISK_ADD_INFO *pInfo)
 	{
 		bFileOpened=TRUE;
 
-		if( m_bSaveTime && !m_bMountDevice )
+		if( m_bPreserveTimestamp && !m_bMountDevice )
 		{
 			status = ZwQueryInformationFile(m_hImageFile, &io_status, &m_fileBasicInfo,
 				sizeof(FILE_BASIC_INFORMATION), FileBasicInformation);

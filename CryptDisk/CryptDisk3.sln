@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Driver", "SOURCE\Driver\Driver.vcproj", "{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Manager", "SOURCE\Manager\Manager.vcproj", "{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}"

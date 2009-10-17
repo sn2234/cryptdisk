@@ -74,7 +74,7 @@ protected:
 	BOOL				m_bRemovable;
 	BOOL				m_bReadOnly;
 	BOOL				m_bMountMgr;	// used by DisksManager
-	BOOL				m_bSaveTime;
+	BOOL				m_bPreserveTimestamp;
 	BOOL				m_bMountDevice;
 
 	int					m_nDiskNumber;

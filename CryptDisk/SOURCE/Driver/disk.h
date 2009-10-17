@@ -69,7 +69,7 @@ typedef struct DISK_BASIC_INFO
 #define		MOUNT_VIA_MOUNTMGR		0x04	// Use mount manager to create symbolic links,
 											// otherwise create links itself. This may surprise some software
 #define		MOUNT_SAVE_TIME			0x08	// Save current file modify/access time and restore it on dismount
-#define		MOUNT_DEVICE			0x16	// FilePath is partition device name
+#define		MOUNT_DEVICE			0x10	// FilePath is partition device name
 
 typedef struct DISK_ADD_INFO
 {
