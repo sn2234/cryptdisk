@@ -47,44 +47,44 @@ public:
 		TwofishSetKey(&Context, const_cast<void*>(UserKey));
 	}
 
-	__forceinline void EncipherBlock(const void *InputBlock, void *OutputBlock)
+	__forceinline void EncipherBlock(const void *InputBlock, void *OutputBlock) const
 	{
 		TwofishEncBlock1(&Context, const_cast<void*>(InputBlock), OutputBlock);
 	}
 
-	__forceinline void EncipherBlock(void *Block)
+	__forceinline void EncipherBlock(void *Block) const
 	{
 		TwofishEncBlock2(&Context, Block);
 	}
 
-	__forceinline void XorAndEncipher(const void *XorData, const void *InputBlock, void *OutputBlock)
+	__forceinline void XorAndEncipher(const void *XorData, const void *InputBlock, void *OutputBlock) const
 	{
 		TwofishXorEnc1(&Context, const_cast<void*>(XorData),
 			const_cast<void*>(InputBlock), OutputBlock);
 	}
 
-	__forceinline void XorAndEncipher(const void *XorData, void *Block)
+	__forceinline void XorAndEncipher(const void *XorData, void *Block) const
 	{
 		TwofishXorEnc2(&Context, const_cast<void*>(XorData), Block);
 	}
 
-	__forceinline void DecipherBlock(const void *InputBlock, void *OutputBlock)
+	__forceinline void DecipherBlock(const void *InputBlock, void *OutputBlock) const
 	{
 		TwofishDecBlock1(&Context, const_cast<void*>(InputBlock), OutputBlock);
 	}
 
-	__forceinline void DecipherBlock(void *Block)
+	__forceinline void DecipherBlock(void *Block) const
 	{
 		TwofishDecBlock2(&Context, Block);
 	}
 
-	__forceinline void DecipherAndXor(const void *XorData, const void *InputBlock, void *OutputBlock)
+	__forceinline void DecipherAndXor(const void *XorData, const void *InputBlock, void *OutputBlock) const
 	{
 		TwofishDecXor1(&Context, const_cast<void*>(XorData),
 			const_cast<void*>(InputBlock), OutputBlock);
 	}
 
-	__forceinline void DecipherAndXor(const void *XorData, void *Block)
+	__forceinline void DecipherAndXor(const void *XorData, void *Block) const
 	{
 		TwofishDecXor2(&Context, const_cast<void*>(XorData), Block);
 	}

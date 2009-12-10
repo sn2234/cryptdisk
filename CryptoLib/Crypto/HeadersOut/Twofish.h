@@ -54,17 +54,17 @@ typedef	__declspec(align(16)) struct TWOFISH_KEY_CTX
 
 extern void __stdcall TwofishSetKey(TWOFISH_KEY_CTX *pCtx, void *pUserKey);
 
-extern void __stdcall TwofishEncBlock1(TWOFISH_KEY_CTX *pCtx, void *PlainText, void *CipherText);
-extern void __stdcall TwofishEncBlock2(TWOFISH_KEY_CTX *pCtx, void *Buff);
+extern void __stdcall TwofishEncBlock1(const TWOFISH_KEY_CTX *pCtx, void *PlainText, void *CipherText);
+extern void __stdcall TwofishEncBlock2(const TWOFISH_KEY_CTX *pCtx, void *Buff);
 
-extern void __stdcall TwofishXorEnc1(TWOFISH_KEY_CTX *pCtx, void *XorData, void *PlainText, void *CipherText);
-extern void __stdcall TwofishXorEnc2(TWOFISH_KEY_CTX *pCtx, void *XorData, void *Buff);
+extern void __stdcall TwofishXorEnc1(const TWOFISH_KEY_CTX *pCtx, void *XorData, void *PlainText, void *CipherText);
+extern void __stdcall TwofishXorEnc2(const TWOFISH_KEY_CTX *pCtx, void *XorData, void *Buff);
 
-extern void __stdcall TwofishDecBlock1(TWOFISH_KEY_CTX *pCtx, void *CipherText, void *PlainText);
-extern void __stdcall TwofishDecBlock2(TWOFISH_KEY_CTX *pCtx, void *Buff);
+extern void __stdcall TwofishDecBlock1(const TWOFISH_KEY_CTX *pCtx, void *CipherText, void *PlainText);
+extern void __stdcall TwofishDecBlock2(const TWOFISH_KEY_CTX *pCtx, void *Buff);
 
-extern void __stdcall TwofishDecXor1(TWOFISH_KEY_CTX *pCtx, void *XorData, void *CipherText, void *PlainText);
-extern void __stdcall TwofishDecXor2(TWOFISH_KEY_CTX *pCtx, void *XorData, void *Buff);
+extern void __stdcall TwofishDecXor1(const TWOFISH_KEY_CTX *pCtx, void *XorData, void *CipherText, void *PlainText);
+extern void __stdcall TwofishDecXor2(const TWOFISH_KEY_CTX *pCtx, void *XorData, void *Buff);
 
 #ifdef __cplusplus
 };

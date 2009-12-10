@@ -50,51 +50,51 @@ public:
 	}
 
 	//##ModelId=41A9DF0C021E
-	__forceinline void EncipherBlock(const void *InputBlock, void *OutputBlock)
+	__forceinline void EncipherBlock(const void *InputBlock, void *OutputBlock) const
 	{
 		EncipherBlock1(&Context, const_cast<void*>(InputBlock), OutputBlock);
 	}
 
 	//##ModelId=41A9DF6F028F
-	__forceinline void EncipherBlock(void *Block)
+	__forceinline void EncipherBlock(void *Block) const
 	{
 		EncipherBlock2(&Context, Block);
 	}
 
 	//##ModelId=41A9DF8300FD
-	__forceinline void XorAndEncipher(const void *XorData, const void *InputBlock, void *OutputBlock)
+	__forceinline void XorAndEncipher(const void *XorData, const void *InputBlock, void *OutputBlock) const
 	{
 		XorAndEncipher1(&Context, const_cast<void*>(XorData),
 			const_cast<void*>(InputBlock), OutputBlock);
 	}
 
 	//##ModelId=41A9DFCD0149
-	__forceinline void XorAndEncipher(void *XorData, void *Block)
+	__forceinline void XorAndEncipher(void *XorData, void *Block) const
 	{
 		XorAndEncipher2(&Context, XorData, Block);
 	}
 
 	//##ModelId=41A9DFE9012C
-	__forceinline void DecipherBlock(const void *InputBlock, void *OutputBlock)
+	__forceinline void DecipherBlock(const void *InputBlock, void *OutputBlock) const
 	{
 		DecipherBlock1(&Context, const_cast<void*>(InputBlock), OutputBlock);
 	}
 
 	//##ModelId=41A9DFF202DD
-	__forceinline void DecipherBlock(void *Block)
+	__forceinline void DecipherBlock(void *Block) const
 	{
 		DecipherBlock2(&Context, Block);
 	}
 
 	//##ModelId=41A9E007030F
-	__forceinline void DecipherAndXor(const void *XorData, const void *InputBlock, void *OutputBlock)
+	__forceinline void DecipherAndXor(const void *XorData, const void *InputBlock, void *OutputBlock) const
 	{
 		DecipherAndXor1(&Context, const_cast<void*>(XorData),
 			const_cast<void*>(InputBlock), OutputBlock);
 	}
 
 	//##ModelId=41A9E0180206
-	__forceinline void DecipherAndXor(const void *XorData, void *Block)
+	__forceinline void DecipherAndXor(const void *XorData, void *Block) const
 	{
 		DecipherAndXor2(&Context, const_cast<void*>(XorData), Block);
 	}

@@ -6,6 +6,18 @@
 namespace CryptoLib
 {
 
+//************************************
+// Method:    EncipherDataCbc
+// FullName:  CryptoLib<Engine>::EncipherDataCbc
+// Access:    public 
+// Returns:   void
+// Qualifier: Encipher data using CBC mode
+// Parameter: [in] const Engine & cipher
+// Parameter: [in] size_t BlocksCount
+// Parameter: [in] const void * InitVector
+// Parameter: [in] const void * InputData
+// Parameter: [out] void * OutputData
+//************************************
 template<class Engine>
 void EncipherDataCbc(const Engine& cipher, size_t BlocksCount, const void *InitVector, const void *InputData, void *OutputData)
 {
@@ -31,6 +43,17 @@ void EncipherDataCbc(const Engine& cipher, size_t BlocksCount, const void *InitV
 	}
 }
 
+//************************************
+// Method:    EncipherDataCbc
+// FullName:  CryptoLib<Engine>::EncipherDataCbc
+// Access:    public 
+// Returns:   void
+// Qualifier: Encipher data using CBC mode. In-place version.
+// Parameter: [in] const Engine & cipher
+// Parameter: [in] size_t BlocksCount
+// Parameter: [in] const void * InitVector
+// Parameter: [in, out] void * Data
+//************************************
 template<class Engine>
 void EncipherDataCbc(const Engine& cipher, size_t BlocksCount, const void *InitVector, void *Data)
 {
@@ -52,6 +75,18 @@ void EncipherDataCbc(const Engine& cipher, size_t BlocksCount, const void *InitV
 	}
 }
 
+//************************************
+// Method:    DecipherDataCbc
+// FullName:  CryptoLib<Engine>::DecipherDataCbc
+// Access:    public 
+// Returns:   void
+// Qualifier: Decipher data using CBC mode.
+// Parameter: [in] const Engine & cipher
+// Parameter: [in] size_t BlocksCount
+// Parameter: [in] const void * InitVector
+// Parameter: [in] const void * InputData
+// Parameter: [in] void * OutputData
+//************************************
 template<class Engine>
 void DecipherDataCbc(const Engine& cipher, size_t BlocksCount, const void *InitVector, const void *InputData, void *OutputData)
 {
@@ -77,6 +112,17 @@ void DecipherDataCbc(const Engine& cipher, size_t BlocksCount, const void *InitV
 	}
 }
 
+//************************************
+// Method:    DecipherDataCbc
+// FullName:  CryptoLib<Engine>::DecipherDataCbc
+// Access:    public 
+// Returns:   void
+// Qualifier: Decipher data using CBC mode. In-place version
+// Parameter: [in] const Engine & cipher
+// Parameter: [in] size_t BlocksCount
+// Parameter: [in] const void * InitVector
+// Parameter: [in, out] void * Data
+//************************************
 template<class Engine>
 void DecipherDataCbc(const Engine& cipher, size_t BlocksCount, const void *InitVector, void *Data)
 {

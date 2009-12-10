@@ -4,6 +4,17 @@
 namespace CryptoLib
 {
 
+//************************************
+// Method:    EncipherDataEcb
+// FullName:  CryptoLib<Engine>::EncipherDataEcb
+// Access:    public 
+// Returns:   void
+// Qualifier: Encipher data in ECB mode.
+// Parameter: [in] const Engine & cipher
+// Parameter: [in] size_t BlocksCount
+// Parameter: [in] const void * InputData
+// Parameter: [out] void * OutputData
+//************************************
 template<class Engine>
 void EncipherDataEcb(const Engine& cipher, size_t BlocksCount, const void *InputData, void *OutputData)
 {
@@ -18,6 +29,16 @@ void EncipherDataEcb(const Engine& cipher, size_t BlocksCount, const void *Input
 	}
 }
 
+//************************************
+// Method:    EncipherDataEcb
+// FullName:  CryptoLib<Engine>::EncipherDataEcb
+// Access:    public 
+// Returns:   void
+// Qualifier: Encipher data in ECB mode. In-place version.
+// Parameter: [in] const Engine & cipher
+// Parameter: [in] size_t BlocksCount
+// Parameter: [in, out] void * Data
+//************************************
 template<class Engine>
 void EncipherDataEcb(const Engine& cipher, size_t BlocksCount, void *Data)
 {
@@ -30,6 +51,17 @@ void EncipherDataEcb(const Engine& cipher, size_t BlocksCount, void *Data)
 	}
 }
 
+//************************************
+// Method:    DecipherDataEcb
+// FullName:  CryptoLib<Engine>::DecipherDataEcb
+// Access:    public 
+// Returns:   void
+// Qualifier: Decipher data in ECB mode.
+// Parameter: [in] const Engine & cipher
+// Parameter: [in] size_t BlocksCount
+// Parameter: [in] const void * InputData
+// Parameter: [out] void * OutputData
+//************************************
 template<class Engine>
 void DecipherDataEcb(const Engine& cipher, size_t BlocksCount, const void *InputData, void *OutputData)
 {
@@ -44,6 +76,16 @@ void DecipherDataEcb(const Engine& cipher, size_t BlocksCount, const void *Input
 	}
 }
 
+//************************************
+// Method:    DecipherDataEcb
+// FullName:  CryptoLib<Engine>::DecipherDataEcb
+// Access:    public 
+// Returns:   void
+// Qualifier: Decipher data in ECB mode. In-place version.
+// Parameter: [in] const Engine & cipher
+// Parameter: [in] size_t BlocksCount
+// Parameter: [in, out] void * Data
+//************************************
 template<class Engine>
 void DecipherDataEcb(const Engine& cipher, size_t BlocksCount, void * Data)
 {
