@@ -1,12 +1,12 @@
 
-pushd I:\WinDDk\6000\bin
+pushd C:\WinDDK\6001.18002\bin\
 if "%1" EQU "DBG" goto debug_
 
-call setenv I:\WinDDk\6000 fre WNET
+call setenv C:\WinDDK\6001.18002 fre WNET
 goto build_
 
 :debug_
-call setenv I:\WinDDk\6000 chk WNET
+call setenv C:\WinDDK\6001.18002 chk WNET
 
 :build_
 popd
