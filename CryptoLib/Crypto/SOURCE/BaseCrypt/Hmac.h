@@ -1,7 +1,7 @@
 
 #pragma once
 
-#include "Tools.h"
+#include "../Primitives/Tools.h"
 
 #pragma	intrinsic(memset,memcpy)
 

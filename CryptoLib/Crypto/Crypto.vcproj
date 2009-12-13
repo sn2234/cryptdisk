@@ -84,7 +84,7 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				CommandLine="$(ProjectDir)CopyHeaders.cmd"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration

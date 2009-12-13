@@ -28,7 +28,7 @@
 #ifndef _INC_RC4_CIPHER_ENGINE_41ACDCE40261_INCLUDED
 #define _INC_RC4_CIPHER_ENGINE_41ACDCE40261_INCLUDED
 
-#include "rc4.h"
+#include "../Primitives/rc4.h"
 
 #pragma intrinsic(memset)
 

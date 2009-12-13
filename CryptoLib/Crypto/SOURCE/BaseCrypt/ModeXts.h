@@ -24,7 +24,7 @@
 
 #pragma once
 
-#include "Tools.h"
+#include "../Primitives/Tools.h"
 
 //************************************
 // Method:    XtsSectorEncipher

@@ -28,7 +28,7 @@
 #ifndef _INC_SHA256_HASH_41A9DCB4038E_INCLUDED
 #define _INC_SHA256_HASH_41A9DCB4038E_INCLUDED
 
-#include "sha256.h"
+#include "../Primitives/sha256.h"
 #pragma	intrinsic(memset)
 
 namespace CryptoLib

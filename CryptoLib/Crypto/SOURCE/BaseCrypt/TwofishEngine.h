@@ -29,7 +29,7 @@
 #pragma once
 #endif
 
-#include "Twofish.h"
+#include "../Primitives/Twofish.h"
 
 namespace CryptoLib
 {

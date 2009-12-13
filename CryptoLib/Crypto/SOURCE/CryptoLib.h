@@ -29,24 +29,24 @@
 
 // Include all headers
 
-#include "SHA256_HASH.h"
-#include "RC4_CIPHER_ENGINE.h"
+#include "BaseCrypt/SHA256_HASH.h"
+#include "BaseCrypt/RC4_CIPHER_ENGINE.h"
 
-#include "DeriveKey.h"
-#include "DNAES.h"
-#include "DNTwofish.h"
-#include "LRWMode.h"
-#include "LRWTwofish.h"
-#include "LRWAes.h"
+#include "BaseCrypt/DeriveKey.h"
+#include "BaseCrypt/DNAES.h"
+#include "BaseCrypt/DNTwofish.h"
+#include "BaseCrypt/LRWMode.h"
+#include "BaseCrypt/LRWTwofish.h"
+#include "BaseCrypt/LRWAes.h"
 
-#include "RndGenerator.h"
-#include "RndSampler.h"
-#include "RndPool.h"
+#include "Random/RndGenerator.h"
+#include "Random/RndSampler.h"
+#include "Random/RndPool.h"
 
-#include "Random.h"
+#include "Random/Random.h"
 
-#include "EncryptionModes.h"
-#include "Hmac.h"
-#include "Pkcs5.h"
+#include "BaseCrypt/EncryptionModes.h"
+#include "BaseCrypt/Hmac.h"
+#include "BaseCrypt/Pkcs5.h"
 
 #endif	//_CRYPT_LIB_H_INCLUDED_

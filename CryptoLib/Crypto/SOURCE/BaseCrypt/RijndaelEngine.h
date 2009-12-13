@@ -28,7 +28,7 @@
 #ifndef _INC_RIJNDAELENGINE_41A9DE6C0304_INCLUDED
 #define _INC_RIJNDAELENGINE_41A9DE6C0304_INCLUDED
 
-#include "rj_opt.h"
+#include "../Primitives/rj_opt.h"
 
 #pragma intrinsic(memset)
 namespace CryptoLib

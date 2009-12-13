@@ -27,7 +27,7 @@
 
 #pragma once
 
-#include "LRWMath.h"
+#include "../Primitives/LRWMath.h"
 
 namespace CryptoLib
 {
