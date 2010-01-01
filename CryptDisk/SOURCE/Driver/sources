@@ -30,7 +30,7 @@ LINK_LIB_IGNORE=4210
 PRECOMPILED_INCLUDE=StdAfx.h
 PRECOMPILED_CXX=1
 
-INCLUDES= $(BASEDIR)\inc\wnet;
+INCLUDES= $(BASEDIR)\inc\wnet;$(CRYPTO_LIB_DIR)\SOURCE;.;
 
 SOURCES= \
 	DiskCipher.cpp \
@@ -38,4 +38,9 @@ SOURCES= \
 	main.cpp \
 	Tools.cpp \
 	DisksManager.cpp \
-	VirtualDisk.cpp
+	VirtualDisk.cpp \
+	DiskCipherAesV3.cpp \
+	DiskCipherAesV4.cpp \
+	DiskCipherTwofishV3.cpp \
+	DiskCipherTwofishV4.cpp \
+	Memtools.cpp

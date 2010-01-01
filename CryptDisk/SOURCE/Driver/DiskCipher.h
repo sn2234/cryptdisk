@@ -27,6 +27,15 @@
 
 #pragma once
 
+#include "disk.h"
+
+#include <BaseCrypt\DNAES.h>
+#include <BaseCrypt\DNTwofish.h>
+#include <BaseCrypt\LRWMode.h>
+#include <BaseCrypt\LRWAES.h>
+#include <BaseCrypt\LRWTwofish.h>
+#include <BaseCrypt\SHA256_HASH.h>
+
 enum DISK_CIPHER
 {
 	DISK_CIPHER_AES=1,
@@ -103,11 +112,9 @@ protected:
 
 	union
 	{
-		LRWAES			m_LrwAES;
-		LRWTwofish		m_LrwTwofish;
+		CryptoLib::LRWAES			m_LrwAES;
+		CryptoLib::LRWTwofish		m_LrwTwofish;
 	};
 };
-
-
 
 #endif /* CRYPTO_DISKCIPHER_H_HEADER_INCLUDED_BD126D1B */

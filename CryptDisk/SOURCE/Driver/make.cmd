@@ -10,5 +10,6 @@ call setenv C:\WinDDK\6001.18002 chk WNET
 
 :build_
 popd
+set CRYPTO_LIB_DIR=..\..\..\CryptoLib\Crypto
 build -g -386
 

@@ -24,7 +24,13 @@
 
 #include "stdafx.h"
 
-#include "Common.h"
+#include "..\Version.h"
+#include "format.h"
+#include "disk.h"
+
+#include "main.h"
+#include "VirtualDisk.h"
+#include "Tools.h"
 
 #ifndef FSCTL_LOCK_VOLUME
 #define FSCTL_LOCK_VOLUME               CTL_CODE(FILE_DEVICE_FILE_SYSTEM,  6, METHOD_BUFFERED, FILE_ANY_ACCESS)

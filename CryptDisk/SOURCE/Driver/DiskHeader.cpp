@@ -24,7 +24,10 @@
 
 #include "StdAfx.h"
 
-#include <Common.h>
+#include "DiskHeader.h"
+#include "..\Version.h"
+
+using namespace CryptoLib;
 
 // This function prepares disk header, but not encipher it
 #ifdef	_USER_MODE_

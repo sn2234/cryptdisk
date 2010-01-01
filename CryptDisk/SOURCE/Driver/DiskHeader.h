@@ -27,6 +27,8 @@
 
 #pragma once
 
+#include "DiskCipher.h"
+
 class CDiskHeader
 {
 public:

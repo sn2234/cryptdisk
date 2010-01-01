@@ -24,8 +24,6 @@
 
 #include "stdafx.h"
 
-#include "Common.h"
-
 NTSTATUS DNDeviceIoControl(IN PDEVICE_OBJECT pDevice, IN ULONG dwIoControlCode, IN PVOID lpInBuffer, IN ULONG nInBufferSize, OUT PVOID lpOutBuffer, IN ULONG nOutBufferSize, OUT PULONG lpBytesReturned)
 {
 	NTSTATUS			status;

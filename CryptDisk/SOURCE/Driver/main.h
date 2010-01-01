@@ -29,6 +29,8 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "DisksManager.h"
+
 extern PDRIVER_OBJECT		pDriverObj;
 extern PDEVICE_OBJECT		pControlDevice;
 extern DisksManager			Manager;

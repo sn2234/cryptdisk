@@ -29,6 +29,15 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
+#include "format.h"
+
+#include <BaseCrypt\DNAES.h>
+#include <BaseCrypt\DNTwofish.h>
+#include <BaseCrypt\LRWMode.h>
+#include <BaseCrypt\LRWAES.h>
+#include <BaseCrypt\LRWTwofish.h>
+#include <BaseCrypt\SHA256_HASH.h>
+
 #pragma pack(push)
 #pragma pack(1)
 

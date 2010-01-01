@@ -27,7 +27,7 @@
 
 #include "stdafx.h"
 
-#include "Common.h"
+#include "..\Version.h"
 
 static TCHAR DriverServiceName[]=_TEXT("CryptDisk30");
 static TCHAR DriverControlDeviceName[]=_TEXT("\\\\.\\DNDiskControl30");

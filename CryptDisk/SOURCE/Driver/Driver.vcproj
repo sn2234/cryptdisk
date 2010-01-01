@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="Driver"
 	ProjectGUID="{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}"
 	RootNamespace="Driver"
@@ -70,6 +70,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DiskCipherAesV3.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskCipherAesV4.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskCipherTwofishV3.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskCipherTwofishV4.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\DiskHeader.cpp"
 				>
 			</File>
@@ -79,6 +95,10 @@
 			</File>
 			<File
 				RelativePath=".\main.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Memtools.cpp"
 				>
 			</File>
 			<File
@@ -108,7 +128,31 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DiskCipherAesV3.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskCipherAesV4.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskCipherTwofishV3.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskCipherTwofishV4.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DiskHeader.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskParamatersV3.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DiskParametersV4.h"
 				>
 			</File>
 			<File
@@ -120,7 +164,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IDiskCipher.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IDiskParameters.h"
+				>
+			</File>
+			<File
 				RelativePath=".\main.h"
+				>
+			</File>
+			<File
+				RelativePath=".\platform.h"
 				>
 			</File>
 			<File

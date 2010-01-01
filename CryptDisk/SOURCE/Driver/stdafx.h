@@ -34,3 +34,4 @@ extern "C"{
 //#include "..\ntifs.h"
 };
 
+#include <platform.h>

@@ -24,7 +24,15 @@
 
 #include "stdafx.h"
 
-#include "Common.h"
+#include "..\Version.h"
+#include "format.h"
+#include "disk.h"
+
+#include "VirtualDisk.h"
+#include "DiskHeader.h"
+#include "DisksManager.h"
+#include "Tools.h"
+
 
 extern "C"
 NTSYSAPI

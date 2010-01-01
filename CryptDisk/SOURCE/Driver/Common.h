@@ -30,15 +30,16 @@
 #endif // _MSC_VER > 1000
 
 // Typedefs
-typedef		long	BOOL;
 
 // Crypto includes
-#include "..\Crypto\DNAES.h"
-#include "..\Crypto\DNTwofish.h"
-#include "..\Crypto\LRWMode.h"
-#include "..\Crypto\LRWAES.h"
-#include "..\Crypto\LRWTwofish.h"
-#include "..\Crypto\SHA256_HASH.h"
+#include <BaseCrypt\DNAES.h>
+#include <BaseCrypt\DNTwofish.h>
+#include <BaseCrypt\LRWMode.h>
+#include <BaseCrypt\LRWAES.h>
+#include <BaseCrypt\LRWTwofish.h>
+#include <BaseCrypt\SHA256_HASH.h>
+
+using namespace CryptoLib;
 
 #define	MEM_TAG		('sDrC')
 

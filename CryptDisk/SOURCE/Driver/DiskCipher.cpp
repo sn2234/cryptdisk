@@ -24,7 +24,9 @@
 
 #include "stdafx.h"
 
-#include <Common.h>
+#include "DiskCipher.h"
+
+using namespace CryptoLib;
 
 void DiskCipher::Init(DISK_HEADER* pHeader, DISK_CIPHER cipher)
 {

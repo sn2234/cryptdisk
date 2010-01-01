@@ -30,7 +30,12 @@
 #pragma message("************************************************************")
 #endif
 
-#include "Common.h"
+#include "..\Version.h"
+#include "format.h"
+#include "disk.h"
+
+#include "VirtualDisk.h"
+#include "main.h"
 
 #define	MAX_DISKS		26
 
