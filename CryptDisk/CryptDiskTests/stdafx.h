@@ -23,4 +23,4 @@
 // CryptoLib
 #include <CryptoLib.h>
 
-#include "platform.h"
+#include "Platform.h"

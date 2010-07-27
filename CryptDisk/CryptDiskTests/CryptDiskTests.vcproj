@@ -209,6 +209,10 @@
 					/>
 				</FileConfiguration>
 			</File>
+			<File
+				RelativePath=".\TestDiskCipherAesV3.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

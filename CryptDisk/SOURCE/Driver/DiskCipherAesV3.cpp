@@ -74,8 +74,8 @@ void DiscCipherAesV3::EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCo
 
 	m_cipher.EncipherFirstBlock(blockNumberByte, pPlainData, pCipherData);
 
-	const UCHAR *plainDataPtr = (const UCHAR *)pPlainData;
-	UCHAR *cipherDataPtr = (UCHAR *)pCipherData;
+	const UCHAR *plainDataPtr = static_cast<const UCHAR *>(pPlainData);
+	UCHAR *cipherDataPtr = static_cast<UCHAR *>(pCipherData);
 	UINT64 cipherBlocksCount = blocksCount * (BYTES_PER_SECTOR/CryptoLib::RijndaelEngine::BlockSize);
 	while(--cipherBlocksCount)
 	{
@@ -112,7 +112,7 @@ void DiscCipherAesV3::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCo
 	}
 }
 
-void DiscCipherAesV3::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pPlainData, PVOID pCipherData)
+void DiscCipherAesV3::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pCipherData, PVOID pPlainData)
 {
 	union
 	{
@@ -129,10 +129,10 @@ void DiscCipherAesV3::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCo
 
 	blockNumberInt64 = firstBlockIndex*BYTES_PER_SECTOR/16;
 
-	m_cipher.EncipherFirstBlock(blockNumberByte, pPlainData, pCipherData);
+	m_cipher.DecipherFirstBlock(blockNumberByte, pCipherData, pPlainData);
 
-	UCHAR *plainDataPtr = (UCHAR *)pPlainData;
-	const UCHAR *cipherDataPtr = (const UCHAR *)pCipherData;
+	UCHAR *plainDataPtr = static_cast<UCHAR *>(pPlainData);
+	const UCHAR *cipherDataPtr = static_cast<const UCHAR *>(pCipherData);
 	UINT64 cipherBlocksCount = blocksCount * (BYTES_PER_SECTOR/CryptoLib::RijndaelEngine::BlockSize);
 	while(--cipherBlocksCount)
 	{

@@ -14,7 +14,11 @@
 class DiskParamatersV3 : public IDiskParameters
 {
 public:
-	DiskParamatersV3();
+	DiskParamatersV3(const unsigned char* diskKey, const unsigned char* tweakKey)
+	{
+		memcpy(m_diskKey, diskKey, sizeof(m_diskKey));
+		memcpy(m_tweakKey, tweakKey, sizeof(m_tweakKey));
+	}
 	virtual ~DiskParamatersV3(){}
 
 	virtual const wchar_t* getTextVersion() const { return L"V3"; }
