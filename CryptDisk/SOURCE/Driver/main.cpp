@@ -39,6 +39,23 @@
 
 #define	MAX_DISKS		26
 
+// OACR functions definitions
+DRIVER_UNLOAD DriverUnload;
+
+__drv_dispatchType(IRP_MJ_CREATE)
+__drv_dispatchType(IRP_MJ_CLOSE)
+DRIVER_DISPATCH DispatchCreateClose;
+
+__drv_dispatchType(IRP_MJ_DEVICE_CONTROL)
+DRIVER_DISPATCH DispatchControl;
+
+__drv_dispatchType(IRP_MJ_READ)
+__drv_dispatchType(IRP_MJ_WRITE)
+DRIVER_DISPATCH DispatchReadWrite;
+extern "C"
+DRIVER_INITIALIZE DriverEntry;
+
+
 // private functions
 static void DriverUnload(PDRIVER_OBJECT DriverObject);
 static NTSTATUS DispatchControl(IN PDEVICE_OBJECT DeviceObject, IN PIRP Irp);

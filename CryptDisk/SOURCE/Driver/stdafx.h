@@ -35,3 +35,6 @@ extern "C"{
 };
 
 #include <platform.h>
+
+#pragma hdrstop
+#include <ntstrsafe.h>

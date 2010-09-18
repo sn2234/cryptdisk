@@ -5,8 +5,7 @@
 //  Original author: nobody
 ///////////////////////////////////////////////////////////
 
-#if !defined(EA_A72286B6_4BAF_4d3a_8D2A_B5ECF3242C5C__INCLUDED_)
-#define EA_A72286B6_4BAF_4d3a_8D2A_B5ECF3242C5C__INCLUDED_
+#pragma once
 
 #include <BaseCrypt\DNAES.h>
 #include <BaseCrypt\LRWMode.h>
@@ -30,5 +29,3 @@ public:
 private:
 	CryptoLib::LRWAES	m_cipher;
 };
-
-#endif // !defined(EA_A72286B6_4BAF_4d3a_8D2A_B5ECF3242C5C__INCLUDED_)

@@ -49,7 +49,7 @@ public:
 	static	NTSTATUS	IoCreateClose(PDEVICE_OBJECT DeviceObject,PIRP Irp);
 
 	// Worker thread
-	static	void __stdcall VirtualDiskThread(PVOID param);
+	static KSTART_ROUTINE VirtualDiskThread;
 	// IRP_MJ_DEVICE_CONTROL handler, in context of worker thread
 	NTSTATUS	ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp);
 

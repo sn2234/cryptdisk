@@ -114,6 +114,22 @@ void doTestDiskCipherAesV3Dec(const DiskCipherAesV3TestData& testData)
 		testData.blocksCount * 512)));
 }
 
+void doTestDiskCipherAesV3DecInPlace(const DiskCipherAesV3TestData& testData)
+{
+	DiscCipherAesV3 cipher(DiskParamatersV3(testData.diskKey, testData.tweakKey));
+
+	vector<unsigned char> plainText(testData.blocksCount * 512);
+	copy(
+		checked_array_iterator<const unsigned char*>(testData.expectedCipherText,testData.blocksCount * 512),
+		checked_array_iterator<const unsigned char*>(testData.expectedCipherText,testData.blocksCount * 512) + testData.blocksCount * 512,
+		plainText.begin());
+	cipher.DecipherDataBlocks(testData.firstBlockIndex, testData.blocksCount, &plainText[0]);
+	BOOST_CHECK(equal(plainText.begin(), plainText.end(),
+		checked_array_iterator<const unsigned char*>(testData.plainText,
+		testData.blocksCount * 512)));
+}
+
+
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV3Enc )
 {
 	BOOST_MESSAGE("DiskCipherAesV3 encryption test");
@@ -127,4 +143,5 @@ BOOST_AUTO_TEST_CASE( testDiskCipherAesV3Dec )
 	BOOST_MESSAGE("DiskCipherAesV3 decryption test");
 
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV3Dec);
+	for_each(begin(tests), end(tests), doTestDiskCipherAesV3DecInPlace);
 }

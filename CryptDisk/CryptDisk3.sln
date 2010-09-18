@@ -1,20 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Driver", "SOURCE\Driver\Driver.vcproj", "{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Driver", "SOURCE\Driver\Driver.vcxproj", "{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Manager", "SOURCE\Manager\Manager.vcproj", "{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Manager", "SOURCE\Manager\Manager.vcxproj", "{590ADFF0-50A3-42F6-B8E6-334F6BFB23DB}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrvTool", "SOURCE\Tools\DrvTool\DrvTool.vcproj", "{5850E1DF-338A-4816-977C-16E74CE3A71E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrvTool", "SOURCE\Tools\DrvTool\DrvTool.vcxproj", "{5850E1DF-338A-4816-977C-16E74CE3A71E}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Installer", "SOURCE\Installer\Installer.vdproj", "{E6D8DF38-F812-43DC-B59E-72C3E5343931}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CryptDiskTests", "CryptDiskTests\CryptDiskTests.vcproj", "{EDF1DDF0-BA55-4536-9B65-0B0AF6F73CF9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CryptDiskTests", "CryptDiskTests\CryptDiskTests.vcxproj", "{EDF1DDF0-BA55-4536-9B65-0B0AF6F73CF9}"
 EndProject
 Global
-	GlobalSection(PowerDesigner) = preSolution
-		HasSWS = 1
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Analyze|Win32 = Analyze|Win32
 		Debug|Win32 = Debug|Win32
@@ -49,5 +46,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(PowerDesigner) = preSolution
+		HasSWS = 1
 	EndGlobalSection
 EndGlobal

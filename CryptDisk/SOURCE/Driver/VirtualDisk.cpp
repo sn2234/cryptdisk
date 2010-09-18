@@ -111,7 +111,7 @@ NTSTATUS VirtualDisk::InternalInit(DISK_ADD_INFO *pInfo, PDEVICE_OBJECT pDevice)
 	m_pFileObject=NULL;
 
 	// Copy file name
-	wcsncpy(m_diskInfo.FilePath,pInfo->FilePath,MAXIMUM_FILENAME_LENGTH);
+	RtlStringCbCopyW(m_diskInfo.FilePath, sizeof(m_diskInfo.FilePath), pInfo->FilePath);
 
 	status = SetFlags(pInfo);
 

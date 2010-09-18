@@ -5,23 +5,33 @@
 //  Original author: nobody
 ///////////////////////////////////////////////////////////
 
-#if !defined(EA_65A25D2E_A7B9_4f8a_BEB0_71ECCE625038__INCLUDED_)
-#define EA_65A25D2E_A7B9_4f8a_BEB0_71ECCE625038__INCLUDED_
+#pragma once
+
+#include <BaseCrypt\RijndaelEngine.h>
 
 #include "DiskParametersV4.h"
 #include "IDiskCipher.h"
 
 class DiskCipherAesV4 : public IDiskCipher
 {
-
-public:
-	DiskCipherAesV4(const DiskParametersV4 diskParameters);
-	virtual ~DiskCipherAesV4();
+private:
 	DiskCipherAesV4(const DiskCipherAesV4& theDiskCipherAesV4);
+	const DiskCipherAesV4& operator =(const DiskCipherAesV4& theDiskCipherAesV4);
+public:
+	DiskCipherAesV4(const DiskParametersV4& diskParameters);
+	virtual ~DiskCipherAesV4();
 
 	virtual void EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, PVOID pData);
 	virtual void EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pPlainData, PVOID pCipherData);
 	virtual void DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, PVOID pData);
 	virtual void DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pPlainData, PVOID pCipherData);
+
+//private:
+	static void AddToInt128(unsigned char* i128, UINT64 x);
+	static void IncInt128(unsigned char* i128);
+private:
+	DiskParametersV4			m_diskParameters;
+	CryptoLib::RijndaelEngine	m_diskKeyCipher;
+	CryptoLib::RijndaelEngine	m_tweakKeyCipher;
+	UINT32						m_cipherBlocksPerSector;
 };
-#endif // !defined(EA_65A25D2E_A7B9_4f8a_BEB0_71ECCE625038__INCLUDED_)
