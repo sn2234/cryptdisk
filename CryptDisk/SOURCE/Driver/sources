@@ -40,7 +40,5 @@ SOURCES= \
 	DisksManager.cpp \
 	VirtualDisk.cpp \
 	DiskCipherAesV3.cpp \
-	DiskCipherAesV4.cpp \
 	DiskCipherTwofishV3.cpp \
-	DiskCipherTwofishV4.cpp \
 	Memtools.cpp

@@ -1,7 +1,9 @@
 
 #include "stdafx.h"
 
-#include "DiskCipherAesV4.h"
+#include <BaseCrypt\RijndaelEngine.h>
+
+#include "DiskCipherV4.h"
 
 using namespace boost;
 using namespace CryptoLib;
@@ -96,7 +98,7 @@ static const DiskCipherAesV4TestData tests[]=
 
 void doTestDiskCipherAesV4Enc(const DiskCipherAesV4TestData& testData)
 {
-	DiskCipherAesV4 cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
+	DiskCipherAesV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
 
 	vector<unsigned char> tmp(testData.blocksCount*testData.blockSize, 0);
 
@@ -109,7 +111,7 @@ void doTestDiskCipherAesV4Enc(const DiskCipherAesV4TestData& testData)
 
 void doTestDiskCipherAesV4EncInPlace(const DiskCipherAesV4TestData& testData)
 {
-	DiskCipherAesV4 cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
+	DiskCipherAesV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
 
 	vector<unsigned char> tmp(testData.blocksCount*testData.blockSize, 0);
 	copy(testData.plainText, testData.plainText+testData.blocksCount*testData.blockSize, tmp.begin());
@@ -123,7 +125,7 @@ void doTestDiskCipherAesV4EncInPlace(const DiskCipherAesV4TestData& testData)
 
 void doTestDiskCipherAesV4Dec(const DiskCipherAesV4TestData& testData)
 {
-	DiskCipherAesV4 cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
+	DiskCipherAesV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
 
 	vector<unsigned char> tmp(testData.blocksCount*testData.blockSize, 0);
 
@@ -136,7 +138,7 @@ void doTestDiskCipherAesV4Dec(const DiskCipherAesV4TestData& testData)
 
 void doTestDiskCipherAesV4DecInPlace(const DiskCipherAesV4TestData& testData)
 {
-	DiskCipherAesV4 cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
+	DiskCipherAesV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
 
 	vector<unsigned char> tmp(testData.blocksCount*testData.blockSize, 0);
 	copy(testData.expectedCipherText, testData.expectedCipherText+testData.blocksCount*testData.blockSize, tmp.begin());
@@ -205,7 +207,7 @@ void doTestDiskCipherAesV4Add128(const Add128TestData& testData)
 {
 	vector<unsigned char> tmp(testData.src1, testData.src1 + sizeof(testData.src1));
 
-	DiskCipherAesV4::AddToInt128(&tmp[0], testData.src2);
+	DiskCipherAesV4<CryptoLib::RijndaelEngine>::AddToInt128(&tmp[0], testData.src2);
 
 	BOOST_CHECK_EQUAL_COLLECTIONS(begin(tmp), end(tmp), begin(testData.expected), end(testData.expected));
 }
@@ -236,7 +238,7 @@ void doTestDiskCipherAesV4Inc128(const Inc128TestData& testData)
 {
 	vector<unsigned char> tmp(testData.src, testData.src + sizeof(testData.src));
 
-	DiskCipherAesV4::IncInt128(&tmp[0]);
+	DiskCipherAesV4<CryptoLib::RijndaelEngine>::IncInt128(&tmp[0]);
 
 	BOOST_CHECK_EQUAL_COLLECTIONS(begin(tmp), end(tmp), begin(testData.expected), end(testData.expected));
 }
