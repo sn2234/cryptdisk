@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////
-//  DiskCipherAesV4.h
-//  Implementation of the Class DiskCipherAesV4
+//  DiskCipherV4.h
+//  Implementation of the Class DiskCipherV4
 //  Created on:      13-dec-2009 23:35:23
 //  Original author: nobody
 ///////////////////////////////////////////////////////////
@@ -13,14 +13,14 @@
 #include "IDiskCipher.h"
 
 template <class Engine>
-class DiskCipherAesV4 : public IDiskCipher
+class DiskCipherV4 : public IDiskCipher
 {
 private:
-	DiskCipherAesV4(const DiskCipherAesV4& theDiskCipherAesV4);
-	const DiskCipherAesV4& operator =(const DiskCipherAesV4& theDiskCipherAesV4);
+	DiskCipherV4(const DiskCipherV4& theDiskCipherAesV4);
+	const DiskCipherV4& operator =(const DiskCipherV4& theDiskCipherAesV4);
 public:
-	DiskCipherAesV4(const DiskParametersV4& diskParameters);
-	virtual ~DiskCipherAesV4(){}
+	DiskCipherV4(const DiskParametersV4& diskParameters);
+	virtual ~DiskCipherV4(){}
 
 	virtual void EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, PVOID pData);
 	virtual void EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pPlainData, PVOID pCipherData);
@@ -38,7 +38,7 @@ private:
 };
 
 template <class Engine>
-DiskCipherAesV4<Engine>::DiskCipherAesV4(const DiskParametersV4& diskParameters)
+DiskCipherV4<Engine>::DiskCipherV4(const DiskParametersV4& diskParameters)
 	: m_diskParameters(diskParameters)
 	, m_cipherBlocksPerSector(diskParameters.getDiskSectorSize()/Engine::BlockSize)
 {
@@ -47,7 +47,7 @@ DiskCipherAesV4<Engine>::DiskCipherAesV4(const DiskParametersV4& diskParameters)
 }
 
 template <class Engine>
-void DiskCipherAesV4<Engine>::EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, PVOID pData)
+void DiskCipherV4<Engine>::EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, PVOID pData)
 {
 	unsigned char indexBytes[DiskParametersV4::TweakNumberLength];
 
@@ -65,7 +65,7 @@ void DiskCipherAesV4<Engine>::EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 
 }
 
 template <class Engine>
-void DiskCipherAesV4<Engine>::EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pPlainData, PVOID pCipherData)
+void DiskCipherV4<Engine>::EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pPlainData, PVOID pCipherData)
 {
 	unsigned char indexBytes[DiskParametersV4::TweakNumberLength];
 
@@ -85,7 +85,7 @@ void DiskCipherAesV4<Engine>::EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 
 }
 
 template <class Engine>
-void DiskCipherAesV4<Engine>::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, PVOID pData)
+void DiskCipherV4<Engine>::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, PVOID pData)
 {
 	unsigned char indexBytes[DiskParametersV4::TweakNumberLength];
 
@@ -103,7 +103,7 @@ void DiskCipherAesV4<Engine>::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 
 }
 
 template <class Engine>
-void DiskCipherAesV4<Engine>::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pPlainData, PVOID pCipherData)
+void DiskCipherV4<Engine>::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pPlainData, PVOID pCipherData)
 {
 	unsigned char indexBytes[DiskParametersV4::TweakNumberLength];
 
@@ -124,7 +124,7 @@ void DiskCipherAesV4<Engine>::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 
 }
 
 template <class Engine>
-void DiskCipherAesV4<Engine>::AddToInt128( unsigned char* i128, UINT64 x )
+void DiskCipherV4<Engine>::AddToInt128( unsigned char* i128, UINT64 x )
 {
 	UINT64* src = reinterpret_cast<UINT64*>(i128);
 	UINT64	tmp;
@@ -139,7 +139,7 @@ void DiskCipherAesV4<Engine>::AddToInt128( unsigned char* i128, UINT64 x )
 }
 
 template <class Engine>
-void DiskCipherAesV4<Engine>::IncInt128( unsigned char* i128 )
+void DiskCipherV4<Engine>::IncInt128( unsigned char* i128 )
 {
 	UINT64* src = reinterpret_cast<UINT64*>(i128);
 	src[0]++;

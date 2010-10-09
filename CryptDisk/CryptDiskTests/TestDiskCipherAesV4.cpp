@@ -98,7 +98,7 @@ static const DiskCipherAesV4TestData tests[]=
 
 void doTestDiskCipherAesV4Enc(const DiskCipherAesV4TestData& testData)
 {
-	DiskCipherAesV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
+	DiskCipherV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
 
 	vector<unsigned char> tmp(testData.blocksCount*testData.blockSize, 0);
 
@@ -111,7 +111,7 @@ void doTestDiskCipherAesV4Enc(const DiskCipherAesV4TestData& testData)
 
 void doTestDiskCipherAesV4EncInPlace(const DiskCipherAesV4TestData& testData)
 {
-	DiskCipherAesV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
+	DiskCipherV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
 
 	vector<unsigned char> tmp(testData.blocksCount*testData.blockSize, 0);
 	copy(testData.plainText, testData.plainText+testData.blocksCount*testData.blockSize, tmp.begin());
@@ -125,7 +125,7 @@ void doTestDiskCipherAesV4EncInPlace(const DiskCipherAesV4TestData& testData)
 
 void doTestDiskCipherAesV4Dec(const DiskCipherAesV4TestData& testData)
 {
-	DiskCipherAesV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
+	DiskCipherV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
 
 	vector<unsigned char> tmp(testData.blocksCount*testData.blockSize, 0);
 
@@ -138,7 +138,7 @@ void doTestDiskCipherAesV4Dec(const DiskCipherAesV4TestData& testData)
 
 void doTestDiskCipherAesV4DecInPlace(const DiskCipherAesV4TestData& testData)
 {
-	DiskCipherAesV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
+	DiskCipherV4<CryptoLib::RijndaelEngine> cipher(DiskParametersV4(testData.diskKey, testData.tweakKey, testData.index, testData.blockSize));
 
 	vector<unsigned char> tmp(testData.blocksCount*testData.blockSize, 0);
 	copy(testData.expectedCipherText, testData.expectedCipherText+testData.blocksCount*testData.blockSize, tmp.begin());
@@ -153,7 +153,7 @@ void doTestDiskCipherAesV4DecInPlace(const DiskCipherAesV4TestData& testData)
 
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV4Enc )
 {
-	BOOST_MESSAGE("DiskCipherAesV4 encryption test");
+	BOOST_MESSAGE("DiskCipherV4 encryption test");
 
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV4Enc);
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV4EncInPlace);
@@ -161,7 +161,7 @@ BOOST_AUTO_TEST_CASE( testDiskCipherAesV4Enc )
 
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV4Dec )
 {
-	BOOST_MESSAGE("DiskCipherAesV4 decryption test");
+	BOOST_MESSAGE("DiskCipherV4 decryption test");
 
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV4Dec);
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV4DecInPlace);
@@ -207,14 +207,14 @@ void doTestDiskCipherAesV4Add128(const Add128TestData& testData)
 {
 	vector<unsigned char> tmp(testData.src1, testData.src1 + sizeof(testData.src1));
 
-	DiskCipherAesV4<CryptoLib::RijndaelEngine>::AddToInt128(&tmp[0], testData.src2);
+	DiskCipherV4<CryptoLib::RijndaelEngine>::AddToInt128(&tmp[0], testData.src2);
 
 	BOOST_CHECK_EQUAL_COLLECTIONS(begin(tmp), end(tmp), begin(testData.expected), end(testData.expected));
 }
 
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV4Add128 )
 {
-	BOOST_MESSAGE("DiskCipherAesV4 128 bit addition test");
+	BOOST_MESSAGE("DiskCipherV4 128 bit addition test");
 
 	for_each(begin(testsAdd128), end(testsAdd128), doTestDiskCipherAesV4Add128);
 }
@@ -238,14 +238,14 @@ void doTestDiskCipherAesV4Inc128(const Inc128TestData& testData)
 {
 	vector<unsigned char> tmp(testData.src, testData.src + sizeof(testData.src));
 
-	DiskCipherAesV4<CryptoLib::RijndaelEngine>::IncInt128(&tmp[0]);
+	DiskCipherV4<CryptoLib::RijndaelEngine>::IncInt128(&tmp[0]);
 
 	BOOST_CHECK_EQUAL_COLLECTIONS(begin(tmp), end(tmp), begin(testData.expected), end(testData.expected));
 }
 
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV4Inc128 )
 {
-	BOOST_MESSAGE("DiskCipherAesV4 128 bit increment test");
+	BOOST_MESSAGE("DiskCipherV4 128 bit increment test");
 
 	for_each(begin(testsInc128), end(testsInc128), doTestDiskCipherAesV4Inc128);
 }
