@@ -48,7 +48,7 @@ void __stdcall GFMultTable(void *pTable, void *pDest, void *pSrc);
 void __stdcall LRWPrepareTable(void *pTable, void *pKeyTable);
 void __stdcall LRWMult(void *pTable, void *pNumber, void *pBuff);
 
-void __stdcall LRWInitContext(OUT LRW_CONTEXT *pCtx, IN void *tweakKey);
+void __stdcall LRWInitContext(OUT LRW_CONTEXT *pCtx, IN const void *tweakKey);
 void __stdcall LRWStartSequence(IN OUT LRW_CONTEXT *pCtx, IN void *indexBegin);
 void __stdcall LRWXorTweak(IN LRW_CONTEXT *pCtx, OUT void *pBuff);
 void __stdcall LRWNextTweak(IN LRW_CONTEXT *pCtx);

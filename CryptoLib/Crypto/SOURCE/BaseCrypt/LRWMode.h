@@ -36,7 +36,7 @@ class LRWMode
 public:
 	LRW_CONTEXT		m_ctx;
 
-	__forceinline void Init(IN void *tweakKey)
+	__forceinline void Init(IN const void *tweakKey)
 	{
 		LRWInitContext(&m_ctx, tweakKey);
 	}

@@ -1,6 +1,9 @@
 
 #pragma once
 
+namespace CryptoLib
+{
+
 inline void XorData(size_t dataLength,
 					const void* inputData1,
 					const void* inputData2,
@@ -50,4 +53,6 @@ inline void XtsGfMult(size_t dataLength, void* buffer)
 	{
 		dst[0] ^= 0x87;
 	}
+}
+
 }

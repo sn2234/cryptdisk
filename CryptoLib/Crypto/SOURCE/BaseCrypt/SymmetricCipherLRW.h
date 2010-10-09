@@ -45,7 +45,7 @@ protected:
 	SymmetricCipherEngine	m_Engine;
 	LRWMode					m_LRW;
 public:
-	__forceinline void SetupKey(void *userKey, void *tweakKey)
+	__forceinline void SetupKey(const void *userKey, const void *tweakKey)
 	{
 		m_Engine.SetupKey(userKey);
 		m_LRW.Init(tweakKey);
@@ -72,14 +72,14 @@ public:
 		m_LRW.XorTweak(Data);
 	}
 
-	__forceinline void EncipherFirstBlock(UCHAR *blockNumber, void *pPlain, void *pCipher)
+	__forceinline void EncipherFirstBlock(UCHAR *blockNumber, const void *pPlain, void *pCipher)
 	{
 		m_LRW.StartSequence(blockNumber);
 		m_Engine.XorAndEncipher(m_LRW.GetTweak(), pPlain, pCipher);
 		m_LRW.XorTweak(pCipher);
 	}
 
-	__forceinline void EncipherNextBlock(void *pPlain, void *pCipher)
+	__forceinline void EncipherNextBlock(const void *pPlain, void *pCipher)
 	{
 		m_LRW.NextTweak();
 		m_Engine.XorAndEncipher(m_LRW.GetTweak(), pPlain, pCipher);
@@ -101,20 +101,20 @@ public:
 		m_Engine.DecipherAndXor(m_LRW.GetTweak(), Data);
 	}
 
-	__forceinline void DecipherFirstBlock(UCHAR *blockNumber, void *pPlain, void *pCipher)
+	__forceinline void DecipherFirstBlock(UCHAR *blockNumber, const void *pCipher, void *pPlain)
 	{
 		m_LRW.StartSequence(blockNumber);
-		memcpy(pCipher, pPlain, SymmetricCipherEngine::BlockSize);
-		m_LRW.XorTweak(pCipher);
-		m_Engine.DecipherAndXor(m_LRW.GetTweak(), pCipher);
+		memcpy(pPlain, pCipher, SymmetricCipherEngine::BlockSize);
+		m_LRW.XorTweak(pPlain);
+		m_Engine.DecipherAndXor(m_LRW.GetTweak(), pPlain);
 	}
 
-	__forceinline void DecipherNextBlock(void *pPlain, void *pCipher)
+	__forceinline void DecipherNextBlock(const void *pCipher, void *pPlane)
 	{
 		m_LRW.NextTweak();
-		memcpy(pCipher, pPlain, SymmetricCipherEngine::BlockSize);
-		m_LRW.XorTweak(pCipher);
-		m_Engine.XorAndEncipher(m_LRW.GetTweak(), pCipher);
+		memcpy(pPlane, pCipher, SymmetricCipherEngine::BlockSize);
+		m_LRW.XorTweak(pPlane);
+		m_Engine.DecipherAndXor(m_LRW.GetTweak(), pPlane);
 	}
 };
 };

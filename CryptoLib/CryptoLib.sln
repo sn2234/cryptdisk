@@ -1,12 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Crypto", "Crypto\Crypto.vcproj", "{8D66C212-D9C8-416C-B774-544EB115D786}"
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Crypto", "Crypto\Crypto.vcxproj", "{8D66C212-D9C8-416C-B774-544EB115D786}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CryptoLibTest", "CryptoLibTest\CryptoLibTest.vcproj", "{350EBD73-28B5-47AE-9569-865B3C61F226}"
-	ProjectSection(ProjectDependencies) = postProject
-		{8D66C212-D9C8-416C-B774-544EB115D786} = {8D66C212-D9C8-416C-B774-544EB115D786}
-	EndProjectSection
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CryptoLibTest", "CryptoLibTest\CryptoLibTest.vcxproj", "{350EBD73-28B5-47AE-9569-865B3C61F226}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

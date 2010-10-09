@@ -43,7 +43,7 @@ void DoPkcs5HmacSha256Test(const PBKDF2Test& testData)
 		testData.saltLength, testData.salt, testData.iterations,
 		testData.keyLength, &tmp[0]);
 
-	BOOST_CHECK(equal(begin(tmp), end(tmp),
+	BOOST_CHECK(equal(boost::begin(tmp), boost::end(tmp),
 		checked_array_iterator<const unsigned char*>(testData.key, testData.keyLength)));
 }
 

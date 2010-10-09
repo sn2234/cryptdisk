@@ -116,7 +116,7 @@ void DoSha256HmacTest(const HmacSha256TestVector& testData)
 			testData.messageLength, testData.messageData,
 			i, &tmp[0]);
 
-		BOOST_CHECK(equal(begin(tmp), end(tmp),
+		BOOST_CHECK(equal(boost::begin(tmp), boost::end(tmp),
 			checked_array_iterator<unsigned char*>(testData.didgestData, i)));
 	}
 }

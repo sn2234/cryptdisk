@@ -154,11 +154,29 @@ void DoAesXtsEncTest(const XtsTest& testData)
 	BOOST_CHECK(equal(begin(testData.ciphertext), end(testData.ciphertext), tmp));
 }
 
+void DoAesXtsEncTestInPlace(const XtsTest& testData)
+{
+	unsigned char tmp[sizeof(testData.plaintext)];
+	std::copy(testData.plaintext, testData.plaintext+_countof(testData.plaintext), tmp);
+
+	RijndaelEngine cipherK1;
+	RijndaelEngine cipherK2;
+
+	cipherK1.SetupKey(testData.key1);
+	cipherK2.SetupKey(testData.key2);
+
+	XtsSectorEncipher(cipherK1, cipherK2, testData.index, sizeof(testData.plaintext), tmp);
+
+	BOOST_CHECK(equal(begin(testData.ciphertext), end(testData.ciphertext), tmp));
+}
+
+
 BOOST_AUTO_TEST_CASE( aesXtsEncTest )
 {
 	BOOST_MESSAGE("XTS-AES-256 encryption test");
 
 	for_each(begin(aesXtsTestVectors), end(aesXtsTestVectors), DoAesXtsEncTest);
+	for_each(begin(aesXtsTestVectors), end(aesXtsTestVectors), DoAesXtsEncTestInPlace);
 }
 
 void DoAesXtsDecTest(const XtsTest& testData)
@@ -179,9 +197,28 @@ void DoAesXtsDecTest(const XtsTest& testData)
 
 }
 
+void DoAesXtsDecTestInPlace(const XtsTest& testData)
+{
+	unsigned char tmp[sizeof(testData.ciphertext)];
+	std::copy(testData.ciphertext, testData.ciphertext+_countof(testData.ciphertext), tmp);
+
+	RijndaelEngine cipherK1;
+	RijndaelEngine cipherK2;
+
+	cipherK1.SetupKey(testData.key1);
+	cipherK2.SetupKey(testData.key2);
+
+	XtsSectorDecipher(cipherK1, cipherK2, testData.index, sizeof(testData.ciphertext), tmp);
+
+	BOOST_CHECK(equal(begin(testData.plaintext), end(testData.plaintext), tmp));
+
+}
+
+
 BOOST_AUTO_TEST_CASE( aesXtsDecTest )
 {
 	BOOST_MESSAGE("XTS-AES-256 decryption test");
 
 	for_each(begin(aesXtsTestVectors), end(aesXtsTestVectors), DoAesXtsDecTest);
+	for_each(begin(aesXtsTestVectors), end(aesXtsTestVectors), DoAesXtsDecTestInPlace);
 }
