@@ -25,3 +25,5 @@
 #include <CryptoLib.h>
 
 #include "Platform.h"
+
+#define _TEST_MODE_

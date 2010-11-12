@@ -35,6 +35,7 @@ INCLUDES= $(BASEDIR)\inc\wnet;$(CRYPTO_LIB_DIR)\SOURCE;.;
 SOURCES= \
 	DiskCipher.cpp \
 	DiskHeader.cpp \
+	DiskHeaderTools.cpp \
 	main.cpp \
 	Tools.cpp \
 	DisksManager.cpp \
