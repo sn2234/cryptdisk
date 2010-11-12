@@ -38,8 +38,8 @@
 namespace CryptoLib
 {
 
-void __stdcall DeriveKey(void *Password,unsigned long PasswordLength,
-			   void *Salt,unsigned long SaltLength,
+void __stdcall DeriveKey(const void *Password,unsigned long PasswordLength,
+			   const void *Salt,unsigned long SaltLength,
 			   void *Key,unsigned long KeyLength,
 			   unsigned long Iterations);
 };

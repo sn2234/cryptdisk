@@ -41,14 +41,14 @@ Key derivation function based on SHA-256
 namespace CryptoLib
 {
 
-static void __fastcall ProcessRound(void *Password,unsigned long PasswordLength,
-						void *Salt,unsigned long SaltLength,
+static void __fastcall ProcessRound(const void *Password,unsigned long PasswordLength,
+						const void *Salt,unsigned long SaltLength,
 						void *Output,
 						unsigned long Iterations,
 						unsigned long BlockNumber);
 
-void __stdcall DeriveKey(void *Password,unsigned long PasswordLength,
-			   void *Salt,unsigned long SaltLength,
+void __stdcall DeriveKey(const void *Password,unsigned long PasswordLength,
+			   const void *Salt,unsigned long SaltLength,
 			   void *Key,unsigned long KeyLength,
 			   unsigned long Iterations)
 {
@@ -76,8 +76,8 @@ void __stdcall DeriveKey(void *Password,unsigned long PasswordLength,
 	memset(temp,0,sizeof(temp));
 }
 
-void __fastcall ProcessRound(void *Password,unsigned long PasswordLength,
-				  void *Salt,unsigned long SaltLength,
+void __fastcall ProcessRound(const void *Password,unsigned long PasswordLength,
+				  const void *Salt,unsigned long SaltLength,
 				  void *Output,
 				  unsigned long Iterations,
 				  unsigned long BlockNumber)

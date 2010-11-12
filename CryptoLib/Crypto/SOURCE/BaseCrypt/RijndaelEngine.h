@@ -69,7 +69,7 @@ public:
 	}
 
 	//##ModelId=41A9DFCD0149
-	__forceinline void XorAndEncipher(void *XorData, void *Block) const
+	__forceinline void XorAndEncipher(const void *XorData, void *Block) const
 	{
 		XorAndEncipher2(&Context, XorData, Block);
 	}
