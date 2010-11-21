@@ -6,17 +6,22 @@
 
 #if	defined(_USER_MODE_) || defined(_TEST_MODE_)
 #include <CryptoLib.h>
-
-using namespace CryptoLib;
-
 #endif
+
+#include <BaseCrypt/SHA256_HASH.h>
+#include <BaseCrypt/DNAES.h>
+#include <BaseCrypt/DNTwofish.h>
+#include <BaseCrypt/RijndaelEngine.h>
+#include <BaseCrypt/TwofishEngine.h>
+#include <BaseCrypt/EncryptionModes.h>
+using namespace CryptoLib;
 
 #if defined(_TEST_MODE_)
 #endif
 
 #if	defined(_USER_MODE_) || defined(_TEST_MODE_)
 
-bool DiskHeaderTools::Decipher( void* pHeader, const UCHAR* passwordData, ULONG passwordLength, DISK_CIPHER* pDiskCipher, VERSION_INFO* pDiskVersion, UCHAR* pUserKey )
+bool DiskHeaderTools::Decipher( void* pHeader, const UCHAR* passwordData, ULONG passwordLength, CIPHER_INFO* pCipherInfo )
 {
 
 	// Try do decipher disk as v3
@@ -25,7 +30,7 @@ bool DiskHeaderTools::Decipher( void* pHeader, const UCHAR* passwordData, ULONG 
 
 		headerBuff = *(reinterpret_cast<DISK_HEADER_V3*>(pHeader));
 
-		if (DecipherV3(&headerBuff, passwordData, passwordLength, pDiskCipher, pDiskVersion, pUserKey))
+		if (DecipherV3(&headerBuff, passwordData, passwordLength, &pCipherInfo->diskCipher , &pCipherInfo->versionInfo, pCipherInfo->userKey))
 		{
 			*(reinterpret_cast<DISK_HEADER_V3*>(pHeader)) = headerBuff;
 			RtlSecureZeroMemory(&headerBuff, sizeof(headerBuff));
@@ -42,7 +47,7 @@ bool DiskHeaderTools::Decipher( void* pHeader, const UCHAR* passwordData, ULONG 
 
 		headerBuff = *(reinterpret_cast<DISK_HEADER_V4*>(pHeader));
 
-		if (DecipherV4(&headerBuff, passwordData, passwordLength, pDiskCipher, pDiskVersion, pUserKey))
+		if (DecipherV4(&headerBuff, passwordData, passwordLength, &pCipherInfo->diskCipher , &pCipherInfo->versionInfo, pCipherInfo->userKey, pCipherInfo->initVector))
 		{
 			*(reinterpret_cast<DISK_HEADER_V4*>(pHeader)) = headerBuff;
 			RtlSecureZeroMemory(&headerBuff, sizeof(headerBuff));
@@ -139,13 +144,13 @@ try_twofish:
 	return false;
 }
 
-bool DiskHeaderTools::DecipherV4( DISK_HEADER_V4* pHeader, const UCHAR* passwordData, ULONG passwordLength, DISK_CIPHER* pDiskCipher, VERSION_INFO* pDiskVersion, UCHAR* pUserKey )
+bool DiskHeaderTools::DecipherV4( DISK_HEADER_V4* pHeader, const UCHAR* passwordData, ULONG passwordLength, DISK_CIPHER* pDiskCipher, VERSION_INFO* pDiskVersion, UCHAR* pUserKey , UCHAR* pInitVector)
 {
 #pragma pack(push, 1)
 	struct
 	{
 		UCHAR			userKey[RijndaelEngine::KeySize];
-		UCHAR			userIV[RijndaelEngine::KeySize];
+		UCHAR			userIV[RijndaelEngine::BlockSize];
 	}usedEncData;
 #pragma pack(pop)
 
@@ -180,12 +185,14 @@ bool DiskHeaderTools::DecipherV4( DISK_HEADER_V4* pHeader, const UCHAR* password
 			*pDiskCipher=DISK_CIPHER_AES;
 			*pDiskVersion = header.DiskVersion;
 			memcpy(pHeader, &header, sizeof(header));
+			memcpy(pUserKey, usedEncData.userKey, sizeof(usedEncData.userKey));
+			memcpy(pInitVector, usedEncData.userIV, sizeof(usedEncData.userIV));
 			RtlSecureZeroMemory(&header, sizeof(header));
 			RtlSecureZeroMemory(&usedEncData, sizeof(usedEncData));
 			return true;
 		}
+		RtlSecureZeroMemory(&header, sizeof(header));
 	}
-try_twofish:
 	// Try twofish
 	{
 		// Create a copy of header
@@ -214,10 +221,13 @@ try_twofish:
 			*pDiskCipher=DISK_CIPHER_TWOFISH;
 			*pDiskVersion = header.DiskVersion;
 			memcpy(pHeader, &header, sizeof(header));
+			memcpy(pUserKey, usedEncData.userKey, sizeof(usedEncData.userKey));
+			memcpy(pInitVector, usedEncData.userIV, sizeof(usedEncData.userIV));
 			RtlSecureZeroMemory(&header, sizeof(header));
 			RtlSecureZeroMemory(&usedEncData, sizeof(usedEncData));
 			return true;
 		}
+		RtlSecureZeroMemory(&header, sizeof(header));
 	}
 
 	RtlSecureZeroMemory(&usedEncData, sizeof(usedEncData));
@@ -228,7 +238,7 @@ bool DiskHeaderTools::Initialize( DISK_HEADER_V3* pHeader, CryptoLib::CRandom* p
 {
 	SHA256_HASH		hash;
 
-	// Fill all header with random data
+	// Fill all pHeaderBuff with random data
 	if(!pRndGen->GenRandom(pHeader, sizeof(DISK_HEADER_V3)))
 	{
 		// If not enough randomness exit with error
@@ -250,7 +260,7 @@ bool DiskHeaderTools::Initialize( DISK_HEADER_V4* pHeader, CryptoLib::CRandom* p
 {
 	SHA256_HASH		hash;
 
-	// Fill all header with random data
+	// Fill all pHeaderBuff with random data
 	if(!pRndGen->GenRandom(pHeader, sizeof(DISK_HEADER_V4)))
 	{
 		// If not enough randomness exit with error
@@ -316,7 +326,7 @@ void DiskHeaderTools::Encipher( DISK_HEADER_V4* pHeader, const UCHAR* passwordDa
 	struct
 	{
 		UCHAR			userKey[RijndaelEngine::KeySize];
-		UCHAR			userIV[RijndaelEngine::KeySize];
+		UCHAR			userIV[RijndaelEngine::BlockSize];
 	}usedEncData;
 #pragma pack(pop)
 
@@ -362,12 +372,177 @@ void DiskHeaderTools::Encipher( DISK_HEADER_V4* pHeader, const UCHAR* passwordDa
 
 bool DiskHeaderTools::Decipher( DISK_HEADER_V3* pHeader, const UCHAR* pUserKey, DISK_CIPHER algoId )
 {
-	return false;
+	UCHAR			didgest[SHA256_DIDGEST_SIZE];
+	SHA256_HASH		hash;
+	bool			result = false;
+
+	switch(algoId)
+	{
+	case DISK_CIPHER_AES:
+		{
+			DNAES* pCipher = (DNAES*)ExAllocatePoolWithTag(PagedPool, sizeof(DNAES), MEM_TAG);
+			if(!pCipher)
+			{
+				return false;
+			}
+
+			pCipher->SetupKey(pUserKey);
+			pCipher->DecipherDataECB(DISK_HEADER_ENC_PASS_SIZE_V3/AES_BLOCK_SIZE,
+				pHeader->DiskKey);
+			pCipher->SetupKey(pHeader->DiskKey);
+			pCipher->DecipherDataECB(DISK_HEADER_ENC_SIZE_V3/AES_BLOCK_SIZE,
+				pHeader->TweakKey);
+
+			// Check version first
+			if((pHeader->DiskVersion.formatVersion == DISK_VERSION_3))
+			{
+				// Check hash
+				hash.Init();
+				hash.Update(pHeader->MagicValue, sizeof(pHeader->MagicValue));
+				hash.Final(didgest);
+				hash.Clear();
+				if(!memcmp(pHeader->MagicHash, didgest, SHA256_DIDGEST_SIZE))
+				{
+					result = true;
+				}
+			}
+			pCipher->Clear();
+			ExFreePoolWithTag(pCipher, MEM_TAG);
+			RtlSecureZeroMemory(didgest, sizeof(didgest));
+		}
+		break;
+	case DISK_CIPHER_TWOFISH:
+		{
+			DNTwofish* pCipher = (DNTwofish*)ExAllocatePoolWithTag(PagedPool, sizeof(DNTwofish), MEM_TAG);
+			if(!pCipher)
+			{
+				return false;
+			}
+
+			pCipher->SetupKey(pUserKey);
+			pCipher->DecipherDataECB(DISK_HEADER_ENC_PASS_SIZE_V3/AES_BLOCK_SIZE,
+				pHeader->DiskKey);
+			pCipher->SetupKey(pHeader->DiskKey);
+			pCipher->DecipherDataECB(DISK_HEADER_ENC_SIZE_V3/AES_BLOCK_SIZE,
+				pHeader->TweakKey);
+
+			// Check version first
+			if((pHeader->DiskVersion.formatVersion == DISK_VERSION_3))
+			{
+				// Check hash
+				hash.Init();
+				hash.Update(pHeader->MagicValue, sizeof(pHeader->MagicValue));
+				hash.Final(didgest);
+				hash.Clear();
+				if(!memcmp(pHeader->MagicHash, didgest, SHA256_DIDGEST_SIZE))
+				{
+					result = true;
+				}
+			}
+			pCipher->Clear();
+			ExFreePoolWithTag(pCipher, MEM_TAG);
+			RtlSecureZeroMemory(didgest, sizeof(didgest));
+		}
+		break;
+	}
+	return result;
 }
 
-bool DiskHeaderTools::Decipher( DISK_HEADER_V4* pHeader, const UCHAR* pUserKey, DISK_CIPHER algoId )
+bool DiskHeaderTools::Decipher( DISK_HEADER_V4* pHeader, const UCHAR* pUserKey, const UCHAR* pInitVector, DISK_CIPHER algoId )
 {
-	return true;
+	bool			result = false;
+
+	switch(algoId)
+	{
+	case DISK_CIPHER_AES:
+		{
+			// Create a copy of pHeaderBuff
+			DISK_HEADER_V4 *pHeaderBuff = (DISK_HEADER_V4*)ExAllocatePoolWithTag(PagedPool, sizeof(DISK_HEADER_V4), MEM_TAG);
+			memcpy(pHeaderBuff, pHeader, sizeof(DISK_HEADER_V4));
+			if(!pHeaderBuff)
+			{
+				return false;
+			}
+
+			// Initialize cipher
+			RijndaelEngine* pEngine = (RijndaelEngine*)ExAllocatePoolWithTag(PagedPool, sizeof(RijndaelEngine), MEM_TAG);
+			if(!pEngine)
+			{
+				ExFreePoolWithTag(pHeaderBuff, MEM_TAG);
+				return false;
+			}
+
+			pEngine->SetupKey(pUserKey);
+			DecipherDataCbc(*pEngine, DISK_HEADER_ENC_PASS_SIZE_V4/RijndaelEngine::BlockSize, pInitVector, pHeaderBuff->DiskKey);
+
+			pEngine->SetupKey(pHeaderBuff->DiskKey);
+			DecipherDataCbc(*pEngine, DISK_HEADER_ENC_SIZE_V4/RijndaelEngine::BlockSize, pHeaderBuff->TweakNumber, &pHeaderBuff->DiskVersion);
+
+			// Check hash
+			SHA256_HASH hash;
+			UCHAR didgest[SHA256_DIDGEST_SIZE];
+
+			hash.Init();
+			hash.Update(pHeaderBuff->MagicValue, sizeof(pHeaderBuff->MagicValue));
+			hash.Final(didgest);
+			if(!memcmp(pHeaderBuff->MagicHash, didgest, SHA256_DIDGEST_SIZE))
+			{
+				// Copy pHeaderBuff and return true
+				memcpy(pHeader, pHeaderBuff, sizeof(DISK_HEADER_V4));
+				result = true;
+			}
+			RtlSecureZeroMemory(pHeaderBuff, sizeof(DISK_HEADER_V4));
+			pEngine->Clear();
+			ExFreePoolWithTag(pHeaderBuff, MEM_TAG);
+			ExFreePoolWithTag(pEngine, MEM_TAG);
+		}
+		break;
+	case DISK_CIPHER_TWOFISH:
+		{
+			// Create a copy of pHeaderBuff
+			DISK_HEADER_V4 *pHeaderBuff = (DISK_HEADER_V4*)ExAllocatePoolWithTag(PagedPool, sizeof(DISK_HEADER_V4), MEM_TAG);
+			memcpy(pHeaderBuff, pHeader, sizeof(DISK_HEADER_V4));
+			if(!pHeaderBuff)
+			{
+				return false;
+			}
+
+			// Initialize cipher
+			TwofishEngine* pEngine = (TwofishEngine*)ExAllocatePoolWithTag(PagedPool, sizeof(TwofishEngine), MEM_TAG);
+			if(!pEngine)
+			{
+				ExFreePoolWithTag(pHeaderBuff, MEM_TAG);
+				return false;
+			}
+
+			pEngine->SetupKey(pUserKey);
+			DecipherDataCbc(*pEngine, DISK_HEADER_ENC_PASS_SIZE_V4/TwofishEngine::BlockSize, pInitVector, pHeaderBuff->DiskKey);
+
+			pEngine->SetupKey(pHeaderBuff->DiskKey);
+			DecipherDataCbc(*pEngine, DISK_HEADER_ENC_SIZE_V4/TwofishEngine::BlockSize, pHeaderBuff->TweakNumber, &pHeaderBuff->DiskVersion);
+
+			// Check hash
+			SHA256_HASH hash;
+			UCHAR didgest[SHA256_DIDGEST_SIZE];
+
+			hash.Init();
+			hash.Update(pHeaderBuff->MagicValue, sizeof(pHeaderBuff->MagicValue));
+			hash.Final(didgest);
+			if(!memcmp(pHeaderBuff->MagicHash, didgest, SHA256_DIDGEST_SIZE))
+			{
+				// Copy pHeaderBuff and return true
+				memcpy(pHeader, &pHeaderBuff, sizeof(DISK_HEADER_V4));
+				result = true;
+			}
+			RtlSecureZeroMemory(pHeaderBuff, sizeof(DISK_HEADER_V4));
+			pEngine->Clear();
+			ExFreePoolWithTag(pHeaderBuff, MEM_TAG);
+			ExFreePoolWithTag(pEngine, MEM_TAG);
+		}
+		break;
+	}
+
+	return result;
 }
 
 #endif

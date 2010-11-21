@@ -35,14 +35,12 @@ BOOST_AUTO_TEST_CASE( testDiskHeaderV3_AES )
 
 	BOOST_CHECK(!std::equal(begin(headerBuff), end(headerBuff), begin(headerBuffEnc)));
 
-	DISK_CIPHER cipherUsed;
-	VERSION_INFO diskVersion;
-	vector<unsigned char> userKey(RijndaelEngine::KeySize);
+	DiskHeaderTools::CIPHER_INFO cipherInfo;
 
-	BOOST_CHECK(DiskHeaderTools::Decipher(&headerBuffEnc[0], (const UCHAR*)"test", 4, &cipherUsed, &diskVersion, &userKey[0]));
+	BOOST_CHECK(DiskHeaderTools::Decipher(&headerBuffEnc[0], (const UCHAR*)"test", 4, &cipherInfo));
 
-	BOOST_CHECK_EQUAL(cipherUsed, DISK_CIPHER_AES);
-	BOOST_CHECK_EQUAL(diskVersion.formatVersion, DISK_VERSION_3);
+	BOOST_CHECK_EQUAL(cipherInfo.diskCipher, DISK_CIPHER_AES);
+	BOOST_CHECK_EQUAL(cipherInfo.versionInfo.formatVersion, DISK_VERSION_3);
 
 	BOOST_CHECK(std::equal(begin(headerBuff), end(headerBuff), begin(headerBuffEnc)));
 }
@@ -63,14 +61,12 @@ BOOST_AUTO_TEST_CASE( testDiskHeaderV3_Twofish )
 
 	BOOST_CHECK(!std::equal(begin(headerBuff), end(headerBuff), begin(headerBuffEnc)));
 
-	DISK_CIPHER cipherUsed;
-	VERSION_INFO diskVersion;
-	vector<unsigned char> userKey(RijndaelEngine::KeySize);
+	DiskHeaderTools::CIPHER_INFO cipherInfo;
 
-	BOOST_CHECK(DiskHeaderTools::Decipher(&headerBuffEnc[0], (const UCHAR*)"test", 4, &cipherUsed, &diskVersion, &userKey[0]));
+	BOOST_CHECK(DiskHeaderTools::Decipher(&headerBuffEnc[0], (const UCHAR*)"test", 4, &cipherInfo));
 
-	BOOST_CHECK_EQUAL(cipherUsed, DISK_CIPHER_TWOFISH);
-	BOOST_CHECK_EQUAL(diskVersion.formatVersion, DISK_VERSION_3);
+	BOOST_CHECK_EQUAL(cipherInfo.diskCipher, DISK_CIPHER_TWOFISH);
+	BOOST_CHECK_EQUAL(cipherInfo.versionInfo.formatVersion, DISK_VERSION_3);
 
 	BOOST_CHECK(std::equal(begin(headerBuff), end(headerBuff), begin(headerBuffEnc)));
 }
@@ -91,14 +87,12 @@ BOOST_AUTO_TEST_CASE( testDiskHeaderV4_AES )
 
 	BOOST_CHECK(!std::equal(begin(headerBuff), end(headerBuff), begin(headerBuffEnc)));
 
-	DISK_CIPHER cipherUsed;
-	VERSION_INFO diskVersion;
-	vector<unsigned char> userKey(RijndaelEngine::KeySize);
+	DiskHeaderTools::CIPHER_INFO cipherInfo;
 
-	BOOST_CHECK(DiskHeaderTools::Decipher(&headerBuffEnc[0], (const UCHAR*)"test", 4, &cipherUsed, &diskVersion, &userKey[0]));
+	BOOST_CHECK(DiskHeaderTools::Decipher(&headerBuffEnc[0], (const UCHAR*)"test", 4, &cipherInfo));
 
-	BOOST_CHECK_EQUAL(cipherUsed, DISK_CIPHER_AES);
-	BOOST_CHECK_EQUAL(diskVersion.formatVersion, DISK_VERSION_4);
+	BOOST_CHECK_EQUAL(cipherInfo.diskCipher, DISK_CIPHER_AES);
+	BOOST_CHECK_EQUAL(cipherInfo.versionInfo.formatVersion, DISK_VERSION_4);
 
 	BOOST_CHECK(std::equal(begin(headerBuff), end(headerBuff), begin(headerBuffEnc)));
 }
