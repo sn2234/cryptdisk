@@ -104,6 +104,7 @@ bool DiskHeaderTools::DecipherV3( DISK_HEADER_V3* pHeader, const UCHAR* password
 		*pDiskCipher = DISK_CIPHER_AES;
 		*pDiskVersion = header.DiskVersion;
 		memcpy(pHeader, &header, sizeof(DISK_HEADER_V3));
+		memcpy(pUserKey, userKey, sizeof(userKey));
 		RtlSecureZeroMemory(&header, sizeof(DISK_HEADER_V3));
 		return true;
 	}
@@ -136,6 +137,7 @@ try_twofish:
 			*pDiskCipher=DISK_CIPHER_TWOFISH;
 			*pDiskVersion = header.DiskVersion;
 			memcpy(pHeader, &header, sizeof(DISK_HEADER_V3));
+			memcpy(pUserKey, userKey, sizeof(userKey));
 			RtlSecureZeroMemory(&header, sizeof(DISK_HEADER_V3));
 			return true;
 		}
