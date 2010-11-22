@@ -38,7 +38,7 @@ class SymmetricCipher
 {
 public:
 	//##ModelId=41A9E1000368
-	__forceinline void SetupKey(void * UserKey)
+	__forceinline void SetupKey(const void * UserKey)
 	{
 		Engine.SetupKey(UserKey);
 	}
@@ -51,7 +51,7 @@ public:
 	}
 
 	//##ModelId=41A9E13302FD
-	void EncipherDataECB(long BlocksCount, void * InputData, void * OutputData)
+	void EncipherDataECB(long BlocksCount, const void * InputData, void * OutputData)
 	{
 		unsigned char	*in,*out;
 
@@ -80,7 +80,7 @@ public:
 	}
 
 	//##ModelId=41A9E1BC0296
-	void EncipherDataCBC(long BlocksCount, void * InitVector, void * InputData, void * OutputData)
+	void EncipherDataCBC(long BlocksCount, const void * InitVector, const void * InputData, void * OutputData)
 	{
 		unsigned char	*in,*out;
 
@@ -107,7 +107,7 @@ public:
 	}
 
 	//##ModelId=41A9E20A01B2
-	void EncipherDataCBC(long BlocksCount, void * InitVector, void * Data)
+	void EncipherDataCBC(long BlocksCount, const void * InitVector, void * Data)
 	{
 		unsigned char	*buff;
 
@@ -129,7 +129,7 @@ public:
 	}
 
 	//##ModelId=41B1D4450293
-	void DecipherDataECB(long BlocksCount, void * InputData, void * OutputData)
+	void DecipherDataECB(long BlocksCount, const void * InputData, void * OutputData)
 	{
 		unsigned char	*in,*out;
 
@@ -158,7 +158,7 @@ public:
 	}
 
 	//##ModelId=41B1D44502D9
-	void DecipherDataCBC(long BlocksCount, void * InitVector, void * InputData, void * OutputData)
+	void DecipherDataCBC(long BlocksCount, const void * InitVector, const void * InputData, void * OutputData)
 	{
 		unsigned char	*in,*out;
 		if(!BlocksCount)
@@ -183,7 +183,7 @@ public:
 	}
 
 	//##ModelId=41B1D4450301
-	void DecipherDataCBC(long BlocksCount, void * InitVector, void * Data)
+	void DecipherDataCBC(long BlocksCount, const void * InitVector, void * Data)
 	{
 		unsigned char	Buff1[SymmetricCipherEngine::BlockSize];
 		unsigned char	Buff2[SymmetricCipherEngine::BlockSize];
