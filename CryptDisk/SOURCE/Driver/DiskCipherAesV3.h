@@ -26,6 +26,10 @@ public:
 	virtual void DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, PVOID pData);
 	virtual void DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pCipherData, PVOID pPlainData);
 
+	// Placement new
+	void* operator new(size_t size, void* pBuff) throw() { return pBuff; }
+	void operator delete(void *ptr, void* pBuff) throw() { }
+
 private:
 	CryptoLib::LRWAES	m_cipher;
 };

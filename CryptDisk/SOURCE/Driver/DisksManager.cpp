@@ -26,7 +26,6 @@
 
 #include "..\Version.h"
 #include "format.h"
-#include "disk.h"
 
 #include "main.h"
 #include "VirtualDisk.h"
@@ -183,13 +182,15 @@ NTSTATUS DisksManager::UnmountDisk(DISK_DELETE_INFO *Info)
 	BOOL					bVolumeInUse=FALSE;
 
 	memset(wsSymLinkName,0,sizeof(wsSymLinkName));
-	DisksManager::GetDosName(Info->DriveLetter,wsSymLinkName);
-	RtlInitUnicodeString(&usSymLinkName,wsSymLinkName);
+
+	DisksManager::GetDosName((static_cast<const VirtualDisk*>(VirtualDisks[Info->DiskId]->DeviceExtension))->GetDiskInfo().DriveLetter,
+		wsSymLinkName);
+	RtlInitUnicodeString(&usSymLinkName, wsSymLinkName);
 
 	bVolumeInUse=FALSE;
 
 	// Open FS volume
-	InitializeObjectAttributes(&ob_attr,&usSymLinkName,OBJ_CASE_INSENSITIVE,NULL,NULL);
+	InitializeObjectAttributes(&ob_attr, &usSymLinkName, OBJ_CASE_INSENSITIVE, NULL, NULL);
 	memset(&iosb,0,sizeof(IO_STATUS_BLOCK));
 	status=ZwCreateFile(&hVolume,SYNCHRONIZE|GENERIC_READ,&ob_attr,&iosb,0,
 		FILE_ATTRIBUTE_NORMAL,
@@ -433,7 +434,7 @@ NTSTATUS DisksManager::UninstallDisk(DISK_DELETE_INFO *Info)
 	{
 		if(VirtualDisks[i])
 		{
-			if(((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_diskInfo.DriveLetter==Info->DriveLetter)
+			if(((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_nDiskNumber==Info->DiskId)
 			{
 				break;
 			}
@@ -481,7 +482,7 @@ NTSTATUS DisksManager::Close(BOOL bForce)
 		if(VirtualDisks[i])
 		{
 			info.bForce=bForce;
-			info.DriveLetter=((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_diskInfo.DriveLetter;
+			info.DiskId=((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_nDiskNumber;
 			status=UninstallDisk(&info);
 			if(!NT_SUCCESS(status))
 			{
@@ -505,7 +506,6 @@ NTSTATUS DisksManager::IoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 	PIO_STACK_LOCATION	ioStack;
 	void				*Buffer;
 	ULONG				InputSize,OutputSize;
-	ULONG				i,j;
 
 	ioStack=IoGetCurrentIrpStackLocation(Irp);
 	Buffer=Irp->AssociatedIrp.SystemBuffer;
@@ -558,42 +558,61 @@ NTSTATUS DisksManager::IoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 	case IOCTL_VDISK_GET_DISKS_INFO:
 		if(Buffer)
 		{
-			if(OutputSize>=(sizeof(DISK_BASIC_INFO)*DisksCount))
+			size_t infosSize = 0;
+			for(ULONG i=0;i<DisksCountMax;i++)
 			{
-				VirtualDisk		*pDisk;
+				if(VirtualDisks[i])
+				{
+					infosSize += ((const VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->GetDiskInfoSize();
+				}
+			}
+
+			if(OutputSize>=infosSize)
+			{
 				DISK_BASIC_INFO	*pInfo;
 
-				pInfo=(DISK_BASIC_INFO*)Buffer;
+				pInfo = (DISK_BASIC_INFO*)Buffer;
 
-				for(i=0,j=0;i<DisksCountMax;i++)
+				for(ULONG i=0,j=0;i<DisksCountMax;i++)
 				{
-					if(j>=DisksCount)
+					if(j >= DisksCount)
 					{
 						break;
 					}
 					if(VirtualDisks[i])
 					{
-						pDisk=(VirtualDisk*)(VirtualDisks[i]->DeviceExtension);
-						pInfo[j++]=pDisk->m_diskInfo;
+						pInfo[j++] = ((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->GetDiskInfo();
 					}
 				}
-				Irp->IoStatus.Information=sizeof(DISK_BASIC_INFO)*j;
+
+				Irp->IoStatus.Information = infosSize;
 				status=STATUS_SUCCESS;
 			}
 			else
 			{
 				status=STATUS_BUFFER_TOO_SMALL;
-				Irp->IoStatus.Information=(sizeof(DISK_BASIC_INFO)*DisksCount);
+				Irp->IoStatus.Information = infosSize;
 			}
 		}
 		break;
-	case IOCTL_VDISK_ADD_DISK:
+	case IOCTL_VDISK_ADD_DISK_V3:
+	case IOCTL_VDISK_ADD_DISK_V4:
 		if(Buffer)
 		{
 			if(InputSize>=sizeof(DISK_ADD_INFO))
 			{
-				status=InstallDisk((DISK_ADD_INFO*)Buffer);
-				Irp->IoStatus.Information=0;
+				size_t fullSize = sizeof(DISK_ADD_INFO) + ((DISK_ADD_INFO*)Buffer)->PathSize - sizeof(WCHAR);
+
+				if(InputSize >= fullSize)
+				{
+					status=InstallDisk((DISK_ADD_INFO*)Buffer);
+					Irp->IoStatus.Information=0;
+				}
+				else
+				{
+					status=STATUS_BUFFER_TOO_SMALL;
+					Irp->IoStatus.Information=fullSize;
+				}
 			}
 			else
 			{

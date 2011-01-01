@@ -22,43 +22,41 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef	_VIRTUAL_DISK_H_INCLUDED
-#define	_VIRTUAL_DISK_H_INCLUDED
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
-#include "DiskCipher.h"
+#include "IDiskCipher.h"
+#include "DriverProtocol.h"
 
 class	VirtualDisk
 {
 	friend class DisksManager;
 public:
 	// Generic functions
-	NTSTATUS			Init(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice);
-	NTSTATUS			Close(BOOL bForce);
+	NTSTATUS			Init(DISK_ADD_INFO *Info, PDEVICE_OBJECT pDevice);
+	NTSTATUS			Close(bool bForce);
 
 	// Initialization and cleanup from worker thread
 	void				Cleanup();
-	NTSTATUS			InternalInit(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice);
+	NTSTATUS			InternalInit(DISK_ADD_INFO *Info, PDEVICE_OBJECT pDevice);
 
 	// Wrappers
-	static	NTSTATUS	IoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp);
-	static	NTSTATUS	IoReadWrite(PDEVICE_OBJECT DeviceObject,PIRP Irp);
-	static	NTSTATUS	IoCreateClose(PDEVICE_OBJECT DeviceObject,PIRP Irp);
+	static	NTSTATUS	IoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp);
+	static	NTSTATUS	IoReadWrite(PDEVICE_OBJECT DeviceObject, PIRP Irp);
+	static	NTSTATUS	IoCreateClose(PDEVICE_OBJECT DeviceObject, PIRP Irp);
 
 	// Worker thread
 	static KSTART_ROUTINE VirtualDiskThread;
 	// IRP_MJ_DEVICE_CONTROL handler, in context of worker thread
-	NTSTATUS	ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp);
+	NTSTATUS	ThreadIoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp);
 
 	// Acessors
-	const DISK_BASIC_INFO& GetDiskInfo() const {return m_diskInfo;}
+	const DISK_BASIC_INFO& GetDiskInfo() const {return *m_pDiskInfo;}
+	size_t GetDiskInfoSize() const { return sizeof(DISK_BASIC_INFO) + m_pDiskInfo->PathSize - sizeof(WCHAR); }
+
 protected:
 	// Internal functions
 	NTSTATUS SetFlags(DISK_ADD_INFO *pInfo);
-	NTSTATUS OpenFile(DISK_ADD_INFO *pInfo);
+	NTSTATUS OpenFile(PCWSTR fileName);
 	NTSTATUS InitCipher(DISK_ADD_INFO *pInfo);
 
 protected:
@@ -70,7 +68,7 @@ protected:
 	FILE_BASIC_INFORMATION	m_fileBasicInfo;
 
 	// Device parameters
-	DISK_BASIC_INFO		m_diskInfo;
+	DISK_BASIC_INFO*	m_pDiskInfo;
 
 	// Flags
 	BOOL				m_bRemovable;
@@ -86,7 +84,7 @@ protected:
 	PFILE_OBJECT		m_pFileObject;
 
 	// Cryptographic parameters
-	DiskCipher			m_cipher;
+	IDiskCipher*		m_pDiskCipher;
 
 	// Worker thread and IRP queue
 	PVOID				m_pWorkerThread;
@@ -95,5 +93,3 @@ protected:
 	KSPIN_LOCK			m_irpQueueLock;
 	BOOL				m_bTerminateThread;
 };
-
-#endif	//_VIRTUAL_DISK_H_INCLUDED

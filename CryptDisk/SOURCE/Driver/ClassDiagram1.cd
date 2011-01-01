@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="DiskCipher" Collapsed="true">
-    <Position X="11.75" Y="0.5" Width="1.5" />
+    <Position X="13.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAEAAAIAAAQAEQBAAQAAAAAAAACAABAAAA=</HashCode>
       <FileName>DiskCipher.h</FileName>
@@ -29,7 +29,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="CDiskHeader" Collapsed="true">
-    <Position X="10" Y="0.5" Width="1.5" />
+    <Position X="13.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAIAACQAAACAAQBAQAAEAAAAQCAABAAAA=</HashCode>
       <FileName>DiskHeader.h</FileName>
@@ -50,7 +50,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="DisksManager" Collapsed="true">
-    <Position X="13.5" Y="0.5" Width="1.5" />
+    <Position X="10.5" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAEEIAAAAAAEAAAEABEAAAEAAAAAAAAAAKAAmFCIg=</HashCode>
       <FileName>DisksManager.h</FileName>
@@ -71,9 +71,9 @@
     </TypeIdentifier>
   </Class>
   <Class Name="VirtualDisk" Collapsed="true">
-    <Position X="10" Y="1.5" Width="1.5" />
+    <Position X="8.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AEBCFACAAQAAIEQEAABAUQAAEMAAAEIAgABCCEDBIEA=</HashCode>
+      <HashCode>AEBCFACAAQAAIEQEAABAQQAAEMAIAEIAgABCCEDBIEA=</HashCode>
       <FileName>VirtualDisk.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -88,41 +88,6 @@
     <Position X="13.5" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
-      <FileName>disk.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="VERSION_DRIVER" Collapsed="true">
-    <Position X="11.75" Y="4.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAIAAAAAAAAAAA=</HashCode>
-      <FileName>disk.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="DISKS_COUNT_INFO" Collapsed="true">
-    <Position X="11.75" Y="3.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAABAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAA=</HashCode>
-      <FileName>disk.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="DISK_BASIC_INFO" Collapsed="true">
-    <Position X="11.75" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgAAABAAAAAAAAAAAAAAgAAAABAAAAAAAA=</HashCode>
-      <FileName>disk.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="DISK_ADD_INFO" Collapsed="true">
-    <Position X="10" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAQAAAAAAkAAAAAAAAAAAAgAAAAAAAAAABAAAAAAAA=</HashCode>
-      <FileName>disk.h</FileName>
-    </TypeIdentifier>
-  </Struct>
-  <Struct Name="DISK_DELETE_INFO" Collapsed="true">
-    <Position X="13.5" Y="2.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>disk.h</FileName>
     </TypeIdentifier>
   </Struct>
@@ -152,6 +117,36 @@
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAAAAAAAAAIAEAAAAAAgAAAAAwIgAAAAAAA=</HashCode>
       <FileName>format.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DISK_DELETE_INFO" Collapsed="true">
+    <Position X="13.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <NewMemberFileName>disk.h</NewMemberFileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DISK_ADD_INFO" Collapsed="true">
+    <Position X="10" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <NewMemberFileName>disk.h</NewMemberFileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DISK_BASIC_INFO" Collapsed="true">
+    <Position X="11.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <NewMemberFileName>disk.h</NewMemberFileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="DISKS_COUNT_INFO" Collapsed="true">
+    <Position X="11.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <NewMemberFileName>disk.h</NewMemberFileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="VERSION_DRIVER" Collapsed="true">
+    <Position X="11.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <NewMemberFileName>disk.h</NewMemberFileName>
     </TypeIdentifier>
   </Struct>
   <Typedef Name="PBOOT_SECTOR" Collapsed="true">

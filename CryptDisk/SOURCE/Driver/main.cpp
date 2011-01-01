@@ -32,7 +32,6 @@
 
 #include "..\Version.h"
 #include "format.h"
-#include "disk.h"
 
 #include "VirtualDisk.h"
 #include "main.h"

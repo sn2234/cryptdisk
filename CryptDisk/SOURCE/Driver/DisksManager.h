@@ -22,12 +22,9 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef	_DISKS_MANAGER_H_INCLUDED
-#define	_DISKS_MANAGER_H_INCLUDED
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
+
+#include "DriverProtocol.h"
 
 #define		MOUNTMGR_DEV_NAME		L"\\Device\\DNVirtualDisks\\DiskZ"
 #define		MOUNTMGR_DOS_NAME		L"\\DosDevices\\Z:"
@@ -101,5 +98,3 @@ public:
 		return sizeof(MOUNTMGR_UNIQUE_ID);
 	}
 };
-
-#endif	//_DISKS_MANAGER_H_INCLUDED
