@@ -27,50 +27,34 @@
 
 #include <windows.h>
 
-//##ModelId=40E9962601E4
 class DNDriverControl
 {
-  public:
-	DNDriverControl()
+	DNDriverControl(HANDLE hDriver)
+		: hDriver(hDriver)
 	{
-		initialized=0;
 	}
 
-	~DNDriverControl()
-	{
-		if(initialized)
-		{
-			Close();
-		}
-	}
-	//##ModelId=40E9979802EE
-	int Open(TCHAR *szDriverDeviceName);
-
-	int Open(TCHAR *szDriverDeviceName,DWORD access);
-
-	//##ModelId=40E997AD02DE
 	int Close();
 
-	//##ModelId=40E997F503A9
+public:
+
+	virtual ~DNDriverControl()
+	{
+			Close();
+	}
+
+	static DNDriverControl* Create(TCHAR *szDriverDeviceName, DWORD access = GENERIC_READ|GENERIC_WRITE);
+
 	DWORD Control(DWORD Code);
 
-	//##ModelId=40E998AE0138
 	DWORD Control(DWORD Code, unsigned char* Input, DWORD InputLen);
 
-	//##ModelId=40E998770138
 	DWORD Control(DWORD Code, unsigned char* Output, DWORD OutputLen, DWORD *Result);
 
-	//##ModelId=40E998E90000
 	DWORD Control(DWORD Code, unsigned char* Input, DWORD InputLen, unsigned char* Output, DWORD OutputLen, DWORD *Result);
 
   protected:
-	//##ModelId=40E999D3001F
 	HANDLE hDriver;
-
-  private:
-	//##ModelId=40E99DA60177
-	int initialized;
-
 };
 
 

@@ -595,8 +595,7 @@ NTSTATUS DisksManager::IoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			}
 		}
 		break;
-	case IOCTL_VDISK_ADD_DISK_V3:
-	case IOCTL_VDISK_ADD_DISK_V4:
+	case IOCTL_VDISK_ADD_DISK:
 		if(Buffer)
 		{
 			if(InputSize>=sizeof(DISK_ADD_INFO))

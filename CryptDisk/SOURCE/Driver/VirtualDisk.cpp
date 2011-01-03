@@ -56,7 +56,7 @@ ZwWaitForSingleObject (
 
 typedef	struct VDISK_THREAD_INIT_PARAMS
 {
-	DISK_ADD_INFO	Info;
+	DISK_ADD_INFO*	Info;
 	PDEVICE_OBJECT	pDevice;
 	NTSTATUS		statusReturned;
 	KEVENT			syncEvent;
@@ -68,7 +68,7 @@ NTSTATUS	VirtualDisk::Init(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice)
 	HANDLE						hThread;
 	NTSTATUS					status=STATUS_UNSUCCESSFUL;
 
-	threadParams.Info=*Info;
+	threadParams.Info=Info;
 	threadParams.pDevice=pDevice;
 	threadParams.statusReturned=STATUS_UNSUCCESSFUL;
 	KeInitializeEvent(&threadParams.syncEvent,NotificationEvent,0);
@@ -684,7 +684,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 	}
 
 	// Perform VirtualDisk initialization
-	status=pDisk->InternalInit(&(threadParams->Info),
+	status=pDisk->InternalInit(threadParams->Info,
 		threadParams->pDevice);
 
 	threadParams->statusReturned=status;

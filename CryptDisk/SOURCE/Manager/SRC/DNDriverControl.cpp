@@ -25,51 +25,14 @@
 #include "stdafx.h"
 
 #include "DNDriverControl.h"
+#include "winapi_exception.h"
 
-//##ModelId=40E9979802EE
-int DNDriverControl::Open(TCHAR *szDriverDeviceName)
-{
-	if(initialized)
-		Close();
-	
-	initialized=0;
-	if((hDriver=CreateFile(szDriverDeviceName,GENERIC_READ|GENERIC_WRITE,
-		FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,0,OPEN_EXISTING,0,0))!=INVALID_HANDLE_VALUE)
-	{
-		initialized=1;
-	}
-	
-	return initialized;
-}
-
-int DNDriverControl::Open(TCHAR *szDriverDeviceName,DWORD access)
-{
-	if(initialized)
-		Close();
-
-	initialized=0;
-	if((hDriver=CreateFile(szDriverDeviceName,access,
-		FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
-		0,OPEN_EXISTING,0,0))!=INVALID_HANDLE_VALUE)
-	{
-		initialized=1;
-	}
-
-	return initialized;
-}
-
-//##ModelId=40E997AD02DE
 int DNDriverControl::Close()
 {
-	if(!initialized)
-		return 0;
-
 	CloseHandle(hDriver);
-	initialized=0;
 	return 1;
 }
 
-//##ModelId=40E997F503A9
 DWORD DNDriverControl::Control(DWORD Code)
 {
 	DWORD dwResult;
@@ -77,7 +40,6 @@ DWORD DNDriverControl::Control(DWORD Code)
 	return DeviceIoControl(hDriver,Code,0,0,0,0,&dwResult,0);
 }
 
-//##ModelId=40E998AE0138
 DWORD DNDriverControl::Control(DWORD Code, unsigned char* Input, DWORD InputLen)
 {
 	DWORD dwResult;
@@ -85,15 +47,26 @@ DWORD DNDriverControl::Control(DWORD Code, unsigned char* Input, DWORD InputLen)
 	return DeviceIoControl(hDriver,Code,Input,InputLen,0,0,&dwResult,0);
 }
 
-//##ModelId=40E998770138
 DWORD DNDriverControl::Control(DWORD Code, unsigned char* Output, DWORD OutputLen, DWORD *Result)
 {
 	return DeviceIoControl(hDriver,Code,0,0,Output,OutputLen,Result,0);
 }
 
-//##ModelId=40E998E90000
 DWORD DNDriverControl::Control(DWORD Code, unsigned char* Input, DWORD InputLen, unsigned char* Output, DWORD OutputLen, DWORD *Result)
 {
 	return DeviceIoControl(hDriver,Code,Input,InputLen,Output,OutputLen,Result,0);
 }
 
+DNDriverControl* DNDriverControl::Create( TCHAR *szDriverDeviceName, DWORD access /*= GENERIC_READ|GENERIC_WRITE*/ )
+{
+	HANDLE hDriver;
+
+	hDriver=CreateFile(szDriverDeviceName, access, FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE, 0, OPEN_EXISTING, 0, 0);
+
+	if(hDriver == INVALID_HANDLE_VALUE)
+	{
+		throw winapi_exception("Error opening driver");
+	}
+
+	return new DNDriverControl(hDriver);
+}

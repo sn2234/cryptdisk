@@ -67,8 +67,8 @@ PDEVICE_OBJECT		pControlDevice;
 DisksManager		Manager;
 
 // private vars
-static	WCHAR			wsControlDeviceName[]=L"\\Device\\DNDiskControl30";
-static	WCHAR			wsControlDeviceLink[]=L"\\??\\DNDiskControl30";
+static	WCHAR			wsControlDeviceName[]=L"\\Device\\DNDiskControl40";
+static	WCHAR			wsControlDeviceLink[]=L"\\??\\DNDiskControl40";
 static	WCHAR			wsDirName[]=L"\\Device\\DNVirtualDisks";
 static	UNICODE_STRING	usSymLink;
 static	HANDLE			hDirectory;
