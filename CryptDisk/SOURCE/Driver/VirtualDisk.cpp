@@ -113,6 +113,8 @@ NTSTATUS VirtualDisk::InternalInit(DISK_ADD_INFO *pInfo, PDEVICE_OBJECT pDevice)
 	m_pDiskInfo->OpenCount=0;
 	// Set drive letter
 	m_pDiskInfo->DriveLetter=pInfo->DriveLetter;
+	m_pDiskInfo->DiskId = m_nDiskNumber;
+	m_pDiskInfo->PathSize = pInfo->PathSize;
 
 	m_pDevice=pDevice;
 	m_pFileObject=NULL;

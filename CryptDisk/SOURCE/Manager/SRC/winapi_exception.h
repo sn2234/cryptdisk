@@ -22,7 +22,7 @@ public:
 	{
 	}
 
-	const char*  what  ()  const throw() { return m_message.c_str(); }
+	virtual const char*  what  ()  const throw() { return m_message.c_str(); }
 	unsigned int error ()  const throw() { return m_error; }
 
 private:
@@ -32,7 +32,7 @@ private:
 		std::stringstream s;
 
 		if(FormatMessageA(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
-			NULL, m_error, 0, buffer, 0, NULL))
+			NULL, m_error, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPSTR)&buffer, 0, NULL))
 		{
 			s << "[" << userMessage << "] " << buffer << " (" << m_error << ")" ;
 

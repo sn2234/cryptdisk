@@ -112,7 +112,7 @@ NTSTATUS __stdcall DriverEntry(PDRIVER_OBJECT DriverObj, PUNICODE_STRING Registr
 			// Create directory for virtual disks devices
 			RtlInitUnicodeString(&usDirectoryName,wsDirName);
 			InitializeObjectAttributes(&object_attributes,&usDirectoryName,
-				OBJ_PERMANENT,
+				OBJ_PERMANENT|OBJ_KERNEL_HANDLE,
 				NULL,NULL);
 			status=ZwCreateDirectoryObject(&hDirectory,DIRECTORY_ALL_ACCESS,
 				&object_attributes);

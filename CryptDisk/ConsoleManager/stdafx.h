@@ -27,3 +27,4 @@
 
 #include "CryptoLib.h"
 // Definitions
+#define USER_MODE

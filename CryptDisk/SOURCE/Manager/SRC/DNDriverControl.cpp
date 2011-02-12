@@ -40,19 +40,19 @@ DWORD DNDriverControl::Control(DWORD Code)
 	return DeviceIoControl(hDriver,Code,0,0,0,0,&dwResult,0);
 }
 
-DWORD DNDriverControl::Control(DWORD Code, unsigned char* Input, DWORD InputLen)
+DWORD DNDriverControl::Control(DWORD Code, void* Input, DWORD InputLen)
 {
 	DWORD dwResult;
 
 	return DeviceIoControl(hDriver,Code,Input,InputLen,0,0,&dwResult,0);
 }
 
-DWORD DNDriverControl::Control(DWORD Code, unsigned char* Output, DWORD OutputLen, DWORD *Result)
+DWORD DNDriverControl::Control(DWORD Code, void* Output, DWORD OutputLen, DWORD *Result)
 {
 	return DeviceIoControl(hDriver,Code,0,0,Output,OutputLen,Result,0);
 }
 
-DWORD DNDriverControl::Control(DWORD Code, unsigned char* Input, DWORD InputLen, unsigned char* Output, DWORD OutputLen, DWORD *Result)
+DWORD DNDriverControl::Control(DWORD Code, void* Input, DWORD InputLen, void* Output, DWORD OutputLen, DWORD *Result)
 {
 	return DeviceIoControl(hDriver,Code,Input,InputLen,Output,OutputLen,Result,0);
 }

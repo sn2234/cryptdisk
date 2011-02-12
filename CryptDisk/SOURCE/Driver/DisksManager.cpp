@@ -190,7 +190,7 @@ NTSTATUS DisksManager::UnmountDisk(DISK_DELETE_INFO *Info)
 	bVolumeInUse=FALSE;
 
 	// Open FS volume
-	InitializeObjectAttributes(&ob_attr, &usSymLinkName, OBJ_CASE_INSENSITIVE, NULL, NULL);
+	InitializeObjectAttributes(&ob_attr, &usSymLinkName, OBJ_CASE_INSENSITIVE|OBJ_KERNEL_HANDLE, NULL, NULL);
 	memset(&iosb,0,sizeof(IO_STATUS_BLOCK));
 	status=ZwCreateFile(&hVolume,SYNCHRONIZE|GENERIC_READ,&ob_attr,&iosb,0,
 		FILE_ATTRIBUTE_NORMAL,
@@ -567,13 +567,14 @@ NTSTATUS DisksManager::IoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 				}
 			}
 
-			if(OutputSize>=infosSize)
+			if(OutputSize >= infosSize)
 			{
 				DISK_BASIC_INFO	*pInfo;
 
 				pInfo = (DISK_BASIC_INFO*)Buffer;
 
-				for(ULONG i=0,j=0;i<DisksCountMax;i++)
+				ULONG j = 0;
+				for(ULONG i=0; i < DisksCountMax; i++)
 				{
 					if(j >= DisksCount)
 					{
@@ -581,17 +582,27 @@ NTSTATUS DisksManager::IoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 					}
 					if(VirtualDisks[i])
 					{
-						pInfo[j++] = ((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->GetDiskInfo();
+						size_t currentInfoSize = ((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->GetDiskInfoSize();
+						memcpy(pInfo, &((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->GetDiskInfo(), currentInfoSize);
+						
+						pInfo = (DISK_BASIC_INFO *)((UCHAR*)pInfo + currentInfoSize);
 					}
 				}
 
 				Irp->IoStatus.Information = infosSize;
-				status=STATUS_SUCCESS;
+				status = STATUS_SUCCESS;
+			}
+			else if (OutputSize >= sizeof(infosSize))
+			{
+				*(reinterpret_cast<size_t*>(Buffer)) = infosSize;
+
+				status = STATUS_BUFFER_OVERFLOW;
+				Irp->IoStatus.Information = sizeof(infosSize);
 			}
 			else
 			{
-				status=STATUS_BUFFER_TOO_SMALL;
-				Irp->IoStatus.Information = infosSize;
+				status = STATUS_BUFFER_TOO_SMALL;
+				Irp->IoStatus.Information = 0;
 			}
 		}
 		break;

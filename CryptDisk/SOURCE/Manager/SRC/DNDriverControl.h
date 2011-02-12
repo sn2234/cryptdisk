@@ -47,11 +47,11 @@ public:
 
 	DWORD Control(DWORD Code);
 
-	DWORD Control(DWORD Code, unsigned char* Input, DWORD InputLen);
+	DWORD Control(DWORD Code, void* Input, DWORD InputLen);
 
-	DWORD Control(DWORD Code, unsigned char* Output, DWORD OutputLen, DWORD *Result);
+	DWORD Control(DWORD Code, void* Output, DWORD OutputLen, DWORD *Result);
 
-	DWORD Control(DWORD Code, unsigned char* Input, DWORD InputLen, unsigned char* Output, DWORD OutputLen, DWORD *Result);
+	DWORD Control(DWORD Code, void* Input, DWORD InputLen, void* Output, DWORD OutputLen, DWORD *Result);
 
   protected:
 	HANDLE hDriver;
