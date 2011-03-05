@@ -41,10 +41,21 @@ public:
 protected:
 	void IncCounter()
 	{
-		PVOID	ptr_cntr=(PVOID)m_counter;
 #if defined(AES_BLOCK_SIZE) && (AES_BLOCK_SIZE != 16)
 #error	Bad counter size
 #endif
+
+#ifdef _WIN64
+		UINT64* pCntr = reinterpret_cast<UINT64*>(m_counter);
+
+		pCntr[0]++;
+		if(pCntr[0] == 0)
+		{
+			pCntr[1]++;
+		}
+#else
+		PVOID	ptr_cntr=(PVOID)m_counter;
+
 		__asm
 		{
 			mov		eax, ptr_cntr
@@ -62,6 +73,7 @@ protected:
 			mov		dword ptr [eax+2*4], ecx
 			mov		dword ptr [eax+3*4], edx
 		}
+#endif
 	}
 
 	DNAES m_cipher;

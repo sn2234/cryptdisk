@@ -130,6 +130,8 @@ BOOST_AUTO_TEST_CASE( aesDecTestMy )
 	for_each(begin(AesTests), end(AesTests), AesDecTest);
 }
 
+#if 0
+
 typedef struct TWOFISH_TEST{
 	BYTE key[TWOFISH_KEY_SIZE];
 	BYTE plaintext[TWOFISH_BLOCK_SIZE];
@@ -544,3 +546,5 @@ BOOST_AUTO_TEST_CASE( sha256Test )
 
 	delete[] ShaTestLong.data;
 }
+
+#endif
