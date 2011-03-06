@@ -165,8 +165,8 @@ extern "C" {
 #    define VOID_RETURN  void __cdecl
 #    define INT_RETURN   int  __cdecl
 #  else
-#    define VOID_RETURN  void
-#    define INT_RETURN   int
+#    define VOID_RETURN  void __stdcall
+#    define INT_RETURN   int __stdcall
 #  endif
 #endif
 

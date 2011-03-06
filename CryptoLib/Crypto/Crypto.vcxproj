@@ -321,17 +321,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </MASM>
-    <MASM Include="SOURCE\Primitives\x86\sha256.asm">
-      <UseSafeExceptionHandlers Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</UseSafeExceptionHandlers>
-      <UseSafeExceptionHandlers Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</UseSafeExceptionHandlers>
-      <UseSafeExceptionHandlers Condition="'$(Configuration)|$(Platform)'=='Profile|Win32'">true</UseSafeExceptionHandlers>
-      <UseSafeExceptionHandlers Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">true</UseSafeExceptionHandlers>
-      <UseSafeExceptionHandlers Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</UseSafeExceptionHandlers>
-      <UseSafeExceptionHandlers Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</UseSafeExceptionHandlers>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </MASM>
     <MASM Include="SOURCE\Primitives\x86\Twofish.asm">
       <UseSafeExceptionHandlers Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</UseSafeExceptionHandlers>
       <UseSafeExceptionHandlers Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</UseSafeExceptionHandlers>
@@ -348,7 +337,8 @@
     <ClInclude Include="SOURCE\Primitives\LRWMath.h" />
     <ClInclude Include="SOURCE\Primitives\rc4.h" />
     <ClInclude Include="SOURCE\Primitives\Rijndael.h" />
-    <ClInclude Include="SOURCE\Primitives\sha256.h" />
+    <ClInclude Include="SOURCE\Primitives\sha2.h" />
+    <ClInclude Include="SOURCE\Primitives\ShaWrapper.h" />
     <ClInclude Include="SOURCE\Primitives\Tools.h" />
     <ClInclude Include="SOURCE\Primitives\Twofish.h" />
     <ClInclude Include="SOURCE\BaseCrypt\DeriveKey.h" />
@@ -427,11 +417,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </None>
-    <None Include="SOURCE\Primitives\x86\sha256.inc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </None>
     <None Include="SOURCE\Primitives\x86\twofish.inc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Profile|x64'">true</ExcludedFromBuild>
@@ -444,6 +429,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SOURCE\Primitives\sha2.c" />
     <ClCompile Include="SOURCE\Primitives\Tools.cpp" />
     <ClCompile Include="SOURCE\BaseCrypt\DeriveKey.cpp" />
     <ClCompile Include="SOURCE\Primitives\x64\aeskey.c">

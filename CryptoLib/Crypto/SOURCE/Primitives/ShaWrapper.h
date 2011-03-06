@@ -25,6 +25,8 @@
 #ifndef	_SHA256_H_INCLUDED
 #define	_SHA256_H_INCLUDED
 
+#include "sha2.h"
+
 #ifdef	__cplusplus
 extern "C" {
 #endif
@@ -32,19 +34,23 @@ extern "C" {
 #define	SHA256_DIDGEST_SIZE		32
 #define	SHA256_BLOCK_SIZE		64
 
-#pragma pack(push,16)
-typedef	__declspec(align(16)) struct	SHA256_CTX
-{
-	unsigned long State[8];
-	unsigned long MessageLength[2];
-	unsigned char Buffer[64];
-	
-}SHA256_CTX;
-#pragma pack(pop)
+typedef sha256_ctx SHA256_CTX;
 
-extern void __stdcall SHA256Init(SHA256_CTX *ctx);
-extern void __stdcall SHA256Update(SHA256_CTX *ctx,void *Input,unsigned long InputLen);
-extern void __stdcall SHA256Final(SHA256_CTX *ctx,void *Didgest);
+void __inline SHA256Init(SHA256_CTX *ctx)
+{
+	sha256_begin(ctx);
+}
+
+void __inline SHA256Update(SHA256_CTX *ctx,const void *Input,unsigned long InputLen)
+{
+	sha256_hash((const unsigned char*)Input, InputLen, ctx);
+}
+
+void __inline SHA256Final(SHA256_CTX *ctx,void *Didgest)
+{
+	sha256_end((unsigned char*)Didgest, ctx);
+}
+
 #ifdef	__cplusplus
 }
 #endif

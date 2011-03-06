@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 using namespace CryptoLib;
-using namespace boost;
+//using namespace boost;
 using namespace std;
 using namespace stdext;
 

@@ -31,7 +31,6 @@ Key derivation function based on SHA-256
 
 #include <string.h>
 
-#include "sha256.h"
 #include "SHA256_HASH.h"
 
 #include "DeriveKey.h"

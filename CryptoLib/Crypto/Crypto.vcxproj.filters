@@ -27,9 +27,6 @@
     <MASM Include="SOURCE\Primitives\x86\rj_opt.asm">
       <Filter>Primitives\x86</Filter>
     </MASM>
-    <MASM Include="SOURCE\Primitives\x86\sha256.asm">
-      <Filter>Primitives\x86</Filter>
-    </MASM>
     <MASM Include="SOURCE\Primitives\x86\Twofish.asm">
       <Filter>Primitives\x86</Filter>
     </MASM>
@@ -39,9 +36,6 @@
       <Filter>Primitives</Filter>
     </ClInclude>
     <ClInclude Include="SOURCE\Primitives\rc4.h">
-      <Filter>Primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Primitives\sha256.h">
       <Filter>Primitives</Filter>
     </ClInclude>
     <ClInclude Include="SOURCE\Primitives\Tools.h">
@@ -141,6 +135,12 @@
     <ClInclude Include="SOURCE\Primitives\x64\AesWrapper.h">
       <Filter>Primitives\x64</Filter>
     </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\ShaWrapper.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\sha2.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="SOURCE\Primitives\x86\LrwMath.inc">
@@ -153,9 +153,6 @@
       <Filter>Primitives\x86</Filter>
     </None>
     <None Include="SOURCE\Primitives\x86\rj_tables.inc">
-      <Filter>Primitives\x86</Filter>
-    </None>
-    <None Include="SOURCE\Primitives\x86\sha256.inc">
       <Filter>Primitives\x86</Filter>
     </None>
     <None Include="SOURCE\Primitives\x86\twotables.inc">
@@ -189,6 +186,9 @@
     </ClCompile>
     <ClCompile Include="SOURCE\Primitives\x64\AesWrapper.c">
       <Filter>Primitives\x64</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\sha2.c">
+      <Filter>Primitives</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

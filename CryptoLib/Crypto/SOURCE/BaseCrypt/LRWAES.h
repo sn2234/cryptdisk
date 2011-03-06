@@ -33,7 +33,9 @@
 #define		ENGINE_KEY_SIZE		RJ_KEY_LEN_BYTES
 
 #define		AES_KEY_SIZE		RJ_KEY_LEN_BYTES
+#ifndef AES_BLOCK_SIZE
 #define		AES_BLOCK_SIZE		RJ_BLOCK_LEN_BYTES
+#endif
 
 #include "SymmetricCipherLRW.h"
 
