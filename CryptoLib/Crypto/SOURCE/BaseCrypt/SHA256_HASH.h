@@ -50,9 +50,9 @@ public:
 	}
 
 	//##ModelId=41A9DD6D0362
-	__forceinline void Update(const void *Data, unsigned long DataLength)
+	__forceinline void Update(const void *Data, size_t DataLength)
 	{
-		SHA256Update(&Context, const_cast<void*>(Data), DataLength);
+		SHA256Update(&Context, const_cast<void*>(Data), (unsigned long)DataLength);
 	}
 
 	//##ModelId=41A9DD6E01E7

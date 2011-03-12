@@ -130,8 +130,6 @@ BOOST_AUTO_TEST_CASE( aesDecTestMy )
 	for_each(begin(AesTests), end(AesTests), AesDecTest);
 }
 
-#ifndef _WIN64
-
 typedef struct TWOFISH_TEST{
 	BYTE key[TWOFISH_KEY_SIZE];
 	BYTE plaintext[TWOFISH_BLOCK_SIZE];
@@ -474,8 +472,6 @@ BOOST_AUTO_TEST_CASE( rc4Test )
 
 	for_each(begin(rc4TestSamples), end(rc4TestSamples), Rc4Test);
 }
-
-#endif
 
 struct SHA_TEST
 {

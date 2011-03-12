@@ -49,7 +49,7 @@ void Pkcs5DeriveKey(size_t passwordLength, const void *password,
 					unsigned long iterationCount,
 					size_t keyLength, void *key)
 {
-	unsigned long l = (keyLength / HashAlgorithm::didgestSize) + 
+	size_t l = (keyLength / HashAlgorithm::didgestSize) + 
 		((keyLength % HashAlgorithm::didgestSize) ? 1 : 0);
 	unsigned long r = keyLength % HashAlgorithm::didgestSize;
 	unsigned long blockNumber = 0;

@@ -1,23 +1,8 @@
 
 #include <memory.h>
-#include <intrin.h>
-#include <emmintrin.h>
 #include "aes.h"
 #include "AesWrapper.h"
-
-void __forceinline XorAesBlock(const void* xorBlock, const void* inBlock, void* outBlock)
-{
-	const __m128i* pXor = (const __m128i*)xorBlock;
-	const __m128i* pIn = (const __m128i*)inBlock;
-	__m128i* pOut = (__m128i*)outBlock;
-
-	int i;
-
-	for (i = 0; i < AES_BLOCK_SIZE/sizeof(__m128i); i++)
-	{
-		pOut[i] = _mm_xor_si128(pXor[i], pIn[i]);
-	}
-}
+#include "PlatformHelpers.h"
 
 void __stdcall SetupKey(RIJNDAEL_KEY_CTX *pCTX, void *pUserKey)
 {
@@ -42,7 +27,7 @@ void __stdcall XorAndEncipher1(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData
 {
 	unsigned char tmp[AES_BLOCK_SIZE];
 
-	XorAesBlock(XorData, PlainText, tmp);
+	XorBlock128(XorData, PlainText, tmp);
 
 	aes_encrypt(tmp, CipherText, &pCTX->encCtx);
 }
@@ -51,7 +36,7 @@ void __stdcall XorAndEncipher2(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData
 {
 	unsigned char tmp[AES_BLOCK_SIZE];
 
-	XorAesBlock(XorData, Buff, tmp);
+	XorBlock128(XorData, Buff, tmp);
 
 	aes_encrypt(tmp, Buff, &pCTX->encCtx);
 }
@@ -75,7 +60,7 @@ void __stdcall DecipherAndXor1(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData
 
 	aes_decrypt(CipherText, tmp, &pCTX->decCtx);
 
-	XorAesBlock(XorData, tmp, PlainText);
+	XorBlock128(XorData, tmp, PlainText);
 }
 
 void __stdcall DecipherAndXor2(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData, void *Buff)
@@ -84,5 +69,5 @@ void __stdcall DecipherAndXor2(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData
 
 	aes_decrypt(Buff, tmp, &pCTX->decCtx);
 
-	XorAesBlock(XorData, tmp, Buff);
+	XorBlock128(XorData, tmp, Buff);
 }

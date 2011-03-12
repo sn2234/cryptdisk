@@ -21,9 +21,6 @@
     <MASM Include="SOURCE\Primitives\x86\LRWMath.asm">
       <Filter>Primitives\x86</Filter>
     </MASM>
-    <MASM Include="SOURCE\Primitives\x86\RC4.Asm">
-      <Filter>Primitives\x86</Filter>
-    </MASM>
     <MASM Include="SOURCE\Primitives\x86\rj_opt.asm">
       <Filter>Primitives\x86</Filter>
     </MASM>
@@ -141,12 +138,24 @@
     <ClInclude Include="SOURCE\Primitives\sha2.h">
       <Filter>Primitives</Filter>
     </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\x64\tomcrypt_macros.h">
+      <Filter>Primitives\x64</Filter>
+    </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\x64\twofish_ltc.h">
+      <Filter>Primitives\x64</Filter>
+    </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\x64\twofish_tab.h">
+      <Filter>Primitives\x64</Filter>
+    </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\x86\twofish_asm.h">
+      <Filter>Primitives\x86</Filter>
+    </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\x64\PlatformHelpers.h">
+      <Filter>Primitives\x64</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="SOURCE\Primitives\x86\LrwMath.inc">
-      <Filter>Primitives\x86</Filter>
-    </None>
-    <None Include="SOURCE\Primitives\x86\RC4.Inc">
       <Filter>Primitives\x86</Filter>
     </None>
     <None Include="SOURCE\Primitives\x86\rj_opt.inc">
@@ -189,6 +198,15 @@
     </ClCompile>
     <ClCompile Include="SOURCE\Primitives\sha2.c">
       <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\rc4.c">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\twofish.c">
+      <Filter>Primitives\x64</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\TwofishWrapper.c">
+      <Filter>Primitives\x64</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

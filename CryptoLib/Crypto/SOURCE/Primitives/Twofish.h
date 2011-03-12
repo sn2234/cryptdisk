@@ -22,12 +22,7 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef	_TWOFISH_H_INCLUDED_
-#define	_TWOFISH_H_INCLUDED_
-
-#if defined (_MSC_VER) && (_MSC_VER >= 1000)
 #pragma once
-#endif
 
 #ifdef __cplusplus
 extern "C"{
@@ -39,35 +34,28 @@ extern "C"{
 #define	TWOFISH_BLOCK_BITS		(128)
 #define	TWOFISH_BLOCK_BYTES		(TWOFISH_BLOCK_BITS/8)
 
-#pragma pack(push,16)
-typedef	__declspec(align(16)) struct TWOFISH_KEY_CTX
-{
-	unsigned long	KeySched[40];
+#ifdef _WIN64
+	// 64-bit stuff
+#include "x64/twofish_ltc.h"
+#else
+	// 32-bit stuff
+#include "x86/twofish_asm.h"
+#endif
 
-	unsigned long	SBox0[256];
-	unsigned long	SBox1[256];
-	unsigned long	SBox2[256];
-	unsigned long	SBox3[256];
+extern void __stdcall TwofishSetKey(TWOFISH_KEY_CTX *pCtx, const void *pUserKey);
 
-}TWOFISH_KEY_CTX;
-#pragma pack(pop)
-
-extern void __stdcall TwofishSetKey(TWOFISH_KEY_CTX *pCtx, void *pUserKey);
-
-extern void __stdcall TwofishEncBlock1(const TWOFISH_KEY_CTX *pCtx, void *PlainText, void *CipherText);
+extern void __stdcall TwofishEncBlock1(const TWOFISH_KEY_CTX *pCtx, const void *PlainText, void *CipherText);
 extern void __stdcall TwofishEncBlock2(const TWOFISH_KEY_CTX *pCtx, void *Buff);
 
-extern void __stdcall TwofishXorEnc1(const TWOFISH_KEY_CTX *pCtx, void *XorData, void *PlainText, void *CipherText);
+extern void __stdcall TwofishXorEnc1(const TWOFISH_KEY_CTX *pCtx, void *XorData, const void *PlainText, void *CipherText);
 extern void __stdcall TwofishXorEnc2(const TWOFISH_KEY_CTX *pCtx, void *XorData, void *Buff);
 
-extern void __stdcall TwofishDecBlock1(const TWOFISH_KEY_CTX *pCtx, void *CipherText, void *PlainText);
+extern void __stdcall TwofishDecBlock1(const TWOFISH_KEY_CTX *pCtx, const void *CipherText, void *PlainText);
 extern void __stdcall TwofishDecBlock2(const TWOFISH_KEY_CTX *pCtx, void *Buff);
 
-extern void __stdcall TwofishDecXor1(const TWOFISH_KEY_CTX *pCtx, void *XorData, void *CipherText, void *PlainText);
+extern void __stdcall TwofishDecXor1(const TWOFISH_KEY_CTX *pCtx, void *XorData, const void *CipherText, void *PlainText);
 extern void __stdcall TwofishDecXor2(const TWOFISH_KEY_CTX *pCtx, void *XorData, void *Buff);
 
 #ifdef __cplusplus
 };
 #endif 
-
-#endif	//_TWOFISH_H_INCLUDED_
