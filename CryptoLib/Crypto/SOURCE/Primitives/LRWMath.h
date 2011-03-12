@@ -34,11 +34,11 @@ extern "C"{
 #pragma pack(push,16)
 typedef __declspec(align(16)) struct LRW_CONTEXT
 {
-	UCHAR	m_gfTable[2048];	// table for optimized GF multiplication
-	UCHAR	m_lrwTable[2048];	// table for optimized consecutive numbers multiplication
-	UCHAR	m_key[16];			// tweak key
-	UCHAR	m_currentTweak[16];	// current tweak value
-	UCHAR	m_currentIndex[16];	// current index
+	unsigned char	m_gfTable[2048];	// table for optimized GF multiplication
+	unsigned char	m_lrwTable[2048];	// table for optimized consecutive numbers multiplication
+	unsigned char	m_key[16];			// tweak key
+	unsigned char	m_currentTweak[16];	// current tweak value
+	unsigned char	m_currentIndex[16];	// current index
 }LRW_CONTEXT;
 #pragma pack(pop)
 
@@ -48,10 +48,10 @@ void __stdcall GFMultTable(void *pTable, void *pDest, void *pSrc);
 void __stdcall LRWPrepareTable(void *pTable, void *pKeyTable);
 void __stdcall LRWMult(void *pTable, void *pNumber, void *pBuff);
 
-void __stdcall LRWInitContext(OUT LRW_CONTEXT *pCtx, IN const void *tweakKey);
-void __stdcall LRWStartSequence(IN OUT LRW_CONTEXT *pCtx, IN void *indexBegin);
-void __stdcall LRWXorTweak(IN LRW_CONTEXT *pCtx, OUT void *pBuff);
-void __stdcall LRWNextTweak(IN LRW_CONTEXT *pCtx);
+void __stdcall LRWInitContext(LRW_CONTEXT *pCtx, const void *tweakKey);
+void __stdcall LRWStartSequence(LRW_CONTEXT *pCtx, void *indexBegin);
+void __stdcall LRWXorTweak(LRW_CONTEXT *pCtx, void *pBuff);
+void __stdcall LRWNextTweak(LRW_CONTEXT *pCtx);
 
 #ifdef __cplusplus
 };

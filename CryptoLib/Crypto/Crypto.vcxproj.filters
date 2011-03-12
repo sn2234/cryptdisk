@@ -153,6 +153,9 @@
     <ClInclude Include="SOURCE\Primitives\x64\PlatformHelpers.h">
       <Filter>Primitives\x64</Filter>
     </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\x64\LrwTools.h">
+      <Filter>Primitives\x64</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="SOURCE\Primitives\x86\LrwMath.inc">
@@ -206,6 +209,12 @@
       <Filter>Primitives\x64</Filter>
     </ClCompile>
     <ClCompile Include="SOURCE\Primitives\x64\TwofishWrapper.c">
+      <Filter>Primitives\x64</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\LrwTools.c">
+      <Filter>Primitives\x64</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\LRWMath.c">
       <Filter>Primitives\x64</Filter>
     </ClCompile>
   </ItemGroup>
