@@ -463,7 +463,7 @@ NTSTATUS DisksManager::UninstallDisk(DISK_DELETE_INFO *Info)
 	return status;
 }
 
-NTSTATUS DisksManager::Close(BOOL bForce)
+NTSTATUS DisksManager::Close(bool bForce)
 {
 	ULONG				i;
 	BOOL				bAllDevicesDeleted;

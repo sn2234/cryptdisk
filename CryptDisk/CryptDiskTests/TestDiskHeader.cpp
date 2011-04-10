@@ -5,7 +5,7 @@
 #include <Random/Random.h>
 
 using namespace std;
-using namespace boost;
+//using namespace boost;
 using namespace CryptoLib;
 
 shared_ptr<CRandom> CreateRandomGen()

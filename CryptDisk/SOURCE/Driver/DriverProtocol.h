@@ -49,7 +49,7 @@ typedef struct DISK_ADD_INFO
 typedef struct DISK_DELETE_INFO
 {
 	ULONG	DiskId;
-	BOOL	bForce;
+	bool	bForce;
 }DISK_DELETE_INFO;
 
 

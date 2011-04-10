@@ -3,7 +3,7 @@
 
 #include "DiskCipherAesV3.h"
 
-using namespace boost;
+//using namespace boost;
 using namespace CryptoLib;
 using namespace std;
 using namespace stdext;

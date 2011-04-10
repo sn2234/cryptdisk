@@ -46,7 +46,7 @@ public:
 
 
 	NTSTATUS			Init(DISKS_MANAGER_INIT_INFO *Info);
-	NTSTATUS			Close(BOOL bForce);
+	NTSTATUS			Close(bool bForce);
 
 	BOOLEAN				GetDisksCount(DISKS_COUNT_INFO *Info);
 	
