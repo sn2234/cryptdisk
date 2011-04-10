@@ -36,17 +36,17 @@ class LRWMode
 public:
 	LRW_CONTEXT		m_ctx;
 
-	__forceinline void Init(IN const void *tweakKey)
+	__forceinline void Init(const void *tweakKey)
 	{
 		LRWInitContext(&m_ctx, tweakKey);
 	}
 
-	__forceinline void StartSequence(IN void *indexBegin)
+	__forceinline void StartSequence(const void *indexBegin)
 	{
 		LRWStartSequence(&m_ctx, indexBegin);
 	}
 
-	__forceinline void XorTweak(OUT void *pBuff)
+	__forceinline void XorTweak(void *pBuff)
 	{
 		LRWXorTweak(&m_ctx, pBuff);
 	}

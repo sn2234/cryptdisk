@@ -57,7 +57,7 @@ public:
 		m_LRW.Clear();
 	}
 
-	__forceinline void EncipherFirstBlock(UCHAR *blockNumber, void *Data)
+	__forceinline void EncipherFirstBlock(const UCHAR *blockNumber, void *Data)
 	{
 		m_LRW.StartSequence(blockNumber);
 		m_LRW.XorTweak(Data);
@@ -72,7 +72,7 @@ public:
 		m_LRW.XorTweak(Data);
 	}
 
-	__forceinline void EncipherFirstBlock(UCHAR *blockNumber, const void *pPlain, void *pCipher)
+	__forceinline void EncipherFirstBlock(const UCHAR *blockNumber, const void *pPlain, void *pCipher)
 	{
 		m_LRW.StartSequence(blockNumber);
 		m_Engine.XorAndEncipher(m_LRW.GetTweak(), pPlain, pCipher);

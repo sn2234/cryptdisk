@@ -49,7 +49,7 @@ void __stdcall LRWPrepareTable(void *pTable, void *pKeyTable);
 void __stdcall LRWMult(void *pTable, void *pNumber, void *pBuff);
 
 void __stdcall LRWInitContext(LRW_CONTEXT *pCtx, const void *tweakKey);
-void __stdcall LRWStartSequence(LRW_CONTEXT *pCtx, void *indexBegin);
+void __stdcall LRWStartSequence(LRW_CONTEXT *pCtx, const void *indexBegin);
 void __stdcall LRWXorTweak(LRW_CONTEXT *pCtx, void *pBuff);
 void __stdcall LRWNextTweak(LRW_CONTEXT *pCtx);
 

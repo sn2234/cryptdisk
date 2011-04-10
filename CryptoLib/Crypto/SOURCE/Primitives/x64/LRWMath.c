@@ -46,7 +46,7 @@ void GFPrepareTable(unsigned char *pTable, unsigned char *pConstant)
 	int		i;
 
 	memset(tmp, 0, 16);
-	//memset(pTable, 0, 2048);
+	memset(pTable, 0, 2048);
 
 	tmp[0]=1;
 	for(i=0;i<128;i++)
@@ -78,7 +78,7 @@ void LRWPrepareTable(unsigned char *pTable, unsigned char *pKeyTable)
 	int		i;
 
 	memset(tmp, 0, 16);
-	//memset(pTable, 0, 2048);
+	memset(pTable, 0, 2048);
 
 	for(i=0;i<128;i++)
 	{
@@ -115,21 +115,22 @@ void LRWInitContext(LRW_CONTEXT *pCtx, unsigned char *tweakKey)
 	memset(pCtx->m_currentTweak, 0, sizeof(pCtx->m_currentTweak));
 	memset(pCtx->m_currentIndex, 0, sizeof(pCtx->m_currentIndex));
 	GFPrepareTable(pCtx->m_gfTable, tweakKey);
+	LRWPrepareTable(pCtx->m_lrwTable, pCtx->m_gfTable);
 }
 
-void LRWStartSequence(LRW_CONTEXT *pCtx, unsigned char *indexBegin)
+void LRWStartSequence(LRW_CONTEXT *pCtx, const unsigned char *indexBegin)
 {
 	memcpy(pCtx->m_currentIndex, indexBegin, sizeof(pCtx->m_currentIndex));
 	GFMultTable(pCtx->m_gfTable,
 		pCtx->m_currentTweak, pCtx->m_currentIndex);
 }
 
-void LRWXorFirstTweak(LRW_CONTEXT *pCtx, unsigned char *pBuff)
+void LRWXorTweak(LRW_CONTEXT *pCtx,void *pBuff)
 {
-	Xor128(pBuff, pCtx->m_currentTweak);
+	Xor128((unsigned char *)pBuff, pCtx->m_currentTweak);
 }
 
-void LRWGetTweak(LRW_CONTEXT *pCtx, unsigned char *tweakValue)
+void LRWNextTweak(LRW_CONTEXT *pCtx)
 {
-	LRWMult(pCtx->m_lrwTable, pCtx->m_currentIndex, tweakValue);
+	LRWMult(pCtx->m_lrwTable, pCtx->m_currentIndex, pCtx->m_currentTweak);
 }

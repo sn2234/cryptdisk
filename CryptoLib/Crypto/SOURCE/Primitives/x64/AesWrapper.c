@@ -17,7 +17,7 @@ void __stdcall EncipherBlock1(const RIJNDAEL_KEY_CTX *pCTX, const void *PlainTex
 
 void __stdcall EncipherBlock2(const RIJNDAEL_KEY_CTX *pCTX, void *Buff)
 {
-	unsigned char tmp[AES_BLOCK_SIZE];
+	__declspec(align(16)) unsigned char tmp[AES_BLOCK_SIZE];
 
 	aes_encrypt(Buff, tmp, &pCTX->encCtx);
 	memcpy(Buff, tmp, sizeof(tmp));
@@ -25,7 +25,7 @@ void __stdcall EncipherBlock2(const RIJNDAEL_KEY_CTX *pCTX, void *Buff)
 
 void __stdcall XorAndEncipher1(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData, const void *PlainText, void *CipherText)
 {
-	unsigned char tmp[AES_BLOCK_SIZE];
+	__declspec(align(16)) unsigned char tmp[AES_BLOCK_SIZE];
 
 	XorBlock128(XorData, PlainText, tmp);
 
@@ -34,7 +34,7 @@ void __stdcall XorAndEncipher1(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData
 
 void __stdcall XorAndEncipher2(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData, void *Buff)
 {
-	unsigned char tmp[AES_BLOCK_SIZE];
+	__declspec(align(16)) unsigned char tmp[AES_BLOCK_SIZE];
 
 	XorBlock128(XorData, Buff, tmp);
 
@@ -48,7 +48,7 @@ void __stdcall DecipherBlock1(const RIJNDAEL_KEY_CTX *pCTX, const void *CipherTe
 
 void __stdcall DecipherBlock2(const RIJNDAEL_KEY_CTX *pCTX, void *Buff)
 {
-	unsigned char tmp[AES_BLOCK_SIZE];
+	__declspec(align(16)) unsigned char tmp[AES_BLOCK_SIZE];
 
 	aes_decrypt(Buff, tmp, &pCTX->decCtx);
 	memcpy(Buff, tmp, sizeof(tmp));
@@ -56,7 +56,7 @@ void __stdcall DecipherBlock2(const RIJNDAEL_KEY_CTX *pCTX, void *Buff)
 
 void __stdcall DecipherAndXor1(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData, const void *CipherText, void *PlainText)
 {
-	unsigned char tmp[AES_BLOCK_SIZE];
+	__declspec(align(16)) unsigned char tmp[AES_BLOCK_SIZE];
 
 	aes_decrypt(CipherText, tmp, &pCTX->decCtx);
 
@@ -65,7 +65,7 @@ void __stdcall DecipherAndXor1(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData
 
 void __stdcall DecipherAndXor2(const RIJNDAEL_KEY_CTX *pCTX, const void *XorData, void *Buff)
 {
-	unsigned char tmp[AES_BLOCK_SIZE];
+	__declspec(align(16)) unsigned char tmp[AES_BLOCK_SIZE];
 
 	aes_decrypt(Buff, tmp, &pCTX->decCtx);
 
