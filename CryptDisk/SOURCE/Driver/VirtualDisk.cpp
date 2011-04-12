@@ -968,7 +968,7 @@ NTSTATUS VirtualDisk::OpenFile(PCWSTR fileName)
 			if(m_bMountDevice)
 			{
 				GET_LENGTH_INFORMATION	lengthInfo;
-				ULONG					retLength;
+				ULONG_PTR				retLength;
 
 				status = DNDeviceIoControl(pFSD, IOCTL_DISK_GET_LENGTH_INFO,
 					NULL, 0, &lengthInfo, sizeof(lengthInfo), &retLength);

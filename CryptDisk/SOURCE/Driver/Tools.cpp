@@ -24,7 +24,7 @@
 
 #include "stdafx.h"
 
-NTSTATUS DNDeviceIoControl(IN PDEVICE_OBJECT pDevice, IN ULONG dwIoControlCode, IN PVOID lpInBuffer, IN ULONG nInBufferSize, OUT PVOID lpOutBuffer, IN ULONG nOutBufferSize, OUT PULONG lpBytesReturned)
+NTSTATUS DNDeviceIoControl(IN PDEVICE_OBJECT pDevice, IN ULONG dwIoControlCode, IN PVOID lpInBuffer, IN ULONG nInBufferSize, OUT PVOID lpOutBuffer, IN ULONG nOutBufferSize, OUT PULONG_PTR lpBytesReturned)
 {
 	NTSTATUS			status;
 	
@@ -56,7 +56,7 @@ NTSTATUS DNDeviceIoControl(IN PDEVICE_OBJECT pDevice, IN ULONG dwIoControlCode, 
 	return status;
 }
 
-NTSTATUS DNDeviceFSControl(IN PDEVICE_OBJECT pDevice, IN PFILE_OBJECT pFileObject, IN ULONG dwIoControlCode, IN PVOID lpInBuffer, IN ULONG nInBufferSize, OUT PVOID lpOutBuffer, IN ULONG nOutBufferSize, OUT PULONG lpBytesReturned)
+NTSTATUS DNDeviceFSControl(IN PDEVICE_OBJECT pDevice, IN PFILE_OBJECT pFileObject, IN ULONG dwIoControlCode, IN PVOID lpInBuffer, IN ULONG nInBufferSize, OUT PVOID lpOutBuffer, IN ULONG nOutBufferSize, OUT PULONG_PTR lpBytesReturned)
 {
 	NTSTATUS			status;
 
