@@ -167,7 +167,7 @@ NTSTATUS VirtualDisk::Close(bool bForce)
 	{
 		return STATUS_SUCCESS;
 	}
-	KdPrint(("VirtualDisk::Close()"));
+	KdPrint(("\nVirtualDisk::Close()"));
 
 	m_bTerminateThread=TRUE;
 	KeReleaseSemaphore(&m_queueSemaphore,0,1,TRUE);
@@ -630,7 +630,7 @@ void VirtualDisk::Cleanup()
 	{
 		return;
 	}
-	KdPrint(("VirtualDisk::Cleanup()"));
+	KdPrint(("\nVirtualDisk::Cleanup()"));
 
 	ExFreePoolWithTag(m_pDiskInfo, MEM_TAG);
 

@@ -83,13 +83,13 @@ std::vector<MountedImageInfo> CryptDiskHelpers::ListMountedImages( DNDriverContr
 
 	// Get images
 	{
+		size_t bufferSize = 0;
 		DWORD result = 0;
-		DWORD dummy = 0;
-		if(!driverControl.Control(IOCTL_VDISK_GET_DISKS_INFO, &result, sizeof(result), &dummy))
+		if(!driverControl.Control(IOCTL_VDISK_GET_DISKS_INFO, &bufferSize, sizeof(bufferSize), &result))
 		{
 			if(GetLastError() == ERROR_MORE_DATA)
 			{
-				vector<unsigned char> buffer(result);
+				vector<unsigned char> buffer(bufferSize);
 
 				if(!driverControl.Control(IOCTL_VDISK_GET_DISKS_INFO, &buffer[0], buffer.size(), &result))
 				{
