@@ -28,8 +28,6 @@
 #pragma once
 
 #define		DRIVER_VERSION_MINOR	0
-#define		DRIVER_VERSION_MAJOR	3
-
-#define		DISK_FORMAT_VERSION		1
+#define		DRIVER_VERSION_MAJOR	4
 
 #endif	//_VERSION_H_INCLUDED_

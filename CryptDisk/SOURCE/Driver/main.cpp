@@ -85,10 +85,6 @@ NTSTATUS __stdcall DriverEntry(PDRIVER_OBJECT DriverObj, PUNICODE_STRING Registr
 	OBJECT_ATTRIBUTES		object_attributes;
 	DISKS_MANAGER_INIT_INFO	dm_info;
 
-// #if	DBG
-// 	__asm int 3;
-// #endif
-
 	DbgPrint("\nCryptDisk: Initializing...");
 	DbgPrint("\nCryptDisk: Driver version: %d.%d",DRIVER_VERSION_MAJOR,
 		DRIVER_VERSION_MINOR);
@@ -134,6 +130,7 @@ NTSTATUS __stdcall DriverEntry(PDRIVER_OBJECT DriverObj, PUNICODE_STRING Registr
 					pDriverObj->MajorFunction[IRP_MJ_READ]=
 					pDriverObj->MajorFunction[IRP_MJ_WRITE]=DispatchReadWrite;
 
+					KdPrint(("CryptDisk: Initialization succeeded"));
 					Initialized=TRUE;
 				}
 			}
@@ -141,6 +138,7 @@ NTSTATUS __stdcall DriverEntry(PDRIVER_OBJECT DriverObj, PUNICODE_STRING Registr
 	}
 	if(!NT_SUCCESS(status))
 	{
+		KdPrint(("CryptDisk: Initialization error: %d, status: %X", init_step, status));
 		// perform cleanup on error
 		switch(init_step)
 		{
@@ -162,6 +160,7 @@ NTSTATUS __stdcall DriverEntry(PDRIVER_OBJECT DriverObj, PUNICODE_STRING Registr
 
 void DriverUnload(PDRIVER_OBJECT DriverObject)
 {
+	KdPrint(("CryptDisk: DriverUnload()"));
 	if(Initialized)
 	{
 		Manager.Close(TRUE);

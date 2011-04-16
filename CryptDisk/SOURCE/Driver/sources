@@ -1,6 +1,6 @@
 # SOURCES for use with BUILD command
 
-TARGETNAME=CryptDisk30
+TARGETNAME=CryptDisk40
 TARGETPATH=obj
 TARGETTYPE=DRIVER
 
@@ -45,7 +45,6 @@ INCLUDES= $(BASEDIR)\inc\wnet;$(CRYPTO_LIB_DIR)\SOURCE;.;
 
 SOURCES= \
 	DiskCipher.cpp \
-	DiskHeader.cpp \
 	DiskHeaderTools.cpp \
 	main.cpp \
 	Tools.cpp \
