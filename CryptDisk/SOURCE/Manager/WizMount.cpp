@@ -27,8 +27,6 @@
 
 #include "stdafx.h"
 
-#include "Common.h"
-
 #include "Manager.h"
 #include "WizMount.h"
 

@@ -29,7 +29,7 @@
 #pragma once
 #endif
 
-extern	CRandom				g_randomSource;
+extern	CryptoLib::CRandom				g_randomSource;
 
 BOOL	RandomOnAppStart(HINSTANCE hInst);
 void	RandomOnAppClose();

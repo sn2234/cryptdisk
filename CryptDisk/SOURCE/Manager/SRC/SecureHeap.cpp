@@ -22,24 +22,38 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "SecureHeap.h"
+#include "winapi_exception.h"
 
-CSecureHeap::CSecureHeap(void)
+CSecureHeap::CSecureHeap(DWORD dwPoolSize)
 {
-	m_pHeap=NULL;
-	m_heapSize=0;
+	m_pHeap=(HEAP_BLOCK*)VirtualAlloc(NULL, dwPoolSize, MEM_COMMIT, PAGE_READWRITE);
+	if(!m_pHeap)
+	{
+		throw winapi_exception("CSecureHeap::CSecureHeap: Unable to allocate memory");
+	}
+
+	if(!VirtualLock(m_pHeap, dwPoolSize))
+	{
+		VirtualFree(m_pHeap, 0, MEM_RELEASE);
+
+		throw winapi_exception("CSecureHeap::CSecureHeap: Unable to lock memory");
+	}
+	m_heapSize=dwPoolSize;
+
+	m_pHeap->bFree=TRUE;
+	m_pHeap->size=dwPoolSize;
 }
 
 CSecureHeap::~CSecureHeap(void)
 {
-	Close();
+	VirtualUnlock(m_pHeap, m_heapSize);
+	VirtualFree(m_pHeap, 0, MEM_RELEASE);
 }
 
 BOOL CSecureHeap::Init(DWORD dwPoolSize)
 {
-	Close();
-
 	m_pHeap=(HEAP_BLOCK*)VirtualAlloc(NULL, dwPoolSize, MEM_COMMIT, PAGE_READWRITE);
 	if(!m_pHeap)
 		return FALSE;
@@ -54,17 +68,6 @@ BOOL CSecureHeap::Init(DWORD dwPoolSize)
 	m_pHeap->bFree=TRUE;
 	m_pHeap->size=dwPoolSize;
 	return TRUE;
-}
-
-void CSecureHeap::Close()
-{
-	if(m_pHeap)
-	{
-		VirtualUnlock(m_pHeap, m_heapSize);
-		VirtualFree(m_pHeap, 0, MEM_RELEASE);
-		m_pHeap=NULL;
-		m_heapSize=0;
-	}
 }
 
 void *CSecureHeap::Alloc(DWORD size)

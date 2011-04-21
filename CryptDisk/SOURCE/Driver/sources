@@ -44,7 +44,6 @@ PRECOMPILED_CXX=1
 INCLUDES= $(BASEDIR)\inc\wnet;$(CRYPTO_LIB_DIR)\SOURCE;.;
 
 SOURCES= \
-	DiskCipher.cpp \
 	DiskHeaderTools.cpp \
 	main.cpp \
 	Tools.cpp \

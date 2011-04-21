@@ -57,7 +57,7 @@ DWORD DNDriverControl::Control(DWORD Code, void* Input, DWORD InputLen, void* Ou
 	return DeviceIoControl(hDriver,Code,Input,InputLen,Output,OutputLen,Result,0);
 }
 
-DNDriverControl* DNDriverControl::Create( TCHAR *szDriverDeviceName, DWORD access /*= GENERIC_READ|GENERIC_WRITE*/ )
+DNDriverControl* DNDriverControl::Create( const TCHAR *szDriverDeviceName, DWORD access /*= GENERIC_READ|GENERIC_WRITE*/ )
 {
 	HANDLE hDriver;
 

@@ -24,6 +24,10 @@
 
 #pragma once
 
+#ifndef MAXIMUM_FILENAME_LENGTH
+#define MAXIMUM_FILENAME_LENGTH 256
+#endif
+
 class CFavManager;
 
 class CFavNode

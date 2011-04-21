@@ -43,7 +43,7 @@ public:
 			Close();
 	}
 
-	static DNDriverControl* Create(TCHAR *szDriverDeviceName, DWORD access = GENERIC_READ|GENERIC_WRITE);
+	static DNDriverControl* Create(const TCHAR *szDriverDeviceName, DWORD access = GENERIC_READ|GENERIC_WRITE);
 
 	DWORD Control(DWORD Code);
 

@@ -33,6 +33,9 @@
 
 #include "resource.h"		// main symbols
 
+#include "src\FavManager.h"
+#include "src\SecureHeap.h"
+#include "src\DNDriverControl.h"
 
 // CManagerApp:
 // See Manager.cpp for the implementation of this class
@@ -51,8 +54,8 @@ public:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	DriverManager	m_manager;
-	BOOL			m_bDriverOk;
+	std::shared_ptr<DNDriverControl>	m_driverControl;
+	BOOL								m_bDriverOk;
 };
 
 extern CManagerApp theApp;

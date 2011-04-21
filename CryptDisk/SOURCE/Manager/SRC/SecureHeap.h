@@ -33,11 +33,10 @@ typedef struct HEAP_BLOCK
 class CSecureHeap
 {
 public:
-	CSecureHeap(void);
+	CSecureHeap(DWORD dwPoolSize);
 	~CSecureHeap(void);
 
 	BOOL Init(DWORD dwPoolSize);
-	void Close();
 
 	void *Alloc(DWORD size);
 	void Free(void *ptr);

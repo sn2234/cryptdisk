@@ -27,12 +27,11 @@
 
 #include "stdafx.h"
 
-#include "Common.h"
-
 #include "Manager.h"
 #include "ManagerDlg.h"
 
 #include "CmdLineParser.h"
+#include "AppRandom.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -41,7 +40,9 @@
 
 CFavManager		g_favorites;
 
-CSecureHeap		g_heap;
+CSecureHeap		g_heap(0x10000);
+
+static const TCHAR DriverControlDeviceName[]=_TEXT("\\\\.\\DNDiskControl40");
 
 // CManagerApp
 
@@ -53,8 +54,8 @@ END_MESSAGE_MAP()
 // CManagerApp construction
 
 CManagerApp::CManagerApp()
+	: m_bDriverOk(FALSE)
 {
-	m_bDriverOk=TRUE;
 }
 
 
@@ -82,18 +83,28 @@ BOOL CManagerApp::InitInstance()
 
 	if(RandomOnAppStart(m_hInstance))
 	{
-		g_heap.Init(0x10000);
-
-		m_bDriverOk=m_manager.Open();
+		m_bDriverOk = FALSE;
+		try
+		{
+			m_driverControl = std::shared_ptr<DNDriverControl>(DNDriverControl::Create(DriverControlDeviceName));
+			m_bDriverOk = TRUE;
+		}
+		catch (std::exception& e)
+		{
+		}
 
 		if(__argc > 1)
 		{
+			// Command line mode
+
 			CCmdLineParser	parser;
 
 			parser.Parse(__argc, __targv);
 		}
 		else
 		{
+			// GUI mode
+
 			if(!m_bDriverOk)
 			{
 				MessageBox(NULL, _T("Unable to start CryptDisk driver.\r\nAll driver-related functions will be disabled"),
@@ -118,11 +129,6 @@ BOOL CManagerApp::InitInstance()
 
 			g_favorites.Save();
 			g_favorites.Close();
-		}
-
-		if(m_bDriverOk)
-		{
-			m_manager.Close();
 		}
 
 		RandomOnAppClose();
