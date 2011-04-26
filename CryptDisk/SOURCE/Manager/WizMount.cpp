@@ -30,6 +30,7 @@
 #include "Manager.h"
 #include "WizMount.h"
 
+#include "SRC/CryptDiskHelpers.h"
 
 // CWizMount
 
@@ -75,6 +76,8 @@ END_MESSAGE_MAP()
 // CWizMount message handlers
 BOOL CWizMount::OnFinish()
 {
+	CryptDiskHelpers::MountImage(*theApp.m_driverControl, m_page1.m_filePath, m_page2.m_driveLetter, NULL);
+
 	DISK_ADD_INFO	info;
 
 	memset(&info, 0, sizeof(info));

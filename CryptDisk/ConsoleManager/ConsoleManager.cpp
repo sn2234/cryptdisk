@@ -36,7 +36,26 @@ void MountImage(const wstring& imagePath, const wstring& driveLetter, const stri
 {
 	shared_ptr<DNDriverControl> driverControl(CreateDriverControl());
 
-	CryptDiskHelpers::MountImage(*driverControl, imagePath.c_str(), driveLetter[0], password.c_str());
+	CryptDiskHelpers::MountImage(*driverControl, imagePath.c_str(), driveLetter[0], reinterpret_cast<const unsigned char*>(password.c_str()), password.size());
+}
+
+void CheckImage(const wstring& imagePath, const string& password)
+{
+	if(CryptDiskHelpers::CheckImage(imagePath.c_str(), reinterpret_cast<const unsigned char*>(password.c_str()), password.size()))
+	{
+		wcout << "Success" << endl;
+	}
+	else
+	{
+		wcout << "Failed" << endl;
+	}
+}
+
+void ChangePassword(const wstring& imagePath, const string& password, const string& passwordNew)
+{
+	shared_ptr<CryptoLib::CRandom> randomGen = CreateRandomGen();
+	CryptDiskHelpers::ChangePassword(randomGen.get(), imagePath.c_str(), reinterpret_cast<const unsigned char*>(password.c_str()), password.size(),
+		reinterpret_cast<const unsigned char*>(passwordNew.c_str()), passwordNew.size());
 }
 
 void UnmountImage(ULONG diskId, bool forceUnmount)
@@ -80,7 +99,7 @@ void CreateImage(const wstring& imagePath, const string& algoName, const string&
 
 	shared_ptr<CryptoLib::CRandom> randomGen = CreateRandomGen();
 
-	CryptDiskHelpers::CreateImage(randomGen.get(), imagePath.c_str(), imageSize, algo, password.c_str());
+	CryptDiskHelpers::CreateImage(randomGen.get(), imagePath.c_str(), imageSize, algo, reinterpret_cast<const unsigned char*>(password.c_str()), password.size());
 }
 
 int wmain(int argc, WCHAR* argv[])
@@ -93,6 +112,7 @@ int wmain(int argc, WCHAR* argv[])
 		wstring driveLetter;
 		bool forceUnmount;
 		string password;
+		string passwordNew;
 		wstring operation;
 		ULONG diskId;
 		INT64 imageSize;
@@ -102,12 +122,19 @@ int wmain(int argc, WCHAR* argv[])
 		desc.add_options()
 			("help", "produce help message")
 			("op", po::wvalue<wstring>(&operation),
-				"Operation to be performed: \n\t m - mount an image\n\t u - unmount image\n\t l - list all mounted images\n\t c - create image")
+				"Operation to be performed: "
+				"\n\t m - mount an image"
+				"\n\t u - unmount image"
+				"\n\t l - list all mounted images"
+				"\n\t c - create image"
+				"\n\t t - test image"
+				"\n\t chp - change password")
 			("image", po::wvalue<wstring>(&imagePath), "Path to image file to be mounted or created")
 			("letter", po::wvalue<wstring>(&driveLetter), "Drive letter")
 			("id", po::value<ULONG>(&diskId), "Disk id to unmount")
 			("size", po::value<INT64>(&imageSize), "Image size")
 			("password", po::value<string>(&password), "Password")
+			("newpassword", po::value<string>(&passwordNew), "New password (for change password)")
 			("algo", po::value<string>(&algoName), "Encryption algorithm (AES, Twofish)")
 			("force", po::wvalue<bool>(&forceUnmount)->default_value(false, "false"), "Force unmount")
 			;
@@ -165,6 +192,30 @@ int wmain(int argc, WCHAR* argv[])
 			}
 
 			CreateImage(imagePath, algoName, password, imageSize);
+		}
+		else if (operation == _T("t"))
+		{
+			// Test image
+			// Check for required parameters
+			if (!vm.count("image") || !vm.count("password"))
+			{
+				cout << desc;
+				return 0;
+			}
+
+			CheckImage(imagePath, password);
+		}
+		else if (operation == _T("chp"))
+		{
+			// Change password
+			// Check for required parameters
+			if (!vm.count("image") || !vm.count("password") || !vm.count("newpassword"))
+			{
+				cout << desc;
+				return 0;
+			}
+
+			ChangePassword(imagePath, password, passwordNew);
 		}
 		else
 		{

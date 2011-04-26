@@ -27,14 +27,14 @@
 
 #include "stdafx.h"
 
-#include "Common.h"
-
 #include "Manager.h"
 #include "KeyFilesDlg.h"
 #include "DlgChangePassword.h"
 #include "PageMount1.h"
 
 #include "WizMount.h"
+
+#include "SRC/CryptDiskHelpers.h"
 
 // CPageMount1 dialog
 
@@ -43,12 +43,18 @@ IMPLEMENT_DYNAMIC(CPageMount1, CPropertyPage)
 CPageMount1::CPageMount1()
 	: CPropertyPage(CPageMount1::IDD)
 	, m_bDontAddToRecent(TRUE)
+	, m_password(NULL)
+	, m_passwordLength(0)
 {
 	m_psp.dwFlags &= ~PSP_HASHELP;
 }
 
 CPageMount1::~CPageMount1()
 {
+	if(m_password)
+	{
+		g_heap.Free(m_password);
+	}
 }
 
 void CPageMount1::DoDataExchange(CDataExchange* pDX)
@@ -85,8 +91,6 @@ BOOL CPageMount1::OnInitDialog()
 LRESULT CPageMount1::OnWizardNext()
 {
 	CWizMount* pWizard= static_cast<CWizMount*>(GetParent());
-
-	DiskImageNONE		image;
 
 	// Get file path
 	int				n;
@@ -129,11 +133,7 @@ LRESULT CPageMount1::OnWizardNext()
 	}
 
 	// Open image
-	BOOL	bResult;
-	bResult=image.Open(m_filePath.GetBuffer(), pPassword, passLength);
-
-	RtlSecureZeroMemory(pPassword, passLength);
-	g_heap.Free(pPassword);
+	bool	bResult = CryptDiskHelpers::CheckImage((const WCHAR*)m_filePath, (const char*)pPassword);
 
 	if(!bResult)
 	{
@@ -142,10 +142,12 @@ LRESULT CPageMount1::OnWizardNext()
 	}
 	else
 	{
-		memcpy(pWizard->m_userKey, image.GetHeader()->GetUserKey(),
-			sizeof(pWizard->m_userKey));
-		pWizard->m_algoId=image.GetHeader()->GetAlgoId();
-		image.Close();
+		m_password = (UCHAR *)g_heap.Alloc(passLength+1);
+		m_passwordLength = passLength;
+		strcpy_s((char*)m_password, m_passwordLength+1, (const char*)pPassword);
+		RtlSecureZeroMemory(pPassword, passLength);
+		g_heap.Free(pPassword);
+
 		return CPropertyPage::OnWizardNext();
 	}
 }

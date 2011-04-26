@@ -27,6 +27,8 @@
 #include "PageMount1.h"
 #include "PageMount2.h"
 
+#include "DiskFormat.h"
+
 // CWizMount
 class CWizMount : public CPropertySheet
 {

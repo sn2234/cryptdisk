@@ -56,5 +56,7 @@ public:
 	afx_msg void OnBnClickedButtonBackup();
 	afx_msg void OnBnClickedButtonRestore();
 protected:
-	BOOL m_bDontAddToRecent;
+	BOOL	m_bDontAddToRecent;
+	UCHAR	*m_password;
+	size_t	m_passwordLength;
 };
