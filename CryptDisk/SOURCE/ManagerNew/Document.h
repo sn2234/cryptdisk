@@ -3,8 +3,8 @@
 class Document
 {
 public:
-	typedef boost::signal<void ()>  signal_t;
-	typedef boost::signals::connection  connection_t;
+	typedef boost::signals2::signal<void ()>  signal_t;
+	typedef boost::signals2::connection  connection_t;
 
 public:
 

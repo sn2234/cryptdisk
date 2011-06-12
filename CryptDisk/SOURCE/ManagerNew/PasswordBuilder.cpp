@@ -3,12 +3,13 @@
 
 #include "PasswordBuilder.h"
 #include "winapi_exception.h"
+#include "AppMemory.h"
 
 PasswordBuilder::PasswordBuilder( const std::vector<std::wstring>& keyFilesList, const unsigned char *password, size_t passwordLength, ULONG keyFileDataLength )
 	: m_password(NULL)
 	, m_passwordLength((keyFilesList.empty() ? 0 : SHA256_DIDGEST_SIZE) + passwordLength)
 {
-	m_password = reinterpret_cast<unsigned char*>(g_heap.Alloc(m_passwordLength));
+	m_password = reinterpret_cast<unsigned char*>(AppMemory::instance().Alloc(m_passwordLength));
 
 	try
 	{
@@ -83,7 +84,7 @@ PasswordBuilder::PasswordBuilder( const std::vector<std::wstring>& keyFilesList,
 	}
 	catch (...)
 	{
-		g_heap.Free(m_password);
+		AppMemory::instance().Free(m_password);
 		m_password = NULL;
 		throw;
 	}
@@ -93,6 +94,6 @@ PasswordBuilder::~PasswordBuilder( void )
 {
 	if(m_password)
 	{
-		g_heap.Free(m_password);
+		AppMemory::instance().Free(m_password);
 	}
 }

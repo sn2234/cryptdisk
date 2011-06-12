@@ -57,8 +57,11 @@
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/range.hpp>
-#include <boost/signal.hpp>
+#include <boost/signals2.hpp>
 #include <boost/lexical_cast.hpp>
+#include <boost/utility.hpp>
+#include <boost/thread/once.hpp>
+#include <boost/scoped_ptr.hpp>
 
 #include "CryptoLib.h"
 
@@ -75,5 +78,3 @@
 #pragma comment(linker,"/manifestdependency:\"type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #endif
 #endif
-
-
