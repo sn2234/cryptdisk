@@ -36,6 +36,8 @@
 
 #include "SRC/CryptDiskHelpers.h"
 
+#include "AppRandom.h"
+
 // CPageMount1 dialog
 
 IMPLEMENT_DYNAMIC(CPageMount1, CPropertyPage)
@@ -210,6 +212,20 @@ void CPageMount1::OnBnClickedButton2()
 	if((dlg.DoModal()==IDOK) && dlg.m_pPassword)
 	{
 		// Change password
+		try
+		{
+			CryptDiskHelpers::ChangePassword(g_randomSource, (const WCHAR*)filePath, pPassword, passLength, dlg.m_pPassword, dlg.m_passwordLength);
+			m_keyFiles.RemoveAll();
+			m_keyFiles.Append(dlg.m_keyFiles);
+
+			SetDlgItemText(IDC_EDIT_PASSWORD, _T(""));
+
+			MessageBox(_T("The password has been successfully changed"), _T("Success"), MB_ICONINFORMATION);
+		}
+		catch (std::exception& e)
+		{
+			MessageBox((CString(e.what().c_str()))), _T("Error when changing password"), MB_ICONERROR);
+		}
 		if(image.ChangePassword(dlg.m_pPassword, dlg.m_passwordLength))
 		{
 			m_keyFiles.RemoveAll();

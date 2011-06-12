@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CryptDiskTests", "CryptDisk
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleManager", "ConsoleManager\ConsoleManager.vcxproj", "{A6AEE6EF-F5D6-4946-96DE-AC86CCCCEEBA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ManagerNew", "SOURCE\ManagerNew\ManagerNew.vcxproj", "{12DF4807-FBB5-4718-A975-3639BE9C9CCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -55,6 +57,12 @@ Global
 		{A6AEE6EF-F5D6-4946-96DE-AC86CCCCEEBA}.Release|Win32.Build.0 = Release|Win32
 		{A6AEE6EF-F5D6-4946-96DE-AC86CCCCEEBA}.Release|x64.ActiveCfg = Release|x64
 		{A6AEE6EF-F5D6-4946-96DE-AC86CCCCEEBA}.Release|x64.Build.0 = Release|x64
+		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Debug|Win32.Build.0 = Debug|Win32
+		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Debug|x64.ActiveCfg = Debug|Win32
+		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Release|Win32.ActiveCfg = Release|Win32
+		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Release|Win32.Build.0 = Release|Win32
+		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
