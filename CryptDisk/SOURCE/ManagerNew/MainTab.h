@@ -16,7 +16,8 @@ public:
 
 private:
 	void SetRectangle();
-
+	
+	// The order is important: the model should always be the first
 	ImagesModel	m_imagesModel;
 	ImagesView	m_imagesView;
 

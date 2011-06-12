@@ -37,16 +37,34 @@
 
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
 
+#include <Windows.h>
+#include <WinIoCtl.h>
 
-// STL
+// STD Lib
+#include <math.h>
+
+// STD
+#include <stdio.h>
+#include <tchar.h>
+#include <iostream>
+#include <exception>
+#include <memory>
 #include <string>
 #include <sstream>
+#include <vector>
 
 // Boost
+#include <boost/program_options.hpp>
+#include <boost/filesystem.hpp>
+#include <boost/range.hpp>
 #include <boost/signal.hpp>
-#include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
+#include "CryptoLib.h"
+
+// Definitions
+#define USER_MODE
+#define _USER_MODE_
 
 #ifdef _UNICODE
 #if defined _M_IX86
