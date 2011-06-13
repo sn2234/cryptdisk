@@ -1,6 +1,7 @@
 #pragma once
 
 #include "View.h"
+#include "afxcmn.h"
 
 // ImagesView dialog
 
@@ -21,4 +22,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
+public:
+	CListCtrl m_listImages;
+	virtual BOOL OnInitDialog();
 };
