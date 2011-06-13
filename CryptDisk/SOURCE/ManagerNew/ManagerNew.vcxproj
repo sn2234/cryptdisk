@@ -190,10 +190,12 @@
     <None Include="res\ManagerNew.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Driver\DiskHeaderTools.h" />
     <ClInclude Include="AppMemory.h" />
     <ClInclude Include="CryptDiskHelpers.h" />
     <ClInclude Include="DNDriverControl.h" />
     <ClInclude Include="Document.h" />
+    <ClInclude Include="DriverTools.h" />
     <ClInclude Include="ImagesModel.h" />
     <ClInclude Include="ImagesView.h" />
     <ClInclude Include="MainTab.h" />
@@ -211,8 +213,10 @@
     <ClInclude Include="winapi_exception.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Driver\DiskHeaderTools.cpp" />
     <ClCompile Include="CryptDiskHelpers.cpp" />
     <ClCompile Include="DNDriverControl.cpp" />
+    <ClCompile Include="DriverTools.cpp" />
     <ClCompile Include="ImagesModel.cpp" />
     <ClCompile Include="ImagesView.cpp" />
     <ClCompile Include="MainTab.cpp" />
