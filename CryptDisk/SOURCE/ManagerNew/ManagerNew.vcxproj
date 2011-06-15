@@ -185,7 +185,6 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="ReadMe.txt" />
     <None Include="res\ManagerNew.ico" />
     <None Include="res\ManagerNew.rc2" />
   </ItemGroup>

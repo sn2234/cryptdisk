@@ -25,4 +25,7 @@ protected:
 public:
 	CListCtrl m_listImages;
 	virtual BOOL OnInitDialog();
+	afx_msg void OnBnClickedButtonMount();
+	afx_msg void OnBnClickedButtonCreate();
+	afx_msg void OnBnClickedButtonDismountImage();
 };
