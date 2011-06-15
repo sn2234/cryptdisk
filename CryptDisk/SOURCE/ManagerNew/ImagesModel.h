@@ -12,6 +12,7 @@ public:
 	virtual ~ImagesModel(void);
 
 	void Refresh();
+	void DismountImage(ULONG imageId, bool bForce);
 
 	const std::vector<MountedImageInfo>& MountedImages() const { return m_mountedImages; }
 private:

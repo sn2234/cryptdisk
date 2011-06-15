@@ -86,6 +86,8 @@ BOOL ImagesView::OnInitDialog()
 	m_listImages.InsertColumn(1, _T("Size"), 0, 80, 1);
 	m_listImages.InsertColumn(2, _T("Path"), 0, 200, 2);
 
+	m_listImages.SetExtendedStyle(LVS_SINGLESEL | LVS_EX_FULLROWSELECT | LVS_EX_AUTOSIZECOLUMNS);
+
 	static_cast<ImagesModel&>(m_document).Refresh();
 
 	return TRUE;  // return TRUE unless you set the focus to a control
@@ -107,5 +109,22 @@ void ImagesView::OnBnClickedButtonCreate()
 
 void ImagesView::OnBnClickedButtonDismountImage()
 {
-	// TODO: Add your control notification handler code here
+	if(m_listImages.GetSelectionMark() != -1)
+	{
+		ULONG diskId = m_listImages.GetItemData(m_listImages.GetSelectionMark());
+
+		try
+		{
+			static_cast<ImagesModel&>(m_document).DismountImage(diskId, false);
+		}
+		catch(std::exception&)
+		{
+			if(MessageBox(_T("This disk may be used by another applications. Do you want to force dismount it?"),
+				_T("Warning"), MB_YESNO | MB_ICONQUESTION) == IDYES)
+			{
+				static_cast<ImagesModel&>(m_document).DismountImage(diskId, true);
+			}
+		}
+		static_cast<ImagesModel&>(m_document).Refresh();
+	}
 }

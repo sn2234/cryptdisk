@@ -21,3 +21,8 @@ void ImagesModel::Refresh()
 		UpdateViews();
 	}
 }
+
+void ImagesModel::DismountImage( ULONG imageId, bool bForce )
+{
+	CryptDiskHelpers::UnmountImage(*AppDriver::instance().getDriverControl(), imageId, bForce);
+}
