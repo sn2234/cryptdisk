@@ -200,6 +200,9 @@
     <ClInclude Include="MainTab.h" />
     <ClInclude Include="ManagerNew.h" />
     <ClInclude Include="ManagerNewDlg.h" />
+    <ClInclude Include="MountWizard.h" />
+    <ClInclude Include="MountWizardModel.h" />
+    <ClInclude Include="PageMount1.h" />
     <ClInclude Include="PasswordBuilder.h" />
     <ClInclude Include="PWTools.h" />
     <ClInclude Include="Resource.h" />
@@ -221,6 +224,9 @@
     <ClCompile Include="MainTab.cpp" />
     <ClCompile Include="ManagerNew.cpp" />
     <ClCompile Include="ManagerNewDlg.cpp" />
+    <ClCompile Include="MountWizard.cpp" />
+    <ClCompile Include="MountWizardModel.cpp" />
+    <ClCompile Include="PageMount1.cpp" />
     <ClCompile Include="PasswordBuilder.cpp" />
     <ClCompile Include="PWTools.cpp" />
     <ClCompile Include="SecureHeap.cpp" />

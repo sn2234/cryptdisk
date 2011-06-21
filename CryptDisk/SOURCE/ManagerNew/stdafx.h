@@ -64,6 +64,7 @@
 #include <boost/scoped_ptr.hpp>
 
 #include "CryptoLib.h"
+#include <afxdlgs.h>
 
 // Definitions
 #define USER_MODE

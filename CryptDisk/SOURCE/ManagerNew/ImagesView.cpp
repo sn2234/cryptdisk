@@ -8,6 +8,8 @@
 
 #include "ImagesModel.h"
 
+#include "MountWizard.h"
+
 std::wstring FormatSize(UINT64 size)
 {
 	const UINT64 szGiga = 1024*1024*1024;
@@ -97,7 +99,9 @@ BOOL ImagesView::OnInitDialog()
 
 void ImagesView::OnBnClickedButtonMount()
 {
-	// TODO: Add your control notification handler code here
+	MountWizard dlg(_T("Mount image"), this);
+
+	dlg.DoModal();
 }
 
 
