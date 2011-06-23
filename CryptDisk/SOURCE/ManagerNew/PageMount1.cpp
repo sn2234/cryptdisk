@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 
 #include "MountWizardModel.h"
+#include "KeyFilesDialog.h"
 
 // PageMount1 dialog
 
@@ -90,7 +91,14 @@ void PageMount1::OnBnClickedButtonChangePassword()
 
 void PageMount1::OnBnClickedButtonKeyFiles()
 {
-	// TODO: Add your control notification handler code here
+	MountWizardModel& m = static_cast<MountWizardModel&>(m_document);
+
+	KeyFilesDialog dlg(m.KeyFiles());
+
+	if(dlg.DoModal() == IDOK)
+	{
+		m.KeyFiles(dlg.KeyFiles());
+	}
 }
 
 

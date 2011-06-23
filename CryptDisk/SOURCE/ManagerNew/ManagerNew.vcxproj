@@ -197,6 +197,7 @@
     <ClInclude Include="DriverTools.h" />
     <ClInclude Include="ImagesModel.h" />
     <ClInclude Include="ImagesView.h" />
+    <ClInclude Include="KeyFilesDialog.h" />
     <ClInclude Include="MainTab.h" />
     <ClInclude Include="ManagerNew.h" />
     <ClInclude Include="ManagerNewDlg.h" />
@@ -221,6 +222,7 @@
     <ClCompile Include="DriverTools.cpp" />
     <ClCompile Include="ImagesModel.cpp" />
     <ClCompile Include="ImagesView.cpp" />
+    <ClCompile Include="KeyFilesDialog.cpp" />
     <ClCompile Include="MainTab.cpp" />
     <ClCompile Include="ManagerNew.cpp" />
     <ClCompile Include="ManagerNewDlg.cpp" />
