@@ -24,7 +24,7 @@ public:
 class CryptDiskHelpers
 {
 public:
-	static void MountImage(DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength);
+	static void MountImage(DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength, ULONG mountOptions);
 	static bool CheckImage(const WCHAR* imagePath, const unsigned char* password, size_t passwordLength);
 	static void ChangePassword(CryptoLib::CRandom* pRndGen, const WCHAR* imagePath, const unsigned char* password, size_t passwordLength, const unsigned char* passwordNew, size_t passwordNewLength);
 	static std::vector<MountedImageInfo> ListMountedImages(DNDriverControl& driverControl);

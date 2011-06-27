@@ -18,6 +18,8 @@ PasswordBuilder::PasswordBuilder( const std::vector<std::wstring>& keyFilesList,
 			// Collect files
 			CryptoLib::SHA256_HASH hash;
 
+			hash.Init();
+
 			std::for_each(keyFilesList.cbegin(), keyFilesList.cend(), [&hash, keyFileDataLength](const std::wstring&filePath){
 				HANDLE	hFile,hMapping;
 				void	*pData;
@@ -78,6 +80,7 @@ PasswordBuilder::PasswordBuilder( const std::vector<std::wstring>& keyFilesList,
 			});
 			
 			hash.Final(m_password);
+			hash.Clear();
 		}
 
 		std::copy_n(password, passwordLength, m_password + (keyFilesList.empty() ? 0 : SHA256_DIDGEST_SIZE));

@@ -13,7 +13,7 @@ using namespace boost;
 
 static const WCHAR pathPrefix[] =  L"\\??\\";
 
-void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength )
+void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength, ULONG mountOptions )
 {
 	size_t	structSize = sizeof(DISK_ADD_INFO) + sizeof(pathPrefix) + wcslen(imagePath)*sizeof(WCHAR) + sizeof(WCHAR);
 
@@ -22,7 +22,7 @@ void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* 
 	DISK_ADD_INFO* pInfo = reinterpret_cast<DISK_ADD_INFO*>(&buffer[0]);
 
 	pInfo->DriveLetter = driveLetter;
-	pInfo->MountOptions = MOUNT_VIA_MOUNTMGR | MOUNT_SAVE_TIME;
+	pInfo->MountOptions = mountOptions;
 	pInfo->PathSize = sizeof(pathPrefix) + wcslen(imagePath)*sizeof(WCHAR) + sizeof(WCHAR);
 	wcscpy_s(pInfo->FilePath, pInfo->PathSize / sizeof(WCHAR), pathPrefix);
 	wcscat_s(pInfo->FilePath, pInfo->PathSize / sizeof(WCHAR), imagePath);

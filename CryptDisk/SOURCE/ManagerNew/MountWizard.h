@@ -2,6 +2,7 @@
 #pragma once
 
 #include "PageMount1.h"
+#include "PageMount2.h"
 #include "MountWizardModel.h"
 
 // MountWizard
@@ -19,6 +20,7 @@ public:
 private:
 	MountWizardModel	m_model;
 	PageMount1			m_page1;
+	PageMount2			m_page2;
 protected:
 	DECLARE_MESSAGE_MAP()
 };

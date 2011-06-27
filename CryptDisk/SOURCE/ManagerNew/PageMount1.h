@@ -20,6 +20,9 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
+	void PropagateToModel();
+	bool ValidateData();
+
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedButtonBrowse();
@@ -27,6 +30,9 @@ public:
 	afx_msg void OnBnClickedButtonKeyFiles();
 	afx_msg void OnBnClickedButtonBackup();
 	afx_msg void OnBnClickedButtonRestore();
-	BOOL		m_bAddToDocuments;
+	BOOL		m_bNotAddToDocuments;
 	CString		m_path;
+
+	virtual BOOL OnSetActive();
+	virtual LRESULT OnWizardNext();
 };
