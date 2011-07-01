@@ -101,7 +101,10 @@ void ImagesView::OnBnClickedButtonMount()
 {
 	MountWizard dlg(_T("Mount image"), this);
 
-	dlg.DoModal();
+	if(dlg.DoModal() != IDCANCEL)
+	{
+		static_cast<ImagesModel&>(m_document).Refresh();
+	}
 }
 
 

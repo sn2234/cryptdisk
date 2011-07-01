@@ -39,11 +39,13 @@ void DiscCipherAesV3::EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCo
 	if(blocksCount == 0)
 		return;
 
+	UINT32 firstBlockIndex32 = static_cast<UINT32>(firstBlockIndex & 0xFFFFFFFF); // Compatibility with previous version
+
 	memset(blockNumberByte, 0, sizeof(blockNumberByte));
 
 	// Calculate first block number
 
-	blockNumberInt64 = firstBlockIndex*BYTES_PER_SECTOR/16;
+	blockNumberInt64 = firstBlockIndex32*BYTES_PER_SECTOR/16;
 
 	m_cipher.EncipherFirstBlock(blockNumberByte, pData);
 
@@ -66,11 +68,13 @@ void DiscCipherAesV3::EncipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCo
 	if(blocksCount == 0)
 		return;
 
+	UINT32 firstBlockIndex32 = static_cast<UINT32>(firstBlockIndex & 0xFFFFFFFF); // Compatibility with previous version
+
 	memset(blockNumberByte, 0, sizeof(blockNumberByte));
 
 	// Calculate first block number
 
-	blockNumberInt64 = firstBlockIndex*BYTES_PER_SECTOR/16;
+	blockNumberInt64 = firstBlockIndex32*BYTES_PER_SECTOR/16;
 
 	m_cipher.EncipherFirstBlock(blockNumberByte, pPlainData, pCipherData);
 
@@ -96,11 +100,13 @@ void DiscCipherAesV3::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCo
 	if(blocksCount == 0)
 		return;
 
+	UINT32 firstBlockIndex32 = static_cast<UINT32>(firstBlockIndex & 0xFFFFFFFF); // Compatibility with previous version
+
 	memset(blockNumberByte, 0, sizeof(blockNumberByte));
 
 	// Calculate first block number
 
-	blockNumberInt64 = firstBlockIndex*BYTES_PER_SECTOR/16;
+	blockNumberInt64 = firstBlockIndex32*BYTES_PER_SECTOR/16;
 
 	m_cipher.DecipherFirstBlock(blockNumberByte, pData);
 
@@ -123,11 +129,13 @@ void DiscCipherAesV3::DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCo
 	if(blocksCount == 0)
 		return;
 
+	UINT32 firstBlockIndex32 = static_cast<UINT32>(firstBlockIndex & 0xFFFFFFFF); // Compatibility with previous version
+
 	memset(blockNumberByte, 0, sizeof(blockNumberByte));
 
 	// Calculate first block number
 
-	blockNumberInt64 = firstBlockIndex*BYTES_PER_SECTOR/16;
+	blockNumberInt64 = firstBlockIndex32*BYTES_PER_SECTOR/16;
 
 	m_cipher.DecipherFirstBlock(blockNumberByte, pCipherData, pPlainData);
 
