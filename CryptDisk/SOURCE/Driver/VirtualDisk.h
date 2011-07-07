@@ -52,6 +52,7 @@ public:
 	// Acessors
 	const DISK_BASIC_INFO& GetDiskInfo() const {return *m_pDiskInfo;}
 	size_t GetDiskInfoSize() const { return sizeof(DISK_BASIC_INFO) + m_pDiskInfo->PathSize - sizeof(WCHAR); }
+	UINT64 ImageDataOffset() const { return m_imageDataOffset; }
 
 protected:
 	// Internal functions
@@ -82,6 +83,7 @@ protected:
 	// Image parameters
 	HANDLE				m_hImageFile;
 	PFILE_OBJECT		m_pFileObject;
+	UINT64				m_imageDataOffset;
 
 	// Cryptographic parameters
 	IDiskCipher*		m_pDiskCipher;

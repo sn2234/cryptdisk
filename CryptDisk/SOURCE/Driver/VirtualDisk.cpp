@@ -356,7 +356,7 @@ NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PPARTITION_INFORMATION)Buffer)->BootIndicator = FALSE;
 			((PPARTITION_INFORMATION)Buffer)->HiddenSectors = 1;
 			((PPARTITION_INFORMATION)Buffer)->PartitionLength.QuadPart =
-				pDisk->m_pDiskInfo->FileSize.QuadPart-sizeof(DISK_HEADER_V4);
+				pDisk->m_pDiskInfo->FileSize.QuadPart - pDisk->ImageDataOffset();
 			((PPARTITION_INFORMATION)Buffer)->PartitionNumber = -1;
 			((PPARTITION_INFORMATION)Buffer)->PartitionType = 0;
 			((PPARTITION_INFORMATION)Buffer)->RecognizedPartition = TRUE;
@@ -501,7 +501,7 @@ NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 		if(OutputSize>=sizeof(GET_LENGTH_INFORMATION))
 		{
 			((PGET_LENGTH_INFORMATION)Buffer)->Length.QuadPart=
-				pDisk->m_pDiskInfo->FileSize.QuadPart-sizeof(DISK_HEADER_V4);
+				pDisk->m_pDiskInfo->FileSize.QuadPart - pDisk->ImageDataOffset();
 			Irp->IoStatus.Information=sizeof(GET_LENGTH_INFORMATION);
 			status=STATUS_SUCCESS;
 		}
@@ -517,7 +517,7 @@ NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PPARTITION_INFORMATION_EX)Buffer)->PartitionStyle=PARTITION_STYLE_MBR;
 			((PPARTITION_INFORMATION_EX)Buffer)->StartingOffset.QuadPart=0;
 			((PPARTITION_INFORMATION_EX)Buffer)->PartitionLength.QuadPart=
-				pDisk->m_pDiskInfo->FileSize.QuadPart-sizeof(DISK_HEADER_V4);
+				pDisk->m_pDiskInfo->FileSize.QuadPart - pDisk->ImageDataOffset();
 			((PPARTITION_INFORMATION_EX)Buffer)->PartitionNumber=-1;
 			((PPARTITION_INFORMATION_EX)Buffer)->RewritePartition=FALSE;
 			((PPARTITION_INFORMATION_EX)Buffer)->Mbr.PartitionType=PARTITION_FAT_16;
@@ -544,7 +544,7 @@ NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].PartitionStyle=PARTITION_STYLE_MBR;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].StartingOffset.QuadPart=0;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].PartitionLength.QuadPart=
-				pDisk->m_pDiskInfo->FileSize.QuadPart-sizeof(DISK_HEADER_V4);
+				pDisk->m_pDiskInfo->FileSize.QuadPart - pDisk->ImageDataOffset();
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].PartitionNumber=-1;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].RewritePartition=FALSE;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].Mbr.BootIndicator=FALSE;
@@ -567,7 +567,7 @@ NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionCount=1;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->Signature=12345678;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].PartitionLength.QuadPart=
-				pDisk->m_pDiskInfo->FileSize.QuadPart-sizeof(DISK_HEADER_V4);
+				pDisk->m_pDiskInfo->FileSize.QuadPart - pDisk->ImageDataOffset();
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].PartitionNumber=-1;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].RewritePartition=FALSE;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].StartingOffset.QuadPart=0;
@@ -737,7 +737,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 					{
 						if(!(FileOffset.QuadPart&(BYTES_PER_SECTOR-1)))
 						{
-							FileOffset.QuadPart+=sizeof(DISK_HEADER_V4);
+							FileOffset.QuadPart += pDisk->ImageDataOffset();
 							// Get buffer address
 							if(Irp->MdlAddress)
 							{
@@ -755,7 +755,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 											{
 												// Read from file to buffer
 												KdPrint(("\nCryptDisk:Read Offset=(%I64d) Length=(%d)",
-													FileOffset.QuadPart-sizeof(DISK_HEADER_V4),
+													FileOffset.QuadPart - pDisk->ImageDataOffset(),
 													RequestLength));
 												{
 													if(NT_SUCCESS(status=ZwReadFile(pDisk->m_hImageFile,NULL,NULL,NULL,
@@ -796,7 +796,7 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 												UCHAR	*Buff;
 
 												KdPrint(("\nCryptDisk:Write Offset=(%I64d) Length=(%d)",
-													FileOffset.QuadPart-sizeof(DISK_HEADER_V4),
+													FileOffset.QuadPart - pDisk->ImageDataOffset(),
 													RequestLength));
 
 												// If request length less then cache buffer we use it
@@ -1071,6 +1071,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 								{
 									DiscCipherAesV3* pCipher = new (pCipherbuff) DiscCipherAesV3(DiskParamatersV3(pHeader->DiskKey, pHeader->TweakKey));
 									m_pDiskCipher = pCipher;
+									m_imageDataOffset = sizeof(DISK_HEADER_V3);
 									status = STATUS_SUCCESS;
 								}
 								else
@@ -1088,6 +1089,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 								{
 									DiskCipherTwofishV3* pCipher = new (pCipherbuff) DiskCipherTwofishV3(DiskParamatersV3(pHeader->DiskKey, pHeader->TweakKey));
 									m_pDiskCipher = pCipher;
+									m_imageDataOffset = sizeof(DISK_HEADER_V3);
 									status = STATUS_SUCCESS;
 								}
 								else
@@ -1124,6 +1126,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 										new (pCipherbuff) DiskCipherV4<RijndaelEngine>(
 											DiskParametersV4(pHeader->DiskKey, pHeader->TweakKey, pHeader->TweakNumber, pHeader->DiskSectorSize));
 									m_pDiskCipher = pCipher;
+									m_imageDataOffset = pHeader->ImageOffset;
 									status = STATUS_SUCCESS;
 								}
 								else
@@ -1143,6 +1146,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 										new (pCipherbuff) DiskCipherV4<TwofishEngine>(
 										DiskParametersV4(pHeader->DiskKey, pHeader->TweakKey, pHeader->TweakNumber, pHeader->DiskSectorSize));
 									m_pDiskCipher = pCipher;
+									m_imageDataOffset = pHeader->ImageOffset;
 									status = STATUS_SUCCESS;
 								}
 								else
