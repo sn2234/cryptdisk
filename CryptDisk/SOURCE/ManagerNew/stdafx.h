@@ -39,6 +39,8 @@
 
 #include <Windows.h>
 #include <WinIoCtl.h>
+#include <Dbt.h>
+#include <winsvc.h>
 
 // STD Lib
 #include <math.h>

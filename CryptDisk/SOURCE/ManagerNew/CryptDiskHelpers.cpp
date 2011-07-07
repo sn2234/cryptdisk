@@ -13,6 +13,8 @@ using namespace boost;
 
 static const WCHAR pathPrefix[] =  L"\\??\\";
 
+static void SendBroadcastMessage( WPARAM message, WCHAR driveLetter );
+
 void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength, ULONG mountOptions )
 {
 	size_t	structSize = sizeof(DISK_ADD_INFO) + sizeof(pathPrefix) + wcslen(imagePath)*sizeof(WCHAR) + sizeof(WCHAR);
@@ -53,6 +55,8 @@ void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* 
 	{
 		throw winapi_exception("DeviceIoControl error");
 	}
+
+	SendBroadcastMessage(DBT_DEVICEARRIVAL, driveLetter);
 }
 
 std::vector<MountedImageInfo> CryptDiskHelpers::ListMountedImages( DNDriverControl& driverControl )
@@ -107,6 +111,21 @@ std::vector<MountedImageInfo> CryptDiskHelpers::ListMountedImages( DNDriverContr
 
 void CryptDiskHelpers::UnmountImage( DNDriverControl& driverControl, ULONG id, bool forceUnmount )
 {
+	// Get disk letter
+
+	auto images = ListMountedImages(driverControl);
+
+	auto it = std::find_if(images.cbegin(), images.cend(), [id](const MountedImageInfo& i){
+		return i.diskId == id;
+	});
+
+	if(it == images.cend())
+	{
+		return;
+	}
+
+	SendBroadcastMessage(DBT_DEVICEREMOVECOMPLETE, it->driveLetter[0]);
+
 	DISK_DELETE_INFO info;
 
 	info.DiskId = id;
@@ -116,6 +135,8 @@ void CryptDiskHelpers::UnmountImage( DNDriverControl& driverControl, ULONG id, b
 	{
 		throw winapi_exception("UnmountImage: DeviceIoControl failed");
 	}
+
+	//SendBroadcastMessage(DBT_DEVICEREMOVECOMPLETE, driveLetter);
 }
 
 void CryptDiskHelpers::CreateImage( CryptoLib::CRandom* pRndGen,
@@ -308,4 +329,34 @@ std::vector<unsigned char> CryptDiskHelpers::ReadImageHeader( const WCHAR* image
 	CloseHandle(hFile);
 	
 	return headerBuff;
+}
+
+void SendBroadcastMessage( WPARAM message, WCHAR driveLetter )
+{
+	std::string driveRoot;
+
+	driveRoot += (char)driveLetter;
+	driveRoot += ":\\";
+
+	switch(message)
+	{
+	case DBT_DEVICEARRIVAL:
+		SHChangeNotify(SHCNE_DRIVEADD, SHCNF_PATH, driveRoot.c_str(), NULL);
+		break;
+	case DBT_DEVICEREMOVECOMPLETE:
+		SHChangeNotify(SHCNE_DRIVEREMOVED, SHCNF_PATH, driveRoot.c_str(), NULL);
+		break;
+	}
+
+	DEV_BROADCAST_VOLUME	data;
+
+	data.dbcv_size = sizeof(data);
+	data.dbcv_devicetype = DBT_DEVTYP_VOLUME;
+	data.dbcv_reserved = 0;
+	data.dbcv_flags = 0;
+	data.dbcv_unitmask = 1 << (driveLetter - L'A');
+
+	DWORD dwResult;
+	SendMessageTimeout(HWND_BROADCAST, WM_DEVICECHANGE, message, (LPARAM)(&data), SMTO_ABORTIFHUNG, 1000, &dwResult);
+
 }
