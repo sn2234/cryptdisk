@@ -5,6 +5,7 @@
 #include "stdafx.h"
 #include "ManagerNew.h"
 #include "ManagerNewDlg.h"
+#include "AppRandom.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -51,6 +52,7 @@ BOOL CManagerNewApp::InitInstance()
 
 	CWinApp::InitInstance();
 
+	AppRandom::instance();
 
 	AfxEnableControlContainer();
 

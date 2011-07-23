@@ -40,6 +40,7 @@ DriverHelper* InitDriverHelper::Alloc()
 			return Result ?  new DriverHelper(std::shared_ptr<DNDriverControl>(DNDriverControl::Create(DriverControlDeviceName))) :
 				new DriverHelper(std::shared_ptr<DNDriverControl>(nullptr));
 		}
+		return new DriverHelper(std::shared_ptr<DNDriverControl>(nullptr));
 	}
 	catch (std::exception& ex)
 	{

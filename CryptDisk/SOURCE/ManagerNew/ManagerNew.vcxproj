@@ -85,12 +85,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;$(SolutionDir)SOURCE\Manager\SRC;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm120 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm134 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\$(PlatformShortName)\Crypto_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\$(PlatformShortName)\Crypto_d.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <Midl>
@@ -111,12 +111,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;$(SolutionDir)SOURCE\Manager\SRC;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm120 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm134 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\$(PlatformShortName)\Crypto_x64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\$(PlatformShortName)\Crypto_x64d.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <Midl>
@@ -138,14 +138,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;$(SolutionDir)SOURCE\Manager\SRC;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm120 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm134 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\$(PlatformShortName)\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\$(PlatformShortName)\Crypto.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <Midl>
@@ -168,14 +168,14 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;$(SolutionDir)SOURCE\Manager\SRC;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <AdditionalOptions>-Zm120 %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions>-Zm134 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\$(PlatformShortName)\Crypto_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\$(PlatformShortName)\Crypto_x64.lib;pdh.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <Midl>
@@ -195,6 +195,7 @@
   <ItemGroup>
     <ClInclude Include="..\Driver\DiskHeaderTools.h" />
     <ClInclude Include="AppMemory.h" />
+    <ClInclude Include="AppRandom.h" />
     <ClInclude Include="CryptDiskHelpers.h" />
     <ClInclude Include="DNDriverControl.h" />
     <ClInclude Include="Document.h" />
@@ -210,7 +211,10 @@
     <ClInclude Include="PageMount1.h" />
     <ClInclude Include="PageMount2.h" />
     <ClInclude Include="PasswordBuilder.h" />
+    <ClInclude Include="PdhCounter.h" />
+    <ClInclude Include="PdhQuery.h" />
     <ClInclude Include="PWTools.h" />
+    <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SafeHandle.h" />
     <ClInclude Include="SecureHeap.h" />
@@ -222,6 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Driver\DiskHeaderTools.cpp" />
+    <ClCompile Include="AppRandom.cpp" />
     <ClCompile Include="CryptDiskHelpers.cpp" />
     <ClCompile Include="DNDriverControl.cpp" />
     <ClCompile Include="DriverTools.cpp" />
@@ -236,7 +241,10 @@
     <ClCompile Include="PageMount1.cpp" />
     <ClCompile Include="PageMount2.cpp" />
     <ClCompile Include="PasswordBuilder.cpp" />
+    <ClCompile Include="PdhCounter.cpp" />
+    <ClCompile Include="PdhQuery.cpp" />
     <ClCompile Include="PWTools.cpp" />
+    <ClCompile Include="RandomGenerator.cpp" />
     <ClCompile Include="SecureHeap.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

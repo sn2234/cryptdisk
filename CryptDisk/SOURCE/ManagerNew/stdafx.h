@@ -64,9 +64,14 @@
 #include <boost/utility.hpp>
 #include <boost/thread/once.hpp>
 #include <boost/scoped_ptr.hpp>
+#include <boost/thread.hpp>
 
 #include "CryptoLib.h"
 #include <afxdlgs.h>
+
+// These ones should be after STL headers
+#include <Pdh.h>
+#include <PdhMsg.h>
 
 // Definitions
 #define USER_MODE
