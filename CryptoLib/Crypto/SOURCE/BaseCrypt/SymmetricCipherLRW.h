@@ -45,6 +45,11 @@ protected:
 	SymmetricCipherEngine	m_Engine;
 	LRWMode					m_LRW;
 public:
+	~SymmetricCipherLRW()
+	{
+		Clear();
+	}
+
 	__forceinline void SetupKey(const void *userKey, const void *tweakKey)
 	{
 		m_Engine.SetupKey(userKey);

@@ -25,12 +25,23 @@
 #ifndef RNDSAMPLER_H_HEADER_INCLUDED_BAEC28AF
 #define RNDSAMPLER_H_HEADER_INCLUDED_BAEC28AF
 
+#include "..\BaseCrypt\SHA256_HASH.h"
+
 namespace CryptoLib
 {
-class CRndSampler
+class RndSampler
 {
 public:
-	void AddSample(void *pSampleData, ULONG sampleSize, ULONG sampleEntropy)
+	RndSampler()
+		:m_entropyEstimated(0)
+	{}
+
+	~RndSampler()
+	{
+		Clear();
+	}
+
+	void AddSample(const void *pSampleData, ULONG sampleSize, ULONG sampleEntropy)
 	{
 		m_hash.Update(pSampleData, sampleSize);
 		m_entropyEstimated+=sampleEntropy;

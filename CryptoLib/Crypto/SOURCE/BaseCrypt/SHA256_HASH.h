@@ -43,6 +43,16 @@ public:
 		didgestSize = SHA256_DIDGEST_SIZE
 	};
 public:
+	SHA256_HASH()
+	{
+		Init();
+	}
+
+	~SHA256_HASH()
+	{
+		Clear();
+	}
+
 	//##ModelId=41A9DD6D00A5
 	__forceinline void Init()
 	{

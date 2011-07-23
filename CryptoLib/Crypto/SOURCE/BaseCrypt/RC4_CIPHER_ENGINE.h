@@ -38,6 +38,11 @@ namespace CryptoLib
 class RC4_CIPHER_ENGINE 
 {
 public:
+	~RC4_CIPHER_ENGINE()
+	{
+		Clear();
+	}
+
 	//##ModelId=41ACDD2A032A
 	__forceinline void SetupKey(const void *UserKey, int KeyLengthBytes)
 	{

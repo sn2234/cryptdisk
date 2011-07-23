@@ -27,11 +27,18 @@
 
 #pragma once
 
+#include "..\BaseCrypt\DNAES.h"
+
 namespace CryptoLib
 {
-class CRndGenerator
+class RndGenerator
 {
 public:
+	~RndGenerator()
+	{
+		Clear();
+	}
+
 	void Init(void *pKey);
 
 	void Generate(void *pBuff, ULONG buffSize);

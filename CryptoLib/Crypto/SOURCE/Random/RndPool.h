@@ -25,15 +25,27 @@
 #ifndef RNDPOOL_H_HEADER_INCLUDED_BAEC29C7
 #define RNDPOOL_H_HEADER_INCLUDED_BAEC29C7
 
+#include "..\BaseCrypt\SHA256_HASH.h"
+
 #define	POOL_BLOCKS			8
 #define	POOL_BLOCK_SIZE		SHA256_DIDGEST_SIZE
 #define	POOL_SIZE			(POOL_BLOCKS*POOL_BLOCK_SIZE)
 
 namespace CryptoLib
 {
-class CRndPool
+class RndPool
 {
 public:
+	RndPool()
+		: m_dataCount(0)
+		, m_counterAdd(0)
+	{}
+
+	~RndPool()
+	{
+		RtlSecureZeroMemory(m_pool, sizeof(m_pool));
+	}
+
 	// Add random data. Size must be SHA256_DIDGEST_SIZE.
 	void AddData(void *pData);
 
@@ -41,10 +53,6 @@ public:
 	void GenKey(void *pKey);
 
 	void Remix();
-
-	void Clear();
-
-	void Init();
 
 	int GetDataCount()
 	{ return m_dataCount;}

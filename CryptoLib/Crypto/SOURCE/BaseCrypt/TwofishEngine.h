@@ -42,6 +42,11 @@ public:
 		KeySize = TWOFISH_KEY_BYTES
 	};
 public:
+	~TwofishEngine()
+	{
+		Clear();
+	}
+
 	__forceinline void SetupKey(const void *UserKey)
 	{
 		TwofishSetKey(&Context, const_cast<void*>(UserKey));

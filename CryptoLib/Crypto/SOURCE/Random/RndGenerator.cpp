@@ -32,14 +32,14 @@
 namespace CryptoLib
 {
 
-	void CRndGenerator::Init(void *pKey)
+void RndGenerator::Init(void *pKey)
 {
 	m_cipher.SetupKey(pKey);
 	memset(m_counter, 0, sizeof(m_counter));
 	m_cipher.EncipherDataECB(1, m_counter);
 }
 
-void CRndGenerator::Generate(void *pBuff, ULONG buffSize)
+void RndGenerator::Generate(void *pBuff, ULONG buffSize)
 {
 	while(buffSize >= AES_BLOCK_SIZE)
 	{
@@ -65,7 +65,7 @@ void CRndGenerator::Generate(void *pBuff, ULONG buffSize)
 	}
 }
 
-void CRndGenerator::Clear()
+void RndGenerator::Clear()
 {
 	m_cipher.Clear();
 	RtlSecureZeroMemory(m_counter, sizeof(m_counter));

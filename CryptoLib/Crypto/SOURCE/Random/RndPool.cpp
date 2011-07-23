@@ -31,11 +31,11 @@
 
 namespace CryptoLib
 {
-void CRndPool::AddData(void *pData)
+void RndPool::AddData(void *pData)
 {
 	PUINT64	ptr;
 
-	ptr=(PUINT64)(m_pool+m_counterAdd*sizeof(UINT64));
+	ptr=(PUINT64)(m_pool+m_counterAdd*POOL_BLOCK_SIZE);
 
 	m_counterAdd++;
 	if(m_counterAdd>=POOL_BLOCKS)
@@ -53,13 +53,13 @@ void CRndPool::AddData(void *pData)
 	Remix();
 }
 
-void CRndPool::GenKey(void *pKey)
+void RndPool::GenKey(void *pKey)
 {
 	GetKeyInternal(pKey);
 	Remix();
 }
 
-void CRndPool::Remix()
+void RndPool::Remix()
 {
 	SHA256_HASH		hash;
 	BYTE			didgest[SHA256_DIDGEST_SIZE];
@@ -81,18 +81,7 @@ void CRndPool::Remix()
 	RtlSecureZeroMemory(didgest, sizeof(didgest));
 }
 
-void CRndPool::Clear()
-{
-	RtlSecureZeroMemory(m_pool, sizeof(m_pool));
-}
-
-void CRndPool::Init()
-{
-	m_dataCount=0;
-	m_counterAdd=0;
-}
-
-void CRndPool::GetKeyInternal(void *pKey)
+void RndPool::GetKeyInternal(void *pKey)
 {
 	SHA256_HASH		hash;
 

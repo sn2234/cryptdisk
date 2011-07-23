@@ -51,7 +51,6 @@ public:
 		InitializeCriticalSection(&m_lock);
 
 		m_sampler.Init();
-		m_pool.Init();
 
 		m_seedFileName[0]=0;
 	}
@@ -59,7 +58,6 @@ public:
 	~CRandom()
 	{
 		m_sampler.Clear();
-		m_pool.Clear();
 		m_gen.Clear();
 
 		DeleteCriticalSection(&m_lock);
@@ -92,9 +90,9 @@ protected:
 	}
 
 	CRITICAL_SECTION	m_lock;
-	CRndSampler			m_sampler;
-	CRndPool			m_pool;
-	CRndGenerator		m_gen;
+	RndSampler			m_sampler;
+	RndPool			m_pool;
+	RndGenerator		m_gen;
 	TCHAR				m_seedFileName[MAX_PATH];
 };
 };

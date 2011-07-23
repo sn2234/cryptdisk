@@ -39,14 +39,17 @@
 #include "BaseCrypt/LRWTwofish.h"
 #include "BaseCrypt/LRWAes.h"
 
+#include "BaseCrypt/EncryptionModes.h"
+#include "BaseCrypt/Hmac.h"
+#include "BaseCrypt/Pkcs5.h"
+
 #include "Random/RndGenerator.h"
 #include "Random/RndSampler.h"
 #include "Random/RndPool.h"
 
-#include "Random/Random.h"
+#include "Random/IRandomGenerator.h"
+#include "Random/RandomGeneratorBase.h"
 
-#include "BaseCrypt/EncryptionModes.h"
-#include "BaseCrypt/Hmac.h"
-#include "BaseCrypt/Pkcs5.h"
+#include "Random/Random.h"
 
 #endif	//_CRYPT_LIB_H_INCLUDED_

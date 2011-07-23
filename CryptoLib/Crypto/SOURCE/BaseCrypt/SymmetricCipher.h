@@ -37,6 +37,11 @@ template<class SymmetricCipherEngine>
 class SymmetricCipher 
 {
 public:
+	~SymmetricCipher()
+	{
+		Clear();
+	}
+
 	//##ModelId=41A9E1000368
 	__forceinline void SetupKey(const void * UserKey)
 	{

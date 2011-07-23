@@ -156,6 +156,12 @@
     <ClInclude Include="SOURCE\Primitives\x64\LrwTools.h">
       <Filter>Primitives\x64</Filter>
     </ClInclude>
+    <ClInclude Include="SOURCE\Random\IRandomGenerator.h">
+      <Filter>Random</Filter>
+    </ClInclude>
+    <ClInclude Include="SOURCE\Random\RandomGeneratorBase.h">
+      <Filter>Random</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="SOURCE\Primitives\x86\LrwMath.inc">
@@ -216,6 +222,9 @@
     </ClCompile>
     <ClCompile Include="SOURCE\Primitives\x64\LRWMath.c">
       <Filter>Primitives\x64</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Random\RandomGeneratorBase.cpp">
+      <Filter>Random</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

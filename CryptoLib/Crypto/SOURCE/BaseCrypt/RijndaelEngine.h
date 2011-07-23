@@ -43,6 +43,11 @@ public:
 		KeySize = RJ_KEY_LEN_BYTES
 	};
 public:
+	~RijndaelEngine()
+	{
+		Clear();
+	}
+
 	//##ModelId=41A9DEB30220
 	__forceinline void SetupKey(const void *UserKey)
 	{
