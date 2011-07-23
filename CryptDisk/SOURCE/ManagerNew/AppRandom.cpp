@@ -16,7 +16,7 @@ RandomGenerator* InitAppRandom::Alloc()
 	if(_get_wpgmptr(&pExecutablePath) == 0)
 	{
 		fs::wpath seedFilePath(pExecutablePath);
-
+		seedFilePath = seedFilePath.parent_path();
 		seedFilePath /= seedFileName;
 
 		pGen = new RandomGenerator(fs::absolute(seedFilePath).generic_wstring());
