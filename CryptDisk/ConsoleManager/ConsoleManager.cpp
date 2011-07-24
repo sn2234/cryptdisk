@@ -5,6 +5,7 @@
 
 #include "CryptDiskHelpers.h"
 #include "DNDriverControl.h"
+#include "DriverProtocol.h"
 
 #include <Random/Random.h>
 
@@ -20,9 +21,9 @@ shared_ptr<DNDriverControl> CreateDriverControl()
 	return shared_ptr<DNDriverControl>(DNDriverControl::Create(DriverControlDeviceName));
 }
 
-shared_ptr<CryptoLib::CRandom> CreateRandomGen()
+shared_ptr<CryptoLib::RandomGeneratorBase> CreateRandomGen()
 {
-	shared_ptr<CryptoLib::CRandom> result(new CryptoLib::CRandom());
+	shared_ptr<CryptoLib::RandomGeneratorBase> result(new CryptoLib::RandomGeneratorBase());
 
 	vector<char> sample(512, 0);
 
@@ -36,7 +37,9 @@ void MountImage(const wstring& imagePath, const wstring& driveLetter, const stri
 {
 	shared_ptr<DNDriverControl> driverControl(CreateDriverControl());
 
-	CryptDiskHelpers::MountImage(*driverControl, imagePath.c_str(), driveLetter[0], reinterpret_cast<const unsigned char*>(password.c_str()), password.size());
+	ULONG mountOptions = MOUNT_VIA_MOUNTMGR | MOUNT_SAVE_TIME;
+
+	CryptDiskHelpers::MountImage(*driverControl, imagePath.c_str(), driveLetter[0], reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), 0);
 }
 
 void CheckImage(const wstring& imagePath, const string& password)
@@ -53,7 +56,7 @@ void CheckImage(const wstring& imagePath, const string& password)
 
 void ChangePassword(const wstring& imagePath, const string& password, const string& passwordNew)
 {
-	shared_ptr<CryptoLib::CRandom> randomGen = CreateRandomGen();
+	shared_ptr<CryptoLib::IRandomGenerator> randomGen = CreateRandomGen();
 	CryptDiskHelpers::ChangePassword(randomGen.get(), imagePath.c_str(), reinterpret_cast<const unsigned char*>(password.c_str()), password.size(),
 		reinterpret_cast<const unsigned char*>(passwordNew.c_str()), passwordNew.size());
 }
@@ -97,7 +100,7 @@ void CreateImage(const wstring& imagePath, const string& algoName, const string&
 		throw logic_error("Unknown algorithm");
 	}
 
-	shared_ptr<CryptoLib::CRandom> randomGen = CreateRandomGen();
+	shared_ptr<CryptoLib::IRandomGenerator> randomGen = CreateRandomGen();
 
 	CryptDiskHelpers::CreateImage(randomGen.get(), imagePath.c_str(), imageSize, algo, reinterpret_cast<const unsigned char*>(password.c_str()), password.size());
 }

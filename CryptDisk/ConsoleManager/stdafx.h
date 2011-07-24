@@ -24,6 +24,10 @@
 
 // Windows
 #include <Windows.h>
+#include <WinIoCtl.h>
+#include <Dbt.h>
+#include <winsvc.h>
+#include <Shlobj.h>
 
 #include "CryptoLib.h"
 // Definitions

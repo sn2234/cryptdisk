@@ -22,6 +22,7 @@ public:
 	RandomGenerator(const std::wstring& seedFileName);
 	~RandomGenerator();
 
+	bool IsInitialized() const  { return m_bSlowPollThreadInitialized && m_bFastPollThreadInitialized; }
 	void LoadSeedFile();
 	void SaveSeedFile();
 
@@ -43,4 +44,6 @@ private:
 	HCRYPTPROV							m_hProv;
 	std::shared_ptr<boost::thread>		m_slowPollThread;
 	std::shared_ptr<boost::thread>		m_fastPollThread;
+	volatile bool						m_bSlowPollThreadInitialized;
+	volatile bool						m_bFastPollThreadInitialized;
 };

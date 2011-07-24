@@ -10,6 +10,8 @@ const int SeedFileSize = 4096;
 RandomGenerator::RandomGenerator(const std::wstring& seedFileName)
 	: m_seedFileName(seedFileName)
 	, m_hProv(0)
+	, m_bSlowPollThreadInitialized(false)
+	, m_bFastPollThreadInitialized(false)
 {
 	LoadSeedFile();
 
@@ -254,6 +256,8 @@ void RandomGenerator::SlowPollThread()
 		query.CollectQueryData();
 
 		AddPdhQuery(query);
+
+		m_bSlowPollThreadInitialized = true;
 	}
 }
 
@@ -297,6 +301,8 @@ void RandomGenerator::FastPollThread()
 		query.CollectQueryData();
 
 		AddPdhQuery(query);
+
+		m_bFastPollThreadInitialized = true;
 	}
 }
 

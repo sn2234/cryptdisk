@@ -49,7 +49,7 @@ public:
 
 	static int GetEntropy(char * pPassword, int passwordLength);
 	static BOOL GenPassword(char *pBuff, int buffLen,
-		PASSWORD_PARAMS *pParams, CryptoLib::CRandom *pRandom);
+		PASSWORD_PARAMS *pParams, CryptoLib::IRandomGenerator *pRandom);
 protected:
 	static const char	m_alphaLower[];		// Alpha in lower case
 	static const char	m_alphaUpper[];		// Alpha in upper case

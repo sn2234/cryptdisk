@@ -139,7 +139,7 @@ void CryptDiskHelpers::UnmountImage( DNDriverControl& driverControl, ULONG id, b
 	//SendBroadcastMessage(DBT_DEVICEREMOVECOMPLETE, driveLetter);
 }
 
-void CryptDiskHelpers::CreateImage( CryptoLib::CRandom* pRndGen,
+void CryptDiskHelpers::CreateImage( CryptoLib::IRandomGenerator* pRndGen,
 	const WCHAR* imagePath, INT64 imageSize, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength )
 {
 	// Prepare disk header
@@ -194,7 +194,7 @@ void CryptDiskHelpers::CreateImage( CryptoLib::CRandom* pRndGen,
 		// Init CTR cipher
 		unsigned char key[RijndaelEngine::KeySize];
 
-		pRndGen->GenRandom(key, sizeof(key));
+		pRndGen->GenerateRandomBytes(key, sizeof(key));
 
 		RijndaelEngine cipher;
 
@@ -206,7 +206,7 @@ void CryptDiskHelpers::CreateImage( CryptoLib::CRandom* pRndGen,
 			unsigned char buffer[RijndaelEngine::BlockSize];
 		};
 
-		pRndGen->GenRandom(buffer, sizeof(buffer));
+		pRndGen->GenerateRandomBytes(buffer, sizeof(buffer));
 
 		unsigned char *pBlock = (unsigned char*)pMap + sizeof(DISK_HEADER_V4);
 		UINT64 bytesToFill = fileSize.QuadPart;
@@ -250,7 +250,7 @@ bool CryptDiskHelpers::CheckImage( const WCHAR* imagePath, const unsigned char* 
 	return bResult;
 }
 
-void CryptDiskHelpers::ChangePassword( CryptoLib::CRandom* pRndGen, const WCHAR* imagePath, const unsigned char* password, size_t passwordLength,
+void CryptDiskHelpers::ChangePassword( CryptoLib::IRandomGenerator* pRndGen, const WCHAR* imagePath, const unsigned char* password, size_t passwordLength,
 	const unsigned char* passwordNew, size_t passwordNewLength )
 {
 	// Read disk header
@@ -269,14 +269,14 @@ void CryptDiskHelpers::ChangePassword( CryptoLib::CRandom* pRndGen, const WCHAR*
 	case DISK_VERSION_3:
 		{
 			DISK_HEADER_V3 *pHeader = reinterpret_cast<DISK_HEADER_V3*>(&headerBuff[0]);
-			pRndGen->GenRandom(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
+			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
 			DiskHeaderTools::Encipher(pHeader, passwordNew, passwordNewLength, cipherInfo.diskCipher);
 		}
 		break;
 	case DISK_VERSION_4:
 		{
 			DISK_HEADER_V4 *pHeader = reinterpret_cast<DISK_HEADER_V4*>(&headerBuff[0]);
-			pRndGen->GenRandom(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
+			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
 			DiskHeaderTools::Encipher(pHeader, passwordNew, passwordNewLength, cipherInfo.diskCipher);
 		}
 		break;

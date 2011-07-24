@@ -236,12 +236,12 @@ bool DiskHeaderTools::DecipherV4( DISK_HEADER_V4* pHeader, const UCHAR* password
 	return false;
 }
 
-bool DiskHeaderTools::Initialize( DISK_HEADER_V3* pHeader, CryptoLib::CRandom* pRndGen )
+bool DiskHeaderTools::Initialize( DISK_HEADER_V3* pHeader, CryptoLib::IRandomGenerator* pRndGen )
 {
 	SHA256_HASH		hash;
 
 	// Fill all pHeaderBuff with random data
-	if(!pRndGen->GenRandom(pHeader, sizeof(DISK_HEADER_V3)))
+	if(!pRndGen->GenerateRandomBytes(pHeader, sizeof(DISK_HEADER_V3)))
 	{
 		// If not enough randomness exit with error
 		return false;
@@ -258,12 +258,12 @@ bool DiskHeaderTools::Initialize( DISK_HEADER_V3* pHeader, CryptoLib::CRandom* p
 	return true;
 }
 
-bool DiskHeaderTools::Initialize( DISK_HEADER_V4* pHeader, CryptoLib::CRandom* pRndGen )
+bool DiskHeaderTools::Initialize( DISK_HEADER_V4* pHeader, CryptoLib::IRandomGenerator* pRndGen )
 {
 	SHA256_HASH		hash;
 
 	// Fill all pHeaderBuff with random data
-	if(!pRndGen->GenRandom(pHeader, sizeof(DISK_HEADER_V4)))
+	if(!pRndGen->GenerateRandomBytes(pHeader, sizeof(DISK_HEADER_V4)))
 	{
 		// If not enough randomness exit with error
 		return false;

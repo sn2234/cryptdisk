@@ -144,7 +144,7 @@ int CPWTools::GetEntropy(char * pPassword, int passwordLength)
 }
 
 BOOL CPWTools::GenPassword(char *pBuff, int buffLen,
-						PASSWORD_PARAMS *pParams, CryptoLib::CRandom *pRandom)
+						PASSWORD_PARAMS *pParams, CryptoLib::IRandomGenerator *pRandom)
 {
 	char	*pAlphabet;
 	int		alphaBuffLen;
@@ -270,7 +270,7 @@ BOOL CPWTools::GenPassword(char *pBuff, int buffLen,
 		{
 			BYTE	idx;
 
-			if(!pRandom->GenRandom(&idx, sizeof(BYTE)))
+			if(!pRandom->GenerateRandomBytes(&idx, sizeof(BYTE)))
 			{
 				break;
 			}

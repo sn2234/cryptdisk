@@ -20,8 +20,8 @@ public:
 		UCHAR			initVector[CryptoLib::RijndaelEngine::BlockSize];
 	};
 
-	static bool Initialize(DISK_HEADER_V3* pHeader, CryptoLib::CRandom* pRndGen);
-	static bool Initialize(DISK_HEADER_V4* pHeader, CryptoLib::CRandom* pRndGen);
+	static bool Initialize(DISK_HEADER_V3* pHeader, CryptoLib::IRandomGenerator* pRndGen);
+	static bool Initialize(DISK_HEADER_V4* pHeader, CryptoLib::IRandomGenerator* pRndGen);
 
 	static void Encipher(DISK_HEADER_V3* pHeader, const UCHAR* passwordData, ULONG passwordLength, DISK_CIPHER algoId);
 	static void Encipher(DISK_HEADER_V4* pHeader, const UCHAR* passwordData, ULONG passwordLength, DISK_CIPHER algoId);

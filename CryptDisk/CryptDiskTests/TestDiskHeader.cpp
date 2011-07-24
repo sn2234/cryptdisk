@@ -8,9 +8,9 @@ using namespace std;
 //using namespace boost;
 using namespace CryptoLib;
 
-shared_ptr<CRandom> CreateRandomGen()
+shared_ptr<IRandomGenerator> CreateRandomGen()
 {
-	shared_ptr<CRandom> result(new CRandom());
+	shared_ptr<RandomGeneratorBase> result(new RandomGeneratorBase());
 
 	vector<char> sample(512, 0);
 
@@ -23,7 +23,7 @@ BOOST_AUTO_TEST_CASE( testDiskHeaderV3_AES )
 {
 	BOOST_MESSAGE("Disk header V3 AES test");
 
-	shared_ptr<CRandom> rndGen = CreateRandomGen();
+	shared_ptr<IRandomGenerator> rndGen = CreateRandomGen();
 
 	vector<unsigned char> headerBuff(sizeof(DISK_HEADER_V3), 0);
 
@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_CASE( testDiskHeaderV3_Twofish )
 {
 	BOOST_MESSAGE("Disk header V3 AES test");
 
-	shared_ptr<CRandom> rndGen = CreateRandomGen();
+	shared_ptr<IRandomGenerator> rndGen = CreateRandomGen();
 
 	vector<unsigned char> headerBuff(sizeof(DISK_HEADER_V3), 0);
 
@@ -81,7 +81,7 @@ BOOST_AUTO_TEST_CASE( testDiskHeaderV4_AES )
 {
 	BOOST_MESSAGE("Disk header V4 AES test");
 
-	shared_ptr<CRandom> rndGen = CreateRandomGen();
+	shared_ptr<IRandomGenerator> rndGen = CreateRandomGen();
 	vector<unsigned char> headerBuff(sizeof(DISK_HEADER_V4), 0);
 
 	// Initialize header
