@@ -9,6 +9,7 @@
 #include "ImagesModel.h"
 
 #include "MountWizard.h"
+#include "CreateWizard.h"
 
 std::wstring FormatSize(UINT64 size)
 {
@@ -110,7 +111,9 @@ void ImagesView::OnBnClickedButtonMount()
 
 void ImagesView::OnBnClickedButtonCreate()
 {
-	// TODO: Add your control notification handler code here
+	CreateWizard dlg(_T("Create image"), this);
+
+	dlg.DoModal();
 }
 
 

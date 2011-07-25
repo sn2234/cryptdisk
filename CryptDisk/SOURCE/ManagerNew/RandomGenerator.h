@@ -16,10 +16,10 @@ struct RND_KEYBOARD_EVENT
 	DWORD		time;		// 2
 };
 
-class RandomGenerator : CryptoLib::RandomGeneratorBase
+class RandomGenerator : CryptoLib::RandomGeneratorBase, boost::noncopyable
 {
 public:
-	RandomGenerator(const std::wstring& seedFileName);
+	explicit RandomGenerator(const std::wstring& seedFileName);
 	~RandomGenerator();
 
 	bool IsInitialized() const  { return m_bSlowPollThreadInitialized && m_bFastPollThreadInitialized; }
