@@ -131,9 +131,17 @@ BOOL PageMount1::OnSetActive()
 
 LRESULT PageMount1::OnWizardNext()
 {
-	PropagateToModel();
+	try
+	{
+		PropagateToModel();
 
-	return ValidateData() ? __super::OnWizardNext() : -1;
+		return ValidateData() ? __super::OnWizardNext() : -1;
+	}
+	catch (std::exception& e)
+	{
+		AfxMessageBox(CString(e.what()), MB_ICONERROR);
+		return -1;
+	}
 }
 
 void PageMount1::PropagateToModel()

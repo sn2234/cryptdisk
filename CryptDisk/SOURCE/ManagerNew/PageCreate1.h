@@ -29,7 +29,11 @@ public:
 	BOOL		m_bNotAddToDocuments;
 	CString		m_path;
 	CString		m_imageSize;
+	CComboBox	m_comboSize;
+	BOOL		m_bQuickFormat;
 
-// 	virtual BOOL OnSetActive();
-// 	virtual LRESULT OnWizardNext();
+	virtual BOOL OnSetActive();
+	virtual LRESULT OnWizardNext();
+
+	virtual BOOL OnInitDialog();
 };
