@@ -8,6 +8,8 @@ public:
 	CreateWizardModel(void);
 	~CreateWizardModel(void);
 
+	void DoCreateImage(std::function<void (double)> callback);
+
 	const std::wstring& ImageFilePath() const { return m_imageFilePath; }
 	void ImageFilePath(const std::wstring& val) { m_imageFilePath = val; }
 

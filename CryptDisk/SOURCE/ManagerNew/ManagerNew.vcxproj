@@ -196,6 +196,7 @@
     <ClInclude Include="..\Driver\DiskHeaderTools.h" />
     <ClInclude Include="AppMemory.h" />
     <ClInclude Include="AppRandom.h" />
+    <ClInclude Include="ColorProgress.h" />
     <ClInclude Include="CreateWizard.h" />
     <ClInclude Include="CreateWizardModel.h" />
     <ClInclude Include="CryptDiskHelpers.h" />
@@ -231,6 +232,7 @@
   <ItemGroup>
     <ClCompile Include="..\Driver\DiskHeaderTools.cpp" />
     <ClCompile Include="AppRandom.cpp" />
+    <ClCompile Include="ColorProgress.cpp" />
     <ClCompile Include="CreateWizard.cpp" />
     <ClCompile Include="CreateWizardModel.cpp" />
     <ClCompile Include="CryptDiskHelpers.cpp" />

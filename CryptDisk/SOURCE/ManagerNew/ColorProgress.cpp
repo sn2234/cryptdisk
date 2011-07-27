@@ -22,40 +22,67 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef _PW_TOLS_H_INCLUDED_
-#define	_PW_TOLS_H_INCLUDED_
+// ColorProgress.cpp : implementation file
+//
 
-#pragma once
+#include "stdafx.h"
 
-class PWTools
+#include "ColorProgress.h"
+
+
+// CColorProgress
+
+IMPLEMENT_DYNAMIC(CColorProgress, CProgressCtrl)
+
+CColorProgress::CColorProgress()
 {
-public:
-	enum
+
+}
+
+CColorProgress::~CColorProgress()
+{
+}
+
+
+BEGIN_MESSAGE_MAP(CColorProgress, CProgressCtrl)
+END_MESSAGE_MAP()
+
+
+
+// CColorProgress message handlers
+int CColorProgress::SetPos(int nPos)
+{
+	int			progressRed,progressGreen;
+	COLORREF	color;
+	int			newPos;
+	int			rangeMin, rangeMax;
+	int			size;
+	int			oldPos;
+
+	oldPos=CProgressCtrl::SetPos(nPos);
+
+	newPos=GetPos();
+	GetRange(rangeMin, rangeMax);
+	size=rangeMax-rangeMin;
+
+	if(newPos<=size/2)
 	{
-		USE_CUSTOM_SET		=0x00000001,
-		USE_UPPER_ALPHA		=0x00000002,
-		USE_LOWER_ALPHA		=0x00000004,
-		USE_NUMERIC			=0x00000008,
-		USE_SYMBOLS			=0x00000010,
-		USE_EASY_TO_READ	=0x00000020
-	};
-
-	struct PASSWORD_PARAMS
+		progressRed=255;
+		progressGreen=(255*newPos/(size/2));
+	}
+	else
 	{
-		DWORD	dwFlags;
-		char	*pCustomSet;
-		int		customSetLength;
-	};
+		progressRed=255-(255*newPos)/(size/2);
+		if(!progressRed)
+		{
+			progressRed=255;
+		}
+		progressGreen=255;
+	}
 
-	static int GetEntropy(char * pPassword, int passwordLength);
-	static BOOL GenPassword(char *pBuff, int buffLen,
-		PASSWORD_PARAMS *pParams, CryptoLib::IRandomGenerator *pRandom);
-protected:
-	static const char	m_alphaLower[];		// Alpha in lower case
-	static const char	m_alphaUpper[];		// Alpha in upper case
-	static const char	m_numeric[];		// Numbers
-	static const char	m_symbols[];		// Symbols
-	static const char	m_exclude[];		// Symbols to exclude when using USE_EASY_TO_READ flag
-};
+	color=RGB(progressRed,progressGreen,0);
 
-#endif	//_PW_TOLS_H_INCLUDED_
+	SendMessage(PBM_SETBARCOLOR,0,color);
+
+	return oldPos;
+}

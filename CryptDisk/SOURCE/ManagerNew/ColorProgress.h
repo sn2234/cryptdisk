@@ -22,40 +22,22 @@
 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef _PW_TOLS_H_INCLUDED_
-#define	_PW_TOLS_H_INCLUDED_
-
 #pragma once
 
-class PWTools
+
+// CColorProgress
+
+class CColorProgress : public CProgressCtrl
 {
+	DECLARE_DYNAMIC(CColorProgress)
+
 public:
-	enum
-	{
-		USE_CUSTOM_SET		=0x00000001,
-		USE_UPPER_ALPHA		=0x00000002,
-		USE_LOWER_ALPHA		=0x00000004,
-		USE_NUMERIC			=0x00000008,
-		USE_SYMBOLS			=0x00000010,
-		USE_EASY_TO_READ	=0x00000020
-	};
+	CColorProgress();
+	virtual ~CColorProgress();
 
-	struct PASSWORD_PARAMS
-	{
-		DWORD	dwFlags;
-		char	*pCustomSet;
-		int		customSetLength;
-	};
-
-	static int GetEntropy(char * pPassword, int passwordLength);
-	static BOOL GenPassword(char *pBuff, int buffLen,
-		PASSWORD_PARAMS *pParams, CryptoLib::IRandomGenerator *pRandom);
+	int SetPos(int nPos);
 protected:
-	static const char	m_alphaLower[];		// Alpha in lower case
-	static const char	m_alphaUpper[];		// Alpha in upper case
-	static const char	m_numeric[];		// Numbers
-	static const char	m_symbols[];		// Symbols
-	static const char	m_exclude[];		// Symbols to exclude when using USE_EASY_TO_READ flag
+	DECLARE_MESSAGE_MAP()
 };
 
-#endif	//_PW_TOLS_H_INCLUDED_
+

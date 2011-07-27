@@ -125,6 +125,8 @@ BOOL PageCreate1::OnInitDialog()
 void PageCreate1::PropagateToModel()
 {
 	CreateWizardModel& m = static_cast<CreateWizardModel&>(m_document);
+	
+	UpdateData(TRUE);
 
 	m.UseRecentDocuments(!m_bNotAddToDocuments);
 	m.ImageFilePath((LPCWSTR)m_path);

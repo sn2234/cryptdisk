@@ -16,7 +16,7 @@ struct RND_KEYBOARD_EVENT
 	DWORD		time;		// 2
 };
 
-class RandomGenerator : CryptoLib::RandomGeneratorBase, boost::noncopyable
+class RandomGenerator : public CryptoLib::RandomGeneratorBase, private boost::noncopyable
 {
 public:
 	explicit RandomGenerator(const std::wstring& seedFileName);

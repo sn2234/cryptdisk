@@ -27,23 +27,23 @@
 #include "PWTools.h"
 
 
-const char	CPWTools::m_alphaLower[]=
+const char	PWTools::m_alphaLower[]=
 {
 	'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'
 };
-const char	CPWTools::m_alphaUpper[]=
+const char	PWTools::m_alphaUpper[]=
 {
 	'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'
 };
-const char	CPWTools::m_numeric[]=
+const char	PWTools::m_numeric[]=
 {
 	'0','1','2','3','4','5','6','7','8','9'
 };
-const char	CPWTools::m_symbols[]=
+const char	PWTools::m_symbols[]=
 {
 	' ','`','~','!','@','#','$','%','^','&','*','(',')','_','+','-','=','{','}','[',']','\"','\'',':',';','<','>',',','.','?','/','|','\\'
 };
-const char	CPWTools::m_exclude[]=
+const char	PWTools::m_exclude[]=
 {
 	'0','O','l','I','1','!','|','`','\''
 };
@@ -77,7 +77,7 @@ static int CopyCharsEx(char *dest, const char *src, int len,
 	return n;
 }
 
-int CPWTools::GetEntropy(char * pPassword, int passwordLength)
+int PWTools::GetEntropy(char * pPassword, int passwordLength)
 {
 	int		alphaLen;
 	BOOL	bAlphaUPresent=FALSE;
@@ -143,7 +143,7 @@ int CPWTools::GetEntropy(char * pPassword, int passwordLength)
 	return (int)ceil(bitsPerChar*(double)passwordLength);
 }
 
-BOOL CPWTools::GenPassword(char *pBuff, int buffLen,
+BOOL PWTools::GenPassword(char *pBuff, int buffLen,
 						PASSWORD_PARAMS *pParams, CryptoLib::IRandomGenerator *pRandom)
 {
 	char	*pAlphabet;

@@ -140,7 +140,7 @@ void CryptDiskHelpers::UnmountImage( DNDriverControl& driverControl, ULONG id, b
 }
 
 void CryptDiskHelpers::CreateImage( CryptoLib::IRandomGenerator* pRndGen,
-	const WCHAR* imagePath, INT64 imageSize, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength )
+	const WCHAR* imagePath, INT64 imageSize, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, std::function<void (double)> callback)
 {
 	// Prepare disk header
 	DISK_HEADER_V4 header;
@@ -220,6 +220,7 @@ void CryptDiskHelpers::CreateImage( CryptoLib::IRandomGenerator* pRndGen,
 			pBlock += RijndaelEngine::BlockSize;
 			bytesFilledInCurrentView += RijndaelEngine::BlockSize;
 			bytesFilled += RijndaelEngine::BlockSize;
+			callback((double)bytesFilled/(double)bytesToFill);
 			if(bytesFilledInCurrentView >= bytesToMap)
 			{
 				UnmapViewOfFile(pMap);

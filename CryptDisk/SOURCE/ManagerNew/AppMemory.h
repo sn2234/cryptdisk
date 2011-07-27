@@ -11,7 +11,7 @@ class InitSecHeap
 public:
 	static CSecureHeap* Alloc()
 	{
-		return new CSecureHeap(100*1024);
+		return new CSecureHeap(10*1024);
 	}
 };
 }
