@@ -21,6 +21,8 @@ void CreateWizardModel::DoCreateImage(std::function<void (double)> callback)
 {
 	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(m_password.c_str()), m_password.size());
 
-	CryptDiskHelpers::CreateImage(&AppRandom::instance(), ImageFilePath().c_str(), ImageSize(), CipherAlgorithm(), pb.Password(), pb.PasswordLength(), callback);
-	callback(0.1f);
+	CryptDiskHelpers::CreateImage(&AppRandom::instance(), ImageFilePath().c_str(), ImageSize(), CipherAlgorithm(),
+		pb.Password(), pb.PasswordLength(),
+		QuickFormat(),
+		callback);
 }

@@ -140,7 +140,8 @@ void CryptDiskHelpers::UnmountImage( DNDriverControl& driverControl, ULONG id, b
 }
 
 void CryptDiskHelpers::CreateImage( CryptoLib::IRandomGenerator* pRndGen,
-	const WCHAR* imagePath, INT64 imageSize, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, std::function<void (double)> callback)
+	const WCHAR* imagePath, INT64 imageSize, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, bool fillImageWithRandom,
+	std::function<void (double)> callback)
 {
 	// Prepare disk header
 	DISK_HEADER_V4 header;
@@ -209,7 +210,7 @@ void CryptDiskHelpers::CreateImage( CryptoLib::IRandomGenerator* pRndGen,
 		pRndGen->GenerateRandomBytes(buffer, sizeof(buffer));
 
 		unsigned char *pBlock = (unsigned char*)pMap + sizeof(DISK_HEADER_V4);
-		UINT64 bytesToFill = fileSize.QuadPart;
+		UINT64 bytesToFill = fillImageWithRandom ? fileSize.QuadPart : 2*sizeof(DISK_HEADER_V4); // Write random data over reserved area always
 		UINT64 bytesFilled = sizeof(DISK_HEADER_V4);
 		size_t bytesFilledInCurrentView = sizeof(DISK_HEADER_V4);
 

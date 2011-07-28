@@ -32,7 +32,7 @@ public:
 	static std::vector<MountedImageInfo> ListMountedImages(DNDriverControl& driverControl);
 	static void UnmountImage(DNDriverControl& driverControl, ULONG id, bool forceUnmount);
 	static void CreateImage(CryptoLib::IRandomGenerator* pRndGen,
-		const WCHAR* imagePath, INT64 imageSize, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength,
+		const WCHAR* imagePath, INT64 imageSize, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, bool fillImageWithRandom,
 		std::function<void (double)> callback);
 	static std::vector<unsigned char> ReadImageHeader(const WCHAR* imagePath);
 };

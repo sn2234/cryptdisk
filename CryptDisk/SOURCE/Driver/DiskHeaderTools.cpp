@@ -533,7 +533,7 @@ bool DiskHeaderTools::Decipher( DISK_HEADER_V4* pHeader, const UCHAR* pUserKey, 
 			if(!memcmp(pHeaderBuff->MagicHash, didgest, SHA256_DIDGEST_SIZE))
 			{
 				// Copy pHeaderBuff and return true
-				memcpy(pHeader, &pHeaderBuff, sizeof(DISK_HEADER_V4));
+				memcpy(pHeader, pHeaderBuff, sizeof(DISK_HEADER_V4));
 				result = true;
 			}
 			RtlSecureZeroMemory(pHeaderBuff, sizeof(DISK_HEADER_V4));
