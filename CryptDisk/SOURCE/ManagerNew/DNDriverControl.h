@@ -27,7 +27,7 @@
 
 #include <windows.h>
 
-class DNDriverControl
+class DNDriverControl : private boost::noncopyable
 {
 	DNDriverControl(HANDLE hDriver)
 		: hDriver(hDriver)

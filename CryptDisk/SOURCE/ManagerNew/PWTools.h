@@ -40,16 +40,9 @@ public:
 		USE_EASY_TO_READ	=0x00000020
 	};
 
-	struct PASSWORD_PARAMS
-	{
-		DWORD	dwFlags;
-		char	*pCustomSet;
-		int		customSetLength;
-	};
-
 	static int GetEntropy(char * pPassword, int passwordLength);
-	static BOOL GenPassword(char *pBuff, int buffLen,
-		PASSWORD_PARAMS *pParams, CryptoLib::IRandomGenerator *pRandom);
+
+	static BOOL GenPassword(char *pBuff, int buffLen, DWORD dwFlags, std::set<char> customCharsSet, CryptoLib::IRandomGenerator *pRandom);
 protected:
 	static const char	m_alphaLower[];		// Alpha in lower case
 	static const char	m_alphaUpper[];		// Alpha in upper case

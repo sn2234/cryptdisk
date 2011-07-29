@@ -66,6 +66,7 @@
 #include <boost/scoped_ptr.hpp>
 #include <boost/thread.hpp>
 #include <boost/noncopyable.hpp>
+#include <boost/shared_array.hpp>
 
 #include "CryptoLib.h"
 #include <afxdlgs.h>

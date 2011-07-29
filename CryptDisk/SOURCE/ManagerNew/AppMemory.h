@@ -9,12 +9,12 @@ namespace
 class InitSecHeap
 {
 public:
-	static CSecureHeap* Alloc()
+	static SecureHeap* Alloc()
 	{
-		return new CSecureHeap(10*1024);
+		return new SecureHeap(10*1024);
 	}
 };
 }
 
-typedef Singleton<CSecureHeap, InitSecHeap> AppMemory;
+typedef Singleton<SecureHeap, InitSecHeap> AppMemory;
 

@@ -30,11 +30,11 @@ typedef struct HEAP_BLOCK
 	DWORD		size:31;	// Size of block with header
 }HEAP_BLOCK;
 
-class CSecureHeap
+class SecureHeap : private boost::noncopyable
 {
 public:
-	CSecureHeap(DWORD dwPoolSize);
-	~CSecureHeap(void);
+	SecureHeap(DWORD dwPoolSize);
+	~SecureHeap(void);
 
 	BOOL Init(DWORD dwPoolSize);
 

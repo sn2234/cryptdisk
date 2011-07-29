@@ -26,19 +26,19 @@
 #include "SecureHeap.h"
 #include "winapi_exception.h"
 
-CSecureHeap::CSecureHeap(DWORD dwPoolSize)
+SecureHeap::SecureHeap(DWORD dwPoolSize)
 {
 	m_pHeap=(HEAP_BLOCK*)VirtualAlloc(NULL, dwPoolSize, MEM_COMMIT, PAGE_READWRITE);
 	if(!m_pHeap)
 	{
-		throw winapi_exception("CSecureHeap::CSecureHeap: Unable to allocate memory");
+		throw winapi_exception("SecureHeap::SecureHeap: Unable to allocate memory");
 	}
 
 	if(!VirtualLock(m_pHeap, dwPoolSize))
 	{
 		VirtualFree(m_pHeap, 0, MEM_RELEASE);
 
-		throw winapi_exception("CSecureHeap::CSecureHeap: Unable to lock memory");
+		throw winapi_exception("SecureHeap::SecureHeap: Unable to lock memory");
 	}
 	m_heapSize=dwPoolSize;
 
@@ -46,13 +46,13 @@ CSecureHeap::CSecureHeap(DWORD dwPoolSize)
 	m_pHeap->size=dwPoolSize;
 }
 
-CSecureHeap::~CSecureHeap(void)
+SecureHeap::~SecureHeap(void)
 {
 	VirtualUnlock(m_pHeap, m_heapSize);
 	VirtualFree(m_pHeap, 0, MEM_RELEASE);
 }
 
-BOOL CSecureHeap::Init(DWORD dwPoolSize)
+BOOL SecureHeap::Init(DWORD dwPoolSize)
 {
 	m_pHeap=(HEAP_BLOCK*)VirtualAlloc(NULL, dwPoolSize, MEM_COMMIT, PAGE_READWRITE);
 	if(!m_pHeap)
@@ -70,7 +70,7 @@ BOOL CSecureHeap::Init(DWORD dwPoolSize)
 	return TRUE;
 }
 
-void *CSecureHeap::Alloc(DWORD size)
+void *SecureHeap::Alloc(DWORD size)
 {
 	HEAP_BLOCK	*ptr;
 
@@ -125,7 +125,7 @@ void *CSecureHeap::Alloc(DWORD size)
 	return NULL;
 }
 
-void CSecureHeap::Free(void *ptr)
+void SecureHeap::Free(void *ptr)
 {
 	// Check if given ptr is in heap
 	if((ptr < m_pHeap) || ((BYTE*)ptr >= (BYTE*)m_pHeap+m_heapSize))
@@ -144,7 +144,7 @@ void CSecureHeap::Free(void *ptr)
 	CheckFreeBlocks(pHeader);
 }
 
-void CSecureHeap::CheckFreeBlocks(HEAP_BLOCK *ptr)
+void SecureHeap::CheckFreeBlocks(HEAP_BLOCK *ptr)
 {
 	HEAP_BLOCK *pNext;
 

@@ -143,147 +143,60 @@ int PWTools::GetEntropy(char * pPassword, int passwordLength)
 	return (int)ceil(bitsPerChar*(double)passwordLength);
 }
 
-BOOL PWTools::GenPassword(char *pBuff, int buffLen,
-						PASSWORD_PARAMS *pParams, CryptoLib::IRandomGenerator *pRandom)
+BOOL PWTools::GenPassword( char *pBuff, int buffLen, DWORD dwFlags, std::set<char> customCharsSet, CryptoLib::IRandomGenerator *pRandom )
 {
-	char	*pAlphabet;
-	int		alphaBuffLen;
-	int		alphaLen;
-	BOOL	bRez=FALSE;
-
 	ASSERT(pBuff);
-	ASSERT(pParams);
 	ASSERT(pRandom);
 
-	if(!buffLen)
+	std::set<char> alphabetSet;
+
+	if(dwFlags & USE_UPPER_ALPHA)
 	{
-		return TRUE;
+		alphabetSet.insert(std::begin(m_alphaUpper), std::end(m_alphaUpper));
+	}
+	if(dwFlags & USE_LOWER_ALPHA)
+	{
+		alphabetSet.insert(std::begin(m_alphaLower), std::end(m_alphaLower));
+	}
+	if(dwFlags & USE_NUMERIC)
+	{
+		alphabetSet.insert(std::begin(m_numeric), std::end(m_numeric));
+	}
+	if(dwFlags & USE_SYMBOLS)
+	{
+		alphabetSet.insert(std::begin(m_symbols), std::end(m_symbols));
+	}
+	if(dwFlags & USE_CUSTOM_SET)
+	{
+		alphabetSet.insert(std::begin(customCharsSet), std::end(customCharsSet));
 	}
 
-	// Compute alphabet length
-	alphaBuffLen=0;
-	alphaLen=0;
-	if(pParams->dwFlags & USE_UPPER_ALPHA)
-		alphaBuffLen+=_countof(m_alphaUpper);
-	if(pParams->dwFlags & USE_LOWER_ALPHA)
-		alphaBuffLen+=_countof(m_alphaLower);
-	if(pParams->dwFlags & USE_NUMERIC)
-		alphaBuffLen+=_countof(m_numeric);
-	if(pParams->dwFlags & USE_SYMBOLS)
-		alphaBuffLen+=_countof(m_symbols);
-	if(pParams->dwFlags & USE_CUSTOM_SET)
-		alphaBuffLen+=pParams->customSetLength;
-
-	if(alphaBuffLen <= 0)
+	if(dwFlags & USE_EASY_TO_READ)
 	{
-		return FALSE;
+		std::set<char> tmp;
+		std::set<char> excluded(std::begin(m_exclude), std::end(m_exclude));
+
+		tmp.swap(alphabetSet);
+		std::set_difference(tmp.cbegin(), tmp.cend(), excluded.cbegin(), excluded.cend(), std::inserter(alphabetSet, alphabetSet.end()));
 	}
 
-	// Allocate buffer
-	pAlphabet=new char[alphaBuffLen];
-
-	char	*ptr;
-	ptr=pAlphabet;
-
-	if(! (pParams->dwFlags & USE_EASY_TO_READ))
+	if(!alphabetSet.empty())
 	{
-		if(pParams->dwFlags & USE_UPPER_ALPHA)
-		{
-			memcpy(ptr, m_alphaUpper, sizeof(m_alphaUpper));
-			ptr+=sizeof(m_alphaUpper);
-			alphaLen+=sizeof(m_alphaUpper);
-		}
-		if(pParams->dwFlags & USE_LOWER_ALPHA)
-		{
-			memcpy(ptr, m_alphaLower, sizeof(m_alphaLower));
-			ptr+=sizeof(m_alphaLower);
-			alphaLen+=sizeof(m_alphaLower);
-		}
-		if(pParams->dwFlags & USE_NUMERIC)
-		{
-			memcpy(ptr, m_numeric, sizeof(m_numeric));
-			ptr+=sizeof(m_numeric);
-			alphaLen+=sizeof(m_numeric);
-		}
-		if(pParams->dwFlags & USE_SYMBOLS)
-		{
-			memcpy(ptr, m_symbols, sizeof(m_symbols));
-			ptr+=sizeof(m_symbols);
-			alphaLen+=sizeof(m_symbols);
-		}
-		if(pParams->dwFlags & USE_CUSTOM_SET)
-		{
-			memcpy(ptr, pParams->pCustomSet, pParams->customSetLength);
-			ptr+=pParams->customSetLength;
-			alphaLen+=pParams->customSetLength;
-		}
+		std::vector<char> alphabet(alphabetSet.cbegin(), alphabetSet.cend());
+		UINT32	idx;
 
-		ASSERT(alphaLen == alphaBuffLen);
-	}
-	else
-	{
-		if(pParams->dwFlags & USE_UPPER_ALPHA)
+		for (int i = 0; i < buffLen; i++)
 		{
-			int n=CopyCharsEx(ptr, m_alphaUpper, sizeof(m_alphaUpper),
-				m_exclude, sizeof(m_exclude));
-			ptr+=n;
-			alphaLen+=n;
-		}
-		if(pParams->dwFlags & USE_LOWER_ALPHA)
-		{
-			int n=CopyCharsEx(ptr, m_alphaLower, sizeof(m_alphaLower),
-				m_exclude, sizeof(m_exclude));
-			ptr+=n;
-			alphaLen+=n;
-		}
-		if(pParams->dwFlags & USE_NUMERIC)
-		{
-			int n=CopyCharsEx(ptr, m_numeric, sizeof(m_numeric),
-				m_exclude, sizeof(m_exclude));
-			ptr+=n;
-			alphaLen+=n;
-		}
-		if(pParams->dwFlags & USE_SYMBOLS)
-		{
-			int n=CopyCharsEx(ptr, m_symbols, sizeof(m_symbols),
-				m_exclude, sizeof(m_exclude));
-			ptr+=n;
-			alphaLen+=n;
-		}
-		if(pParams->dwFlags & USE_CUSTOM_SET)
-		{
-			int n=CopyCharsEx(ptr, pParams->pCustomSet, pParams->customSetLength,
-				m_exclude, sizeof(m_exclude));
-			ptr+=n;
-			alphaLen+=n;
-		}
-	}
-
-	ASSERT((ptr-pAlphabet) == alphaLen);
-
-	if(alphaLen)
-	{
-		// Generate password
-		int i;
-		for(i=0;i<buffLen;i++)
-		{
-			BYTE	idx;
-
-			if(!pRandom->GenerateRandomBytes(&idx, sizeof(BYTE)))
+			if(!pRandom->GenerateRandomBytes(&idx, sizeof(idx)))
 			{
 				break;
 			}
 
-			pBuff[i]=pAlphabet[idx%alphaLen];
+			pBuff[i]=alphabet[idx % alphabet.size()];
 		}
 
-		if(i == buffLen)
-		{
-			bRez=TRUE;
-		}
+		RtlSecureZeroMemory(&idx, sizeof(idx));
 	}
 
-	RtlSecureZeroMemory(pAlphabet, alphaLen);
-	delete[] pAlphabet;
-	return bRez;
+	return FALSE;
 }

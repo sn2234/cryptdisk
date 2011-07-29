@@ -9,6 +9,7 @@
 #include "KeyFilesDialog.h"
 #include "PWTools.h"
 #include "AppMemory.h"
+#include "DialogGenPassword.h"
 
 namespace fs = boost::filesystem;
 // PageCreate2 dialog
@@ -69,7 +70,9 @@ void PageCreate2::OnDocumentUpdate()
 
 void PageCreate2::OnBnClickedButtonGenPass()
 {
-	// TODO: Add your control notification handler code here
+	DialogGenPassword dlg(20);
+
+	dlg.DoModal();
 }
 
 
