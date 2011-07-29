@@ -20,7 +20,7 @@ DiskCipherTwofishV3::DiskCipherTwofishV3(const DiskCipherTwofishV3& theDiskCiphe
 
 }
 
-DiskCipherTwofishV3::DiskCipherTwofishV3(const DiskParamatersV3 diskParameters)
+DiskCipherTwofishV3::DiskCipherTwofishV3(const DiskParamatersV3& diskParameters)
 {
 	ASSERT(diskParameters.getDiskKeyLength() == CryptoLib::TwofishEngine::KeySize);
 	ASSERT(diskParameters.getDiskTweakKeyLength() == 16);

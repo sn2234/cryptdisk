@@ -84,8 +84,6 @@ NTSTATUS DisksManager::MountDisk(PUNICODE_STRING pusSymLinkName,PUNICODE_STRING 
 	PMOUNTMGR_TARGET_NAME			pTargetName;
 	PMOUNTMGR_CREATE_POINT_INPUT	pCreatePoint;
 
-	int								structSize;
-
 	status=STATUS_UNSUCCESSFUL;
 
 	if(!Initialized)
@@ -99,6 +97,7 @@ NTSTATUS DisksManager::MountDisk(PUNICODE_STRING pusSymLinkName,PUNICODE_STRING 
 
 	if(NT_SUCCESS(status))
 	{
+		int								structSize;
 		structSize=sizeof(pTargetName->DeviceNameLength)+pusDeviceName->Length;
 
 		if(pTargetName=(PMOUNTMGR_TARGET_NAME)
@@ -176,7 +175,6 @@ NTSTATUS DisksManager::UnmountDisk(DISK_DELETE_INFO *Info)
 	UNICODE_STRING			usMountMgrName;
 	PFILE_OBJECT			pMountMgrFileObject;
 	PDEVICE_OBJECT			pMountMgrDeviceObject;
-	int						structSize;
 	PMOUNTMGR_MOUNT_POINT	pMountPoint;
 	PVOID					pBuff;
 	BOOL					bVolumeInUse=FALSE;
@@ -235,6 +233,8 @@ NTSTATUS DisksManager::UnmountDisk(DISK_DELETE_INFO *Info)
 					&pMountMgrFileObject,&pMountMgrDeviceObject);
 				if(NT_SUCCESS(status))
 				{
+					int						structSize;
+
 					structSize=sizeof(MOUNTMGR_MOUNT_POINT)+usSymLinkName.Length;
 					pMountPoint=(PMOUNTMGR_MOUNT_POINT)ExAllocatePoolWithTag(PagedPool,
 						structSize+2*sizeof(WCHAR), MEM_TAG);

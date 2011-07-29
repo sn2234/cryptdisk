@@ -17,7 +17,6 @@ DiscCipherAesV3::~DiscCipherAesV3()
 
 DiscCipherAesV3::DiscCipherAesV3(const DiscCipherAesV3& theDiscCipherAesV3)
 {
-
 }
 
 DiscCipherAesV3::DiscCipherAesV3(const DiskParamatersV3& diskParameters)

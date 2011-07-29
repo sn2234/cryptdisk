@@ -75,8 +75,6 @@ void PageCreate1::OnBnClickedButtonBrowse()
 {
 	UpdateData(TRUE);
 
-	CreateWizardModel& m = static_cast<CreateWizardModel&>(m_document);
-
 	OPENFILENAME	ofn;
 	TCHAR			filePath[MAX_PATH];
 

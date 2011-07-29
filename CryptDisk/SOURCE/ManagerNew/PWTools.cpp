@@ -185,7 +185,6 @@ BOOL PWTools::GenPassword(char *pBuff, int buffLen,
 	char	*ptr;
 	ptr=pAlphabet;
 
-	int	n=0;
 	if(! (pParams->dwFlags & USE_EASY_TO_READ))
 	{
 		if(pParams->dwFlags & USE_UPPER_ALPHA)
@@ -225,35 +224,35 @@ BOOL PWTools::GenPassword(char *pBuff, int buffLen,
 	{
 		if(pParams->dwFlags & USE_UPPER_ALPHA)
 		{
-			n=CopyCharsEx(ptr, m_alphaUpper, sizeof(m_alphaUpper),
+			int n=CopyCharsEx(ptr, m_alphaUpper, sizeof(m_alphaUpper),
 				m_exclude, sizeof(m_exclude));
 			ptr+=n;
 			alphaLen+=n;
 		}
 		if(pParams->dwFlags & USE_LOWER_ALPHA)
 		{
-			n=CopyCharsEx(ptr, m_alphaLower, sizeof(m_alphaLower),
+			int n=CopyCharsEx(ptr, m_alphaLower, sizeof(m_alphaLower),
 				m_exclude, sizeof(m_exclude));
 			ptr+=n;
 			alphaLen+=n;
 		}
 		if(pParams->dwFlags & USE_NUMERIC)
 		{
-			n=CopyCharsEx(ptr, m_numeric, sizeof(m_numeric),
+			int n=CopyCharsEx(ptr, m_numeric, sizeof(m_numeric),
 				m_exclude, sizeof(m_exclude));
 			ptr+=n;
 			alphaLen+=n;
 		}
 		if(pParams->dwFlags & USE_SYMBOLS)
 		{
-			n=CopyCharsEx(ptr, m_symbols, sizeof(m_symbols),
+			int n=CopyCharsEx(ptr, m_symbols, sizeof(m_symbols),
 				m_exclude, sizeof(m_exclude));
 			ptr+=n;
 			alphaLen+=n;
 		}
 		if(pParams->dwFlags & USE_CUSTOM_SET)
 		{
-			n=CopyCharsEx(ptr, pParams->pCustomSet, pParams->customSetLength,
+			int n=CopyCharsEx(ptr, pParams->pCustomSet, pParams->customSetLength,
 				m_exclude, sizeof(m_exclude));
 			ptr+=n;
 			alphaLen+=n;

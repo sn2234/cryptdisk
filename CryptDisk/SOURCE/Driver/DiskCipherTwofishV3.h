@@ -19,7 +19,7 @@ class DiskCipherTwofishV3 : public IDiskCipher
 {
 
 public:
-	DiskCipherTwofishV3(const DiskParamatersV3 diskParameters);
+	DiskCipherTwofishV3(const DiskParamatersV3& diskParameters);
 	virtual ~DiskCipherTwofishV3();
 	DiskCipherTwofishV3(const DiskCipherTwofishV3& theDiskCipherTwofishV3);
 

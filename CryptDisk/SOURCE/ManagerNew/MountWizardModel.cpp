@@ -13,6 +13,9 @@ MountWizardModel::MountWizardModel(void)
 	, m_preserveImageTimestamp(true)
 	, m_driveLetter(L'A')
 	, m_bUseRecentDocuments(false)
+	, m_mountAsReadOnly(false)
+	, m_mountAsRemovable(false)
+	, m_addToFavorites(true)
 {
 }
 
