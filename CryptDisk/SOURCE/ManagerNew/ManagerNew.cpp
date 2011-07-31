@@ -54,6 +54,11 @@ BOOL CManagerNewApp::InitInstance()
 
 	AppRandom::instance();
 
+	HANDLE hEvent = CreateEvent( NULL, TRUE, FALSE, NULL );
+	Concurrency::CurrentScheduler::Create( Concurrency::SchedulerPolicy() );
+	Concurrency::CurrentScheduler::RegisterShutdownEvent( hEvent );
+
+
 	AfxEnableControlContainer();
 
 	// Create the shell manager, in case the dialog contains
@@ -88,6 +93,9 @@ BOOL CManagerNewApp::InitInstance()
 	{
 		delete pShellManager;
 	}
+
+	Concurrency::CurrentScheduler::Detach();
+	WaitForSingleObject( hEvent, INFINITE );
 
 	// Since the dialog has been closed, return FALSE so that we exit the
 	//  application, rather than start the application's message pump.

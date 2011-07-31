@@ -1,8 +1,12 @@
 #include "StdAfx.h"
-#include "CreateWizardModel.h"
+#include "ManagerNew.h"
+#include "DialogFormatProgress.h"
+#include "afxdialogex.h"
 #include "CryptDiskHelpers.h"
 #include "AppRandom.h"
+#include "CreateWizardModel.h"
 #include "PasswordBuilder.h"
+
 
 CreateWizardModel::CreateWizardModel(void)
 	: m_bUseRecentDocuments(false)
@@ -17,12 +21,12 @@ CreateWizardModel::~CreateWizardModel(void)
 {
 }
 
-void CreateWizardModel::DoCreateImage(std::function<void (double)> callback)
+void CreateWizardModel::DoCreateImage()
 {
 	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(m_password.c_str()), m_password.size());
 
-	CryptDiskHelpers::CreateImage(&AppRandom::instance(), ImageFilePath().c_str(), ImageSize(), CipherAlgorithm(),
-		pb.Password(), pb.PasswordLength(),
-		QuickFormat(),
-		callback);
+	DialogFormatProgress dlg(ImageFilePath().c_str(), ImageSize(), CipherAlgorithm(),
+		pb.Password(), pb.PasswordLength(),QuickFormat());
+
+	dlg.DoModal();
 }

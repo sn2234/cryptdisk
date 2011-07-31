@@ -160,7 +160,7 @@ BOOL PageCreate2::OnWizardFinish()
 
 		CreateWizardModel& m = static_cast<CreateWizardModel&>(m_document);
 
-		m.DoCreateImage([](double x){});
+		m.DoCreateImage();
 
 		return __super::OnWizardFinish();
 	}

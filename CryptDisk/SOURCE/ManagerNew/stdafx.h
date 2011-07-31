@@ -42,6 +42,9 @@
 #include <Dbt.h>
 #include <winsvc.h>
 
+#include <ppl.h>
+#include <agents.h>
+
 // STD Lib
 #include <math.h>
 

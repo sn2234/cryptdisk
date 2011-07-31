@@ -38,16 +38,14 @@ std::map<std::wstring, PDH_RAW_COUNTER> PdhCounter::RawValues() const
 
 	if(bufferSize != 0)
 	{
-		BYTE* pBuffer = new BYTE[bufferSize+sizeof(wchar_t)];
+		boost::shared_array<BYTE> pBuffer(new BYTE[bufferSize+sizeof(wchar_t)]);
 
-		PdhGetRawCounterArrayW(m_hCounter, &bufferSize, &itemsCount, (PPDH_RAW_COUNTER_ITEM_W)pBuffer);
+		PdhGetRawCounterArrayW(m_hCounter, &bufferSize, &itemsCount, (PPDH_RAW_COUNTER_ITEM_W)pBuffer.get());
 
-		std::for_each(reinterpret_cast<PPDH_RAW_COUNTER_ITEM_W>(pBuffer), reinterpret_cast<PPDH_RAW_COUNTER_ITEM_W>(pBuffer)+itemsCount,
+		std::for_each(reinterpret_cast<PPDH_RAW_COUNTER_ITEM_W>(pBuffer.get()), reinterpret_cast<PPDH_RAW_COUNTER_ITEM_W>(pBuffer.get())+itemsCount,
 			[&val](const PDH_RAW_COUNTER_ITEM_W& it){
 				val.insert(std::make_pair(it.szName, it.RawValue));
 		});
-
-		delete[] pBuffer;
 	}
 
 	return val;
