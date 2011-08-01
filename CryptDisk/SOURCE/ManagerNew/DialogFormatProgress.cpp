@@ -22,8 +22,7 @@ DialogFormatProgress::DialogFormatProgress( const WCHAR* imagePath, INT64 imageS
 	, m_imageSize(imageSize)
 	, m_cipherAlgorithm(cipherAlgorithm)
 	, m_bQuickFormat(quickFormat)
-	, m_password(static_cast<char*>(AppMemory::instance().Alloc(passwordLength + 1)),
-		boost::bind(&SecureHeap::Free, boost::ref(AppMemory::instance()), _1))
+	, m_password(AllocPasswordBuffer(passwordLength + 1))
 	, m_cancel(false)
 	, m_progressHwnd(NULL)
 {

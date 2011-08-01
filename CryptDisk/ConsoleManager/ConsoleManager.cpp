@@ -103,7 +103,7 @@ void CreateImage(const wstring& imagePath, const string& algoName, const string&
 	shared_ptr<CryptoLib::IRandomGenerator> randomGen = CreateRandomGen();
 
 	CryptDiskHelpers::CreateImage(randomGen.get(), imagePath.c_str(), imageSize, algo, reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), true,
-		[](double progress){});
+		[](double progress){ return true; });
 }
 
 int wmain(int argc, WCHAR* argv[])

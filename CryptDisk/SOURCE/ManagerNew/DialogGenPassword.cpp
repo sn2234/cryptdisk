@@ -16,9 +16,9 @@ IMPLEMENT_DYNAMIC(DialogGenPassword, CDialogEx)
 
 DialogGenPassword::DialogGenPassword(UINT passwordLength, CWnd* pParent /*=NULL*/)
 	: CDialogEx(DialogGenPassword::IDD, pParent)
-	, m_bUseUpper(FALSE)
-	, m_bUseLower(FALSE)
-	, m_bUseNumbers(FALSE)
+	, m_bUseUpper(TRUE)
+	, m_bUseLower(TRUE)
+	, m_bUseNumbers(TRUE)
 	, m_bUseSpecial(FALSE)
 	, m_bUseEasyToRead(FALSE)
 	, m_bUseCustomSet(FALSE)
@@ -71,8 +71,7 @@ void DialogGenPassword::OnBnClickedButtonGenerate()
 	if(m_bUseEasyToRead)
 		dwFlags|=PWTools::USE_EASY_TO_READ;
 
-	boost::shared_array<char> passwordBuff(static_cast<char*>(AppMemory::instance().Alloc(m_passwordLength + 1)),
-		boost::bind(&SecureHeap::Free, boost::ref(AppMemory::instance()), _1));
+	boost::shared_array<char> passwordBuff(AllocPasswordBuffer(m_passwordLength + 1));
 
 	std::fill_n(stdext::checked_array_iterator<char*>(passwordBuff.get(), m_passwordLength + 1), m_passwordLength + 1, 0);
 

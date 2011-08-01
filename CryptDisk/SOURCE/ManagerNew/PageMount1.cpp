@@ -88,7 +88,14 @@ void PageMount1::OnBnClickedButtonBrowse()
 
 void PageMount1::OnBnClickedButtonChangePassword()
 {
-	// TODO: Add your control notification handler code here
+	MountWizardModel& m = static_cast<MountWizardModel&>(m_document);
+
+	PropagateToModel();
+
+	if(ValidateData())
+	{
+		m.ChangePassword();
+	}
 }
 
 
