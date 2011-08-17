@@ -12,6 +12,11 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleManager", "ConsoleManager\ConsoleManager.vcxproj", "{A6AEE6EF-F5D6-4946-96DE-AC86CCCCEEBA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ManagerNew", "SOURCE\ManagerNew\ManagerNew.vcxproj", "{12DF4807-FBB5-4718-A975-3639BE9C9CCC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{10227ADB-0AB0-9843-AFD5-B08472A19479} = {10227ADB-0AB0-9843-AFD5-B08472A19479}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiCPP", "SOURCE\ticpp\TiCPP.vcxproj", "{10227ADB-0AB0-9843-AFD5-B08472A19479}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +70,14 @@ Global
 		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Release|Win32.Build.0 = Release|Win32
 		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Release|x64.ActiveCfg = Release|x64
 		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Release|x64.Build.0 = Release|x64
+		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Debug|Win32.ActiveCfg = Debug|Win32
+		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Debug|Win32.Build.0 = Debug|Win32
+		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Debug|x64.ActiveCfg = Debug|x64
+		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Debug|x64.Build.0 = Debug|x64
+		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Release|Win32.ActiveCfg = Release|Win32
+		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Release|Win32.Build.0 = Release|Win32
+		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Release|x64.ActiveCfg = Release|x64
+		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

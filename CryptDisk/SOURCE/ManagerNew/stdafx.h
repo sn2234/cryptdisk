@@ -57,6 +57,8 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <locale>
+#include <codecvt>
 
 // Boost
 #include <boost/program_options.hpp>
