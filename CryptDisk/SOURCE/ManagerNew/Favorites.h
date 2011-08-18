@@ -21,5 +21,10 @@ private:
 	bool			m_preserveTimestamp;
 };
 
-std::vector<FavoriteImage> LoadFavorites(const std::wstring& filePath);
-void SaveFavorites(const std::wstring& filePath, const std::vector<FavoriteImage>& favorites);
+class Favorites
+{
+public:
+	static std::vector<FavoriteImage> Load(const std::wstring& filePath);
+	static void Save(const std::wstring& filePath, const std::vector<FavoriteImage>& favorites);
+	static std::wstring PreparePath();
+};

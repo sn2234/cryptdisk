@@ -17,37 +17,37 @@ FavoriteImage::FavoriteImage( const std::wstring& imagePath, wchar_t driveLetter
 
 }
 
-
-std::vector<FavoriteImage> LoadFavorites( const std::wstring& filePath )
+std::vector<FavoriteImage> Favorites::Load( const std::wstring& filePath )
 {
 	std::vector<FavoriteImage> tmp;
 
 	fs::path p(filePath);
 
 	ticpp::Document doc;
-	
+
 	doc.LoadFile(p.string(), TIXML_ENCODING_UTF8);
 
-//	ticpp::Element* pFavNode = doc.FirstChildElement("Favorites")->FirstChildElement("Favorite");
+	//	ticpp::Element* pFavNode = doc.FirstChildElement("Favorites")->FirstChildElement("Favorite");
 
 	for (ticpp::Element* p = doc.FirstChildElement("Favorites")->FirstChildElement("Favorite"); p; p = p->NextSiblingElement("Favorite", false))
 	{
 		std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
 
-		FavoriteImage x(conv.from_bytes(p->FirstChildElement("ImagePath")->Value()),
-			conv.from_bytes(p->FirstChildElement("DriveLetter")->Value()).at(0),
-			_stricmp(p->FirstChildElement("ReadOnly")->Value().c_str(), "true") == 0,
-			_stricmp(p->FirstChildElement("Removable")->Value().c_str(), "true") == 0,
-			_stricmp(p->FirstChildElement("MountManager")->Value().c_str(), "true") == 0,
-			_stricmp(p->FirstChildElement("PreserveTimestamp")->Value().c_str(), "true") == 0);
+		FavoriteImage x(conv.from_bytes(p->FirstChildElement("ImagePath")->GetText()),
+			conv.from_bytes(p->FirstChildElement("DriveLetter")->GetText()).at(0),
+			_stricmp(p->FirstChildElement("ReadOnly")->GetText().c_str(), "true") == 0,
+			_stricmp(p->FirstChildElement("Removable")->GetText().c_str(), "true") == 0,
+			_stricmp(p->FirstChildElement("MountManager")->GetText().c_str(), "true") == 0,
+			_stricmp(p->FirstChildElement("PreserveTimestamp")->GetText().c_str(), "true") == 0);
 
 		tmp.push_back(x);
 	}
 
 	return tmp;
+
 }
 
-void SaveFavorites( const std::wstring& filePath, const std::vector<FavoriteImage>& favorites )
+void Favorites::Save( const std::wstring& filePath, const std::vector<FavoriteImage>& favorites )
 {
 	std::ofstream out(filePath);
 	out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << std::endl;
@@ -62,8 +62,29 @@ void SaveFavorites( const std::wstring& filePath, const std::vector<FavoriteImag
 		out << "\t\t<Removable>" << std::boolalpha << i.Removable() << "</Removable>" << std::endl;
 		out << "\t\t<MountManager>" << std::boolalpha << i.MountManager() << "</MountManager>" << std::endl;
 		out << "\t\t<PreserveTimestamp>" << std::boolalpha << i.PreserveTimestamp() << "</PreserveTimestamp>" << std::endl;
+		out << "\t</Favorite>" << std::endl;
 	});
 
 	out << "</Favorites>" << std::endl;
 }
 
+std::wstring Favorites::PreparePath()
+{
+	wchar_t appDataPath[MAX_PATH];
+
+	SHGetFolderPathW(NULL, CSIDL_APPDATA, NULL, SHGFP_TYPE_CURRENT, appDataPath);
+
+	fs::wpath folder(appDataPath);
+
+	folder /= L"CryptDisk";
+
+	if(!fs::exists(folder))
+	{
+		fs::create_directories(folder);
+	}
+
+	fs::wpath file(folder);
+	file /= L"Favorites.xml";
+
+	return file.wstring();
+}

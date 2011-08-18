@@ -368,7 +368,6 @@ void SendBroadcastMessage( WPARAM message, WCHAR driveLetter )
 	data.dbcv_flags = 0;
 	data.dbcv_unitmask = 1 << (driveLetter - L'A');
 
-	DWORD dwResult;
+	DWORD_PTR dwResult;
 	SendMessageTimeout(HWND_BROADCAST, WM_DEVICECHANGE, message, (LPARAM)(&data), SMTO_ABORTIFHUNG, 1000, &dwResult);
-
 }

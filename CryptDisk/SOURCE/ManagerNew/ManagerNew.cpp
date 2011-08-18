@@ -6,6 +6,7 @@
 #include "ManagerNew.h"
 #include "ManagerNewDlg.h"
 #include "AppRandom.h"
+#include "AppFavorites.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -53,6 +54,7 @@ BOOL CManagerNewApp::InitInstance()
 	CWinApp::InitInstance();
 
 	AppRandom::instance();
+	AppFavorites::instance();
 
 	HANDLE hEvent = CreateEvent( NULL, TRUE, FALSE, NULL );
 	Concurrency::CurrentScheduler::Create( Concurrency::SchedulerPolicy() );
@@ -63,7 +65,7 @@ BOOL CManagerNewApp::InitInstance()
 
 	// Create the shell manager, in case the dialog contains
 	// any shell tree view or shell list view controls.
-	CShellManager *pShellManager = new CShellManager;
+	std::shared_ptr<CShellManager> pShellManager(new CShellManager);
 
 	// Standard initialization
 	// If you are not using these features and wish to reduce the size
@@ -88,11 +90,7 @@ BOOL CManagerNewApp::InitInstance()
 		//  dismissed with Cancel
 	}
 
-	// Delete the shell manager created above.
-	if (pShellManager != NULL)
-	{
-		delete pShellManager;
-	}
+	Favorites::Save(Favorites::PreparePath(), AppFavorites::instance());
 
 	Concurrency::CurrentScheduler::Detach();
 	WaitForSingleObject( hEvent, INFINITE );
