@@ -28,19 +28,21 @@ std::vector<FavoriteImage> Favorites::Load( const std::wstring& filePath )
 	doc.LoadFile(p.string(), TIXML_ENCODING_UTF8);
 
 	//	ticpp::Element* pFavNode = doc.FirstChildElement("Favorites")->FirstChildElement("Favorite");
-
-	for (ticpp::Element* p = doc.FirstChildElement("Favorites")->FirstChildElement("Favorite"); p; p = p->NextSiblingElement("Favorite", false))
+	if(doc.FirstChildElement("Favorites", false) && doc.FirstChildElement("Favorites", false)->FirstChildElement("Favorite", false))
 	{
-		std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+		for (ticpp::Element* p = doc.FirstChildElement("Favorites")->FirstChildElement("Favorite"); p; p = p->NextSiblingElement("Favorite", false))
+		{
+			std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
 
-		FavoriteImage x(conv.from_bytes(p->FirstChildElement("ImagePath")->GetText()),
-			conv.from_bytes(p->FirstChildElement("DriveLetter")->GetText()).at(0),
-			_stricmp(p->FirstChildElement("ReadOnly")->GetText().c_str(), "true") == 0,
-			_stricmp(p->FirstChildElement("Removable")->GetText().c_str(), "true") == 0,
-			_stricmp(p->FirstChildElement("MountManager")->GetText().c_str(), "true") == 0,
-			_stricmp(p->FirstChildElement("PreserveTimestamp")->GetText().c_str(), "true") == 0);
+			FavoriteImage x(conv.from_bytes(p->FirstChildElement("ImagePath")->GetText()),
+				conv.from_bytes(p->FirstChildElement("DriveLetter")->GetText()).at(0),
+				_stricmp(p->FirstChildElement("ReadOnly")->GetText().c_str(), "true") == 0,
+				_stricmp(p->FirstChildElement("Removable")->GetText().c_str(), "true") == 0,
+				_stricmp(p->FirstChildElement("MountManager")->GetText().c_str(), "true") == 0,
+				_stricmp(p->FirstChildElement("PreserveTimestamp")->GetText().c_str(), "true") == 0);
 
-		tmp.push_back(x);
+			tmp.push_back(x);
+		}
 	}
 
 	return tmp;
