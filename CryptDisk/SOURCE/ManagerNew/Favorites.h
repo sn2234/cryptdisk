@@ -1,6 +1,8 @@
 
 #pragma once
 
+#include "Document.h"
+
 class FavoriteImage
 {
 public:
@@ -27,4 +29,17 @@ public:
 	static std::vector<FavoriteImage> Load(const std::wstring& filePath);
 	static void Save(const std::wstring& filePath, const std::vector<FavoriteImage>& favorites);
 	static std::wstring PreparePath();
+};
+
+class FavoritesManager : private boost::noncopyable, public Document
+{
+public:
+	FavoritesManager();
+	~FavoritesManager();
+
+	const std::vector<FavoriteImage>& Favorites() const { return m_favorites; }
+	std::vector<FavoriteImage>& Favorites() { return m_favorites; }
+
+private:
+	std::vector<FavoriteImage>	m_favorites;
 };

@@ -12,6 +12,7 @@ IMPLEMENT_DYNAMIC(MainTab, CTabCtrl)
 
 MainTab::MainTab()
 	: m_imagesView(m_imagesModel, this)
+	, m_favoritesView(m_favoritesModel, this)
 {
 
 }
@@ -65,6 +66,7 @@ void MainTab::OnSelchange( NMHDR* pNMHDR, LRESULT* pResult )
 	case 0:
 		m_imagesView.EnableWindow(TRUE);
 		m_imagesView.ShowWindow(SW_SHOW);
+		m_imagesModel.Refresh();
 
 		m_favoritesView.EnableWindow(FALSE);
 		m_favoritesView.ShowWindow(SW_HIDE);

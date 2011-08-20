@@ -90,8 +90,6 @@ BOOL CManagerNewApp::InitInstance()
 		//  dismissed with Cancel
 	}
 
-	Favorites::Save(Favorites::PreparePath(), AppFavorites::instance());
-
 	Concurrency::CurrentScheduler::Detach();
 	WaitForSingleObject( hEvent, INFINITE );
 

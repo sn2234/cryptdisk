@@ -88,3 +88,24 @@ std::wstring Favorites::PreparePath()
 
 	return file.wstring();
 }
+
+FavoritesManager::FavoritesManager()
+{
+	fs::wpath file(Favorites::PreparePath());
+
+	if(fs::exists(file))
+	{
+		m_favorites = Favorites::Load(file.wstring());
+	}
+}
+
+FavoritesManager::~FavoritesManager()
+{
+	try
+	{
+		Favorites::Save(Favorites::PreparePath(), m_favorites);
+	}
+	catch(...)
+	{
+	}
+}

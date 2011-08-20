@@ -9,9 +9,10 @@ class FavoritesModel : public Document
 public:
 	FavoritesModel(void);
 	virtual ~FavoritesModel(void);
-
 	
-	std::vector<FavoriteImage> FavoriteImages() const { return m_favoriteImages; }
 private:
-	std::vector<FavoriteImage>	m_favoriteImages;
+	void OnFavoritesUpdate();
+
+private:
+	Document::connection_t		m_connection;
 };

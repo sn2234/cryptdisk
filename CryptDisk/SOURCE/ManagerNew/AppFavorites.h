@@ -7,7 +7,10 @@
 class InitAppFavorites
 {
 public:
-	static std::vector<FavoriteImage>* Alloc();
+	static FavoritesManager* Alloc()
+	{
+		return new FavoritesManager();
+	}
 };
 
-typedef Singleton<std::vector<FavoriteImage>, InitAppFavorites> AppFavorites;
+typedef Singleton<FavoritesManager, InitAppFavorites> AppFavorites;

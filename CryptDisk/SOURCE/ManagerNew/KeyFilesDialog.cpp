@@ -90,8 +90,9 @@ BOOL KeyFilesDialog::OnInitDialog()
 	col.fmt = LVCFMT_LEFT;
 	col.pszText = _T("File path");
 	col.iSubItem = 0;
-	col.cx = 200;
+	col.cx = 300;
 	m_keyFilesList.InsertColumn(0, &col);
+	m_keyFilesList.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_AUTOSIZECOLUMNS);
 
 	std::for_each(m_keyFiles.cbegin(), m_keyFiles.cend(), [&](const std::wstring& x){
 		m_keyFilesList.InsertItem(m_keyFilesList.GetItemCount(), x.c_str());

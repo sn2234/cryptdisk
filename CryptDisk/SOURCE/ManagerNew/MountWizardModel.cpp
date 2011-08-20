@@ -10,6 +10,7 @@
 #include "DriverProtocol.h"
 #include "DriverTools.h"
 #include "DialogChangePassword.h"
+#include "AppFavorites.h"
 
 MountWizardModel::MountWizardModel(void)
 	: m_useMountManager(true)
@@ -25,6 +26,10 @@ MountWizardModel::MountWizardModel(void)
 
 MountWizardModel::~MountWizardModel(void)
 {
+	if(!m_password.empty())
+	{
+		RtlSecureZeroMemory(&m_password[0], m_password.size());
+	}
 }
 
 bool MountWizardModel::TryOpenImage() const
@@ -45,6 +50,13 @@ void MountWizardModel::PerformMount()
 	if(m_mountAsRemovable) mountOptions |= MOUNT_AS_REMOVABLE;
 
 	CryptDiskHelpers::MountImage(*AppDriver::instance().getDriverControl(), m_imageFilePath.c_str(), m_driveLetter, pb.Password(), pb.PasswordLength(), mountOptions);
+
+	if(m_addToFavorites)
+	{
+		AppFavorites::instance().Favorites().push_back(
+			FavoriteImage(m_imageFilePath, m_driveLetter, m_mountAsReadOnly, m_mountAsRemovable, m_useMountManager, m_preserveImageTimestamp));
+		AppFavorites::instance().UpdateViews();
+	}
 }
 
 void MountWizardModel::ChangePassword()

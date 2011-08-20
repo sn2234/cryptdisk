@@ -8,6 +8,7 @@
 
 #include "MountWizardModel.h"
 #include "KeyFilesDialog.h"
+#include "AppMemory.h"
 
 namespace fs = boost::filesystem;
 
@@ -162,9 +163,9 @@ void PageMount1::PropagateToModel()
 
 	UINT passLength = GetDlgItem(IDC_EDIT_PASSWORD)->GetWindowTextLength();
 
-	std::vector<char> tmp(passLength + 1);
-	GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, &tmp[0], tmp.size());
-	m.Password(&tmp[0]);
+	auto passwordBuffer = AllocPasswordBuffer(passLength+1);
+	GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, &passwordBuffer[0], passLength+1);
+	m.Password(&passwordBuffer[0]);
 }
 
 bool PageMount1::ValidateData()

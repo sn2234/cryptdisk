@@ -72,6 +72,11 @@ BOOL SecureHeap::Init(DWORD dwPoolSize)
 
 void *SecureHeap::Alloc(DWORD size)
 {
+	if(size == 0)
+	{
+		size = 1;
+	}
+
 	HEAP_BLOCK	*ptr;
 
 	ASSERT(m_pHeap);
