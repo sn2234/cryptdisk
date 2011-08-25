@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "ManagerNew.h"
 #include "CreateWizard.h"
+#include "AppRandom.h"
 
 
 // CreateWizard
@@ -42,6 +43,8 @@ void CreateWizard::DoInit()
 	AddPage(&m_page2);
 
 	SetWizardMode();
+
+	AppRandom::instance().InitRandomUI();
 }
 
 // CreateWizard message handlers

@@ -30,6 +30,8 @@ DialogChangePassword::DialogChangePassword(const std::wstring& imagePath, const 
 		throw std::invalid_argument("The image file does not exists");
 	}
 	std::copy_n(password, passwordLength, stdext::checked_array_iterator<char*>(m_password.get(), passwordLength + 1));
+
+	AppRandom::instance().InitRandomUI();
 }
 
 DialogChangePassword::~DialogChangePassword()

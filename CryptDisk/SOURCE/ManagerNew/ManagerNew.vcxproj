@@ -203,6 +203,7 @@
     <ClInclude Include="DialogFormatProgress.h" />
     <ClInclude Include="DialogGenPassword.h" />
     <ClInclude Include="DialogMountFavorite.h" />
+    <ClInclude Include="DialogRandom.h" />
     <ClInclude Include="DNDriverControl.h" />
     <ClInclude Include="Document.h" />
     <ClInclude Include="DriverTools.h" />
@@ -247,6 +248,7 @@
     <ClCompile Include="DialogFormatProgress.cpp" />
     <ClCompile Include="DialogGenPassword.cpp" />
     <ClCompile Include="DialogMountFavorite.cpp" />
+    <ClCompile Include="DialogRandom.cpp" />
     <ClCompile Include="DNDriverControl.cpp" />
     <ClCompile Include="DriverTools.cpp" />
     <ClCompile Include="Favorites.cpp" />

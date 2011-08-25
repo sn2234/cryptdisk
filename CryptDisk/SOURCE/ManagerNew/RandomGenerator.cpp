@@ -4,6 +4,8 @@
 #include "winapi_exception.h"
 #include "SafeHandle.h"
 #include "RandomGenerator.h"
+#include "AppRandom.h"
+#include "DialogRandom.h"
 
 const int SeedFileSize = 4096;
 
@@ -12,6 +14,9 @@ RandomGenerator::RandomGenerator(const std::wstring& seedFileName)
 	, m_hProv(0)
 	, m_bSlowPollThreadInitialized(false)
 	, m_bFastPollThreadInitialized(false)
+	, m_hMouseHook(NULL)
+	, m_hKeyboardHook(NULL)
+	, m_randomGuiInitialized(false)
 {
 	LoadSeedFile();
 
@@ -26,6 +31,10 @@ RandomGenerator::RandomGenerator(const std::wstring& seedFileName)
 	m_slowPollThread.reset(new boost::thread(std::bind(&RandomGenerator::SlowPollThread, this)));
 	m_fastPollThread.reset(new boost::thread(std::bind(&RandomGenerator::FastPollThread, this)));
 
+	HINSTANCE hInst = (HINSTANCE)GetModuleHandle(NULL);
+
+	m_hMouseHook=SetWindowsHookEx(WH_MOUSE, &MouseHookProc, hInst, GetCurrentThreadId());
+	m_hKeyboardHook=SetWindowsHookEx(WH_KEYBOARD, &KeyboardHookProc, hInst, GetCurrentThreadId());
 }
 
 RandomGenerator::~RandomGenerator()
@@ -48,6 +57,15 @@ RandomGenerator::~RandomGenerator()
 
 	m_slowPollThread->join();
 	m_fastPollThread->join();
+
+	if(m_hMouseHook)
+	{
+		UnhookWindowsHookEx(m_hMouseHook);
+	}
+	if(m_hKeyboardHook)
+	{
+		UnhookWindowsHookEx(m_hKeyboardHook);
+	}
 }
 
 void RandomGenerator::LoadSeedFile()
@@ -325,4 +343,55 @@ void RandomGenerator::AddPdhQuery( const PdhQuery &query )
 			AddSample(&val.second, sizeof(val.second), 4);
 		});
 	});
+}
+
+LRESULT CALLBACK RandomGenerator::MouseHookProc(int code,WPARAM wParam,LPARAM lParam)
+{
+	MOUSEHOOKSTRUCT		*pData;
+	RND_MOUSE_EVENT		mouseEvent;
+
+	pData=(MOUSEHOOKSTRUCT*)lParam;
+
+	{
+		memset(&mouseEvent, 0, sizeof(mouseEvent));
+
+		mouseEvent.position=LOWORD(pData->pt.x)|(LOWORD(pData->pt.y)<<16);
+		mouseEvent.time=(DWORD)(__rdtsc()&0xFFFFFFFF);
+		AppRandom::instance().AddMouseEvent(&mouseEvent);
+	}
+	return CallNextHookEx(AppRandom::instance().MouseHook(),code,wParam,lParam);
+}
+
+LRESULT CALLBACK RandomGenerator::KeyboardHookProc(int code,WPARAM wParam,LPARAM lParam)
+{
+	RND_KEYBOARD_EVENT	keyboardEvent;
+
+	static	WPARAM	PrevChar;
+
+	memset(&keyboardEvent, 0, sizeof(keyboardEvent));
+
+
+	if(PrevChar!=wParam)
+	{
+		keyboardEvent.flags = (DWORD)lParam;
+		keyboardEvent.scanCode = (BYTE)((lParam>>16)&0xFF);
+		keyboardEvent.time = (DWORD)(__rdtsc()&0xFFFFFFFF);
+		keyboardEvent.vkCode = LOBYTE(wParam);
+
+		PrevChar = wParam;
+
+		AppRandom::instance().AddKeyboardEvent(&keyboardEvent);
+	}
+
+	return CallNextHookEx(AppRandom::instance().KeyboardHook(),code,wParam,lParam);
+}
+
+void RandomGenerator::InitRandomUI()
+{
+	if(!m_randomGuiInitialized)
+	{
+		DialogRandom dlg;
+
+		m_randomGuiInitialized = (dlg.DoModal() == IDOK);
+	}
 }

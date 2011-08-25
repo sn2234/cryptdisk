@@ -25,7 +25,7 @@ DialogGenPassword::DialogGenPassword(UINT passwordLength, CWnd* pParent /*=NULL*
 	, m_customSymbols(_T(""))
 	, m_passwordLength(passwordLength)
 {
-
+	AppRandom::instance().InitRandomUI();
 }
 
 DialogGenPassword::~DialogGenPassword()
