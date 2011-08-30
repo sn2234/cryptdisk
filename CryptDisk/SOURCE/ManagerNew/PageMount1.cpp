@@ -9,6 +9,7 @@
 #include "MountWizardModel.h"
 #include "KeyFilesDialog.h"
 #include "AppMemory.h"
+#include "DialogBackupHeader.h"
 
 namespace fs = boost::filesystem;
 
@@ -115,7 +116,12 @@ void PageMount1::OnBnClickedButtonKeyFiles()
 
 void PageMount1::OnBnClickedButtonBackup()
 {
-	// TODO: Add your control notification handler code here
+	if(!m_path.IsEmpty() && fs::exists((const wchar_t*)m_path))
+	{
+		DialogBackupHeader dlg((const wchar_t*)m_path);
+
+		dlg.DoModal();
+	}
 }
 
 

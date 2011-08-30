@@ -199,6 +199,7 @@
     <ClInclude Include="CreateWizard.h" />
     <ClInclude Include="CreateWizardModel.h" />
     <ClInclude Include="CryptDiskHelpers.h" />
+    <ClInclude Include="DialogBackupHeader.h" />
     <ClInclude Include="DialogChangePassword.h" />
     <ClInclude Include="DialogFormatProgress.h" />
     <ClInclude Include="DialogGenPassword.h" />
@@ -244,6 +245,7 @@
     <ClCompile Include="CreateWizard.cpp" />
     <ClCompile Include="CreateWizardModel.cpp" />
     <ClCompile Include="CryptDiskHelpers.cpp" />
+    <ClCompile Include="DialogBackupHeader.cpp" />
     <ClCompile Include="DialogChangePassword.cpp" />
     <ClCompile Include="DialogFormatProgress.cpp" />
     <ClCompile Include="DialogGenPassword.cpp" />
