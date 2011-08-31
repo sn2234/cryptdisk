@@ -53,6 +53,7 @@ void PageMount2::OnDocumentUpdate()
 	m_bUseMountManager = m.UseMountManager();
 	m_bTime = m.PreserveImageTimestamp();
 	m_driveLetter = m.DriveLetter();
+	m_bAddToFav = m.AddToFavorites();
 
 	if(!m_driveLetters.empty())
 	{
@@ -151,5 +152,6 @@ void PageMount2::PropagateToModel()
 	m.MountAsRemovable(m_bRemovable);
 	m.UseMountManager(m_bUseMountManager);
 	m.PreserveImageTimestamp(m_bTime);
+	m.AddToFavorites(m_bAddToFav);
 	m.DriveLetter(m_driveLetters[m_driveCombo.GetCurSel()]);
 }

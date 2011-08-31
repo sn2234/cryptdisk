@@ -10,6 +10,7 @@
 #include "KeyFilesDialog.h"
 #include "AppMemory.h"
 #include "DialogBackupHeader.h"
+#include "Manager\SRC\SafeHandle.h"
 
 namespace fs = boost::filesystem;
 
@@ -116,6 +117,8 @@ void PageMount1::OnBnClickedButtonKeyFiles()
 
 void PageMount1::OnBnClickedButtonBackup()
 {
+	UpdateData(TRUE);
+
 	if(!m_path.IsEmpty() && fs::exists((const wchar_t*)m_path))
 	{
 		DialogBackupHeader dlg((const wchar_t*)m_path);
@@ -127,7 +130,75 @@ void PageMount1::OnBnClickedButtonBackup()
 
 void PageMount1::OnBnClickedButtonRestore()
 {
-	// TODO: Add your control notification handler code here
+	UpdateData(TRUE);
+
+	if(!m_path.IsEmpty() && fs::exists((const wchar_t*)m_path))
+	{
+		if(AfxMessageBox(_T("Do you want to backup current header first?"), MB_ICONQUESTION | MB_YESNO) == IDYES)
+		{
+			DialogBackupHeader dlg((const wchar_t*)m_path);
+
+			dlg.DoModal();
+		}
+
+		OPENFILENAME	ofn;
+		TCHAR			filePath[MAX_PATH];
+
+		memset(&ofn,0,sizeof(ofn));
+		memset(&filePath,0,sizeof(filePath));
+		ofn.lStructSize=sizeof(ofn);
+		ofn.hInstance=AfxGetApp()->m_hInstance;
+		ofn.hwndOwner=GetSafeHwnd();
+		ofn.lpstrFilter=_T("Backup files\0*.imghdr\0All files\0*.*\0\0");
+		ofn.lpstrFile=filePath;
+		ofn.nMaxFile=sizeof(filePath);
+		ofn.lpstrTitle=_T("Open image backup header");
+		ofn.Flags|=OFN_DONTADDTORECENT;
+		if(GetOpenFileName(&ofn))
+		{
+			if(fs::exists(filePath))
+			{
+				SafeHandle hBackupFile(CreateFile(filePath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
+				if (hBackupFile == INVALID_HANDLE_VALUE)
+				{
+					AfxMessageBox(_T("Unable to open backup file"), MB_ICONERROR);
+					return;
+				}
+
+				SafeHandle hImageFile(CreateFileW(m_path, GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
+				if (hImageFile == INVALID_HANDLE_VALUE)
+				{
+					AfxMessageBox(_T("Unable to open image file"), MB_ICONERROR);
+					return;
+				}
+
+				size_t backupFileSize = GetFileSize(hBackupFile, NULL);
+
+				std::vector<unsigned char> backupBuff(backupFileSize);
+				{
+					DWORD bytesRead;
+					BOOL result = ReadFile(hBackupFile, &backupBuff[0], backupBuff.size(), &bytesRead, NULL);
+					if(!result || !(bytesRead == backupFileSize))
+					{
+						AfxMessageBox(_T("Unable to read data"), MB_ICONERROR);
+						return;
+					}
+				}
+
+				{
+					DWORD bytesWrite;
+					BOOL result = WriteFile(hImageFile, &backupBuff[0], backupBuff.size(), &bytesWrite, NULL);
+					if(!result || !(bytesWrite == backupFileSize))
+					{
+						AfxMessageBox(_T("Unable to write data"), MB_ICONERROR);
+						return;
+					}
+				}
+
+				AfxMessageBox(_T("Image header has been restored successfully"), MB_OK);
+			}
+		}
+	}
 }
 
 

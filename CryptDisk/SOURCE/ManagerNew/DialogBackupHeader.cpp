@@ -64,7 +64,7 @@ void DialogBackupHeader::OnBnClickedButtonBrowse()
 	ofn.lStructSize=sizeof(ofn);
 	ofn.hInstance=AfxGetApp()->m_hInstance;
 	ofn.hwndOwner=GetSafeHwnd();
-	ofn.lpstrFilter=_T("Images\0*.imghdr\0All files\0*.*\0\0");
+	ofn.lpstrFilter=_T("Backup files\0*.imghdr\0All files\0*.*\0\0");
 	ofn.lpstrFile=filePath;
 	ofn.nMaxFile=sizeof(filePath);
 	ofn.lpstrTitle=_T("Create image");
