@@ -7,6 +7,7 @@
 #include "ManagerNewDlg.h"
 #include "AppRandom.h"
 #include "AppFavorites.h"
+#include "AppMemory.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -55,6 +56,7 @@ BOOL CManagerNewApp::InitInstance()
 
 	AppRandom::instance();
 	AppFavorites::instance();
+	AppMemory::instance();
 
 	HANDLE hEvent = CreateEvent( NULL, TRUE, FALSE, NULL );
 	Concurrency::CurrentScheduler::Create( Concurrency::SchedulerPolicy() );

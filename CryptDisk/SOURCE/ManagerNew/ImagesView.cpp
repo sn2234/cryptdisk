@@ -61,6 +61,7 @@ BEGIN_MESSAGE_MAP(ImagesView, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_MOUNT, &ImagesView::OnBnClickedButtonMount)
 	ON_BN_CLICKED(IDC_BUTTON_CREATE, &ImagesView::OnBnClickedButtonCreate)
 	ON_BN_CLICKED(IDC_BUTTON_DISMOUNT_IMAGE, &ImagesView::OnBnClickedButtonDismountImage)
+	ON_BN_CLICKED(IDC_BUTTON_DISMOUNTALL, &ImagesView::OnBnClickedButtonDismountall)
 END_MESSAGE_MAP()
 
 void ImagesView::OnDocumentUpdate()
@@ -137,4 +138,23 @@ void ImagesView::OnBnClickedButtonDismountImage()
 		}
 		static_cast<ImagesModel&>(m_document).Refresh();
 	}
+}
+
+
+void ImagesView::OnBnClickedButtonDismountall()
+{
+	auto images = static_cast<ImagesModel&>(m_document).MountedImages();
+
+	int nItem = 0;
+	std::for_each(images.cbegin(), images.cend(), [&](const MountedImageInfo& info){
+		try
+		{
+			static_cast<ImagesModel&>(m_document).DismountImage(info.diskId, false);
+		}
+		catch(std::exception&)
+		{
+		}
+	});
+
+	static_cast<ImagesModel&>(m_document).Refresh();
 }

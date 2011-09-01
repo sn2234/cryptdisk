@@ -4,8 +4,6 @@
 #include "Singleton.h"
 #include "SecureHeap.h"
 
-namespace
-{
 class InitSecHeap
 {
 public:
@@ -14,7 +12,6 @@ public:
 		return new SecureHeap(10*1024);
 	}
 };
-}
 
 typedef Singleton<SecureHeap, InitSecHeap> AppMemory;
 

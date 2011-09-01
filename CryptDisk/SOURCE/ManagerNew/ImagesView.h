@@ -28,4 +28,5 @@ public:
 	afx_msg void OnBnClickedButtonMount();
 	afx_msg void OnBnClickedButtonCreate();
 	afx_msg void OnBnClickedButtonDismountImage();
+	afx_msg void OnBnClickedButtonDismountall();
 };

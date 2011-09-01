@@ -87,6 +87,8 @@ void *SecureHeap::Alloc(DWORD size)
 
 	for(;;)
 	{
+		ASSERT(ptr->size);
+
 		// Find free block
 		if(ptr->bFree)
 		{
@@ -105,6 +107,7 @@ void *SecureHeap::Alloc(DWORD size)
 					pNewBlock=(HEAP_BLOCK*)((BYTE*)ptr+sizeof(HEAP_BLOCK)+size);
 					pNewBlock->bFree=TRUE;
 					pNewBlock->size=ptr->size-sizeof(HEAP_BLOCK)-size;
+					ASSERT(pNewBlock->size);
 					ptr->size=sizeof(HEAP_BLOCK)+size;
 					ptr->bFree=FALSE;
 
