@@ -28,4 +28,5 @@ public:
 	afx_msg void OnBnClickedButtonMount();
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedButtonRemove();
+	afx_msg void OnNMDblclkListFavorites(NMHDR *pNMHDR, LRESULT *pResult);
 };

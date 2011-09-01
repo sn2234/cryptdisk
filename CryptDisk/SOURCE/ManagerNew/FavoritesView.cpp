@@ -35,6 +35,7 @@ void FavoritesView::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(FavoritesView, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_MOUNT, &FavoritesView::OnBnClickedButtonMount)
 	ON_BN_CLICKED(IDC_BUTTON_REMOVE, &FavoritesView::OnBnClickedButtonRemove)
+	ON_NOTIFY(NM_DBLCLK, IDC_LIST_FAVORITES, &FavoritesView::OnNMDblclkListFavorites)
 END_MESSAGE_MAP()
 
 
@@ -99,4 +100,16 @@ void FavoritesView::OnBnClickedButtonRemove()
 
 	AppFavorites::instance().Favorites().erase(AppFavorites::instance().Favorites().begin() + m_favoritesList.GetSelectionMark());
 	AppFavorites::instance().UpdateViews();
+}
+
+void FavoritesView::OnNMDblclkListFavorites(NMHDR *pNMHDR, LRESULT *pResult)
+{
+	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+
+	const FavoriteImage& currentImage = AppFavorites::instance().Favorites()[pNMItemActivate->iItem];
+	DialogMountFavorite dlg(currentImage, this);
+
+	dlg.DoModal();
+
+	*pResult = 0;
 }
