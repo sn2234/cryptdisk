@@ -89,36 +89,44 @@ void DialogMountFavorite::OnBnClickedButtonKeyFiles()
 
 void DialogMountFavorite::OnOK()
 {
-	int passwordLength = GetWindowTextLengthA(GetDlgItem(IDC_EDIT_PASSWORD)->GetSafeHwnd());
-	auto passwordBuffer = AllocPasswordBuffer(passwordLength+1);
-
-	GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, &passwordBuffer[0], passwordLength+1);
-
-	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(&passwordBuffer[0]), passwordLength);
-
-	if(CryptDiskHelpers::CheckImage(m_path, pb.Password(), pb.PasswordLength()))
+	try
 	{
-		ULONG mountOptions = 0;
 
-		if(m_bUseMountManager) mountOptions |= MOUNT_VIA_MOUNTMGR;
-		if(m_bTime) mountOptions |= MOUNT_SAVE_TIME;
-		if(m_bReadOnly) mountOptions |= MOUNT_READ_ONLY;
-		if(m_bRemovable) mountOptions |= MOUNT_AS_REMOVABLE;
+		int passwordLength = GetWindowTextLengthA(GetDlgItem(IDC_EDIT_PASSWORD)->GetSafeHwnd());
+		auto passwordBuffer = AllocPasswordBuffer(passwordLength+1);
 
-		CryptDiskHelpers::MountImage(
-			*AppDriver::instance().getDriverControl(),
-			m_path,
-			m_driveLetters[m_driveCombo.GetCurSel()],
-			pb.Password(),
-			pb.PasswordLength(),
-			mountOptions);
+		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, &passwordBuffer[0], passwordLength+1);
+
+		PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(&passwordBuffer[0]), passwordLength);
+
+		if(CryptDiskHelpers::CheckImage(m_path, pb.Password(), pb.PasswordLength()))
+		{
+			ULONG mountOptions = 0;
+
+			if(m_bUseMountManager) mountOptions |= MOUNT_VIA_MOUNTMGR;
+			if(m_bTime) mountOptions |= MOUNT_SAVE_TIME;
+			if(m_bReadOnly) mountOptions |= MOUNT_READ_ONLY;
+			if(m_bRemovable) mountOptions |= MOUNT_AS_REMOVABLE;
+
+			CryptDiskHelpers::MountImage(
+				*AppDriver::instance().getDriverControl(),
+				m_path,
+				m_driveLetters[m_driveCombo.GetCurSel()],
+				pb.Password(),
+				pb.PasswordLength(),
+				mountOptions);
+
+			CDialogEx::OnOK();
+		}
+		else
+		{
+			AfxMessageBox(_T("Unable to open image"), MB_ICONERROR);
+		}
 	}
-	else
+	catch (const std::exception& e)
 	{
-		AfxMessageBox(_T("Unable to open image"), MB_ICONERROR);
+		AfxMessageBox(CString(e.what()), MB_ICONERROR);
 	}
-
-	CDialogEx::OnOK();
 }
 
 

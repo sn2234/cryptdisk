@@ -196,6 +196,7 @@
     <ClInclude Include="AppMemory.h" />
     <ClInclude Include="AppRandom.h" />
     <ClInclude Include="ColorProgress.h" />
+    <ClInclude Include="CommonTools.h" />
     <ClInclude Include="CreateWizard.h" />
     <ClInclude Include="CreateWizardModel.h" />
     <ClInclude Include="CryptDiskHelpers.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="AppFavorites.cpp" />
     <ClCompile Include="AppRandom.cpp" />
     <ClCompile Include="ColorProgress.cpp" />
+    <ClCompile Include="CommonTools.cpp" />
     <ClCompile Include="CreateWizard.cpp" />
     <ClCompile Include="CreateWizardModel.cpp" />
     <ClCompile Include="CryptDiskHelpers.cpp" />

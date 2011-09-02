@@ -2,6 +2,7 @@
 #include "stdafx.h"
 
 #include "AppRandom.h"
+#include "CommonTools.h"
 
 namespace fs = boost::filesystem;
 
@@ -11,16 +12,18 @@ RandomGenerator* InitAppRandom::Alloc()
 {
 	RandomGenerator* pGen = nullptr;
 
-	wchar_t* pExecutablePath;
+// 	wchar_t* pExecutablePath;
+// 
+// 	if(_get_wpgmptr(&pExecutablePath) == 0)
+// 	{
+// 		fs::wpath seedFilePath(pExecutablePath);
+// 		seedFilePath = seedFilePath.parent_path();
+// 		seedFilePath /= seedFileName;
+// 
+// 		pGen = new RandomGenerator(fs::absolute(seedFilePath).generic_wstring());
+// 	}
 
-	if(_get_wpgmptr(&pExecutablePath) == 0)
-	{
-		fs::wpath seedFilePath(pExecutablePath);
-		seedFilePath = seedFilePath.parent_path();
-		seedFilePath /= seedFileName;
-
-		pGen = new RandomGenerator(fs::absolute(seedFilePath).generic_wstring());
-	}
+	pGen = new RandomGenerator(CommonTools::MakeAppDataPath(seedFileName));
 
 	return pGen;
 }

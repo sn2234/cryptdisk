@@ -3,6 +3,7 @@
 #include "Favorites.h"
 
 #include "ticpp/ticpp.h"
+#include "CommonTools.h"
 
 namespace fs = boost::filesystem;
 
@@ -72,23 +73,7 @@ void Favorites::Save( const std::wstring& filePath, const std::vector<FavoriteIm
 
 std::wstring Favorites::PreparePath()
 {
-	wchar_t appDataPath[MAX_PATH];
-
-	SHGetFolderPathW(NULL, CSIDL_APPDATA, NULL, SHGFP_TYPE_CURRENT, appDataPath);
-
-	fs::wpath folder(appDataPath);
-
-	folder /= L"CryptDisk";
-
-	if(!fs::exists(folder))
-	{
-		fs::create_directories(folder);
-	}
-
-	fs::wpath file(folder);
-	file /= L"Favorites.xml";
-
-	return file.wstring();
+	return CommonTools::MakeAppDataPath(L"Favorites.xml");
 }
 
 FavoritesManager::FavoritesManager()

@@ -47,7 +47,7 @@ BOOL FavoritesView::OnInitDialog()
 	CDialogEx::OnInitDialog();
 
 	m_favoritesList.InsertColumn(0, _T("Letter"), 0, 50, 0);
-	m_favoritesList.InsertColumn(2, _T("Path"), 0, 300, 1);
+	m_favoritesList.InsertColumn(2, _T("Path"), 0, 400, 1);
 
 	m_favoritesList.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_AUTOSIZECOLUMNS);
 
@@ -79,10 +79,13 @@ void FavoritesView::OnDocumentUpdate()
 
 void FavoritesView::OnBnClickedButtonMount()
 {
-	const FavoriteImage& currentImage = AppFavorites::instance().Favorites()[m_favoritesList.GetSelectionMark()];
-	DialogMountFavorite dlg(currentImage, this);
+	if(m_favoritesList.GetSelectionMark() != -1)
+	{
+		const FavoriteImage& currentImage = AppFavorites::instance().Favorites()[m_favoritesList.GetSelectionMark()];
+		DialogMountFavorite dlg(currentImage, this);
 
-	dlg.DoModal();
+		dlg.DoModal();
+	}
 }
 
 

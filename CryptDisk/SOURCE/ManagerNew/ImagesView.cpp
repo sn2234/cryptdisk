@@ -88,7 +88,7 @@ BOOL ImagesView::OnInitDialog()
 	
 	m_listImages.InsertColumn(0, _T("Letter"), 0, 50, 0);
 	m_listImages.InsertColumn(1, _T("Size"), 0, 80, 1);
-	m_listImages.InsertColumn(2, _T("Path"), 0, 200, 2);
+	m_listImages.InsertColumn(2, _T("Path"), 0, 400, 2);
 
 	m_listImages.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_AUTOSIZECOLUMNS);
 
