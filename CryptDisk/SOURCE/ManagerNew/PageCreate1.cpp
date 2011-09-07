@@ -32,6 +32,7 @@ void PageCreate1::DoDataExchange(CDataExchange* pDX)
 	CPropertyPage::DoDataExchange(pDX);
 
 	DDX_Check(pDX, IDC_CHECK_DOCUMENTS, m_bNotAddToDocuments);
+	DDX_Check(pDX, IDC_CHECK_QUICK, m_bQuickFormat);
 	DDX_Text(pDX, IDC_EDIT_PATH, m_path);
 	DDX_Text(pDX, IDC_EDIT_SIZE, m_imageSize);
 	DDX_Control(pDX, IDC_COMBO_SIZE, m_comboSize);

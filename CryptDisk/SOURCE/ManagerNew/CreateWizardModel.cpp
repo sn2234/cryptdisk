@@ -26,7 +26,7 @@ void CreateWizardModel::DoCreateImage()
 	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(m_password.c_str()), m_password.size());
 
 	DialogFormatProgress dlg(ImageFilePath().c_str(), ImageSize(), CipherAlgorithm(),
-		pb.Password(), pb.PasswordLength(),QuickFormat());
+		pb.Password(), pb.PasswordLength(), QuickFormat());
 
 	dlg.DoModal();
 }

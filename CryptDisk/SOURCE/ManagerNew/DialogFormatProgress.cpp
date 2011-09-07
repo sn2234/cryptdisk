@@ -72,6 +72,8 @@ BOOL DialogFormatProgress::OnInitDialog()
 
 void DialogFormatProgress::WorkerTask()
 {
+	Concurrency::asend(m_progressResult, 0.0);
+
 	CryptDiskHelpers::CreateImage(&AppRandom::instance(), m_imagePath.c_str(), m_imageSize, m_cipherAlgorithm,
 		reinterpret_cast<const unsigned char*>(m_password.get()), m_passwordLength,	!m_bQuickFormat,
 		[this](double x) -> bool{
