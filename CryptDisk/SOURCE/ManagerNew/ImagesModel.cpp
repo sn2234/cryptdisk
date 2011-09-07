@@ -24,5 +24,8 @@ void ImagesModel::Refresh()
 
 void ImagesModel::DismountImage( ULONG imageId, bool bForce )
 {
-	CryptDiskHelpers::UnmountImage(*AppDriver::instance().getDriverControl(), imageId, bForce);
+	if (AppDriver::instance().getDriverControl())
+	{
+		CryptDiskHelpers::UnmountImage(*AppDriver::instance().getDriverControl(), imageId, bForce);
+	}
 }

@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "AppFavorites.h"
 #include "DialogMountFavorite.h"
+#include "DriverTools.h"
 
 
 // FavoritesView dialog
@@ -29,6 +30,7 @@ void FavoritesView::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_FAVORITES, m_favoritesList);
+	DDX_Control(pDX, IDC_BUTTON_MOUNT, m_buttonMount);
 }
 
 
@@ -54,6 +56,11 @@ BOOL FavoritesView::OnInitDialog()
 	m_dialogInitialized = true;
 
 	OnDocumentUpdate();
+
+	if(!AppDriver::instance().getDriverControl())
+	{
+		m_buttonMount.EnableWindow(FALSE);
+	}
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
@@ -107,12 +114,15 @@ void FavoritesView::OnBnClickedButtonRemove()
 
 void FavoritesView::OnNMDblclkListFavorites(NMHDR *pNMHDR, LRESULT *pResult)
 {
-	LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
+	if(AppDriver::instance().getDriverControl())
+	{
+		LPNMITEMACTIVATE pNMItemActivate = reinterpret_cast<LPNMITEMACTIVATE>(pNMHDR);
 
-	const FavoriteImage& currentImage = AppFavorites::instance().Favorites()[pNMItemActivate->iItem];
-	DialogMountFavorite dlg(currentImage, this);
+		const FavoriteImage& currentImage = AppFavorites::instance().Favorites()[pNMItemActivate->iItem];
+		DialogMountFavorite dlg(currentImage, this);
 
-	dlg.DoModal();
+		dlg.DoModal();
+	}
 
 	*pResult = 0;
 }

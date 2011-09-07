@@ -11,7 +11,10 @@ public:
 		: m_control(cntrl)
 	{}
 
-	DNDriverControl* getDriverControl() { return m_control.get(); }
+	DNDriverControl* getDriverControl()
+	{ 
+		return m_control.get();
+	}
 
 private:
 	std::shared_ptr<DNDriverControl> m_control;

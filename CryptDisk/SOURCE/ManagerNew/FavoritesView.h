@@ -1,6 +1,7 @@
 #pragma once
 #include "afxcmn.h"
 #include "View.h"
+#include "afxwin.h"
 
 
 // FavoritesView dialog
@@ -29,4 +30,5 @@ public:
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedButtonRemove();
 	afx_msg void OnNMDblclkListFavorites(NMHDR *pNMHDR, LRESULT *pResult);
+	CButton m_buttonMount;
 };

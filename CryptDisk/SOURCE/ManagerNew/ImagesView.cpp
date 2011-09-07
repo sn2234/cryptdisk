@@ -10,6 +10,7 @@
 
 #include "MountWizard.h"
 #include "CreateWizard.h"
+#include "DriverTools.h"
 
 std::wstring FormatSize(UINT64 size)
 {
@@ -54,6 +55,9 @@ void ImagesView::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_LIST_IMAGES, m_listImages);
+	DDX_Control(pDX, IDC_BUTTON_MOUNT, m_buttonMount);
+	DDX_Control(pDX, IDC_BUTTON_DISMOUNT_IMAGE, m_buttonDismount);
+	DDX_Control(pDX, IDC_BUTTON_DISMOUNTALL, m_buttonDismountAll);
 }
 
 
@@ -93,6 +97,13 @@ BOOL ImagesView::OnInitDialog()
 	m_listImages.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_AUTOSIZECOLUMNS);
 
 	static_cast<ImagesModel&>(m_document).Refresh();
+
+	if(!AppDriver::instance().getDriverControl())
+	{
+		m_buttonMount.EnableWindow(FALSE);
+		m_buttonDismount.EnableWindow(FALSE);
+		m_buttonDismountAll.EnableWindow(FALSE);
+	}
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE

@@ -2,6 +2,7 @@
 
 #include "View.h"
 #include "afxcmn.h"
+#include "afxwin.h"
 
 // ImagesView dialog
 
@@ -29,4 +30,7 @@ public:
 	afx_msg void OnBnClickedButtonCreate();
 	afx_msg void OnBnClickedButtonDismountImage();
 	afx_msg void OnBnClickedButtonDismountall();
+	CButton m_buttonMount;
+	CButton m_buttonDismount;
+	CButton m_buttonDismountAll;
 };

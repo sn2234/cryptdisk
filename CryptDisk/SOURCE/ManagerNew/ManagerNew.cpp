@@ -78,18 +78,25 @@ BOOL CManagerNewApp::InitInstance()
 	// such as the name of your company or organization
 	SetRegistryKey(_T("Local AppWizard-Generated Applications"));
 
-	CManagerNewDlg dlg;
-	m_pMainWnd = &dlg;
-	INT_PTR nResponse = dlg.DoModal();
-	if (nResponse == IDOK)
+	try
 	{
-		// TODO: Place code here to handle when the dialog is
-		//  dismissed with OK
+		CManagerNewDlg dlg;
+		m_pMainWnd = &dlg;
+		INT_PTR nResponse = dlg.DoModal();
+		if (nResponse == IDOK)
+		{
+			// TODO: Place code here to handle when the dialog is
+			//  dismissed with OK
+		}
+		else if (nResponse == IDCANCEL)
+		{
+			// TODO: Place code here to handle when the dialog is
+			//  dismissed with Cancel
+		}
 	}
-	else if (nResponse == IDCANCEL)
+	catch (const std::exception& e)
 	{
-		// TODO: Place code here to handle when the dialog is
-		//  dismissed with Cancel
+		MessageBox(NULL,CString(e.what()), _T("Exception"), MB_ICONERROR | MB_OK);
 	}
 
 	Concurrency::CurrentScheduler::Detach();
