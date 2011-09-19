@@ -13,13 +13,11 @@
 #undef APSTUDIO_READONLY_SYMBOLS
 
 /////////////////////////////////////////////////////////////////////////////
-// Russian resources
+// Russian (Russia) resources
 
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_RUS)
-#ifdef _WIN32
 LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
 #pragma code_page(1251)
-#endif //_WIN32
 
 #ifdef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
@@ -53,15 +51,15 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 3,0,0,0
- PRODUCTVERSION 3,0,0,0
+ FILEVERSION 4,0,0,0
+ PRODUCTVERSION 4,0,0,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x29L
 #else
  FILEFLAGS 0x28L
 #endif
- FILEOS 0x40004L
+ FILEOS 0x40000L
  FILETYPE 0x3L
  FILESUBTYPE 0x7L
 BEGIN
@@ -69,14 +67,15 @@ BEGIN
     BEGIN
         BLOCK "000004b0"
         BEGIN
-            VALUE "FileDescription", "CryptDisk 3.0 kernel driver"
-            VALUE "FileVersion", "3, 0, 0, 0"
-            VALUE "InternalName", "CryptDisk30"
-            VALUE "LegalCopyright", "Copyright (C) 2006, nobody"
-            VALUE "OriginalFilename", "CryptDisk30.sys"
+            VALUE "CompanyName", "CryptDisk.4"
+            VALUE "FileDescription", "CryptDisk 4.0 kernel driver"
+            VALUE "FileVersion", "4.0.0.0"
+            VALUE "InternalName", "CryptDisk40"
+            VALUE "LegalCopyright", "Copyright (C) 2006-2011, nobody"
+            VALUE "OriginalFilename", "CryptDisk40.sys"
             VALUE "PrivateBuild", "1"
-            VALUE "ProductName", "CryptDisk30"
-            VALUE "ProductVersion", "3, 0, 0, 0"
+            VALUE "ProductName", "CryptDisk40"
+            VALUE "ProductVersion", "4.0.0.0"
             VALUE "SpecialBuild", "1"
         END
     END
@@ -86,7 +85,7 @@ BEGIN
     END
 END
 
-#endif    // Russian resources
+#endif    // Russian (Russia) resources
 /////////////////////////////////////////////////////////////////////////////
 
 
