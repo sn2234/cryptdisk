@@ -3,9 +3,6 @@
   <Product Id="34ea659a-6cca-4bfc-9f16-c34ca8f0a30e"
            Name="CryptDisk 4.h" Language="1033" Version="4.0.0.0" Manufacturer="CryptDisk 4.h" UpgradeCode="3b928c38-3e66-4cee-b6aa-121ef9d048cf">
     <Package InstallerVersion="300" Compressed="yes" />
-    <UIRef Id="WixUI_InstallDir" />
-    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
-    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
     <?if $(var.Platform) = "x86"?>
     <?define ProgramFilesDir="ProgramFilesFolder"?>
@@ -18,7 +15,11 @@
     <?else?>
     <?define ModuleConfig=""?>
     <?endif?>
-    
+
+    <UIRef Id="WixUI_InstallDir" />
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
     <Directory Id="TARGETDIR" Name="SourceDir">
       <Directory Id="$(var.ProgramFilesDir)">
         <Directory Id="INSTALLLOCATION" Name="CryptDisk 4.h">
@@ -68,5 +69,16 @@
       <MergeRef Id="VCRedist"/>
       <MergeRef Id="MFCRedist"/>
     </Feature>
+
+    <!--<Binary Id="CmdProcessor" SourceFile="C:\windows\System32\cmd.exe" />-->
+
+    <CustomAction Id="InstallExec" FileKey="DrvTool" Execute="deferred" Return="check" ExeCommand=" > c:\temp\dir.log"/>
+    <CustomAction Id="UninstallExec" FileKey="DrvTool" Execute="immediate" Return="check" ExeCommand=" > c:\temp\dir_uninst.log"/>
+
+    <InstallExecuteSequence>
+      <Custom Action="InstallExec" After="InstallFiles"/>
+      <Custom Action="UninstallExec" Before="RemoveFiles">Installed AND NOT UPGRADINGPRODUCTCODE</Custom>
+    </InstallExecuteSequence>
+
   </Product>
 </Wix>
