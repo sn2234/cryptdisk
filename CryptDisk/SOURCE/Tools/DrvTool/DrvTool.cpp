@@ -29,7 +29,7 @@
 
 #include "SCMHelper.h"
 
-const TCHAR *szTitle   = _T("[DrvTool 1.0] by nobody\n")
+const TCHAR *szTitle   = _T("[DrvTool 1.1]\n")
 						_T("--------------------\n");
 const TCHAR *szArgs       = _T("Command line:\n")
 _T(" DrvTool <command> <driver name> [driver path]\n")
@@ -41,13 +41,14 @@ _T("   /STOP          - stop driver\n")
 _T(" Quotes are allowed and options must be interrupted by spaces.\n");
 
 void PrintUsage();
-void RegDriver(LPCTSTR driverName, LPCTSTR driverPath);
-void UnregDriver(LPCTSTR driverName);
-void RunDriver(LPCTSTR driverName);
-void StopDriver(LPCTSTR driverName);
+int RegDriver(LPCTSTR driverName, LPCTSTR driverPath);
+int UnregDriver(LPCTSTR driverName);
+int RunDriver(LPCTSTR driverName);
+int StopDriver(LPCTSTR driverName);
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	int retVal = 1;
 	if(argc < 3)
 	{
 		PrintUsage();
@@ -63,30 +64,30 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 		else
 		{
-			RegDriver(argv[2], argv[3]);
+			retVal = RegDriver(argv[2], argv[3]);
 		}
 	}
 	else if(!_tcsicmp(_T("/UNREG"), argv[1]))
 	{
 		// Unregister driver
-		UnregDriver(argv[2]);
+		retVal = UnregDriver(argv[2]);
 	}
 	else if(!_tcsicmp(_T("/RUN"), argv[1]))
 	{
 		// Start driver
-		RunDriver(argv[2]);
+		retVal = RunDriver(argv[2]);
 	}
 	else if(!_tcsicmp(_T("/STOP"), argv[1]))
 	{
 		// Stop driver
-		StopDriver(argv[2]);
+		retVal = StopDriver(argv[2]);
 	}
 	else
 	{
 		PrintUsage();
 	}
 
-	return 0;
+	return retVal;
 }
 
 void PrintUsage()
@@ -95,7 +96,7 @@ void PrintUsage()
 	_tprintf(szArgs);
 }
 
-void RegDriver(LPCTSTR driverName, LPCTSTR driverPath)
+int RegDriver(LPCTSTR driverName, LPCTSTR driverPath)
 {
 	//_tprintf(_T("\nReg, Name: %s Path: %s"), driverName, driverPath);
 
@@ -103,14 +104,16 @@ void RegDriver(LPCTSTR driverName, LPCTSTR driverPath)
 	if(CSCMHelper::RegService(driverName, driverPath))
 	{
 		_tprintf(_T("OK\n"));
+		return 0;
 	}
 	else
 	{
 		_tprintf(_T("Failed\n"));
+		return 1;
 	}
 }
 
-void UnregDriver(LPCTSTR driverName)
+int UnregDriver(LPCTSTR driverName)
 {
 	//_tprintf(_T("\nUnreg, Name: %s"), driverName);
 
@@ -118,14 +121,16 @@ void UnregDriver(LPCTSTR driverName)
 	if(CSCMHelper::UnregService(driverName))
 	{
 		_tprintf(_T("OK\n"));
+		return 0;
 	}
 	else
 	{
 		_tprintf(_T("Failed\n"));
+		return 1;
 	}
 }
 
-void RunDriver(LPCTSTR driverName)
+int RunDriver(LPCTSTR driverName)
 {
 	//_tprintf(_T("\nRun, Name: %s"), driverName);
 
@@ -133,14 +138,16 @@ void RunDriver(LPCTSTR driverName)
 	if(CSCMHelper::StartService(driverName))
 	{
 		_tprintf(_T("OK\n"));
+		return 0;
 	}
 	else
 	{
 		_tprintf(_T("Failed\n"));
+		return 1;
 	}
 }
 
-void StopDriver(LPCTSTR driverName)
+int StopDriver(LPCTSTR driverName)
 {
 	//_tprintf(_T("\nStop, Name: %s"), driverName);
 
@@ -148,9 +155,11 @@ void StopDriver(LPCTSTR driverName)
 	if(CSCMHelper::StopService(driverName))
 	{
 		_tprintf(_T("OK\n"));
+		return 0;
 	}
 	else
 	{
 		_tprintf(_T("Failed\n"));
+		return 1;
 	}
 }

@@ -18,6 +18,7 @@
 
     <UIRef Id="WixUI_InstallDir" />
     <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+    <WixVariable Id="WixUILicenseRtf" Value="$(var.SolutionDir)License.rtf" />
     <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
 
     <Directory Id="TARGETDIR" Name="SourceDir">
@@ -72,12 +73,14 @@
 
     <!--<Binary Id="CmdProcessor" SourceFile="C:\windows\System32\cmd.exe" />-->
 
-    <CustomAction Id="InstallExec" FileKey="DrvTool" Execute="deferred" Return="check" ExeCommand=" > c:\temp\dir.log"/>
-    <CustomAction Id="UninstallExec" FileKey="DrvTool" Execute="immediate" Return="check" ExeCommand=" > c:\temp\dir_uninst.log"/>
+    <CustomAction Id="InstallExec" FileKey="DrvTool" Execute="deferred" Return="check" Impersonate="no" ExeCommand="/REG CryptDisk40 &quot;C:\Temp\CryptDisk4\CryptDisk40.sys&quot;"/>
+    <CustomAction Id="UninstallExecStopService" FileKey="DrvTool" Execute="deferred" Return="ignore" Impersonate="no" ExeCommand="/STOP CryptDisk40"/>
+    <CustomAction Id="UninstallExecRemoveService" FileKey="DrvTool" Execute="deferred" Return="ignore" Impersonate="no" ExeCommand="/UNREG CryptDisk40"/>
 
     <InstallExecuteSequence>
-      <Custom Action="InstallExec" After="InstallFiles"/>
-      <Custom Action="UninstallExec" Before="RemoveFiles">Installed AND NOT UPGRADINGPRODUCTCODE</Custom>
+      <Custom Action="InstallExec" After="InstallFiles">NOT Installed</Custom>
+      <Custom Action="UninstallExecStopService" Before="RemoveFiles">Installed AND NOT UPGRADINGPRODUCTCODE</Custom>
+      <Custom Action="UninstallExecRemoveService" After="UninstallExecStopService">Installed AND NOT UPGRADINGPRODUCTCODE</Custom>
     </InstallExecuteSequence>
 
   </Product>
