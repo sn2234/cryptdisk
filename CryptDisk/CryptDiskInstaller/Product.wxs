@@ -49,6 +49,9 @@
           <Component Id="DriverTool" Guid="11352FBF-B356-4E95-9761-D53958CE88C1">
             <File Id="DrvTool" Name="$(var.DrvTool.TargetFileName)" Source="$(var.DrvTool.TargetPath)" KeyPath="yes"></File>
           </Component>
+          <Component Id="DiskDriver" Guid="D74198E6-28CE-4FEC-A90D-4C4606A6F52D">
+            <File Id="DiskDriver" Name="$(var.Driver.TargetFileName)" Source="$(var.Driver.TargetPath)" KeyPath="yes"></File>
+          </Component>
 
           <Merge Id="VCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC100_DebugCRT_$(var.Platform).msm" DiskId="1" Language="0"/>
           <Merge Id="MFCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC100_DebugMFC_$(var.Platform).msm" DiskId="1" Language="0"/>
@@ -63,6 +66,7 @@
       <!-- TODO: Remove the comments around this ComponentRef element and the Component above in order to add resources to this installer. -->
       <ComponentRef Id="MainProgram" />
       <ComponentRef Id="DriverTool" />
+      <ComponentRef Id="DiskDriver" />
       <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
       <ComponentGroupRef Id="Product.Generated" />
     </Feature>
@@ -73,7 +77,7 @@
 
     <!--<Binary Id="CmdProcessor" SourceFile="C:\windows\System32\cmd.exe" />-->
 
-    <CustomAction Id="InstallExec" FileKey="DrvTool" Execute="deferred" Return="check" Impersonate="no" ExeCommand="/REG CryptDisk40 &quot;C:\Temp\CryptDisk4\CryptDisk40.sys&quot;"/>
+    <CustomAction Id="InstallExec" FileKey="DrvTool" Execute="deferred" Return="check" Impersonate="no" ExeCommand="/REG CryptDisk40 &quot;[#DiskDriver]&quot;"/>
     <CustomAction Id="UninstallExecStopService" FileKey="DrvTool" Execute="deferred" Return="ignore" Impersonate="no" ExeCommand="/STOP CryptDisk40"/>
     <CustomAction Id="UninstallExecRemoveService" FileKey="DrvTool" Execute="deferred" Return="ignore" Impersonate="no" ExeCommand="/UNREG CryptDisk40"/>
 
