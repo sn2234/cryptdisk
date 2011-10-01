@@ -138,7 +138,10 @@ void PageMount1::OnBnClickedButtonRestore()
 		{
 			DialogBackupHeader dlg((const wchar_t*)m_path);
 
-			dlg.DoModal();
+			if(dlg.DoModal() == IDCANCEL)
+			{
+				return;
+			}
 		}
 
 		OPENFILENAME	ofn;
