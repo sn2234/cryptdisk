@@ -53,8 +53,8 @@
             <File Id="DiskDriver" Name="$(var.Driver.TargetFileName)" Source="$(var.Driver.TargetPath)" KeyPath="yes"></File>
           </Component>
 
-          <Merge Id="VCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC100_DebugCRT_$(var.Platform).msm" DiskId="1" Language="0"/>
-          <Merge Id="MFCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC100_DebugMFC_$(var.Platform).msm" DiskId="1" Language="0"/>
+          <Merge Id="VCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC100_$(var.ModuleConfig)CRT_$(var.Platform).msm" DiskId="1" Language="0"/>
+          <Merge Id="MFCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC100_$(var.ModuleConfig)MFC_$(var.Platform).msm" DiskId="1" Language="0"/>
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder"></Directory>
