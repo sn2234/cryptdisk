@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{ABD9D503-5481-47D9-9A41-C0CA037BC4E5}</ProjectGuid>
+    <RootNamespace>Driver</RootNamespace>
+    <Keyword>MakeFileProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Makefile</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(TargetDir)</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(TargetDir)</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(TargetDir)</IntDir>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">make_x86.cmd DBG</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">make_amd64.cmd DBG</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">make_x86.cmd DBG</NMakeReBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">make_amd64.cmd DBG</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">clean.cmd</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">clean.cmd</NMakeCleanCommandLine>
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">objchk_wnet_x86\i386\CryptDisk40.sys</NMakeOutput>
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">objchk_win7_amd64\amd64\CryptDisk40.sys</NMakeOutput>
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">WIN32;_DEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(TargetDir)</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(TargetDir)</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(TargetDir)</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(TargetDir)</IntDir>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">make_x86.cmd</NMakeBuildCommandLine>
+    <NMakeBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|x64'">make_amd64.cmd</NMakeBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">make_x86.cmd</NMakeReBuildCommandLine>
+    <NMakeReBuildCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|x64'">make_amd64.cmd</NMakeReBuildCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">clean.cmd</NMakeCleanCommandLine>
+    <NMakeCleanCommandLine Condition="'$(Configuration)|$(Platform)'=='Release|x64'">clean.cmd</NMakeCleanCommandLine>
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">objfre_wnet_x86\i386\CryptDisk40.sys</NMakeOutput>
+    <NMakeOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">objfre_win7_amd64\amd64\CryptDisk40.sys</NMakeOutput>
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakePreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">WIN32;NDEBUG;$(NMakePreprocessorDefinitions)</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeIncludeSearchPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NMakeIncludeSearchPath)</NMakeIncludeSearchPath>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeForcedIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NMakeForcedIncludes)</NMakeForcedIncludes>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeAssemblySearchPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NMakeAssemblySearchPath)</NMakeAssemblySearchPath>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <NMakeForcedUsingAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(NMakeForcedUsingAssemblies)</NMakeForcedUsingAssemblies>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\WinDDK\7600.16385.1\inc\api;C:\WinDDK\7600.16385.1\inc\ddk;$(IncludePath)</IncludePath>
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\WinDDK\7600.16385.1\inc\api;C:\WinDDK\7600.16385.1\inc\ddk;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="DiskCipherAesV3.cpp" />
+    <ClCompile Include="DiskCipherTwofishV3.cpp" />
+    <ClCompile Include="DiskHeaderTools.cpp" />
+    <ClCompile Include="DisksManager.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Memtools.cpp" />
+    <ClCompile Include="Tools.cpp" />
+    <ClCompile Include="VirtualDisk.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="disk.h" />
+    <ClInclude Include="DiskCipherAesV3.h" />
+    <ClInclude Include="DiskCipherTwofishV3.h" />
+    <ClInclude Include="DiskCipherV4.h" />
+    <ClInclude Include="DiskFormat.h" />
+    <ClInclude Include="DiskHeaderTools.h" />
+    <ClInclude Include="DiskParamatersV3.h" />
+    <ClInclude Include="DiskParametersV4.h" />
+    <ClInclude Include="DisksManager.h" />
+    <ClInclude Include="DriverProtocol.h" />
+    <ClInclude Include="format.h" />
+    <ClInclude Include="IDiskCipher.h" />
+    <ClInclude Include="IDiskParameters.h" />
+    <ClInclude Include="main.h" />
+    <ClInclude Include="platform.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Tools.h" />
+    <ClInclude Include="..\Version.h" />
+    <ClInclude Include="VirtualDisk.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Driver.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="sources" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
