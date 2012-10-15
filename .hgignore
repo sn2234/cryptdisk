@@ -18,3 +18,4 @@ CryptDisk/SOURCE/Tools/DrvTool/Debug/*
 CryptoLib/Crypto/Debug/*
 CryptoLib/CryptoLibTest/Debug/*
 CryptoLib/Debug/*
+*.filters
