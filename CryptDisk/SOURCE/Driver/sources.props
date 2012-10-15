@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TARGETNAME Condition="'$(OVERRIDE_TARGETNAME)'!='true'">CryptDisk40</TARGETNAME>
+    <TARGETPATH Condition="'$(OVERRIDE_TARGETPATH)'!='true'">obj</TARGETPATH>
+    <TARGETTYPE Condition="'$(OVERRIDE_TARGETTYPE)'!='true'">DRIVER</TARGETTYPE>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="('$(DDKBUILDENV)'=='chk') Or ('$(DDKBUILDENV)'=='checked')">
+      <PropertyGroup>
+        <BUILDTYPE Condition="'$(OVERRIDE_BUILDTYPE)'!='true'">CHECKED</BUILDTYPE>
+      </PropertyGroup>
+      <Choose>
+        <When Condition="'$(_BUILDARCH)'=='AMD64'">
+          <PropertyGroup>
+            <BIN_SUFFIX Condition="'$(OVERRIDE_BIN_SUFFIX)'!='true'">x64</BIN_SUFFIX>
+          </PropertyGroup>
+        </When>
+        <Otherwise>
+          <PropertyGroup>
+            <BIN_SUFFIX Condition="'$(OVERRIDE_BIN_SUFFIX)'!='true'" />
+          </PropertyGroup>
+        </Otherwise>
+      </Choose>
+      <PropertyGroup>
+        <CRYPTLIB Condition="'$(OVERRIDE_CRYPTLIB)'!='true'">Crypto_$(BIN_SUFFIX)d.lib</CRYPTLIB>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <BUILDTYPE Condition="'$(OVERRIDE_BUILDTYPE)'!='true'">FREE</BUILDTYPE>
+      </PropertyGroup>
+      <Choose>
+        <When Condition="'$(_BUILDARCH)'=='AMD64'">
+          <PropertyGroup>
+            <BIN_SUFFIX Condition="'$(OVERRIDE_BIN_SUFFIX)'!='true'">_x64</BIN_SUFFIX>
+          </PropertyGroup>
+        </When>
+        <Otherwise>
+          <PropertyGroup>
+            <BIN_SUFFIX Condition="'$(OVERRIDE_BIN_SUFFIX)'!='true'" />
+          </PropertyGroup>
+        </Otherwise>
+      </Choose>
+      <PropertyGroup>
+        <CRYPTLIB Condition="'$(OVERRIDE_CRYPTLIB)'!='true'">Crypto$(BIN_SUFFIX).lib</CRYPTLIB>
+        <NTDEBUG Condition="'$(OVERRIDE_NTDEBUG)'!='true'" />
+        <MSC_OPTIMIZATION Condition="'$(OVERRIDE_MSC_OPTIMIZATION)'!='true'">/O2</MSC_OPTIMIZATION>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <PropertyGroup>
+    <BUFFER_OVERFLOW_CHECKS Condition="'$(OVERRIDE_BUFFER_OVERFLOW_CHECKS)'!='true'">LINK_ONLY</BUFFER_OVERFLOW_CHECKS>
+    <USER_C_FLAGS Condition="'$(OVERRIDE_USER_C_FLAGS)'!='true'">/Fa"$(TARGETPATH)/" /FAs</USER_C_FLAGS>
+    <TARGETLIBS Condition="'$(OVERRIDE_TARGETLIBS)'!='true'">$(DDK_LIB_PATH)\ntoskrnl.lib  	$(DDK_LIB_PATH)\hal.lib  	$(DDK_LIB_PATH)\BufferOverflowK.lib  	$(CRYPTO_LIB_BIN_DIR)\$(CRYPTLIB)</TARGETLIBS>
+    <RCNOFONTMAP Condition="'$(OVERRIDE_RCNOFONTMAP)'!='true'">1</RCNOFONTMAP>
+    <LINK_LIB_IGNORE Condition="'$(OVERRIDE_LINK_LIB_IGNORE)'!='true'">4210,4099</LINK_LIB_IGNORE>
+    <PRECOMPILED_INCLUDE Condition="'$(OVERRIDE_PRECOMPILED_INCLUDE)'!='true'">stdafx.h</PRECOMPILED_INCLUDE>
+    <PRECOMPILED_CXX Condition="'$(OVERRIDE_PRECOMPILED_CXX)'!='true'">1</PRECOMPILED_CXX>
+    <INCLUDES Condition="'$(OVERRIDE_INCLUDES)'!='true'">$(BASEDIR)\inc\wnet;$(CRYPTO_LIB_DIR)\SOURCE;.;</INCLUDES>
+    <SOURCES Condition="'$(OVERRIDE_SOURCES)'!='true'">DiskHeaderTools.cpp  	main.cpp  	Tools.cpp  	DisksManager.cpp  	VirtualDisk.cpp  	DiskCipherAesV3.cpp  	DiskCipherTwofishV3.cpp  	Memtools.cpp</SOURCES>
+  </PropertyGroup>
+</Project>

@@ -1,0 +1,20 @@
+syntax: glob
+CryptDisk/_UpgradeReport_Files/*
+*.vcxproj.user
+CryptDisk/ConsoleManager/Debug/*
+*.sdf
+*.suo
+CryptDisk/CryptDiskTests/Debug/*
+CryptDisk/Debug/*
+*ipch*
+CryptDisk/SOURCE/Driver/CryptDisk40-Package/Win7Debug/*
+CryptDisk/SOURCE/Driver/Win7Debug/*
+CryptDisk/SOURCE/ManagerNew/Debug/*
+CryptDisk/SOURCE/ticpp/Debug/*
+*.log
+CryptDisk/SOURCE/Driver/obj/*
+CryptDisk/SOURCE/Tools/DrvTool/Debug/*
+*UpgradeLog*
+CryptoLib/Crypto/Debug/*
+CryptoLib/CryptoLibTest/Debug/*
+CryptoLib/Debug/*

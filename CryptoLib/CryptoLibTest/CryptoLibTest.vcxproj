@@ -133,7 +133,6 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <ShowProgress>LinkVerbose</ShowProgress>
     </Link>
     <PostBuildEvent>
       <Command>"$(TargetDir)\$(TargetName).exe" --result_code=no --log_level=message</Command>
