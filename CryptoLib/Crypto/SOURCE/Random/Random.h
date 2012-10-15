@@ -79,12 +79,12 @@ public:
 	BOOL GenRandom(void *pBuff, ULONG size);
 
 protected:
-	void Lock()
+	_Acquires_lock_(this->m_lock) void Lock()
 	{
 		EnterCriticalSection(&m_lock);
 	}
 
-	void Unlock()
+	_Releases_lock_(this->m_lock) void Unlock()
 	{
 		LeaveCriticalSection(&m_lock);
 	}

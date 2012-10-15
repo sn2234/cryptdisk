@@ -69,14 +69,6 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SOURCE\Driver\Driver.vcxproj">
-      <Name>Driver</Name>
-      <Project>{abd9d503-5481-47d9-9a41-c0ca037bc4e5}</Project>
-      <Private>True</Private>
-      <DoNotHarvest>True</DoNotHarvest>
-      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
-      <RefTargetDir>INSTALLLOCATION</RefTargetDir>
-    </ProjectReference>
     <ProjectReference Include="..\SOURCE\ManagerNew\ManagerNew.vcxproj">
       <Name>ManagerNew</Name>
       <Project>{12df4807-fbb5-4718-a975-3639be9c9ccc}</Project>

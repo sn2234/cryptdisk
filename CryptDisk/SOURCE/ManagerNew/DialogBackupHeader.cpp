@@ -6,11 +6,11 @@
 #include "DialogBackupHeader.h"
 #include "afxdialogex.h"
 #include "KeyFilesDialog.h"
-#include "Manager\SRC\CryptDiskHelpers.h"
+#include "CryptDiskHelpers.h"
 #include "AppMemory.h"
 #include "PasswordBuilder.h"
 #include "DiskHeaderTools.h"
-#include "Manager\SRC\SafeHandle.h"
+#include "ManagerNew\SafeHandle.h"
 
 namespace fs = boost::filesystem;
 

@@ -107,9 +107,9 @@ void CRandom::AddSystemRandom()
 	GetCursorPos(&pt);
 	AddSample(&pt, sizeof(pt), 4);
 
-	MEMORYSTATUS	memstat;
+	MEMORYSTATUSEX	memstat;
 
-	GlobalMemoryStatus(&memstat);
+	GlobalMemoryStatusEx(&memstat);
 	AddSample(&memstat, sizeof(memstat), 6);
 
 	HANDLE	hndl;

@@ -20,9 +20,9 @@ public:
 	virtual bool GenerateRandomBytes( void *pBuff, size_t size );
 
 protected:
-	void Lock()	{ EnterCriticalSection(&m_lock); }
+	_Acquires_lock_(this->m_lock) void Lock()	{ EnterCriticalSection(&m_lock); }
 
-	void Unlock() {	LeaveCriticalSection(&m_lock); }
+	_Releases_lock_(this->m_lock) void Unlock() {	LeaveCriticalSection(&m_lock); }
 
 	CRITICAL_SECTION	m_lock;
 	RndSampler			m_sampler;

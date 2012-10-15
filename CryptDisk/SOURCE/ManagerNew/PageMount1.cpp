@@ -10,7 +10,7 @@
 #include "KeyFilesDialog.h"
 #include "AppMemory.h"
 #include "DialogBackupHeader.h"
-#include "Manager\SRC\SafeHandle.h"
+#include "SafeHandle.h"
 
 namespace fs = boost::filesystem;
 
