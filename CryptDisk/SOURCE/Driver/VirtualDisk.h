@@ -27,6 +27,15 @@
 #include "IDiskCipher.h"
 #include "DriverProtocol.h"
 
+struct IoParameters 
+{
+	ULONG			requestLength;
+	LARGE_INTEGER	fileOffset;
+	ULONG			beginSector;
+	ULONG			sectors;
+	void*			dataBuffer;
+};
+
 class	VirtualDisk
 {
 	friend class DisksManager;
@@ -44,21 +53,25 @@ public:
 	static	NTSTATUS	IoReadWrite(PDEVICE_OBJECT DeviceObject, PIRP Irp);
 	static	NTSTATUS	IoCreateClose(PDEVICE_OBJECT DeviceObject, PIRP Irp);
 
-	// Worker thread
-	static KSTART_ROUTINE VirtualDiskThread;
-	// IRP_MJ_DEVICE_CONTROL handler, in context of worker thread
-	NTSTATUS	ThreadIoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp);
-
 	// Acessors
 	const DISK_BASIC_INFO& GetDiskInfo() const {return *m_pDiskInfo;}
 	size_t GetDiskInfoSize() const { return sizeof(DISK_BASIC_INFO) + m_pDiskInfo->PathSize - sizeof(WCHAR); }
 	UINT64 ImageDataOffset() const { return m_imageDataOffset; }
 
-protected:
+private:
+	// Worker thread
+	static KSTART_ROUTINE VirtualDiskThread;
+	// IRP_MJ_DEVICE_CONTROL handler, in context of worker thread
+	NTSTATUS	ThreadIoControl(PDEVICE_OBJECT DeviceObject, PIRP Irp);
+
 	// Internal functions
 	NTSTATUS SetFlags(DISK_ADD_INFO *pInfo);
 	NTSTATUS OpenFile(PCWSTR fileName);
 	NTSTATUS InitCipher(DISK_ADD_INFO *pInfo);
+	void ProcessIoResuest(PDEVICE_OBJECT pDeviceObject, PIRP Irp);
+	NTSTATUS BuildIoParameters(PIRP Irp, PIO_STACK_LOCATION ioStack, IoParameters& ioParameters);
+	IO_STATUS_BLOCK ProcessDiskRead(const IoParameters& ioParameters);
+	IO_STATUS_BLOCK ProcessDiskWrite(const IoParameters& ioParameters);
 
 protected:
 	BOOL				m_bInitialized;
@@ -94,4 +107,6 @@ protected:
 	LIST_ENTRY			m_irpQueueHead;
 	KSPIN_LOCK			m_irpQueueLock;
 	BOOL				m_bTerminateThread;
+
+	UCHAR*				m_cacheBuff;
 };

@@ -7,10 +7,13 @@
 
 #include "targetver.h"
 
+#ifndef VC_EXTRALEAN
+#define VC_EXTRALEAN            // Exclude rarely-used stuff from Windows headers
+#endif
+#include <windows.h>
 
 #include <stdio.h>
 #include <tchar.h>
-#include <windows.h>
 
 // STL
 #include <algorithm>

@@ -28,8 +28,8 @@ DialogFormatProgress::DialogFormatProgress( const WCHAR* imagePath, INT64 imageS
 {
 	std::copy_n(password, passwordLength, stdext::checked_array_iterator<char*>(m_password.get(), passwordLength + 1));
 
-	m_tasks.run(std::bind(&DialogFormatProgress::WorkerTask, this));
-	m_tasks.run(std::bind(&DialogFormatProgress::WatcherTask, this));
+	m_tasks.run(static_cast<const std::function<void(void)>>(std::bind(&DialogFormatProgress::WorkerTask, this)));
+	m_tasks.run(static_cast<const std::function<void(void)>>(std::bind(&DialogFormatProgress::WatcherTask, this)));
 }
 
 DialogFormatProgress::~DialogFormatProgress()

@@ -68,6 +68,13 @@ NTSTATUS	VirtualDisk::Init(DISK_ADD_INFO *Info,PDEVICE_OBJECT pDevice)
 	HANDLE						hThread;
 	NTSTATUS					status=STATUS_UNSUCCESSFUL;
 
+	// Allocate cash buffer
+	m_cacheBuff = (UCHAR*)ExAllocatePoolWithTag(PagedPool, CACHE_BUFF_SIZE, MEM_TAG);
+	if(!m_cacheBuff)
+	{
+		return STATUS_INSUFFICIENT_RESOURCES;
+	}
+
 	threadParams.Info=Info;
 	threadParams.pDevice=pDevice;
 	threadParams.statusReturned=STATUS_UNSUCCESSFUL;
@@ -647,13 +654,13 @@ void VirtualDisk::Cleanup()
 		}
 	}
 	ZwClose(m_hImageFile);
+
+	// Free cache buffer
+	ExFreePoolWithTag(m_cacheBuff, MEM_TAG);
 }
 
 void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 {
-	PIRP						Irp;
-	PLIST_ENTRY					Element;
-
 	PDEVICE_OBJECT				pDeviceObject;
 	VirtualDisk					*pDisk;
 	PIO_STACK_LOCATION			ioStack;
@@ -664,11 +671,11 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 	IO_STATUS_BLOCK				IoStatus;
 	ULONG						Sectors;
 	ULONG						beginSector;
-	VDISK_THREAD_INIT_PARAMS	*threadParams;
 	UCHAR						*cacheBuff;
 
 	// Initialization
-	if(!(threadParams=(VDISK_THREAD_INIT_PARAMS*)param))
+	VDISK_THREAD_INIT_PARAMS	*threadParams = (VDISK_THREAD_INIT_PARAMS*)param;
+	if(!threadParams)
 	{
 		PsTerminateSystemThread(status);
 	}
@@ -713,187 +720,209 @@ void __stdcall VirtualDisk::VirtualDiskThread(PVOID param)
 		}
 
 		// Get IRP from queue
-		while(Element=ExInterlockedRemoveHeadList(
-			&pDisk->m_irpQueueHead,&pDisk->m_irpQueueLock))
+		while(PLIST_ENTRY Element=ExInterlockedRemoveHeadList(&pDisk->m_irpQueueHead,&pDisk->m_irpQueueLock))
 		{
-			status=STATUS_INVALID_DEVICE_REQUEST;
-
-			Irp=CONTAINING_RECORD(Element,IRP,Tail.Overlay.ListEntry);
-
-			ioStack=IoGetCurrentIrpStackLocation(Irp);
-
-			Irp->IoStatus.Information=0;
-
-			if(ioStack)
-			{
-				switch(ioStack->MajorFunction)
-				{
-				case IRP_MJ_READ:
-				case IRP_MJ_WRITE:
-					RequestLength=ioStack->Parameters.Read.Length;
-					FileOffset.QuadPart=ioStack->Parameters.Read.ByteOffset.QuadPart;
-					// Check for alignment
-					if(!(RequestLength&(BYTES_PER_SECTOR-1)))
-					{
-						if(!(FileOffset.QuadPart&(BYTES_PER_SECTOR-1)))
-						{
-							FileOffset.QuadPart += pDisk->ImageDataOffset();
-							// Get buffer address
-							if(Irp->MdlAddress)
-							{
-								if(pDataBuff=MmGetSystemAddressForMdlSafe(Irp->MdlAddress,NormalPagePriority))
-								{
-									if((FileOffset.QuadPart+RequestLength)<=
-										pDisk->m_pDiskInfo->FileSize.QuadPart)
-									{
-										beginSector=(ULONG)(FileOffset.QuadPart/BYTES_PER_SECTOR-1);
-										Sectors=RequestLength/BYTES_PER_SECTOR;
-
-										switch(ioStack->MajorFunction)
-										{
-										case IRP_MJ_READ:
-											{
-												// Read from file to buffer
-												KdPrint(("\nCryptDisk:Read Offset=(%I64d) Length=(%d)",
-													FileOffset.QuadPart - pDisk->ImageDataOffset(),
-													RequestLength));
-												{
-													if(NT_SUCCESS(status=ZwReadFile(pDisk->m_hImageFile,NULL,NULL,NULL,
-														&IoStatus,pDataBuff,RequestLength,
-														&FileOffset,NULL)))
-													{
-														if(status==STATUS_PENDING)
-														{
-															ZwWaitForSingleObject(pDisk->m_hImageFile,
-																FALSE,NULL);
-														}
-													}
-													else
-													{
-														KdPrint(("\nCryptDisk:ReadWrite error while read. Status= %08X",status));
-														IoStatus.Status=status;
-													}
-													if(NT_SUCCESS(IoStatus.Status))
-													{
-														// Decipher buffer
-														pDisk->m_pDiskCipher->DecipherDataBlocks(beginSector, Sectors, pDataBuff);
-													}
-													status=IoStatus.Status;
-													Irp->IoStatus.Information=IoStatus.Information;
-												}
-											}
-											break;
-
-										case IRP_MJ_WRITE:
-											{
-												if(pDisk->m_bReadOnly)
-												{
-													status=STATUS_MEDIA_WRITE_PROTECTED;
-													Irp->IoStatus.Information=0;
-													break;
-												}
-
-												UCHAR	*Buff;
-
-												KdPrint(("\nCryptDisk:Write Offset=(%I64d) Length=(%d)",
-													FileOffset.QuadPart - pDisk->ImageDataOffset(),
-													RequestLength));
-
-												// If request length less then cache buffer we use it
-												if(RequestLength<=CACHE_BUFF_SIZE)
-												{
-													pDisk->m_pDiskCipher->EncipherDataBlocks(beginSector, Sectors, pDataBuff, cacheBuff);
-
-													if(NT_SUCCESS(status=ZwWriteFile(pDisk->m_hImageFile,NULL,NULL,NULL,
-														&IoStatus,cacheBuff,RequestLength,
-														&FileOffset,NULL)))
-													{
-														if(status==STATUS_PENDING)
-														{
-															ZwWaitForSingleObject(pDisk->m_hImageFile,
-																FALSE,NULL);
-														}
-													}
-													else
-													{
-														KdPrint(("\nCryptDisk:ReadWrite error while write. Status= %08X",status));
-														IoStatus.Status=status;
-													}
-
-													Irp->IoStatus.Information=IoStatus.Information;
-													status=IoStatus.Status;
-												}
-												else
-												{
-													// Allocate buffer
-													if(Buff=(UCHAR*)ExAllocatePoolWithTag(PagedPool, RequestLength, MEM_TAG))
-													{
-														pDisk->m_pDiskCipher->EncipherDataBlocks(beginSector, Sectors, pDataBuff, Buff);
-
-														if(NT_SUCCESS(status=ZwWriteFile(pDisk->m_hImageFile, NULL, NULL, NULL,
-															&IoStatus, Buff, RequestLength,
-															&FileOffset, NULL)))
-														{
-															if(status==STATUS_PENDING)
-															{
-																ZwWaitForSingleObject(pDisk->m_hImageFile,
-																	FALSE, NULL);
-															}
-														}
-														else
-														{
-															KdPrint(("\nCryptDisk:ReadWrite error while write. Status= %08X",status));
-															IoStatus.Status=status;
-														}
-
-														Irp->IoStatus.Information=IoStatus.Information;
-														status=IoStatus.Status;
-
-														memset(Buff,0,RequestLength);
-														ExFreePoolWithTag(Buff, MEM_TAG);
-													}
-													else
-													{
-														status=STATUS_INSUFFICIENT_RESOURCES;
-														Irp->IoStatus.Information=0;
-													}
-												}
-											}
-											break;
-										}
-									}
-								}
-								else
-								{
-									DnPrint("ReadWrite: unable to map pages");
-									status=STATUS_INSUFFICIENT_RESOURCES;
-									Irp->IoStatus.Information=0;
-								}
-							}
-						}
-						else
-						{
-							DnPrint("ReadWrite fail: invalid request offset");
-							status=STATUS_INVALID_DEVICE_REQUEST;
-						}
-					}
-					else
-					{
-						DnPrint("ReadWrite fail: invalid request length");
-						status=STATUS_INVALID_DEVICE_REQUEST;
-					}
-					break;
-				case IRP_MJ_DEVICE_CONTROL:
-					status=pDisk->ThreadIoControl(pDeviceObject,Irp);
-					break;
-				}
-			}
-
-			Irp->IoStatus.Status=status;
-			IofCompleteRequest(Irp, 
-				NT_SUCCESS(status)?IO_DISK_INCREMENT:IO_NO_INCREMENT);
+			PIRP Irp=CONTAINING_RECORD(Element, IRP, Tail.Overlay.ListEntry);
+			pDisk->ProcessIoResuest(pDeviceObject, Irp);
 		}
 	}
+}
+
+void VirtualDisk::ProcessIoResuest(PDEVICE_OBJECT pDeviceObject, PIRP Irp)
+{
+	NTSTATUS status=STATUS_INVALID_DEVICE_REQUEST;
+
+	PIO_STACK_LOCATION ioStack=IoGetCurrentIrpStackLocation(Irp);
+
+	Irp->IoStatus.Information=0;
+
+	if(ioStack)
+	{
+		switch(ioStack->MajorFunction)
+		{
+		case IRP_MJ_READ:
+		case IRP_MJ_WRITE:
+			{
+				IoParameters ioParameters = {0};
+				status = BuildIoParameters(Irp, ioStack, ioParameters);
+
+				if(NT_SUCCESS(status))
+				{
+					switch(ioStack->MajorFunction)
+					{
+					case IRP_MJ_READ:
+						Irp->IoStatus = ProcessDiskRead(ioParameters);
+						break;
+					case IRP_MJ_WRITE:
+						Irp->IoStatus = ProcessDiskWrite(ioParameters);
+						break;
+					}
+				}
+				status = Irp->IoStatus.Status;
+				break;
+			}
+		case IRP_MJ_DEVICE_CONTROL:
+			status=ThreadIoControl(pDeviceObject,Irp);
+			break;
+		}
+	}
+
+	Irp->IoStatus.Status=status;
+	IofCompleteRequest(Irp, 
+		NT_SUCCESS(status)?IO_DISK_INCREMENT:IO_NO_INCREMENT);
+}
+
+IO_STATUS_BLOCK VirtualDisk::ProcessDiskRead( const IoParameters& ioParameters )
+{
+	// Read from file to buffer
+	KdPrint(("\nCryptDisk:Read Offset=(%I64d) Length=(%d)", ioParameters.fileOffset.QuadPart - ImageDataOffset(), ioParameters.requestLength));
+	IO_STATUS_BLOCK IoStatus = {0};
+	
+	NTSTATUS status = ZwReadFile(m_hImageFile,NULL,NULL,NULL,
+		&IoStatus, ioParameters.dataBuffer, ioParameters.requestLength, const_cast<PLARGE_INTEGER>(&ioParameters.fileOffset), NULL);
+
+	if(NT_SUCCESS(status))
+	{
+		if(status==STATUS_PENDING)
+		{
+			ZwWaitForSingleObject(m_hImageFile, FALSE,NULL);
+		}
+	}
+	else
+	{
+		KdPrint(("\nCryptDisk:ReadWrite error while read. Status= %08X",status));
+		IoStatus.Status=status;
+	}
+
+	if(NT_SUCCESS(IoStatus.Status))
+	{
+		// Decipher buffer
+		m_pDiskCipher->DecipherDataBlocks(ioParameters.beginSector, ioParameters.sectors, ioParameters.dataBuffer);
+	}
+
+	return IoStatus;
+}
+
+IO_STATUS_BLOCK VirtualDisk::ProcessDiskWrite( const IoParameters& ioParameters )
+{
+	if(m_bReadOnly)
+	{
+		IO_STATUS_BLOCK IoStatus = {0};
+
+		IoStatus.Status = STATUS_MEDIA_WRITE_PROTECTED;
+		IoStatus.Information = 0;
+		
+		return IoStatus;
+	}
+
+	KdPrint(("\nCryptDisk:Write Offset=(%I64d) Length=(%d)", ioParameters.fileOffset.QuadPart - ImageDataOffset(), ioParameters.requestLength));
+
+	IO_STATUS_BLOCK IoStatus = {0};
+
+	// If request length less then cache buffer we use it
+	if(ioParameters.requestLength <= CACHE_BUFF_SIZE)
+	{
+		m_pDiskCipher->EncipherDataBlocks(ioParameters.beginSector, ioParameters.sectors, ioParameters.dataBuffer, m_cacheBuff);
+
+		NTSTATUS status;
+
+		if(NT_SUCCESS(status=ZwWriteFile(m_hImageFile, NULL, NULL, NULL,
+			&IoStatus, m_cacheBuff, ioParameters.requestLength, const_cast<PLARGE_INTEGER>(&ioParameters.fileOffset), NULL)))
+		{
+			if(status==STATUS_PENDING)
+			{
+				ZwWaitForSingleObject(m_hImageFile,
+					FALSE,NULL);
+			}
+		}
+		else
+		{
+			KdPrint(("\nCryptDisk:ReadWrite error while write. Status= %08X",status));
+			IoStatus.Status=status;
+		}
+	}
+	else
+	{
+		UCHAR	*Buff;
+
+		// Allocate buffer
+		if(Buff=(UCHAR*)ExAllocatePoolWithTag(PagedPool, ioParameters.requestLength, MEM_TAG))
+		{
+			m_pDiskCipher->EncipherDataBlocks(ioParameters.beginSector, ioParameters.sectors, ioParameters.dataBuffer, Buff);
+
+			NTSTATUS status;
+
+			if(NT_SUCCESS(status=ZwWriteFile(m_hImageFile, NULL, NULL, NULL,
+				&IoStatus, Buff, ioParameters.requestLength, const_cast<PLARGE_INTEGER>(&ioParameters.fileOffset), NULL)))
+			{
+				if(status==STATUS_PENDING)
+				{
+					ZwWaitForSingleObject(m_hImageFile, FALSE, NULL);
+				}
+			}
+			else
+			{
+				KdPrint(("\nCryptDisk:ReadWrite error while write. Status= %08X",status));
+				IoStatus.Status=status;
+			}
+
+			RtlSecureZeroMemory(Buff, ioParameters.requestLength);
+			ExFreePoolWithTag(Buff, MEM_TAG);
+		}
+		else
+		{
+			IoStatus.Status = STATUS_INSUFFICIENT_RESOURCES;
+			IoStatus.Information = 0;
+		}
+	}
+
+	return IoStatus;
+}
+
+NTSTATUS VirtualDisk::BuildIoParameters( PIRP Irp, PIO_STACK_LOCATION ioStack, IoParameters& ioParameters )
+{
+	ULONG RequestLength=ioStack->Parameters.Read.Length;
+	LARGE_INTEGER FileOffset;
+	FileOffset.QuadPart=ioStack->Parameters.Read.ByteOffset.QuadPart;
+
+	// Check for alignment
+	if((RequestLength&(BYTES_PER_SECTOR-1)) || (FileOffset.QuadPart&(BYTES_PER_SECTOR-1)))
+	{
+		KdPrint(("ReadWrite fail: invalid request length"));
+		return STATUS_INVALID_DEVICE_REQUEST;
+	}
+
+	FileOffset.QuadPart += ImageDataOffset();
+	ULONG beginSector=(ULONG)(FileOffset.QuadPart/BYTES_PER_SECTOR-1);
+	ULONG Sectors=RequestLength/BYTES_PER_SECTOR;
+
+	// Check for image size
+	if((FileOffset.QuadPart+RequestLength) > m_pDiskInfo->FileSize.QuadPart)
+	{
+		KdPrint(("ReadWrite fail: invalid request offset"));
+		return STATUS_INVALID_DEVICE_REQUEST;
+	}
+
+	// Get buffer address
+	if(!Irp->MdlAddress)
+	{
+		return STATUS_INVALID_DEVICE_REQUEST;
+	}
+
+	void* pDataBuff=MmGetSystemAddressForMdlSafe(Irp->MdlAddress,NormalPagePriority);
+	if(!pDataBuff)
+	{
+		KdPrint(("ReadWrite: unable to map pages"));
+		return STATUS_INSUFFICIENT_RESOURCES;
+	}
+
+	ioParameters.requestLength = RequestLength;
+	ioParameters.fileOffset = FileOffset;
+	ioParameters.beginSector = beginSector;
+	ioParameters.sectors = Sectors;
+	ioParameters.dataBuffer = pDataBuff;
+
+	return STATUS_SUCCESS;
 }
 
 NTSTATUS VirtualDisk::SetFlags(DISK_ADD_INFO *pInfo)
