@@ -778,26 +778,65 @@ IO_STATUS_BLOCK VirtualDisk::ProcessDiskRead( const IoParameters& ioParameters )
 	KdPrint(("\nCryptDisk:Read Offset=(%I64d) Length=(%d)", ioParameters.fileOffset.QuadPart - ImageDataOffset(), ioParameters.requestLength));
 	IO_STATUS_BLOCK IoStatus = {0};
 	
-	NTSTATUS status = ZwReadFile(m_hImageFile,NULL,NULL,NULL,
-		&IoStatus, ioParameters.dataBuffer, ioParameters.requestLength, const_cast<PLARGE_INTEGER>(&ioParameters.fileOffset), NULL);
-
-	if(NT_SUCCESS(status))
+	if(ioParameters.requestLength <= CACHE_BUFF_SIZE)
 	{
-		if(status==STATUS_PENDING)
+		NTSTATUS status = ZwReadFile(m_hImageFile,NULL,NULL,NULL,
+			&IoStatus, m_cacheBuff, ioParameters.requestLength, const_cast<PLARGE_INTEGER>(&ioParameters.fileOffset), NULL);
+
+		if(NT_SUCCESS(status))
 		{
-			ZwWaitForSingleObject(m_hImageFile, FALSE,NULL);
+			if(status==STATUS_PENDING)
+			{
+				ZwWaitForSingleObject(m_hImageFile, FALSE,NULL);
+			}
+		}
+		else
+		{
+			KdPrint(("\nCryptDisk:ReadWrite error while read. Status= %08X",status));
+			IoStatus.Status=status;
+		}
+
+		if(NT_SUCCESS(IoStatus.Status))
+		{
+			// Decipher buffer
+			m_pDiskCipher->DecipherDataBlocks(ioParameters.beginSector, ioParameters.sectors, m_cacheBuff, ioParameters.dataBuffer);
 		}
 	}
 	else
 	{
-		KdPrint(("\nCryptDisk:ReadWrite error while read. Status= %08X",status));
-		IoStatus.Status=status;
-	}
+		UCHAR	*buffer;
+		if(buffer = (UCHAR*)ExAllocatePoolWithTag(PagedPool, ioParameters.requestLength, MEM_TAG))
+		{
+			NTSTATUS status = ZwReadFile(m_hImageFile,NULL,NULL,NULL,
+				&IoStatus, buffer, ioParameters.requestLength, const_cast<PLARGE_INTEGER>(&ioParameters.fileOffset), NULL);
 
-	if(NT_SUCCESS(IoStatus.Status))
-	{
-		// Decipher buffer
-		m_pDiskCipher->DecipherDataBlocks(ioParameters.beginSector, ioParameters.sectors, ioParameters.dataBuffer);
+			if(NT_SUCCESS(status))
+			{
+				if(status==STATUS_PENDING)
+				{
+					ZwWaitForSingleObject(m_hImageFile, FALSE,NULL);
+				}
+			}
+			else
+			{
+				KdPrint(("\nCryptDisk:ReadWrite error while read. Status= %08X",status));
+				IoStatus.Status=status;
+			}
+
+			if(NT_SUCCESS(IoStatus.Status))
+			{
+				// Decipher buffer
+				m_pDiskCipher->DecipherDataBlocks(ioParameters.beginSector, ioParameters.sectors, buffer, ioParameters.dataBuffer);
+			}
+
+			RtlSecureZeroMemory(buffer, ioParameters.requestLength);
+			ExFreePoolWithTag(buffer, MEM_TAG);
+		}
+		else
+		{
+			IoStatus.Status = STATUS_INSUFFICIENT_RESOURCES;
+			IoStatus.Information = 0;
+		}
 	}
 
 	return IoStatus;
