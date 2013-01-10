@@ -656,6 +656,7 @@ void VirtualDisk::Cleanup()
 	ZwClose(m_hImageFile);
 
 	// Free cache buffer
+	RtlSecureZeroMemory(m_cacheBuff, CACHE_BUFF_SIZE);
 	ExFreePoolWithTag(m_cacheBuff, MEM_TAG);
 }
 
