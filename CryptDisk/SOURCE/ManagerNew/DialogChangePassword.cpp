@@ -161,9 +161,9 @@ void DialogChangePassword::OnEnChangeEditPassword()
 	{
 		boost::shared_array<char> buff = AllocPasswordBuffer(len+1);
 
-		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, buff.get(), len+1);
+		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, buff.get(), static_cast<int>(len+1));
 
-		bits=PWTools::GetEntropy(buff.get(), len);
+		bits=PWTools::GetEntropy(buff.get(), static_cast<int>(len));
 
 		RtlSecureZeroMemory(buff.get(), len+1);
 	}

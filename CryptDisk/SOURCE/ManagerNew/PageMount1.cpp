@@ -180,7 +180,7 @@ void PageMount1::OnBnClickedButtonRestore()
 				std::vector<unsigned char> backupBuff(backupFileSize);
 				{
 					DWORD bytesRead;
-					BOOL result = ReadFile(hBackupFile, &backupBuff[0], backupBuff.size(), &bytesRead, NULL);
+					BOOL result = ReadFile(hBackupFile, &backupBuff[0], static_cast<DWORD>(backupBuff.size()), &bytesRead, NULL);
 					if(!result || !(bytesRead == backupFileSize))
 					{
 						AfxMessageBox(_T("Unable to read data"), MB_ICONERROR);
@@ -190,7 +190,7 @@ void PageMount1::OnBnClickedButtonRestore()
 
 				{
 					DWORD bytesWrite;
-					BOOL result = WriteFile(hImageFile, &backupBuff[0], backupBuff.size(), &bytesWrite, NULL);
+					BOOL result = WriteFile(hImageFile, &backupBuff[0], static_cast<DWORD>(backupBuff.size()), &bytesWrite, NULL);
 					if(!result || !(bytesWrite == backupFileSize))
 					{
 						AfxMessageBox(_T("Unable to write data"), MB_ICONERROR);

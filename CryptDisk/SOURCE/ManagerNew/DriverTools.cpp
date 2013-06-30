@@ -20,7 +20,6 @@ DriverHelper* InitDriverHelper::Alloc()
 			// Start driver
 			SC_HANDLE		hScm;
 			SC_HANDLE		hDriverService;
-			DWORD			dwResult;
 			bool			Result=false;
 
 			if(hScm=OpenSCManager(NULL,NULL,GENERIC_EXECUTE))
@@ -42,7 +41,7 @@ DriverHelper* InitDriverHelper::Alloc()
 		}
 		return new DriverHelper(std::shared_ptr<DNDriverControl>(nullptr));
 	}
-	catch (std::exception& ex)
+	catch (std::exception&)
 	{
 		return new DriverHelper(std::shared_ptr<DNDriverControl>(nullptr));
 	}

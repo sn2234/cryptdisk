@@ -90,14 +90,14 @@ void DialogBackupHeader::OnBnClickedButtonOpen()
 {
 	size_t passwordLength = GetWindowTextLengthA(GetDlgItem(IDC_EDIT_PASSWORD)->GetSafeHwnd());
 	boost::shared_array<char> passwordBuff(AllocPasswordBuffer(passwordLength + 1));
-	GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, passwordBuff.get(), passwordLength+1);
+	GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, passwordBuff.get(), static_cast<int>(passwordLength+1));
 
 	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(passwordBuff.get()), passwordLength);
 
 	auto headerBuff = CryptDiskHelpers::ReadImageHeader(m_imagePath);
 
 	DiskHeaderTools::CIPHER_INFO info;
-	if(DiskHeaderTools::Decipher(&headerBuff[0], pb.Password(), pb.PasswordLength(), &info))
+	if(DiskHeaderTools::Decipher(&headerBuff[0], pb.Password(), static_cast<ULONG>(pb.PasswordLength()), &info))
 	{
 		// Set version and algorithm
 		switch(info.versionInfo.formatVersion)
@@ -173,7 +173,7 @@ void DialogBackupHeader::OnBnClickedOk()
 
 	{
 		DWORD bytesRead;
-		BOOL result = ReadFile(hImageFile, &headerBuff[0], headerBuff.size(), &bytesRead, NULL);
+		BOOL result = ReadFile(hImageFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesRead, NULL);
 		if(!result || !(bytesRead == headerSize))
 		{
 			AfxMessageBox(_T("Unable to read data"), MB_ICONERROR);
@@ -190,7 +190,7 @@ void DialogBackupHeader::OnBnClickedOk()
 
 	{
 		DWORD bytesWrite;
-		BOOL result = WriteFile(hBackupFile, &headerBuff[0], headerBuff.size(), &bytesWrite, NULL);
+		BOOL result = WriteFile(hBackupFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWrite, NULL);
 		if(!result || !(bytesWrite == headerSize))
 		{
 			AfxMessageBox(_T("Unable to write data"), MB_ICONERROR);

@@ -154,7 +154,7 @@ BOOL DialogMountFavorite::OnInitDialog()
 	auto i = std::find(m_driveLetters.cbegin(), m_driveLetters.cend(), m_favImage.DriveLetter());
 	if(i != m_driveLetters.cend())
 	{
-		m_driveCombo.SetCurSel(i - m_driveLetters.cbegin());
+		m_driveCombo.SetCurSel(static_cast<int>(i - m_driveLetters.cbegin()));
 	}
 	else
 	{

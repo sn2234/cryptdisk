@@ -133,7 +133,7 @@ void ImagesView::OnBnClickedButtonDismountImage()
 {
 	if(m_listImages.GetSelectionMark() != -1)
 	{
-		ULONG diskId = m_listImages.GetItemData(m_listImages.GetSelectionMark());
+		ULONG diskId = m_listImages.GetItemData(static_cast<ULONG>(m_listImages.GetSelectionMark()));
 
 		try
 		{

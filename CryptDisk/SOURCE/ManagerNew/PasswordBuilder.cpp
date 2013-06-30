@@ -9,7 +9,7 @@ PasswordBuilder::PasswordBuilder( const std::vector<std::wstring>& keyFilesList,
 	: m_password(NULL)
 	, m_passwordLength((keyFilesList.empty() ? 0 : SHA256_DIDGEST_SIZE) + passwordLength)
 {
-	m_password = reinterpret_cast<unsigned char*>(AppMemory::instance().Alloc(m_passwordLength));
+	m_password = reinterpret_cast<unsigned char*>(AppMemory::instance().Alloc(static_cast<DWORD>(m_passwordLength)));
 
 	try
 	{

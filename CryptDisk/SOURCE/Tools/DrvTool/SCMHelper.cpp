@@ -42,14 +42,17 @@ BOOL CSCMHelper::RegService(LPCTSTR serviceName, LPCTSTR imagePath)
 		return FALSE;
 	}
 
+	SCOPE_EXIT { CloseServiceHandle(hSCM); };
+
 	hService=CreateService(hSCM, serviceName, serviceName, GENERIC_ALL,
 		SERVICE_KERNEL_DRIVER, SERVICE_DEMAND_START, SERVICE_ERROR_NORMAL,
 		fullPath, NULL, NULL, NULL, NULL, NULL);
-	if(hService)
-		bRez=TRUE;
+	if (hService)
+	{
+		bRez = TRUE;
+		CloseServiceHandle(hService);
+	}
 
-	CloseServiceHandle(hService);
-	CloseServiceHandle(hSCM);
 	return bRez;
 }
 
@@ -67,18 +70,18 @@ BOOL CSCMHelper::UnregService(LPCTSTR serviceName)
 		return FALSE;
 	}
 
-	hService=OpenService(hSCM, serviceName,
-		SERVICE_ALL_ACCESS);
+	SCOPE_EXIT { CloseServiceHandle(hSCM); };
+
+	hService=OpenService(hSCM, serviceName, SERVICE_ALL_ACCESS);
 	if(hService)
 	{
 		SERVICE_STATUS	stastus;
 
 		ControlService(hService, SERVICE_CONTROL_STOP, &stastus);
 		bRez=DeleteService(hService);
+		CloseServiceHandle(hService);
 	}
 
-	CloseServiceHandle(hService);
-	CloseServiceHandle(hSCM);
 	return bRez;
 }
 
@@ -96,15 +99,15 @@ BOOL CSCMHelper::StartService(LPCTSTR serviceName)
 		return FALSE;
 	}
 
-	hService=OpenService(hSCM, serviceName,
-		SERVICE_START);
+	SCOPE_EXIT { CloseServiceHandle(hSCM); };
+
+	hService=OpenService(hSCM, serviceName, SERVICE_START);
 	if(hService)
 	{
 		bRez=::StartService(hService, 0, NULL);
+		CloseServiceHandle(hService);
 	}
 
-	CloseServiceHandle(hService);
-	CloseServiceHandle(hSCM);
 	return bRez;
 }
 
@@ -122,16 +125,16 @@ BOOL CSCMHelper::StopService(LPCTSTR serviceName)
 		return FALSE;
 	}
 
-	hService=OpenService(hSCM, serviceName,
-		SERVICE_STOP);
+	SCOPE_EXIT { CloseServiceHandle(hSCM); };
+
+	hService=OpenService(hSCM, serviceName, SERVICE_STOP);
 	if(hService)
 	{
 		SERVICE_STATUS	stastus;
 
 		bRez=ControlService(hService, SERVICE_CONTROL_STOP, &stastus);
+		CloseServiceHandle(hService);
 	}
 
-	CloseServiceHandle(hService);
-	CloseServiceHandle(hSCM);
 	return bRez;
 }

@@ -14,7 +14,7 @@ shared_ptr<IRandomGenerator> CreateRandomGen()
 
 	vector<char> sample(512, 0);
 
-	result->AddSample(&sample[0], sample.size(), sample.size()*8);
+	result->AddSample(&sample[0], static_cast<ULONG>(sample.size()), static_cast<ULONG>(sample.size()*8));
 
 	return result;
 }

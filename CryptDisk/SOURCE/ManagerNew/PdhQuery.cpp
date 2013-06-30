@@ -34,17 +34,20 @@ void PdhQuery::AddCounter( LPCWSTR counterName )
 std::vector<std::wstring> PdhQuery::ExpandWildcardPath( const std::wstring& path )
 {
 	DWORD bufferSize = 0;
-	LPWSTR buffer = NULL;
+
+	std::vector<std::wstring::value_type> strBuff(256);
+
 	std::vector<std::wstring> tmp;
-	if(PdhExpandWildCardPathW(NULL, path.c_str(), buffer, &bufferSize, 0) == PDH_MORE_DATA)
+	if (PdhExpandWildCardPathW(NULL, path.c_str(), &strBuff[0], &bufferSize, 0) == PDH_MORE_DATA)
 	{
-		buffer = new wchar_t[bufferSize + 2];
-		PdhExpandWildCardPathW(NULL, path.c_str(), buffer, &bufferSize, 0);
-		for (LPWSTR p = buffer; wcslen(p); p += wcslen(p) + 1)
+		strBuff.resize(bufferSize + 2, 0);
+		std::fill(std::begin(strBuff), std::end(strBuff), 0);
+
+		PdhExpandWildCardPathW(NULL, path.c_str(), &strBuff[0], &bufferSize, 0);
+		for (const wchar_t* p = &strBuff[0]; wcslen(p); p += wcslen(p) + 1)
 		{
 			tmp.push_back(p);
 		}
-		delete buffer;
 	}
 	return tmp;
 }

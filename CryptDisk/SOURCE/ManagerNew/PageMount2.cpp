@@ -60,7 +60,7 @@ void PageMount2::OnDocumentUpdate()
 		auto i = std::find(m_driveLetters.cbegin(), m_driveLetters.cend(), m_driveLetter);
 		if(i != m_driveLetters.cend())
 		{
-			m_driveCombo.SetCurSel(i - m_driveLetters.cbegin());
+			m_driveCombo.SetCurSel(static_cast<int>(i - m_driveLetters.cbegin()));
 		}
 		else
 		{
@@ -148,10 +148,10 @@ void PageMount2::PropagateToModel()
 
 	MountWizardModel& m = static_cast<MountWizardModel&>(m_document);
 
-	m.MountAsReadOnly(m_bReadOnly);
-	m.MountAsRemovable(m_bRemovable);
-	m.UseMountManager(m_bUseMountManager);
-	m.PreserveImageTimestamp(m_bTime);
-	m.AddToFavorites(m_bAddToFav);
+	m.MountAsReadOnly(m_bReadOnly == TRUE);
+	m.MountAsRemovable(m_bRemovable == TRUE);
+	m.UseMountManager(m_bUseMountManager == TRUE);
+	m.PreserveImageTimestamp(m_bTime == TRUE);
+	m.AddToFavorites(m_bAddToFav == TRUE);
 	m.DriveLetter(m_driveLetters[m_driveCombo.GetCurSel()]);
 }

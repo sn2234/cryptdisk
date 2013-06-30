@@ -200,6 +200,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Driver\DiskHeaderTools.h" />
+    <ClInclude Include="..\scope_exit.h" />
     <ClInclude Include="AppFavorites.h" />
     <ClInclude Include="AppMemory.h" />
     <ClInclude Include="AppRandom.h" />

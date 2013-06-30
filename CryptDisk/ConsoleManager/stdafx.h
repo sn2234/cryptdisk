@@ -30,5 +30,8 @@
 #include <Shlobj.h>
 
 #include "CryptoLib.h"
+
+#include "..\SOURCE\scope_exit.h"
+
 // Definitions
 #define USER_MODE

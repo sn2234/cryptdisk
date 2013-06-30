@@ -329,7 +329,7 @@ void RandomGenerator::AddTimer()
 	LARGE_INTEGER	timestamp;
 	if(!QueryPerformanceCounter(&timestamp))
 	{
-		timestamp.QuadPart = GetTickCount();
+		timestamp.QuadPart = GetTickCount64();
 	}
 
 	AddSample(&timestamp, sizeof(timestamp), 2);

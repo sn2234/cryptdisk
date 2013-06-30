@@ -25,7 +25,7 @@ void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* 
 
 	pInfo->DriveLetter = driveLetter;
 	pInfo->MountOptions = mountOptions;
-	pInfo->PathSize = sizeof(pathPrefix) + wcslen(imagePath)*sizeof(WCHAR) + sizeof(WCHAR);
+	pInfo->PathSize = static_cast<ULONG>(sizeof(pathPrefix) + wcslen(imagePath)*sizeof(WCHAR) + sizeof(WCHAR));
 	wcscpy_s(pInfo->FilePath, pInfo->PathSize / sizeof(WCHAR), pathPrefix);
 	wcscat_s(pInfo->FilePath, pInfo->PathSize / sizeof(WCHAR), imagePath);
 
@@ -35,7 +35,7 @@ void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* 
 
 	// Decipher disk header
 	DiskHeaderTools::CIPHER_INFO cipherInfo;
-	if(!DiskHeaderTools::Decipher(&headerBuff[0], password, passwordLength, &cipherInfo))
+	if(!DiskHeaderTools::Decipher(&headerBuff[0], password, static_cast<ULONG>(passwordLength), &cipherInfo))
 	{
 		throw logic_error("Wrong password");
 	}
@@ -49,7 +49,7 @@ void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* 
 	RtlSecureZeroMemory(&cipherInfo, sizeof(cipherInfo));
 	RtlSecureZeroMemory(&headerBuff[0], headerBuff.size());
 
-	DWORD drvResult = driverControl.Control(IOCTL_VDISK_ADD_DISK, &buffer[0], buffer.size());
+	DWORD drvResult = driverControl.Control(IOCTL_VDISK_ADD_DISK, &buffer[0], static_cast<ULONG>(buffer.size()));
 	RtlSecureZeroMemory(&buffer[0], buffer.size());
 	if(!drvResult)
 	{
@@ -83,7 +83,7 @@ std::vector<MountedImageInfo> CryptDiskHelpers::ListMountedImages( DNDriverContr
 			{
 				vector<unsigned char> buffer(bufferSize);
 
-				if(!driverControl.Control(IOCTL_VDISK_GET_DISKS_INFO, &buffer[0], buffer.size(), &result))
+				if(!driverControl.Control(IOCTL_VDISK_GET_DISKS_INFO, &buffer[0], static_cast<ULONG>(buffer.size()), &result))
 				{
 					throw winapi_exception("DeviceIoControl error when querying mounted images");
 				}
@@ -153,14 +153,16 @@ void CryptDiskHelpers::CreateImage( CryptoLib::IRandomGenerator* pRndGen,
 	header.DiskSectorSize = sectorSize;
 	header.ImageOffset = 2*sizeof(DISK_HEADER_V4); // Reserve place for another header for hidden volume
 
-	DiskHeaderTools::Encipher(&header, password, passwordLength, cipherAlgorithm);
+	DiskHeaderTools::Encipher(&header, password, static_cast<ULONG>(passwordLength), cipherAlgorithm);
 
 	// Create file
-	SafeHandle hFile(CreateFileW(imagePath, GENERIC_READ|GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL));
+	HANDLE hFile(CreateFileW(imagePath, GENERIC_READ|GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL|FILE_FLAG_SEQUENTIAL_SCAN, NULL));
 	if(hFile == INVALID_HANDLE_VALUE)
 	{
 		throw winapi_exception("CreateImage: unable to create image file");
 	}
+
+	SCOPE_EXIT { CloseHandle(hFile); };
 
 	// Correct image size
 	imageSize -= imageSize % sectorSize;
@@ -176,11 +178,13 @@ void CryptDiskHelpers::CreateImage( CryptoLib::IRandomGenerator* pRndGen,
 	}
 
 	{
-		SafeHandle hFileMapping(CreateFileMapping(hFile, NULL, PAGE_READWRITE, fileSize.HighPart, fileSize.LowPart, NULL));
+		HANDLE hFileMapping(CreateFileMapping(hFile, NULL, PAGE_READWRITE, fileSize.HighPart, fileSize.LowPart, NULL));
 		if(hFileMapping == 0)
 		{
 			throw winapi_exception("CreateImage: unable to create file mapping");
 		}
+
+		SCOPE_EXIT { CloseHandle(hFileMapping); };
 
 		// Write header
 		LARGE_INTEGER offsetMapped;
@@ -189,6 +193,8 @@ void CryptDiskHelpers::CreateImage( CryptoLib::IRandomGenerator* pRndGen,
 		offsetMapped.QuadPart = 0;
 
 		void *pMap = MapViewOfFile(hFileMapping, FILE_MAP_WRITE, offsetMapped.HighPart, offsetMapped.LowPart, bytesToMap);
+
+		SCOPE_EXIT { UnmapViewOfFile(pMap); };
 
 		*((DISK_HEADER_V4*)pMap) = header;
 
@@ -242,8 +248,6 @@ void CryptDiskHelpers::CreateImage( CryptoLib::IRandomGenerator* pRndGen,
 				bytesFilledInCurrentView = 0;
 			}
 		} while (bytesFilled < bytesToFill);
-
-		UnmapViewOfFile(pMap);
 	}
 }
 
@@ -254,7 +258,7 @@ bool CryptDiskHelpers::CheckImage( const WCHAR* imagePath, const unsigned char* 
 
 	// Decipher disk header
 	DiskHeaderTools::CIPHER_INFO cipherInfo;
-	bool bResult = DiskHeaderTools::Decipher(&headerBuff[0], password, passwordLength, &cipherInfo);
+	bool bResult = DiskHeaderTools::Decipher(&headerBuff[0], password, static_cast<ULONG>(passwordLength), &cipherInfo);
 
 	RtlSecureZeroMemory(&cipherInfo, sizeof(cipherInfo));
 	RtlSecureZeroMemory(&headerBuff[0], headerBuff.size());
@@ -270,7 +274,7 @@ void CryptDiskHelpers::ChangePassword( CryptoLib::IRandomGenerator* pRndGen, con
 
 	// Decipher disk header
 	DiskHeaderTools::CIPHER_INFO cipherInfo;
-	if(!DiskHeaderTools::Decipher(&headerBuff[0], password, passwordLength, &cipherInfo))
+	if(!DiskHeaderTools::Decipher(&headerBuff[0], password, static_cast<ULONG>(passwordLength), &cipherInfo))
 	{
 		throw logic_error("Wrong password");
 	}
@@ -282,14 +286,14 @@ void CryptDiskHelpers::ChangePassword( CryptoLib::IRandomGenerator* pRndGen, con
 		{
 			DISK_HEADER_V3 *pHeader = reinterpret_cast<DISK_HEADER_V3*>(&headerBuff[0]);
 			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
-			DiskHeaderTools::Encipher(pHeader, passwordNew, passwordNewLength, cipherInfo.diskCipher);
+			DiskHeaderTools::Encipher(pHeader, passwordNew, static_cast<ULONG>(passwordNewLength), cipherInfo.diskCipher);
 		}
 		break;
 	case DISK_VERSION_4:
 		{
 			DISK_HEADER_V4 *pHeader = reinterpret_cast<DISK_HEADER_V4*>(&headerBuff[0]);
 			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
-			DiskHeaderTools::Encipher(pHeader, passwordNew, passwordNewLength, cipherInfo.diskCipher);
+			DiskHeaderTools::Encipher(pHeader, passwordNew, static_cast<ULONG>(passwordNewLength), cipherInfo.diskCipher);
 		}
 		break;
 	default:
@@ -305,7 +309,7 @@ void CryptDiskHelpers::ChangePassword( CryptoLib::IRandomGenerator* pRndGen, con
 	}
 
 	DWORD bytesWritten;
-	BOOL result = WriteFile(hFile, &headerBuff[0], headerBuff.size(), &bytesWritten, NULL);
+	BOOL result = WriteFile(hFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWritten, NULL);
 	if(!result)
 	{
 		int err = GetLastError();
@@ -330,15 +334,15 @@ std::vector<unsigned char> CryptDiskHelpers::ReadImageHeader( const WCHAR* image
 		throw winapi_exception("Error opening image");
 	}
 
+	SCOPE_EXIT { CloseHandle(hFile); };
+
 	DWORD bytesRead;
-	BOOL result = ReadFile(hFile, &headerBuff[0], headerBuff.size(), &bytesRead, NULL);
+	BOOL result = ReadFile(hFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesRead, NULL);
 	if(!result)
 	{
 		int err = GetLastError();
-		CloseHandle(hFile);
 		throw winapi_exception("Error reading disk header", err);
 	}
-	CloseHandle(hFile);
 	
 	return headerBuff;
 }
