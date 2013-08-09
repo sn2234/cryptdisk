@@ -37,14 +37,14 @@ typedef	struct	DISKS_MANAGER_INIT_INFO
 
 class	DisksManager
 {
-public:
+private:
 	BOOL				Initialized;
 	
 	ULONG				DisksCount;
 	ULONG				DisksCountMax;
 	PDEVICE_OBJECT		*VirtualDisks;
 
-
+public:
 	NTSTATUS			Init(DISKS_MANAGER_INIT_INFO *Info);
 	NTSTATUS			Close(bool bForce);
 
