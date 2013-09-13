@@ -153,7 +153,7 @@ void doTestDiskCipherAesV4DecInPlace(const DiskCipherAesV4TestData& testData)
 
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV4Enc )
 {
-	BOOST_MESSAGE("DiskCipherV4 encryption test");
+	BOOST_TEST_MESSAGE("DiskCipherV4 encryption test");
 
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV4Enc);
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV4EncInPlace);
@@ -161,7 +161,7 @@ BOOST_AUTO_TEST_CASE( testDiskCipherAesV4Enc )
 
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV4Dec )
 {
-	BOOST_MESSAGE("DiskCipherV4 decryption test");
+	BOOST_TEST_MESSAGE("DiskCipherV4 decryption test");
 
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV4Dec);
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV4DecInPlace);
@@ -214,7 +214,7 @@ void doTestDiskCipherAesV4Add128(const Add128TestData& testData)
 
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV4Add128 )
 {
-	BOOST_MESSAGE("DiskCipherV4 128 bit addition test");
+	BOOST_TEST_MESSAGE("DiskCipherV4 128 bit addition test");
 
 	for_each(begin(testsAdd128), end(testsAdd128), doTestDiskCipherAesV4Add128);
 }
@@ -245,7 +245,7 @@ void doTestDiskCipherAesV4Inc128(const Inc128TestData& testData)
 
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV4Inc128 )
 {
-	BOOST_MESSAGE("DiskCipherV4 128 bit increment test");
+	BOOST_TEST_MESSAGE("DiskCipherV4 128 bit increment test");
 
 	for_each(begin(testsInc128), end(testsInc128), doTestDiskCipherAesV4Inc128);
 }

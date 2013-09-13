@@ -4211,7 +4211,7 @@ void doTestDiskCipherAesV3DecInPlace(const DiskCipherAesV3TestData& testData)
 
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV3Enc )
 {
-	BOOST_MESSAGE("DiskCipherAesV3 encryption test");
+	BOOST_TEST_MESSAGE("DiskCipherAesV3 encryption test");
 
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV3Enc);
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV3EncInPlace);
@@ -4219,7 +4219,7 @@ BOOST_AUTO_TEST_CASE( testDiskCipherAesV3Enc )
 
 BOOST_AUTO_TEST_CASE( testDiskCipherAesV3Dec )
 {
-	BOOST_MESSAGE("DiskCipherAesV3 decryption test");
+	BOOST_TEST_MESSAGE("DiskCipherAesV3 decryption test");
 
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV3Dec);
 	for_each(begin(tests), end(tests), doTestDiskCipherAesV3DecInPlace);

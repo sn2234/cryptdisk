@@ -21,7 +21,7 @@ shared_ptr<IRandomGenerator> CreateRandomGen()
 
 BOOST_AUTO_TEST_CASE( testDiskHeaderV3_AES )
 {
-	BOOST_MESSAGE("Disk header V3 AES test");
+	BOOST_TEST_MESSAGE("Disk header V3 AES test");
 
 	shared_ptr<IRandomGenerator> rndGen = CreateRandomGen();
 
@@ -50,7 +50,7 @@ BOOST_AUTO_TEST_CASE( testDiskHeaderV3_AES )
 
 BOOST_AUTO_TEST_CASE( testDiskHeaderV3_Twofish )
 {
-	BOOST_MESSAGE("Disk header V3 AES test");
+	BOOST_TEST_MESSAGE("Disk header V3 AES test");
 
 	shared_ptr<IRandomGenerator> rndGen = CreateRandomGen();
 
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( testDiskHeaderV3_Twofish )
 
 BOOST_AUTO_TEST_CASE( testDiskHeaderV4_AES )
 {
-	BOOST_MESSAGE("Disk header V4 AES test");
+	BOOST_TEST_MESSAGE("Disk header V4 AES test");
 
 	shared_ptr<IRandomGenerator> rndGen = CreateRandomGen();
 	vector<unsigned char> headerBuff(sizeof(DISK_HEADER_V4), 0);

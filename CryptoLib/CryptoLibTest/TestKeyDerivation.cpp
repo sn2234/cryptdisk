@@ -49,7 +49,7 @@ void DoPkcs5HmacSha256Test(const PBKDF2Test& testData)
 
 BOOST_AUTO_TEST_CASE( pkcs5HmacSha256Test )
 {
-	BOOST_MESSAGE("PKCS 5.2.1 with HMAC-SHA-256 test");
+	BOOST_TEST_MESSAGE("PKCS 5.2.1 with HMAC-SHA-256 test");
 
 	for_each(begin(testCases), end(testCases), DoPkcs5HmacSha256Test);
 }

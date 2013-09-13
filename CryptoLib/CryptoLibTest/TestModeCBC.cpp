@@ -74,7 +74,7 @@ void DoAesCbcDecTestInPlace(const AES_CBC_TEST& test)
 
 BOOST_AUTO_TEST_CASE( aesCbcDecTest )
 {
-	BOOST_MESSAGE("AES CBC Decryption test");
+	BOOST_TEST_MESSAGE("AES CBC Decryption test");
 
 	for_each(begin(aesCbcTestVectors), end(aesCbcTestVectors), DoAesCbcDecTest);
 	for_each(begin(aesCbcTestVectors), end(aesCbcTestVectors), DoAesCbcDecTestInPlace);
@@ -108,7 +108,7 @@ void DoAesCbcEncTestInPlace(const AES_CBC_TEST& test)
 
 BOOST_AUTO_TEST_CASE( aesCbcEncTest )
 {
-	BOOST_MESSAGE("AES CBC Encryption test");
+	BOOST_TEST_MESSAGE("AES CBC Encryption test");
 
 	for_each(begin(aesCbcTestVectors), end(aesCbcTestVectors), DoAesCbcEncTest);
 	for_each(begin(aesCbcTestVectors), end(aesCbcTestVectors), DoAesCbcEncTestInPlace);

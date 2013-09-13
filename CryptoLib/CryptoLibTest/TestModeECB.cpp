@@ -70,7 +70,7 @@ void DoAesEcbDecTestInPlace(const AES_ECB_TEST& test)
 
 BOOST_AUTO_TEST_CASE( aesEcbDecTest )
 {
-	BOOST_MESSAGE("AES ECB decryption test");
+	BOOST_TEST_MESSAGE("AES ECB decryption test");
 
 	for_each(begin(aesEcbTestVectors), end(aesEcbTestVectors), DoAesEcbDecTest);
 	for_each(begin(aesEcbTestVectors), end(aesEcbTestVectors), DoAesEcbDecTestInPlace);
@@ -105,7 +105,7 @@ void DoAesEcbEncTestInPlace(const AES_ECB_TEST& test)
 
 BOOST_AUTO_TEST_CASE( aesEcbEncTest )
 {
-	BOOST_MESSAGE("AES ECB encryption test");
+	BOOST_TEST_MESSAGE("AES ECB encryption test");
 
 	for_each(begin(aesEcbTestVectors), end(aesEcbTestVectors), DoAesEcbEncTest);
 	for_each(begin(aesEcbTestVectors), end(aesEcbTestVectors), DoAesEcbEncTestInPlace);

@@ -123,7 +123,7 @@ void DoSha256HmacTest(const HmacSha256TestVector& testData)
 
 BOOST_AUTO_TEST_CASE( hmacSha256Test )
 {
-	BOOST_MESSAGE("HMAC-SHA-256 test");
+	BOOST_TEST_MESSAGE("HMAC-SHA-256 test");
 
 	for_each(begin(sha256Tests), end(sha256Tests), DoSha256HmacTest);
 }

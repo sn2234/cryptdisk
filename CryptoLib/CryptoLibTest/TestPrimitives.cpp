@@ -120,13 +120,13 @@ void AesDecTest(const AES_TEST& testData)
 
 BOOST_AUTO_TEST_CASE( aesEncTestMy )
 {
-	BOOST_MESSAGE("Rijndael-256 encryption test");
+	BOOST_TEST_MESSAGE("Rijndael-256 encryption test");
 	for_each(begin(AesTests), end(AesTests), AesEncTest);
 }
 
 BOOST_AUTO_TEST_CASE( aesDecTestMy )
 {
-	BOOST_MESSAGE("Rijndael-256 decryption test");
+	BOOST_TEST_MESSAGE("Rijndael-256 decryption test");
 	for_each(begin(AesTests), end(AesTests), AesDecTest);
 }
 
@@ -231,13 +231,13 @@ void TwofishEncTest(const TWOFISH_TEST& testData)
 
 BOOST_AUTO_TEST_CASE( twofishEncTestMy )
 {
-	BOOST_MESSAGE("Twofish encryption test");
+	BOOST_TEST_MESSAGE("Twofish encryption test");
 	for_each(begin(TwofishTests), end(TwofishTests), TwofishEncTest);
 }
 
 BOOST_AUTO_TEST_CASE( twofishDecTestMy )
 {
-	BOOST_MESSAGE("Twofish decrytption test");
+	BOOST_TEST_MESSAGE("Twofish decrytption test");
 	for_each(begin(TwofishTests), end(TwofishTests), TwofishDecTest);
 }
 
@@ -462,7 +462,7 @@ void Rc4Test(const RC4_TEST& testData)
 
 BOOST_AUTO_TEST_CASE( rc4Test )
 {
-	BOOST_MESSAGE("RC4 test");
+	BOOST_TEST_MESSAGE("RC4 test");
 
 	BOOST_REQUIRE_EQUAL(sizeof(testRC4plaintext1), sizeof(testRC4ciphertext1));
 	BOOST_REQUIRE_EQUAL(sizeof(testRC4plaintext2), sizeof(testRC4ciphertext2));
@@ -528,7 +528,7 @@ void TestSha256(const SHA_TEST& testData)
 
 BOOST_AUTO_TEST_CASE( sha256Test )
 {
-	BOOST_MESSAGE("SHA-256 test");
+	BOOST_TEST_MESSAGE("SHA-256 test");
 
 	for_each(begin(ShaTests), end(ShaTests), TestSha256);
 

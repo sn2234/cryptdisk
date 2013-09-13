@@ -173,7 +173,7 @@ void DoAesXtsEncTestInPlace(const XtsTest& testData)
 
 BOOST_AUTO_TEST_CASE( aesXtsEncTest )
 {
-	BOOST_MESSAGE("XTS-AES-256 encryption test");
+	BOOST_TEST_MESSAGE("XTS-AES-256 encryption test");
 
 	for_each(begin(aesXtsTestVectors), end(aesXtsTestVectors), DoAesXtsEncTest);
 	for_each(begin(aesXtsTestVectors), end(aesXtsTestVectors), DoAesXtsEncTestInPlace);
@@ -217,7 +217,7 @@ void DoAesXtsDecTestInPlace(const XtsTest& testData)
 
 BOOST_AUTO_TEST_CASE( aesXtsDecTest )
 {
-	BOOST_MESSAGE("XTS-AES-256 decryption test");
+	BOOST_TEST_MESSAGE("XTS-AES-256 decryption test");
 
 	for_each(begin(aesXtsTestVectors), end(aesXtsTestVectors), DoAesXtsDecTest);
 	for_each(begin(aesXtsTestVectors), end(aesXtsTestVectors), DoAesXtsDecTestInPlace);

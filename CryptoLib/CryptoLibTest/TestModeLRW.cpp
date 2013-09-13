@@ -70,7 +70,7 @@ void DoAesLrwEncTestInPlace(const LrwTest& testData)
 
 BOOST_AUTO_TEST_CASE( aesLrwEncTest )
 {
-	BOOST_MESSAGE("LRW-AES-256 encryption test");
+	BOOST_TEST_MESSAGE("LRW-AES-256 encryption test");
 
 	for_each(begin(aesLrwTestVectors), end(aesLrwTestVectors), DoAesLrwEncTest);
 	for_each(begin(aesLrwTestVectors), end(aesLrwTestVectors), DoAesLrwEncTestInPlace);

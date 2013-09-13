@@ -1,6 +1,7 @@
 
 #pragma once
 #include "PdhQuery.h"
+#include <wincrypt.h>
 
 struct RND_MOUSE_EVENT
 {
