@@ -41,7 +41,7 @@ bool RandomGeneratorBase::GenerateRandomBytes( void *pBuff, size_t size )
 	m_gen.Init(key);
 	RtlSecureZeroMemory(key, sizeof(key));
 
-	m_gen.Generate(pBuff, size);
+	m_gen.Generate(pBuff, static_cast<ULONG>(size));
 	m_gen.Clear();
 
 	Unlock();
