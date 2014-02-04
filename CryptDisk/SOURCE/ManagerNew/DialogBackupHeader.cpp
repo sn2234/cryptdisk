@@ -10,7 +10,6 @@
 #include "AppMemory.h"
 #include "PasswordBuilder.h"
 #include "DiskHeaderTools.h"
-#include "ManagerNew\SafeHandle.h"
 
 namespace fs = boost::filesystem;
 
@@ -164,12 +163,14 @@ void DialogBackupHeader::OnBnClickedOk()
 	std::vector<unsigned char> headerBuff(headerSize);
 
 	
-	SafeHandle hImageFile(CreateFileW(m_imagePath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
+	HANDLE hImageFile(CreateFileW(m_imagePath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
 	if (hImageFile == INVALID_HANDLE_VALUE)
 	{
 		AfxMessageBox(_T("Unable to open image file"), MB_ICONERROR);
 		return;
 	}
+
+	SCOPE_EXIT{ CloseHandle(hImageFile); };
 
 	{
 		DWORD bytesRead;
@@ -181,12 +182,14 @@ void DialogBackupHeader::OnBnClickedOk()
 		}
 	}
 
-	SafeHandle hBackupFile(CreateFileW(m_backupPath, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL));
+	HANDLE hBackupFile(CreateFileW(m_backupPath, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL));
 	if (hBackupFile == INVALID_HANDLE_VALUE)
 	{
 		AfxMessageBox(_T("Unable to open backup file"), MB_ICONERROR);
 		return;
 	}
+
+	SCOPE_EXIT{ CloseHandle(hBackupFile); };
 
 	{
 		DWORD bytesWrite;

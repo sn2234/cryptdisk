@@ -12,7 +12,6 @@
 namespace po = boost::program_options;
 
 using namespace std;
-using namespace std::tr1;
 
 static TCHAR DriverControlDeviceName[]=_TEXT("\\\\.\\DNDiskControl40");
 

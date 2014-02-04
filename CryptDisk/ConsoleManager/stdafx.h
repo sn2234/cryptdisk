@@ -31,7 +31,7 @@
 
 #include "CryptoLib.h"
 
-#include "..\SOURCE\scope_exit.h"
+#include "../SOURCE/Core/scope_exit.h"
 
 // Definitions
 #define USER_MODE

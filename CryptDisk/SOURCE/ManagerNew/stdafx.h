@@ -80,7 +80,7 @@
 #include <Pdh.h>
 #include <PdhMsg.h>
 
-#include "..\scope_exit.h"
+#include "../Core/scope_exit.h"
 
 // Definitions
 #define USER_MODE
