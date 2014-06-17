@@ -460,11 +460,12 @@ bool DiskHeaderTools::Decipher( DISK_HEADER_V4* pHeader, const UCHAR* pUserKey, 
 		{
 			// Create a copy of pHeaderBuff
 			DISK_HEADER_V4 *pHeaderBuff = (DISK_HEADER_V4*)ExAllocatePoolWithTag(PagedPool, sizeof(DISK_HEADER_V4), MEM_TAG);
-			memcpy(pHeaderBuff, pHeader, sizeof(DISK_HEADER_V4));
 			if(!pHeaderBuff)
 			{
 				return false;
 			}
+
+			memcpy(pHeaderBuff, pHeader, sizeof(DISK_HEADER_V4));
 
 			// Initialize cipher
 			RijndaelEngine* pEngine = (RijndaelEngine*)ExAllocatePoolWithTag(PagedPool, sizeof(RijndaelEngine), MEM_TAG);
@@ -503,11 +504,12 @@ bool DiskHeaderTools::Decipher( DISK_HEADER_V4* pHeader, const UCHAR* pUserKey, 
 		{
 			// Create a copy of pHeaderBuff
 			DISK_HEADER_V4 *pHeaderBuff = (DISK_HEADER_V4*)ExAllocatePoolWithTag(PagedPool, sizeof(DISK_HEADER_V4), MEM_TAG);
-			memcpy(pHeaderBuff, pHeader, sizeof(DISK_HEADER_V4));
 			if(!pHeaderBuff)
 			{
 				return false;
 			}
+
+			memcpy(pHeaderBuff, pHeader, sizeof(DISK_HEADER_V4));
 
 			// Initialize cipher
 			TwofishEngine* pEngine = (TwofishEngine*)ExAllocatePoolWithTag(PagedPool, sizeof(TwofishEngine), MEM_TAG);

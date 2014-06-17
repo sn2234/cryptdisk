@@ -615,8 +615,6 @@ NTSTATUS VirtualDisk::IoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 		return status;
 	}
 
-	status=STATUS_INVALID_DEVICE_REQUEST;
-
 	IoMarkIrpPending(Irp);
 	status=STATUS_PENDING;
 

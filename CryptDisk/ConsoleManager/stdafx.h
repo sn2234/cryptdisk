@@ -21,6 +21,9 @@
 #include <boost/program_options.hpp>
 #include <boost/filesystem.hpp>
 #include <boost/range.hpp>
+#include <boost/system/system_error.hpp>
+#include <boost/format.hpp>
+#include <boost/algorithm/string.hpp>
 
 // Windows
 #include <Windows.h>
@@ -28,6 +31,16 @@
 #include <Dbt.h>
 #include <winsvc.h>
 #include <Shlobj.h>
+
+// ATL
+#define _ATL_CSTRING_EXPLICIT_CONSTRUCTORS      // some CString constructors will be explicit
+
+#include <atlbase.h>
+#include <atlstr.h>
+#include <atlsafe.h>
+#include <comdef.h>
+#include <initguid.h>
+#include <wbemidl.h>
 
 #include "CryptoLib.h"
 

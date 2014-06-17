@@ -7,6 +7,8 @@
 #include "DNDriverControl.h"
 #include "DriverProtocol.h"
 
+#include "VolumeTools.h"
+
 #include <Random/Random.h>
 
 namespace po = boost::program_options;
@@ -15,94 +17,130 @@ using namespace std;
 
 static TCHAR DriverControlDeviceName[]=_TEXT("\\\\.\\DNDiskControl40");
 
-shared_ptr<DNDriverControl> CreateDriverControl()
+namespace
 {
-	return shared_ptr<DNDriverControl>(DNDriverControl::Create(DriverControlDeviceName));
-}
-
-shared_ptr<CryptoLib::RandomGeneratorBase> CreateRandomGen()
-{
-	shared_ptr<CryptoLib::RandomGeneratorBase> result(new CryptoLib::RandomGeneratorBase());
-
-	vector<char> sample(512, 0);
-
-	result->AddSample(&sample[0], static_cast<ULONG>(sample.size()), static_cast<ULONG>(sample.size()*8));
-
-	return result;
-}
-
-
-void MountImage(const wstring& imagePath, const wstring& driveLetter, const string& password)
-{
-	shared_ptr<DNDriverControl> driverControl(CreateDriverControl());
-
-	ULONG mountOptions = MOUNT_VIA_MOUNTMGR | MOUNT_SAVE_TIME;
-
-	CryptDiskHelpers::MountImage(*driverControl, imagePath.c_str(), driveLetter[0], reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), 0);
-}
-
-void CheckImage(const wstring& imagePath, const string& password)
-{
-	if(CryptDiskHelpers::CheckImage(imagePath.c_str(), reinterpret_cast<const unsigned char*>(password.c_str()), password.size()))
+	shared_ptr<DNDriverControl> CreateDriverControl()
 	{
-		wcout << "Success" << endl;
+		return shared_ptr<DNDriverControl>(DNDriverControl::Create(DriverControlDeviceName));
 	}
-	else
+
+	shared_ptr<CryptoLib::RandomGeneratorBase> CreateRandomGen()
 	{
-		wcout << "Failed" << endl;
+		shared_ptr<CryptoLib::RandomGeneratorBase> result(new CryptoLib::RandomGeneratorBase());
+
+		vector<char> sample(512, 0);
+
+		result->AddSample(&sample[0], static_cast<ULONG>(sample.size()), static_cast<ULONG>(sample.size() * 8));
+
+		return result;
 	}
-}
 
-void ChangePassword(const wstring& imagePath, const string& password, const string& passwordNew)
-{
-	shared_ptr<CryptoLib::IRandomGenerator> randomGen = CreateRandomGen();
-	CryptDiskHelpers::ChangePassword(randomGen.get(), imagePath.c_str(), reinterpret_cast<const unsigned char*>(password.c_str()), password.size(),
-		reinterpret_cast<const unsigned char*>(passwordNew.c_str()), passwordNew.size());
-}
 
-void UnmountImage(ULONG diskId, bool forceUnmount)
-{
-	shared_ptr<DNDriverControl> driverControl(CreateDriverControl());
-
-	CryptDiskHelpers::UnmountImage(*driverControl, diskId, forceUnmount);
-}
-
-void ListImages()
-{
-	shared_ptr<DNDriverControl> driverControl(CreateDriverControl());
-
-	vector<MountedImageInfo> images(CryptDiskHelpers::ListMountedImages(*driverControl));
-
-	for (vector<MountedImageInfo>::iterator it = images.begin(); it != images.end(); ++it)
+	void MountImage(const wstring& imagePath, const wstring& driveLetter, const string& password)
 	{
-		wcout	<< "DiskId:\t" << (*it).diskId << endl
+		shared_ptr<DNDriverControl> driverControl(CreateDriverControl());
+
+		ULONG mountOptions = MOUNT_VIA_MOUNTMGR | MOUNT_SAVE_TIME;
+
+		CryptDiskHelpers::MountImage(*driverControl, imagePath.c_str(), driveLetter[0],
+			reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), mountOptions);
+	}
+
+	void CheckImage(const wstring& imagePath, const string& password)
+	{
+		if (CryptDiskHelpers::CheckImage(imagePath.c_str(), reinterpret_cast<const unsigned char*>(password.c_str()), password.size()))
+		{
+			wcout << "Success" << endl;
+		}
+		else
+		{
+			wcout << "Failed" << endl;
+		}
+	}
+
+	void ChangePassword(const wstring& imagePath, const string& password, const string& passwordNew)
+	{
+		shared_ptr<CryptoLib::IRandomGenerator> randomGen = CreateRandomGen();
+		CryptDiskHelpers::ChangePassword(randomGen.get(), imagePath.c_str(), reinterpret_cast<const unsigned char*>(password.c_str()), password.size(),
+			reinterpret_cast<const unsigned char*>(passwordNew.c_str()), passwordNew.size());
+	}
+
+	void UnmountImage(ULONG diskId, bool forceUnmount)
+	{
+		shared_ptr<DNDriverControl> driverControl(CreateDriverControl());
+
+		CryptDiskHelpers::UnmountImage(*driverControl, diskId, forceUnmount);
+	}
+
+	void ListImages()
+	{
+		shared_ptr<DNDriverControl> driverControl(CreateDriverControl());
+
+		vector<MountedImageInfo> images(CryptDiskHelpers::ListMountedImages(*driverControl));
+
+		for (vector<MountedImageInfo>::iterator it = images.begin(); it != images.end(); ++it)
+		{
+			wcout << "DiskId:\t" << (*it).diskId << endl
 				<< "Letter:\t" << (*it).driveLetter << endl
 				<< "Size:\t" << (*it).size << endl
 				<< "Image:\t" << (*it).imageFilePath << endl;
+		}
 	}
-}
 
-void CreateImage(const wstring& imagePath, const string& algoName, const string& password, INT64 imageSize)
-{
-	DISK_CIPHER algo;
-
-	if(_stricmp(algoName.c_str(), "aes") == 0)
+	void CreateImage(const wstring& imagePath, const string& algoName, const string& password, INT64 imageSize)
 	{
-		algo = DISK_CIPHER_AES;
-	}
-	else if(_stricmp(algoName.c_str(), "twofish") == 0)
-	{
-		algo = DISK_CIPHER_TWOFISH;
-	}
-	else
-	{
-		throw logic_error("Unknown algorithm");
+		DISK_CIPHER algo;
+
+		if (_stricmp(algoName.c_str(), "aes") == 0)
+		{
+			algo = DISK_CIPHER_AES;
+		}
+		else if (_stricmp(algoName.c_str(), "twofish") == 0)
+		{
+			algo = DISK_CIPHER_TWOFISH;
+		}
+		else
+		{
+			throw logic_error("Unknown algorithm");
+		}
+
+		shared_ptr<CryptoLib::IRandomGenerator> randomGen = CreateRandomGen();
+
+		CryptDiskHelpers::CreateImage(randomGen.get(), imagePath.c_str(), imageSize, algo, reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), true,
+			[](double progress){ return true; });
 	}
 
-	shared_ptr<CryptoLib::IRandomGenerator> randomGen = CreateRandomGen();
+	void ListVolumes()
+	{
+		VolumeTools volumeTools;
 
-	CryptDiskHelpers::CreateImage(randomGen.get(), imagePath.c_str(), imageSize, algo, reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), true,
-		[](double progress){ return true; });
+		std::cout << "\nVolumes:";
+		for (auto i : volumeTools.enumVolumes())
+		{
+			std::cout << "\n" << i.deviceId
+				<< ", " << i.driveLetter
+				<< ", " << i.capacity
+				<< ", " << i.fileSystem
+				<< ", " << i.driveType
+				<< "\n\t";
+
+
+			for (auto e : i.diskExtents)
+			{
+				std::cout << "\\\\.\\PHYSICALDRIVE" << e.DiskNumber << "\n\t";
+			}
+		}
+	}
+
+	void MountVolume(const wstring& volumeName, const wstring& driveLetter, const string& password)
+	{
+		shared_ptr<DNDriverControl> driverControl(CreateDriverControl());
+
+		ULONG mountOptions = MOUNT_VIA_MOUNTMGR | MOUNT_SAVE_TIME | MOUNT_DEVICE;
+
+		CryptDiskHelpers::MountImage(*driverControl, volumeName.c_str(), driveLetter[0],
+			reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), mountOptions);
+	}
 }
 
 int wmain(int argc, WCHAR* argv[])
@@ -111,8 +149,16 @@ int wmain(int argc, WCHAR* argv[])
 
 	try
 	{
+		CoInitializeEx(NULL, COINIT_MULTITHREADED);
+
+		SCOPE_EXIT{ CoUninitialize(); };
+		CoInitializeSecurity(NULL, -1, NULL,
+			NULL, RPC_C_AUTHN_LEVEL_PKT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL,
+			EOAC_NONE, 0);
+
 		wstring imagePath;
 		wstring driveLetter;
+		wstring volumeName;
 		bool forceUnmount;
 		string password;
 		string passwordNew;
@@ -131,7 +177,9 @@ int wmain(int argc, WCHAR* argv[])
 				"\n\t l - list all mounted images"
 				"\n\t c - create image"
 				"\n\t t - test image"
-				"\n\t chp - change password")
+				"\n\t chp - change password"
+				"\n\t lv - list volumes"
+				"\n\t mv - mount volume")
 			("image", po::wvalue<wstring>(&imagePath), "Path to image file to be mounted or created")
 			("letter", po::wvalue<wstring>(&driveLetter), "Drive letter")
 			("id", po::value<ULONG>(&diskId), "Disk id to unmount")
@@ -140,6 +188,7 @@ int wmain(int argc, WCHAR* argv[])
 			("newpassword", po::value<string>(&passwordNew), "New password (for change password)")
 			("algo", po::value<string>(&algoName), "Encryption algorithm (AES, Twofish)")
 			("force", po::wvalue<bool>(&forceUnmount)->default_value(false, "false"), "Force unmount")
+			("volume", po::wvalue<wstring>(&volumeName), "Volume name to be mounted")
 			;
 
 		po::variables_map vm;
@@ -219,6 +268,23 @@ int wmain(int argc, WCHAR* argv[])
 			}
 
 			ChangePassword(imagePath, password, passwordNew);
+		}
+		else if (operation == _T("lv"))
+		{
+			ListVolumes();
+		}
+		else if (operation == _T("mv"))
+		{
+			// Mount volume
+
+			// Check for required parameters
+			if (!vm.count("volume") || !vm.count("letter") || !vm.count("password"))
+			{
+				cout << desc;
+				return 0;
+			}
+
+			MountVolume(volumeName, driveLetter, password);
 		}
 		else
 		{
