@@ -16,6 +16,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 // Boost
 #include <boost/program_options.hpp>
@@ -48,3 +49,4 @@
 
 // Definitions
 #define USER_MODE
+#define NOMINMAX

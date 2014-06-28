@@ -141,6 +141,10 @@ namespace
 		CryptDiskHelpers::MountImage(*driverControl, volumeName.c_str(), driveLetter[0],
 			reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), mountOptions);
 	}
+
+	void EncryptVolume(const wstring& volumeName, const string& algoName, const string& password)
+	{
+	}
 }
 
 int wmain(int argc, WCHAR* argv[])
@@ -179,7 +183,8 @@ int wmain(int argc, WCHAR* argv[])
 				"\n\t t - test image"
 				"\n\t chp - change password"
 				"\n\t lv - list volumes"
-				"\n\t mv - mount volume")
+				"\n\t mv - mount volume"
+				"\n\t ev - encrypt volume")
 			("image", po::wvalue<wstring>(&imagePath), "Path to image file to be mounted or created")
 			("letter", po::wvalue<wstring>(&driveLetter), "Drive letter")
 			("id", po::value<ULONG>(&diskId), "Disk id to unmount")
@@ -285,6 +290,17 @@ int wmain(int argc, WCHAR* argv[])
 			}
 
 			MountVolume(volumeName, driveLetter, password);
+		}
+		else if (operation == _T("ev"))
+		{
+			// Encrypt volume
+			if (!vm.count("volume") || !vm.count("algo") || !vm.count("password"))
+			{
+				cout << desc;
+				return 0;
+			}
+
+			EncryptVolume(volumeName, algoName, password);
 		}
 		else
 		{

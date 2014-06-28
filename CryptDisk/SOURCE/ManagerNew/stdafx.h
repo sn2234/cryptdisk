@@ -59,6 +59,7 @@
 #include <vector>
 #include <locale>
 #include <codecvt>
+#include <algorithm>
 
 // Boost
 #include <boost/program_options.hpp>
@@ -85,6 +86,7 @@
 // Definitions
 #define USER_MODE
 #define _USER_MODE_
+#define NOMINMAX
 
 #ifdef _UNICODE
 #if defined _M_IX86

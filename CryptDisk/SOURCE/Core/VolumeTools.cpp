@@ -229,7 +229,7 @@ std::vector<VolumeDesk> VolumeTools::enumVolumes()
 		{
 			tmp.diskExtents = getVolumeExtents(tmp.deviceId);
 		}
-		catch (const bsys::system_error& ex)
+		catch (const bsys::system_error&)
 		{
 
 		}

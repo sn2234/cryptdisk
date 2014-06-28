@@ -47,6 +47,7 @@ class VolumeTools
 public:
 	VolumeTools();
 	std::vector<VolumeDesk> enumVolumes();
+
 private:
 	CComPtr<IWbemServices> m_pIWbemServices;
 };

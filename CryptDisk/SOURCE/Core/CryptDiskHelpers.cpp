@@ -10,10 +10,129 @@
 using namespace std;
 using namespace CryptoLib;
 using namespace boost;
+namespace bsys = boost::system;
 
-static const WCHAR pathPrefix[] =  L"\\??\\";
+namespace
+{
+	static const WCHAR pathPrefix [] = L"\\??\\";
 
-static void SendBroadcastMessage( WPARAM message, WCHAR driveLetter );
+	void SendBroadcastMessage(WPARAM message, WCHAR driveLetter)
+	{
+		std::string driveRoot;
+
+		driveRoot += (char) driveLetter;
+		driveRoot += ":\\";
+
+		switch (message)
+		{
+		case DBT_DEVICEARRIVAL:
+			SHChangeNotify(SHCNE_DRIVEADD, SHCNF_PATH, driveRoot.c_str(), NULL);
+			break;
+		case DBT_DEVICEREMOVECOMPLETE:
+			SHChangeNotify(SHCNE_DRIVEREMOVED, SHCNF_PATH, driveRoot.c_str(), NULL);
+			break;
+		}
+
+		DEV_BROADCAST_VOLUME	data;
+
+		data.dbcv_size = sizeof(data);
+		data.dbcv_devicetype = DBT_DEVTYP_VOLUME;
+		data.dbcv_reserved = 0;
+		data.dbcv_flags = 0;
+		data.dbcv_unitmask = 1 << (driveLetter - L'A');
+
+		DWORD_PTR dwResult;
+		SendMessageTimeout(HWND_BROADCAST, WM_DEVICECHANGE, message, (LPARAM) (&data), SMTO_ABORTIFHUNG, 1000, &dwResult);
+	}
+
+	void DoEncrypt(HANDLE hVolume, __int64 length, CryptoLib::IRandomGenerator* pRndGen, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, bool fillImageWithRandom, std::function<bool(double)> callback)
+	{
+		// Prepare disk header
+		DISK_HEADER_V4 header;
+
+		DiskHeaderTools::Initialize(&header, pRndGen);
+
+		const size_t  sectorSize = 512;
+
+		header.DiskSectorSize = sectorSize;
+		header.ImageOffset = 2 * sizeof(DISK_HEADER_V4); // Reserve place for another header for hidden volume
+
+		DiskHeaderTools::Encipher(&header, password, static_cast<ULONG>(passwordLength), cipherAlgorithm);
+
+		// Write header
+		{
+			DWORD dwResult;
+			if (!WriteFile(hVolume, static_cast<LPCVOID>(&header), sizeof(header), &dwResult, nullptr))
+			{
+				throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
+			}
+		}
+
+		// Init CTR cipher
+		unsigned char key[RijndaelEngine::KeySize];
+
+		pRndGen->GenerateRandomBytes(key, sizeof(key));
+
+		RijndaelEngine cipher;
+
+		cipher.SetupKey(key);
+
+		union
+		{
+			UINT64 counter;
+			unsigned char buffer[RijndaelEngine::BlockSize];
+		};
+
+		pRndGen->GenerateRandomBytes(buffer, sizeof(buffer));
+
+		UINT64 bytesToFill = fillImageWithRandom ? length : 2 * sizeof(DISK_HEADER_V4); // Write random data over reserved area always
+		UINT64 bytesFilled = sizeof(DISK_HEADER_V4);
+		std::vector<unsigned char> writeBuffer(0x10000);
+
+		int callbackCounter = 0;
+		do
+		{
+			for (size_t i = 0; i < writeBuffer.size() / RijndaelEngine::BlockSize; i++)
+			{
+				cipher.EncipherBlock(buffer, &writeBuffer[0] + i * RijndaelEngine::BlockSize);
+				counter++;
+				bytesFilled += RijndaelEngine::BlockSize;
+			}
+
+			if (callbackCounter++ > 255)
+			{
+				if (!callback(min((double) bytesFilled / (double) bytesToFill, 1.0)))
+				{
+					break;
+				}
+				callbackCounter = 0;
+			}
+
+			{
+				DWORD dwResult;
+				if (!WriteFile(hVolume, static_cast<LPCVOID>(&writeBuffer[0]),
+					static_cast<DWORD>(min(bytesToFill, writeBuffer.size())), &dwResult, nullptr))
+				{
+					throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
+				}
+			}
+
+		} while (bytesFilled < bytesToFill);
+	}
+
+	__int64 GetVolumeLength(HANDLE hVolume)
+	{
+		DWORD dwResult;
+		GET_LENGTH_INFORMATION	lengthInfo;
+
+		if (!::DeviceIoControl(hVolume, IOCTL_DISK_GET_LENGTH_INFO, NULL, 0, &lengthInfo, sizeof(lengthInfo), &dwResult, NULL))
+		{
+			throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
+		}
+
+		return lengthInfo.Length.QuadPart;
+	}
+}
 
 void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength, ULONG mountOptions )
 {
@@ -347,31 +466,29 @@ std::vector<unsigned char> CryptDiskHelpers::ReadImageHeader( const WCHAR* image
 	return headerBuff;
 }
 
-void SendBroadcastMessage( WPARAM message, WCHAR driveLetter )
+void CryptDiskHelpers::EncryptVolume(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* volumeName, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, bool fillImageWithRandom, std::function<bool(double)> callback)
 {
-	std::string driveRoot;
-
-	driveRoot += (char)driveLetter;
-	driveRoot += ":\\";
-
-	switch(message)
+	// Open
+	HANDLE hFile = ::CreateFileW(volumeName, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+	if (hFile == INVALID_HANDLE_VALUE)
 	{
-	case DBT_DEVICEARRIVAL:
-		SHChangeNotify(SHCNE_DRIVEADD, SHCNF_PATH, driveRoot.c_str(), NULL);
-		break;
-	case DBT_DEVICEREMOVECOMPLETE:
-		SHChangeNotify(SHCNE_DRIVEREMOVED, SHCNF_PATH, driveRoot.c_str(), NULL);
-		break;
+		throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
 	}
 
-	DEV_BROADCAST_VOLUME	data;
+	SCOPE_EXIT { ::CloseHandle(hFile); };
 
-	data.dbcv_size = sizeof(data);
-	data.dbcv_devicetype = DBT_DEVTYP_VOLUME;
-	data.dbcv_reserved = 0;
-	data.dbcv_flags = 0;
-	data.dbcv_unitmask = 1 << (driveLetter - L'A');
 
-	DWORD_PTR dwResult;
-	SendMessageTimeout(HWND_BROADCAST, WM_DEVICECHANGE, message, (LPARAM)(&data), SMTO_ABORTIFHUNG, 1000, &dwResult);
+	// Lock
+	DWORD dwResult;
+	if(!::DeviceIoControl(hFile, FSCTL_LOCK_VOLUME, NULL, 0, NULL, 0, &dwResult, NULL))
+	{
+		throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
+	}
+
+	SCOPE_EXIT {
+		DWORD dwResult;
+		::DeviceIoControl(hFile, FSCTL_UNLOCK_VOLUME, NULL, 0, NULL, 0, &dwResult, NULL);
+	};
+
+	DoEncrypt(hFile, GetVolumeLength(hFile), pRndGen, cipherAlgorithm, password, passwordLength, fillImageWithRandom, callback);
 }
