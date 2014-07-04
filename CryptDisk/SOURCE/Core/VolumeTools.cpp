@@ -185,6 +185,20 @@ namespace
 		});
 	}
 
+	std::wstring extractVolumeId(const std::wstring& rawVolumeName)
+	{
+		std::wregex volumePattern(L"Volume\\{.+?\\}");
+
+		std::wsmatch mr;
+		if (std::regex_search(rawVolumeName, mr, volumePattern))
+		{
+			return mr.cbegin()->str();
+		}
+		else
+		{
+			throw std::logic_error("Bad volume format");
+		}
+	}
 }
 
 
@@ -238,4 +252,9 @@ std::vector<VolumeDesk> VolumeTools::enumVolumes()
 	});
 
 	return volumes;
+}
+
+std::wstring VolumeTools::prepareVolumeName(const std::wstring& rawVolumeName)
+{
+	return std::wstring(L"\\??\\") + extractVolumeId(rawVolumeName);
 }

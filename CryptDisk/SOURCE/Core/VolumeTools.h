@@ -48,6 +48,7 @@ public:
 	VolumeTools();
 	std::vector<VolumeDesk> enumVolumes();
 
+	static std::wstring prepareVolumeName(const std::wstring& rawVolumeName);
 private:
 	CComPtr<IWbemServices> m_pIWbemServices;
 };

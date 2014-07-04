@@ -138,12 +138,32 @@ namespace
 
 		ULONG mountOptions = MOUNT_VIA_MOUNTMGR | MOUNT_SAVE_TIME | MOUNT_DEVICE;
 
-		CryptDiskHelpers::MountImage(*driverControl, volumeName.c_str(), driveLetter[0],
+		CryptDiskHelpers::MountVolume(*driverControl, volumeName.c_str(), driveLetter[0],
 			reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), mountOptions);
 	}
 
 	void EncryptVolume(const wstring& volumeName, const string& algoName, const string& password)
 	{
+		DISK_CIPHER algo;
+
+		if (_stricmp(algoName.c_str(), "aes") == 0)
+		{
+			algo = DISK_CIPHER_AES;
+		}
+		else if (_stricmp(algoName.c_str(), "twofish") == 0)
+		{
+			algo = DISK_CIPHER_TWOFISH;
+		}
+		else
+		{
+			throw logic_error("Unknown algorithm");
+		}
+
+		shared_ptr<CryptoLib::IRandomGenerator> randomGen = CreateRandomGen();
+
+		CryptDiskHelpers::EncryptVolume(randomGen.get(),
+			VolumeTools::prepareVolumeName(volumeName).c_str(), algo, reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), true,
+			[](double progress){ return true; });
 	}
 }
 

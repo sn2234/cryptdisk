@@ -6,6 +6,8 @@
 #include "DiskHeaderTools.h"
 
 #include "SafeHandle.h"
+#include "DNDriverControl.h"
+#include "VolumeTools.h"
 
 using namespace std;
 using namespace CryptoLib;
@@ -110,8 +112,12 @@ namespace
 
 			{
 				DWORD dwResult;
+
+				DWORD bytesToWrite = static_cast<DWORD>(min(bytesToFill, writeBuffer.size()) -
+					(bytesFilled > bytesToFill ? bytesFilled - bytesToFill : 0));
+
 				if (!WriteFile(hVolume, static_cast<LPCVOID>(&writeBuffer[0]),
-					static_cast<DWORD>(min(bytesToFill, writeBuffer.size())), &dwResult, nullptr))
+					bytesToWrite, &dwResult, nullptr))
 				{
 					throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
 				}
@@ -171,6 +177,51 @@ void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* 
 	DWORD drvResult = driverControl.Control(IOCTL_VDISK_ADD_DISK, &buffer[0], static_cast<ULONG>(buffer.size()));
 	RtlSecureZeroMemory(&buffer[0], buffer.size());
 	if(!drvResult)
+	{
+		throw winapi_exception("DeviceIoControl error");
+	}
+
+	SendBroadcastMessage(DBT_DEVICEARRIVAL, driveLetter);
+}
+
+void CryptDiskHelpers::MountVolume(DNDriverControl& driverControl, const WCHAR* volumePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength, ULONG mountOptions)
+{
+	std::wstring volumeName = VolumeTools::prepareVolumeName(volumePath);
+
+	size_t	structSize = sizeof(DISK_ADD_INFO) + volumeName.size()*sizeof(WCHAR) + sizeof(WCHAR);
+
+	vector<unsigned char> buffer(structSize);
+
+	DISK_ADD_INFO* pInfo = reinterpret_cast<DISK_ADD_INFO*>(&buffer[0]);
+
+	pInfo->DriveLetter = driveLetter;
+	pInfo->MountOptions = mountOptions;
+	pInfo->PathSize = static_cast<ULONG>(volumeName.size()*sizeof(WCHAR) + sizeof(WCHAR));
+	wcscpy_s(pInfo->FilePath, pInfo->PathSize / sizeof(WCHAR), volumeName.c_str());
+
+	// Read disk header
+	vector<unsigned char> headerBuff((ReadImageHeader(volumeName.c_str())));
+
+
+	// Decipher disk header
+	DiskHeaderTools::CIPHER_INFO cipherInfo;
+	if (!DiskHeaderTools::Decipher(&headerBuff[0], password, static_cast<ULONG>(passwordLength), &cipherInfo))
+	{
+		throw logic_error("Wrong password");
+	}
+
+	// Fill cryptographic parameters
+	pInfo->DiskFormatVersion = cipherInfo.versionInfo.formatVersion;
+	copy(begin(cipherInfo.initVector), end(cipherInfo.initVector), pInfo->InitVector);
+	copy(begin(cipherInfo.userKey), end(cipherInfo.userKey), pInfo->UserKey);
+	pInfo->wAlgoId = cipherInfo.diskCipher;
+
+	RtlSecureZeroMemory(&cipherInfo, sizeof(cipherInfo));
+	RtlSecureZeroMemory(&headerBuff[0], headerBuff.size());
+
+	DWORD drvResult = driverControl.Control(IOCTL_VDISK_ADD_DISK, &buffer[0], static_cast<ULONG>(buffer.size()));
+	RtlSecureZeroMemory(&buffer[0], buffer.size());
+	if (!drvResult)
 	{
 		throw winapi_exception("DeviceIoControl error");
 	}

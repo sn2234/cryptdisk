@@ -17,6 +17,7 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
+#include <regex>
 
 // Boost
 #include <boost/program_options.hpp>

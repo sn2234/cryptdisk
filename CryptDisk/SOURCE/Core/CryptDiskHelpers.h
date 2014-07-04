@@ -27,6 +27,9 @@ public:
 	static void MountImage(DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter,
 		const unsigned char* password, size_t passwordLength, ULONG mountOptions);
 
+	static void MountVolume(DNDriverControl& driverControl, const WCHAR* volumePath, WCHAR driveLetter,
+		const unsigned char* password, size_t passwordLength, ULONG mountOptions);
+
 	static bool CheckImage(const WCHAR* imagePath, const unsigned char* password, size_t passwordLength);
 
 	static void ChangePassword(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* imagePath, const unsigned char* password,

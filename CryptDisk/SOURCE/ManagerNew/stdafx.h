@@ -37,6 +37,10 @@
 
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
 
+#include <comdef.h>
+#include <initguid.h>
+#include <wbemidl.h>
+
 #include <Windows.h>
 #include <WinIoCtl.h>
 #include <Dbt.h>
@@ -60,6 +64,7 @@
 #include <locale>
 #include <codecvt>
 #include <algorithm>
+#include <regex>
 
 // Boost
 #include <boost/program_options.hpp>
@@ -73,6 +78,9 @@
 #include <boost/thread.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_array.hpp>
+#include <boost/system/system_error.hpp>
+#include <boost/format.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include "CryptoLib.h"
 #include <afxdlgs.h>
