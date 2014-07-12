@@ -99,6 +99,8 @@ BOOL CManagerNewApp::InitInstance()
 		MessageBox(NULL,CString(e.what()), _T("Exception"), MB_ICONERROR | MB_OK);
 	}
 
+	Favorites::Save(Favorites::PreparePath(), AppFavorites::instance().Favorites());
+
 	Concurrency::CurrentScheduler::Detach();
 	WaitForSingleObject( hEvent, INFINITE );
 

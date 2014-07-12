@@ -88,11 +88,5 @@ FavoritesManager::FavoritesManager()
 
 FavoritesManager::~FavoritesManager()
 {
-	try
-	{
-		Favorites::Save(Favorites::PreparePath(), m_favorites);
-	}
-	catch(...)
-	{
-	}
+
 }
