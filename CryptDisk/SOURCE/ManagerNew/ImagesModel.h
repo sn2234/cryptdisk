@@ -8,9 +8,6 @@
 class ImagesModel : public Document
 {
 public:
-	ImagesModel(void);
-	virtual ~ImagesModel(void);
-
 	void Refresh();
 	void DismountImage(ULONG imageId, bool bForce);
 

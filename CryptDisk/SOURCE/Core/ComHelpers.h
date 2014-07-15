@@ -20,7 +20,9 @@ template<> struct HResultChecker<true>
 static void Check(HRESULT hr)
 {
 	if (FAILED(hr))
-		AtlThrow(hr);
+	{
+		throw boost::system::system_error(boost::system::error_code(hr, boost::system::system_category()));
+	}
 }
 };
 

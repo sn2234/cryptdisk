@@ -42,6 +42,13 @@ CManagerNewApp theApp;
 
 BOOL CManagerNewApp::InitInstance()
 {
+	CoInitializeEx(NULL, COINIT_MULTITHREADED);
+
+	SCOPE_EXIT{ CoUninitialize(); };
+	CoInitializeSecurity(NULL, -1, NULL,
+		NULL, RPC_C_AUTHN_LEVEL_PKT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL,
+		EOAC_NONE, 0);
+
 	// InitCommonControlsEx() is required on Windows XP if an application
 	// manifest specifies use of ComCtl32.dll version 6 or later to enable
 	// visual styles.  Otherwise, any window creation will fail.

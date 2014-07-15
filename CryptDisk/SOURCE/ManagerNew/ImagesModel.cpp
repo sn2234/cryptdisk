@@ -3,15 +3,6 @@
 
 #include "DriverTools.h"
 
-ImagesModel::ImagesModel(void)
-{
-}
-
-
-ImagesModel::~ImagesModel(void)
-{
-}
-
 void ImagesModel::Refresh()
 {
 	if (AppDriver::instance().getDriverControl())

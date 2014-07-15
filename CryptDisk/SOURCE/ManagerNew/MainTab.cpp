@@ -13,6 +13,7 @@ IMPLEMENT_DYNAMIC(MainTab, CTabCtrl)
 MainTab::MainTab()
 	: m_imagesView(m_imagesModel, this)
 	, m_favoritesView(m_favoritesModel, this)
+	, m_volumesView(m_volumesModel, this)
 {
 
 }
@@ -30,6 +31,7 @@ void MainTab::Init()
 {
 	InsertItem(0, _T("Images"));
 	InsertItem(1, _T("Favorites"));
+	InsertItem(2, _T("Volumes"));
 
 	m_imagesView.Create(ImagesView::IDD, this);
 	m_imagesView.EnableWindow(TRUE);
@@ -38,6 +40,11 @@ void MainTab::Init()
 	m_favoritesView.Create(FavoritesView::IDD, this);
 	m_favoritesView.EnableWindow(FALSE);
 	m_favoritesView.ShowWindow(SW_HIDE);
+
+
+	m_volumesView.Create(VolumesView::IDD, this);
+	m_volumesView.EnableWindow(FALSE);
+	m_volumesView.ShowWindow(SW_HIDE);
 
 	SetRectangle();
 }
@@ -70,6 +77,9 @@ void MainTab::OnSelchange( NMHDR* pNMHDR, LRESULT* pResult )
 
 		m_favoritesView.EnableWindow(FALSE);
 		m_favoritesView.ShowWindow(SW_HIDE);
+
+		m_volumesView.EnableWindow(FALSE);
+		m_volumesView.ShowWindow(SW_HIDE);
 		break;
 	case 1:
 		m_imagesView.EnableWindow(FALSE);
@@ -77,6 +87,19 @@ void MainTab::OnSelchange( NMHDR* pNMHDR, LRESULT* pResult )
 
 		m_favoritesView.EnableWindow(TRUE);
 		m_favoritesView.ShowWindow(SW_SHOW);
+
+		m_volumesView.EnableWindow(FALSE);
+		m_volumesView.ShowWindow(SW_HIDE);
+		break;
+	case 2:
+		m_imagesView.EnableWindow(FALSE);
+		m_imagesView.ShowWindow(SW_HIDE);
+
+		m_favoritesView.EnableWindow(FALSE);
+		m_favoritesView.ShowWindow(SW_HIDE);
+
+		m_volumesView.EnableWindow(TRUE);
+		m_volumesView.ShowWindow(SW_SHOW);
 		break;
 	}
 }
