@@ -64,6 +64,7 @@ void MainTab::SetRectangle()
 
 	m_imagesView.SetWindowPos(&wndTop, nX, nY, nXc, nYc, SWP_SHOWWINDOW);
 	m_favoritesView.SetWindowPos(&wndTop, nX, nY, nXc, nYc, SWP_SHOWWINDOW);
+	m_volumesView.SetWindowPos(&wndTop, nX, nY, nXc, nYc, SWP_SHOWWINDOW);
 }
 
 void MainTab::OnSelchange( NMHDR* pNMHDR, LRESULT* pResult )
