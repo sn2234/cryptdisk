@@ -7,4 +7,6 @@
 void VolumesModel::Refresh()
 {
 	m_volumesCache = m_volumeTools.enumVolumes();
+
+	UpdateViews();
 }
