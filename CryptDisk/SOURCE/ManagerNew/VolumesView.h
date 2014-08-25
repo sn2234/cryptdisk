@@ -26,4 +26,7 @@ public:
 	virtual BOOL OnInitDialog();
 private:
 	CListCtrl m_listVolumes;
+public:
+	afx_msg void OnBnClickedButtonMount();
+	afx_msg void OnBnClickedButtonEncipher();
 };

@@ -64,6 +64,8 @@ void VolumesView::DoDataExchange(CDataExchange* pDX)
 
 
 BEGIN_MESSAGE_MAP(VolumesView, CDialogEx)
+	ON_BN_CLICKED(IDC_BUTTON_MOUNT, &VolumesView::OnBnClickedButtonMount)
+	ON_BN_CLICKED(IDC_BUTTON_ENCIPHER, &VolumesView::OnBnClickedButtonEncipher)
 END_MESSAGE_MAP()
 
 void VolumesView::OnDocumentUpdate()
@@ -104,4 +106,16 @@ BOOL VolumesView::OnInitDialog()
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// EXCEPTION: OCX Property Pages should return FALSE
+}
+
+
+void VolumesView::OnBnClickedButtonMount()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void VolumesView::OnBnClickedButtonEncipher()
+{
+	// TODO: Add your control notification handler code here
 }
