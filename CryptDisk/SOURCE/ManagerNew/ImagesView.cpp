@@ -126,7 +126,7 @@ void ImagesView::OnBnClickedButtonMount()
 
 void ImagesView::OnBnClickedButtonCreate()
 {
-	CreateWizard dlg(_T("Create image"), this);
+	CreateWizard dlg(false, _T("Create image"), this);
 
 	dlg.DoModal();
 }

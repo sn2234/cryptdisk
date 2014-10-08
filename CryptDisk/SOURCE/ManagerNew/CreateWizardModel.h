@@ -31,6 +31,9 @@ public:
 	DISK_CIPHER CipherAlgorithm() const { return m_cipherAlgorithm; }
 	void CipherAlgorithm(DISK_CIPHER val) { m_cipherAlgorithm = val; }
 
+	bool IsVolume() const { return m_isVolume; }
+	void Volume(bool val) { m_isVolume = val; }
+
 private:
 	std::wstring				m_imageFilePath;
 	std::vector<std::wstring>	m_keyFiles;
@@ -39,4 +42,6 @@ private:
 	unsigned __int64			m_imageSize;
 	bool						m_bQuickFormat;
 	DISK_CIPHER					m_cipherAlgorithm;
+
+	bool						m_isVolume;
 };
