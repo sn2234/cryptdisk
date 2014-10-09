@@ -86,8 +86,6 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\WinDDK\7600.16385.1\inc\ddk;$(IncludePath)</IncludePath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\WinDDK\7600.16385.1\inc\ddk;$(IncludePath)</IncludePath>
     <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</RunCodeAnalysis>
     <RunCodeAnalysis Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</RunCodeAnalysis>
   </PropertyGroup>
