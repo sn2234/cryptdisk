@@ -39,6 +39,8 @@ END_MESSAGE_MAP()
 
 void CreateWizard::DoInit()
 {
+	m_model.Volume(m_createVolume);
+
 	m_psh.dwFlags &= ~PSH_HASHELP;
 
 	if (m_createVolume)
