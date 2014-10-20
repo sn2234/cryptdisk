@@ -1,6 +1,7 @@
 #pragma once
 #include "document.h"
 #include "DiskFormat.h"
+#include "VolumeTools.h"
 
 class CreateWizardModel : public Document
 {
@@ -9,6 +10,8 @@ public:
 	~CreateWizardModel(void);
 
 	void DoCreateImage();
+
+	void RefreshVolumes();
 
 	const std::wstring& ImageFilePath() const { return m_imageFilePath; }
 	void ImageFilePath(const std::wstring& val) { m_imageFilePath = val; }
@@ -34,8 +37,15 @@ public:
 	bool IsVolume() const { return m_isVolume; }
 	void Volume(bool val) { m_isVolume = val; }
 
+	const std::vector<VolumeDesk>& Volumes() const { return m_volumes; }
+
 private:
+	// Image file specific
 	std::wstring				m_imageFilePath;
+
+	// Volume specific
+	std::vector<VolumeDesk>		m_volumes;
+
 	std::vector<std::wstring>	m_keyFiles;
 	std::string					m_password;
 	bool						m_bUseRecentDocuments;
@@ -44,4 +54,6 @@ private:
 	DISK_CIPHER					m_cipherAlgorithm;
 
 	bool						m_isVolume;
+
+	VolumeTools					m_volumeTools;
 };

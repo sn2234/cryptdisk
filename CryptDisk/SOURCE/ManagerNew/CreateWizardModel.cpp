@@ -30,3 +30,8 @@ void CreateWizardModel::DoCreateImage()
 
 	dlg.DoModal();
 }
+
+void CreateWizardModel::RefreshVolumes()
+{
+	m_volumes = m_volumeTools.enumVolumes();
+}
