@@ -34,4 +34,6 @@ void CreateWizardModel::DoCreateImage()
 void CreateWizardModel::RefreshVolumes()
 {
 	m_volumes = m_volumeTools.enumVolumes();
+
+	UpdateViews();
 }

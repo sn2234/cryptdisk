@@ -3,6 +3,7 @@
 #include "CreateWizardModel.h"
 #include "PageCreate1.h"
 #include "PageCreate2.h"
+#include "PageCreateVolume.h"
 
 // CreateWizard
 
@@ -17,10 +18,11 @@ public:
 
 	void DoInit();
 private:
-	CreateWizardModel	m_model;
-	PageCreate1			m_page1;
-	PageCreate2			m_page2;
-	bool				m_createVolume;
+	CreateWizardModel					m_model;
+	std::unique_ptr<PageCreate1>		m_page1;
+	std::unique_ptr<PageCreate2>		m_page2;
+	std::unique_ptr<PageCreateVolume>	m_pageVolumes;
+	bool								m_createVolume;
 protected:
 	DECLARE_MESSAGE_MAP()
 };

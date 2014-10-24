@@ -6,6 +6,7 @@
 #include "VolumesView.h"
 #include "afxdialogex.h"
 #include "VolumesModel.h"
+#include "CommonTools.h"
 
 namespace
 {
@@ -18,26 +19,7 @@ namespace
 
 		UINT64 size = boost::lexical_cast<UINT64>(sizeStr);
 
-		const UINT64 szGiga = 1024 * 1024 * 1024;
-		const UINT64 szMega = 1024 * 1024;
-		const UINT64 szKilo = 1024;
-
-		if (size >= szGiga) // GB
-		{
-			return boost::lexical_cast<std::wstring>(size / szGiga) + L"GB";
-		}
-		else if (size >= szMega) // MB
-		{
-			return boost::lexical_cast<std::wstring>(size / szMega) + L"MB";
-		}
-		else if (size >= szKilo) // KB
-		{
-			return boost::lexical_cast<std::wstring>(size / szKilo) + L"KB";
-		}
-		else
-		{
-			return boost::lexical_cast<std::wstring>(size) +L" Bytes";
-		}
+		return CommonTools::FormatSize(size);
 	}
 }
 

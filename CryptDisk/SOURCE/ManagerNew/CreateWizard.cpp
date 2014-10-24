@@ -14,8 +14,9 @@ IMPLEMENT_DYNAMIC(CreateWizard, CPropertySheet)
 CreateWizard::CreateWizard(bool createVolume, UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
 	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
 	, m_createVolume(createVolume)
-	, m_page1(m_model)
-	, m_page2(m_model)
+	, m_page1(std::make_unique<PageCreate1>(m_model))
+	, m_page2(std::make_unique<PageCreate2>(m_model))
+	, m_pageVolumes(std::make_unique<PageCreateVolume>(m_model))
 {
 	DoInit();
 }
@@ -23,8 +24,9 @@ CreateWizard::CreateWizard(bool createVolume, UINT nIDCaption, CWnd* pParentWnd,
 CreateWizard::CreateWizard(bool createVolume, LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
 	:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
 	, m_createVolume(createVolume)
-	, m_page1(m_model)
-	, m_page2(m_model)
+	, m_page1(std::make_unique<PageCreate1>(m_model))
+	, m_page2(std::make_unique<PageCreate2>(m_model))
+	, m_pageVolumes(std::make_unique<PageCreateVolume>(m_model))
 {
 	DoInit();
 }
@@ -45,14 +47,14 @@ void CreateWizard::DoInit()
 
 	if (m_createVolume)
 	{
-		// TODO: add another page
+		AddPage(m_pageVolumes.get());
 	}
 	else
 	{
-		AddPage(&m_page1);
+		AddPage(m_page1.get());
 	}
 
-	AddPage(&m_page2);
+	AddPage(m_page2.get());
 
 	SetWizardMode();
 

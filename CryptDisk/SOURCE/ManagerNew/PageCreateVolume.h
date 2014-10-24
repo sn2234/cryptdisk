@@ -1,6 +1,7 @@
 #pragma once
 
 #include "View.h"
+#include "afxcmn.h"
 
 // PageCreateVolume dialog
 
@@ -21,4 +22,9 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
+private:
+	CListCtrl m_listVolumes;
+public:
+	afx_msg void OnBnClickedButtonRefresh();
+	virtual BOOL OnInitDialog();
 };

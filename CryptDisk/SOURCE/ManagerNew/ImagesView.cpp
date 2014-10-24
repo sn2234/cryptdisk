@@ -11,33 +11,7 @@
 #include "MountWizard.h"
 #include "CreateWizard.h"
 #include "DriverTools.h"
-
-namespace
-{
-	std::wstring FormatSize(UINT64 size)
-	{
-		const UINT64 szGiga = 1024 * 1024 * 1024;
-		const UINT64 szMega = 1024 * 1024;
-		const UINT64 szKilo = 1024;
-
-		if (size >= szGiga) // GB
-		{
-			return boost::lexical_cast<std::wstring>(size / szGiga) + L"GB";
-		}
-		else if (size >= szMega) // MB
-		{
-			return boost::lexical_cast<std::wstring>(size / szMega) + L"MB";
-		}
-		else if (size >= szKilo) // KB
-		{
-			return boost::lexical_cast<std::wstring>(size / szKilo) + L"KB";
-		}
-		else
-		{
-			return boost::lexical_cast<std::wstring>(size) +L" Bytes";
-		}
-	}
-}
+#include "CommonTools.h"
 
 // ImagesView dialog
 
@@ -80,7 +54,7 @@ void ImagesView::OnDocumentUpdate()
 	int nItem = 0;
 	std::for_each(images.cbegin(), images.cend(), [&](const MountedImageInfo& info){
 		m_listImages.InsertItem(nItem, info.driveLetter.c_str());
-		m_listImages.SetItemText(nItem, 1, FormatSize(info.size).c_str());
+		m_listImages.SetItemText(nItem, 1, CommonTools::FormatSize(info.size).c_str());
 		m_listImages.SetItemText(nItem, 2, info.imageFilePath.c_str());
 		m_listImages.SetItemData(nItem, info.diskId);
 		nItem++;
