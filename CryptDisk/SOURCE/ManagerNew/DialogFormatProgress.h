@@ -10,9 +10,7 @@ class DialogFormatProgress : public CDialogEx
 	DECLARE_DYNAMIC(DialogFormatProgress)
 
 public:
-	DialogFormatProgress(const WCHAR* imagePath,
-		INT64 imageSize, DISK_CIPHER cipherAlgorithm,
-		const unsigned char* password, size_t passwordLength, bool quickFormat, CWnd* pParent = NULL);   // standard constructor
+	DialogFormatProgress(std::function<void(std::function<bool(double)>)> processfunc, CWnd* pParent = NULL);   // standard constructor
 	virtual ~DialogFormatProgress();
 
 // Dialog Data
@@ -25,12 +23,7 @@ protected:
 	void WatcherTask();
 
 private:
-	boost::shared_array<char>	m_password;
-	size_t						m_passwordLength;
-	std::wstring				m_imagePath;
-	INT64						m_imageSize;
-	DISK_CIPHER					m_cipherAlgorithm;
-	bool						m_bQuickFormat;
+	std::function<void(std::function<bool(double)>)> m_processfunc;
 	volatile bool				m_cancel;
 
 	HWND						m_progressHwnd;

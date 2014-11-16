@@ -11,22 +11,22 @@
 
 IMPLEMENT_DYNAMIC(CreateWizard, CPropertySheet)
 
-CreateWizard::CreateWizard(bool createVolume, UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
+CreateWizard::CreateWizard(const VolumeDesk* descriptor, UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
 	: CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
-	, m_createVolume(createVolume)
+	, m_model(descriptor)
+	, m_createVolume(descriptor != nullptr)
 	, m_page1(std::make_unique<PageCreate1>(m_model))
 	, m_page2(std::make_unique<PageCreate2>(m_model))
-	, m_pageVolumes(std::make_unique<PageCreateVolume>(m_model))
 {
 	DoInit();
 }
 
-CreateWizard::CreateWizard(bool createVolume, LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
+CreateWizard::CreateWizard(const VolumeDesk* descriptor, LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
 	:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
-	, m_createVolume(createVolume)
+	, m_model(descriptor)
+	, m_createVolume(descriptor != nullptr)
 	, m_page1(std::make_unique<PageCreate1>(m_model))
 	, m_page2(std::make_unique<PageCreate2>(m_model))
-	, m_pageVolumes(std::make_unique<PageCreateVolume>(m_model))
 {
 	DoInit();
 }
@@ -41,15 +41,9 @@ END_MESSAGE_MAP()
 
 void CreateWizard::DoInit()
 {
-	m_model.Volume(m_createVolume);
-
 	m_psh.dwFlags &= ~PSH_HASHELP;
 
-	if (m_createVolume)
-	{
-		AddPage(m_pageVolumes.get());
-	}
-	else
+	if (!m_createVolume)
 	{
 		AddPage(m_page1.get());
 	}

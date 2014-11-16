@@ -6,12 +6,10 @@
 class CreateWizardModel : public Document
 {
 public:
-	CreateWizardModel(void);
-	~CreateWizardModel(void);
+	CreateWizardModel(const VolumeDesk* descriptor);
+	~CreateWizardModel() = default;
 
-	void DoCreateImage();
-
-	void RefreshVolumes();
+	void DoCreate();
 
 	const std::wstring& ImageFilePath() const { return m_imageFilePath; }
 	void ImageFilePath(const std::wstring& val) { m_imageFilePath = val; }
@@ -35,16 +33,9 @@ public:
 	void CipherAlgorithm(DISK_CIPHER val) { m_cipherAlgorithm = val; }
 
 	bool IsVolume() const { return m_isVolume; }
-	void Volume(bool val) { m_isVolume = val; }
-
-	const std::vector<VolumeDesk>& Volumes() const { return m_volumes; }
-
 private:
 	// Image file specific
 	std::wstring				m_imageFilePath;
-
-	// Volume specific
-	std::vector<VolumeDesk>		m_volumes;
 
 	std::vector<std::wstring>	m_keyFiles;
 	std::string					m_password;
@@ -54,6 +45,5 @@ private:
 	DISK_CIPHER					m_cipherAlgorithm;
 
 	bool						m_isVolume;
-
-	VolumeTools					m_volumeTools;
+	std::unique_ptr<VolumeDesk>	m_volumeDescriptor;
 };

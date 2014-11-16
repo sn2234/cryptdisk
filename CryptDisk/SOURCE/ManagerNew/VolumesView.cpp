@@ -7,6 +7,7 @@
 #include "afxdialogex.h"
 #include "VolumesModel.h"
 #include "CommonTools.h"
+#include "CreateWizard.h"
 
 namespace
 {
@@ -93,11 +94,25 @@ BOOL VolumesView::OnInitDialog()
 
 void VolumesView::OnBnClickedButtonMount()
 {
-	// TODO: Add your control notification handler code here
 }
 
 
 void VolumesView::OnBnClickedButtonEncipher()
 {
-	// TODO: Add your control notification handler code here
+	// Get selected volume
+	int selectedRow = m_listVolumes.GetSelectionMark();
+
+	if (selectedRow != -1)
+	{
+		auto volumes = static_cast<VolumesModel&>(m_document).getVolumes();
+
+		if (selectedRow < volumes.size())
+		{
+			const auto* selectedVolume = &volumes[selectedRow];
+
+			CreateWizard dlg(selectedVolume, _T("Encipher Volume"), this);
+
+			dlg.DoModal();
+		}
+	}
 }
