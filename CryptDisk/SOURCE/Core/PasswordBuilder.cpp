@@ -9,11 +9,16 @@ PasswordBuilder::PasswordBuilder( const std::vector<std::wstring>& keyFilesList,
 	: m_password(NULL)
 	, m_passwordLength((keyFilesList.empty() ? 0 : SHA256_DIDGEST_SIZE) + passwordLength)
 {
+	bool passwordSuccess = false;
 	m_password = reinterpret_cast<unsigned char*>(AppMemory::instance().Alloc(static_cast<DWORD>(m_passwordLength)));
+
 	SCOPE_EXIT
 	{
-		AppMemory::instance().Free(m_password);
-		m_password = NULL;
+		if (!passwordSuccess)
+		{
+			AppMemory::instance().Free(m_password);
+			m_password = NULL;
+		}
 	};
 
 	if(!keyFilesList.empty())
@@ -91,6 +96,7 @@ PasswordBuilder::PasswordBuilder( const std::vector<std::wstring>& keyFilesList,
 	}
 
 	std::copy_n(password, passwordLength, m_password + (keyFilesList.empty() ? 0 : SHA256_DIDGEST_SIZE));
+	passwordSuccess = true;
 }
 
 PasswordBuilder::~PasswordBuilder( void )

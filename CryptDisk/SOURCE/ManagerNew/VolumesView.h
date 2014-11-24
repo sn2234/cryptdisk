@@ -2,6 +2,7 @@
 
 #include "View.h"
 #include "afxcmn.h"
+#include "VolumeTools.h"
 
 // VolumesView dialog
 
@@ -25,8 +26,10 @@ protected:
 public:
 	virtual BOOL OnInitDialog();
 private:
-	CListCtrl m_listVolumes;
+	CListCtrl					m_listVolumes;
+	std::vector<VolumeDesk>		m_volumeDescriptors;
 public:
 	afx_msg void OnBnClickedButtonMount();
 	afx_msg void OnBnClickedButtonEncipher();
+	afx_msg void OnBnClickedButtonRefresh();
 };

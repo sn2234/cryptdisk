@@ -20,24 +20,25 @@ CreateWizardModel::CreateWizardModel(const VolumeDesk* descriptor)
 
 void CreateWizardModel::DoCreate()
 {
-	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(m_password.c_str()), m_password.size());
+	std::shared_ptr<PasswordBuilder> pb =
+		std::make_shared<PasswordBuilder>(m_keyFiles, reinterpret_cast<const unsigned char*>(m_password.c_str()), m_password.size());
 
 	std::function<void(std::function<bool(double)>)> processFunc;
 
 	if (m_isVolume)
 	{
-		processFunc = [this, &pb](std::function<bool(double)> f){
+		processFunc = [this, pb](std::function<bool(double)> f){
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
-			CryptDiskHelpers::EncryptVolume(&AppRandom::instance(), 
-				conv.from_bytes(m_volumeDescriptor->deviceId).c_str(), CipherAlgorithm(),
-				pb.Password(), pb.PasswordLength(), !QuickFormat(), f);
+			CryptDiskHelpers::EncryptVolume(&AppRandom::instance(),
+				VolumeTools::prepareVolumeName(conv.from_bytes(m_volumeDescriptor->deviceId).c_str()).c_str(),
+				CipherAlgorithm(), pb->Password(), pb->PasswordLength(), !QuickFormat(), f);
 		};
 	}
 	else
 	{
-		processFunc = [this, &pb](std::function<bool(double)> f){
+		processFunc = [this, pb](std::function<bool(double)> f){
 			CryptDiskHelpers::CreateImage(&AppRandom::instance(), ImageFilePath().c_str(), ImageSize(), CipherAlgorithm(),
-				pb.Password(), pb.PasswordLength(), !QuickFormat(), f);
+				pb->Password(), pb->PasswordLength(), !QuickFormat(), f);
 		};
 	}
 

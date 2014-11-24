@@ -49,16 +49,17 @@ void VolumesView::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(VolumesView, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_MOUNT, &VolumesView::OnBnClickedButtonMount)
 	ON_BN_CLICKED(IDC_BUTTON_ENCIPHER, &VolumesView::OnBnClickedButtonEncipher)
+	ON_BN_CLICKED(IDC_BUTTON_REFRESH, &VolumesView::OnBnClickedButtonRefresh)
 END_MESSAGE_MAP()
 
 void VolumesView::OnDocumentUpdate()
 {
 	m_listVolumes.DeleteAllItems();
 
-	auto volumes = static_cast<VolumesModel&>(m_document).getVolumes();
+	m_volumeDescriptors = static_cast<VolumesModel&>(m_document).getVolumes();
 
 	int nItem = 0;
-	for (auto v : volumes)
+	for (auto v : m_volumeDescriptors)
 	{
 		std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
 		m_listVolumes.InsertItem(nItem, conv.from_bytes(v.deviceId).c_str());
@@ -66,6 +67,7 @@ void VolumesView::OnDocumentUpdate()
 		m_listVolumes.SetItemText(nItem, 2, conv.from_bytes(v.driveLetter).c_str());
 		m_listVolumes.SetItemText(nItem, 3, conv.from_bytes(v.fileSystem).c_str());
 		m_listVolumes.SetItemText(nItem, 4, conv.from_bytes(v.driveType).c_str());
+		nItem++;
 	}
 }
 
@@ -83,6 +85,7 @@ BOOL VolumesView::OnInitDialog()
 	m_listVolumes.InsertColumn(3, _T("File System"), 0, 80, 2);
 	m_listVolumes.InsertColumn(4, _T("Drive Type"), 0, 80, 2);
 
+	
 	m_listVolumes.SetExtendedStyle(LVS_EX_FULLROWSELECT | LVS_EX_AUTOSIZECOLUMNS);
 
 	static_cast<VolumesModel&>(m_document).Refresh();
@@ -104,15 +107,19 @@ void VolumesView::OnBnClickedButtonEncipher()
 
 	if (selectedRow != -1)
 	{
-		auto volumes = static_cast<VolumesModel&>(m_document).getVolumes();
-
-		if (selectedRow < volumes.size())
+		if (selectedRow < m_volumeDescriptors.size())
 		{
-			const auto* selectedVolume = &volumes[selectedRow];
+			const auto* selectedVolume = &m_volumeDescriptors[selectedRow];
 
 			CreateWizard dlg(selectedVolume, _T("Encipher Volume"), this);
 
 			dlg.DoModal();
 		}
 	}
+}
+
+
+void VolumesView::OnBnClickedButtonRefresh()
+{
+	static_cast<VolumesModel&>(m_document).Refresh();
 }

@@ -67,16 +67,23 @@ BOOL DialogFormatProgress::OnInitDialog()
 
 void DialogFormatProgress::WorkerTask()
 {
-	Concurrency::asend(m_progressResult, 0.0);
+	try
+	{
+		Concurrency::asend(m_progressResult, 0.0);
 
+		m_processfunc([this](double x) -> bool{
+			Concurrency::asend(m_progressResult, x);
+			return !Concurrency::is_current_task_group_canceling();
+		});
 
-	m_processfunc([this](double x) -> bool{
-		Concurrency::asend(m_progressResult, x);
-		return !Concurrency::is_current_task_group_canceling();
-	});
-	
-	PostMessage(WM_COMMAND, IDOK, 0);
-	m_tasks.cancel();
+		::PostMessage(GetSafeHwnd(), WM_COMMAND, IDOK, 0);
+		m_tasks.cancel();
+	}
+	catch (...)
+	{
+		::PostMessage(GetSafeHwnd(), WM_COMMAND, IDCANCEL, 0);
+		throw;
+	}
 }
 
 void DialogFormatProgress::WatcherTask()
