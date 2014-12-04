@@ -22,6 +22,7 @@ DialogFormatProgress::DialogFormatProgress(std::function<void(std::function<bool
 	, m_processfunc(processfunc)
 	, m_cancel(false)
 	, m_progressHwnd(NULL)
+	, m_progressResult(0.0)
 {
 	m_tasks.run(static_cast<const std::function<void(void)>>(std::bind(&DialogFormatProgress::WorkerTask, this)));
 	m_tasks.run(static_cast<const std::function<void(void)>>(std::bind(&DialogFormatProgress::WatcherTask, this)));
@@ -30,6 +31,7 @@ DialogFormatProgress::DialogFormatProgress(std::function<void(std::function<bool
 DialogFormatProgress::~DialogFormatProgress()
 {
 	m_tasks.cancel();
+	m_progressSignal.set();
 	m_tasks.wait();
 }
 
@@ -69,15 +71,19 @@ void DialogFormatProgress::WorkerTask()
 {
 	try
 	{
-		Concurrency::asend(m_progressResult, 0.0);
+		m_progressResult = 0.0;
+		m_progressSignal.set();
 
 		m_processfunc([this](double x) -> bool{
-			Concurrency::asend(m_progressResult, x);
+			TRACE("Progress asend :[%f]\n", x);
+			m_progressResult = x;
+			m_progressSignal.set();
 			return !Concurrency::is_current_task_group_canceling();
 		});
 
 		::PostMessage(GetSafeHwnd(), WM_COMMAND, IDOK, 0);
 		m_tasks.cancel();
+		m_progressSignal.set();
 	}
 	catch (...)
 	{
@@ -90,7 +96,15 @@ void DialogFormatProgress::WatcherTask()
 {
 	while (!Concurrency::is_current_task_group_canceling())
 	{
-		double p = Concurrency::receive(m_progressResult);
+		m_progressSignal.wait();
+		if (Concurrency::is_current_task_group_canceling())
+		{
+			break;
+		}
+
+		double p = m_progressResult;
+
+		m_progressSignal.reset();
 
 		if(m_progressHwnd)
 		{

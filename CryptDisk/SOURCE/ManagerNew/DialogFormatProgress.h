@@ -29,7 +29,8 @@ private:
 	HWND						m_progressHwnd;
 
 	Concurrency::task_group					m_tasks;
-	Concurrency::overwrite_buffer<double>	m_progressResult;
+	std::atomic<double>						m_progressResult;
+	Concurrency::event						m_progressSignal;
 
 	DECLARE_MESSAGE_MAP()
 public:
