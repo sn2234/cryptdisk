@@ -12,7 +12,7 @@
 #include "DialogChangePassword.h"
 #include "AppFavorites.h"
 
-MountWizardModel::MountWizardModel(void)
+MountWizardModel::MountWizardModel(const VolumeDesk* descriptor)
 	: m_useMountManager(true)
 	, m_preserveImageTimestamp(true)
 	, m_driveLetter(L'A')
@@ -20,6 +20,8 @@ MountWizardModel::MountWizardModel(void)
 	, m_mountAsReadOnly(false)
 	, m_mountAsRemovable(false)
 	, m_addToFavorites(false)
+	, m_isVolume(descriptor != nullptr)
+	, m_volumeDescriptor(descriptor != nullptr ? std::make_unique<VolumeDesk>(*descriptor) : nullptr)
 {
 }
 

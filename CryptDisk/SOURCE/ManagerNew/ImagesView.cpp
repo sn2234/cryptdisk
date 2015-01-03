@@ -89,7 +89,7 @@ BOOL ImagesView::OnInitDialog()
 
 void ImagesView::OnBnClickedButtonMount()
 {
-	MountWizard dlg(_T("Mount image"), this);
+	MountWizard dlg(nullptr, _T("Mount image"), this);
 
 	if(dlg.DoModal() != IDCANCEL)
 	{

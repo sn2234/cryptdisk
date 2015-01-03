@@ -8,6 +8,7 @@
 #include "VolumesModel.h"
 #include "CommonTools.h"
 #include "CreateWizard.h"
+#include "MountWizard.h"
 
 namespace
 {
@@ -97,6 +98,20 @@ BOOL VolumesView::OnInitDialog()
 
 void VolumesView::OnBnClickedButtonMount()
 {
+	// Get selected volume
+	int selectedRow = m_listVolumes.GetSelectionMark();
+
+	if (selectedRow != -1)
+	{
+		if (selectedRow < m_volumeDescriptors.size())
+		{
+			const auto* selectedVolume = &m_volumeDescriptors[selectedRow];
+
+			MountWizard dlg(selectedVolume, _T("Mount volume"), this);
+
+			dlg.DoModal();
+		}
+	}
 }
 
 

@@ -12,8 +12,8 @@ class MountWizard : public CPropertySheet
 	DECLARE_DYNAMIC(MountWizard)
 
 public:
-	MountWizard(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-	MountWizard(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+	MountWizard(const VolumeDesk* descriptor, UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+	MountWizard(const VolumeDesk* descriptor, LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 	virtual ~MountWizard();
 
 	void DoInit();

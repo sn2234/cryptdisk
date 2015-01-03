@@ -2,11 +2,12 @@
 #pragma once
 
 #include "Document.h"
+#include "VolumeTools.h"
 
 class MountWizardModel : public Document
 {
 public:
-	MountWizardModel(void);
+	MountWizardModel(const VolumeDesk* descriptor);
 	virtual ~MountWizardModel(void);
 
 	bool TryOpenImage() const;
@@ -44,8 +45,18 @@ public:
 
 	bool AddToFavorites() const { return m_addToFavorites; }
 	void AddToFavorites(bool val) { m_addToFavorites = val; }
+
+	bool IsVolume() const { return m_isVolume; }
 private:
+
+	bool						m_isVolume;
+
+	// For images
 	std::wstring				m_imageFilePath;
+
+	// For volumes
+	std::unique_ptr<VolumeDesk>	m_volumeDescriptor;
+
 	std::vector<std::wstring>	m_keyFiles;
 	std::string					m_password;
 	bool						m_bUseRecentDocuments;

@@ -10,16 +10,18 @@
 
 IMPLEMENT_DYNAMIC(MountWizard, CPropertySheet)
 
-MountWizard::MountWizard(UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
+MountWizard::MountWizard(const VolumeDesk* descriptor, UINT nIDCaption, CWnd* pParentWnd, UINT iSelectPage)
 	:CPropertySheet(nIDCaption, pParentWnd, iSelectPage)
+	, m_model(descriptor)
 	, m_page1(m_model)
 	, m_page2(m_model)
 {
 	DoInit();
 }
 
-MountWizard::MountWizard(LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
+MountWizard::MountWizard(const VolumeDesk* descriptor, LPCTSTR pszCaption, CWnd* pParentWnd, UINT iSelectPage)
 	:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
+	, m_model(descriptor)
 	, m_page1(m_model)
 	, m_page2(m_model)
 {
@@ -43,5 +45,3 @@ void MountWizard::DoInit()
 
 	SetWizardMode();
 }
-
-// MountWizard message handlers
