@@ -47,6 +47,7 @@ public:
 	void AddToFavorites(bool val) { m_addToFavorites = val; }
 
 	bool IsVolume() const { return m_isVolume; }
+	VolumeDesk VolumeDescriptor() const { return *m_volumeDescriptor; }
 private:
 
 	bool						m_isVolume;
@@ -56,7 +57,6 @@ private:
 
 	// For volumes
 	std::unique_ptr<VolumeDesk>	m_volumeDescriptor;
-
 	std::vector<std::wstring>	m_keyFiles;
 	std::string					m_password;
 	bool						m_bUseRecentDocuments;
