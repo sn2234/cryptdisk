@@ -37,7 +37,16 @@ MountWizardModel::~MountWizardModel(void)
 bool MountWizardModel::TryOpenImage() const
 {
 	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(m_password.c_str()), m_password.size());
-	return CryptDiskHelpers::CheckImage(m_imageFilePath.c_str(), pb.Password(), pb.PasswordLength());
+
+	if (m_isVolume)
+	{
+		std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+		return CryptDiskHelpers::CheckVolume(conv.from_bytes(m_volumeDescriptor->deviceId).c_str(), pb.Password(), pb.PasswordLength());
+	}
+	else
+	{
+		return CryptDiskHelpers::CheckImage(m_imageFilePath.c_str(), pb.Password(), pb.PasswordLength());
+	}
 }
 
 void MountWizardModel::PerformMount()
@@ -51,13 +60,24 @@ void MountWizardModel::PerformMount()
 	if(m_mountAsReadOnly) mountOptions |= MOUNT_READ_ONLY;
 	if(m_mountAsRemovable) mountOptions |= MOUNT_AS_REMOVABLE;
 
-	CryptDiskHelpers::MountImage(*AppDriver::instance().getDriverControl(), m_imageFilePath.c_str(), m_driveLetter, pb.Password(), pb.PasswordLength(), mountOptions);
-
-	if(m_addToFavorites)
+	if (m_isVolume)
 	{
-		AppFavorites::instance().Favorites().push_back(
-			FavoriteImage(m_imageFilePath, m_driveLetter, m_mountAsReadOnly, m_mountAsRemovable, m_useMountManager, m_preserveImageTimestamp));
-		AppFavorites::instance().UpdateViews();
+		std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+		CryptDiskHelpers::MountVolume(*AppDriver::instance().getDriverControl(),
+			conv.from_bytes(m_volumeDescriptor->deviceId).c_str(), m_driveLetter,
+			pb.Password(), pb.PasswordLength(), mountOptions);
+	}
+	else
+	{
+		CryptDiskHelpers::MountImage(*AppDriver::instance().getDriverControl(),
+			m_imageFilePath.c_str(), m_driveLetter, pb.Password(), pb.PasswordLength(), mountOptions);
+
+		if (m_addToFavorites)
+		{
+			AppFavorites::instance().Favorites().push_back(
+				FavoriteImage(m_imageFilePath, m_driveLetter, m_mountAsReadOnly, m_mountAsRemovable, m_useMountManager, m_preserveImageTimestamp));
+			AppFavorites::instance().UpdateViews();
+		}
 	}
 }
 

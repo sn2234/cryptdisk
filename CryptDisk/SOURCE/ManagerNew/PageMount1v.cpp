@@ -8,6 +8,7 @@
 #include "MountWizardModel.h"
 #include "AppMemory.h"
 #include "CommonTools.h"
+#include "KeyFilesDialog.h"
 
 namespace fs = boost::filesystem;
 
@@ -69,7 +70,14 @@ void PageMount1v::OnBnClickedButtonChangePassword()
 
 void PageMount1v::OnBnClickedButtonKeyFiles()
 {
-	AfxMessageBox(_T("Not implemented yet..."), MB_ICONWARNING);
+	MountWizardModel& m = static_cast<MountWizardModel&>(m_document);
+
+	KeyFilesDialog dlg(m.KeyFiles());
+
+	if (dlg.DoModal() == IDOK)
+	{
+		m.KeyFiles(dlg.KeyFiles());
+	}
 }
 
 

@@ -138,6 +138,21 @@ namespace
 
 		return lengthInfo.Length.QuadPart;
 	}
+
+	bool CheckHeader(const vector<unsigned char>& header, const unsigned char* password, size_t passwordLength)
+	{
+		vector<unsigned char> headerBuff(header);
+
+		// Decipher disk header
+		DiskHeaderTools::CIPHER_INFO cipherInfo;
+		bool bResult = DiskHeaderTools::Decipher(&headerBuff[0], password, static_cast<ULONG>(passwordLength), &cipherInfo);
+
+		RtlSecureZeroMemory(&cipherInfo, sizeof(cipherInfo));
+		RtlSecureZeroMemory(&headerBuff[0], headerBuff.size());
+
+		return bResult;
+
+	}
 }
 
 void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength, ULONG mountOptions )
@@ -426,14 +441,17 @@ bool CryptDiskHelpers::CheckImage( const WCHAR* imagePath, const unsigned char* 
 	// Read disk header
 	vector<unsigned char> headerBuff((ReadImageHeader(imagePath)));
 
-	// Decipher disk header
-	DiskHeaderTools::CIPHER_INFO cipherInfo;
-	bool bResult = DiskHeaderTools::Decipher(&headerBuff[0], password, static_cast<ULONG>(passwordLength), &cipherInfo);
+	return CheckHeader(headerBuff, password, passwordLength);
+}
 
-	RtlSecureZeroMemory(&cipherInfo, sizeof(cipherInfo));
-	RtlSecureZeroMemory(&headerBuff[0], headerBuff.size());
+bool CryptDiskHelpers::CheckVolume(const WCHAR* volumeId, const unsigned char* password, size_t passwordLength)
+{
+	std::wstring volumeName = VolumeTools::prepareVolumeName(volumeId);
 
-	return bResult;
+	// Read disk header
+	vector<unsigned char> headerBuff((ReadImageHeader(volumeName.c_str())));
+
+	return CheckHeader(headerBuff, password, passwordLength);
 }
 
 void CryptDiskHelpers::ChangePassword( CryptoLib::IRandomGenerator* pRndGen, const WCHAR* imagePath, const unsigned char* password, size_t passwordLength,
