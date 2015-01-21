@@ -62,6 +62,8 @@ void MountWizardModel::PerformMount()
 
 	if (m_isVolume)
 	{
+		mountOptions |= MOUNT_DEVICE;
+
 		std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
 		CryptDiskHelpers::MountVolume(*AppDriver::instance().getDriverControl(),
 			conv.from_bytes(m_volumeDescriptor->deviceId).c_str(), m_driveLetter,
