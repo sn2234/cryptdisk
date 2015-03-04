@@ -57,6 +57,7 @@ private:
 
 	// For volumes
 	std::unique_ptr<VolumeDesk>	m_volumeDescriptor;
+
 	std::vector<std::wstring>	m_keyFiles;
 	std::string					m_password;
 	bool						m_bUseRecentDocuments;

@@ -34,7 +34,7 @@ public:
 	
 	static bool CheckVolume(const WCHAR* volumeId, const unsigned char* password, size_t passwordLength);
 
-	void ChangePasswordVolume(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* volumeId, const unsigned char* password,
+	static void ChangePasswordVolume(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* volumeId, const unsigned char* password,
 		size_t passwordLength, const unsigned char* passwordNew, size_t passwordNewLength);
 
 	static void ChangePassword(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* imagePath, const unsigned char* password,

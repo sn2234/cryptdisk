@@ -96,7 +96,16 @@ void MountWizardModel::ChangePassword()
 			throw std::invalid_argument("Unable to open image");
 		}
 
+		DialogChangePassword dlg(
+			[this](const unsigned char* oldPassword, size_t oldPasswordLen, const unsigned char* newPassword, size_t newPasswordLen){
+			std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+			CryptDiskHelpers::ChangePasswordVolume(&AppRandom::instance(),
+				conv.from_bytes(m_volumeDescriptor->deviceId).c_str(),
+				oldPassword, oldPasswordLen, newPassword, newPasswordLen);
+		},
+			pb.Password(), pb.PasswordLength());
 
+		dlg.DoModal();
 	}
 	else
 	{
