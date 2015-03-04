@@ -12,6 +12,7 @@
 #include "AppMemory.h"
 #include "DriverTools.h"
 #include "DriverProtocol.h"
+#include "AppRandom.h"
 
 
 // DialogMountFavorite dialog
@@ -70,7 +71,12 @@ void DialogMountFavorite::OnBnClickedButtonChangePassword()
 		return;
 	}
 
-	DialogChangePassword dlg((const WCHAR*)m_path, pb.Password(), pb.PasswordLength());
+	DialogChangePassword dlg(
+		[this](const unsigned char* oldPassword, size_t oldPasswordLen, const unsigned char* newPassword, size_t newPasswordLen){
+		CryptDiskHelpers::ChangePassword(&AppRandom::instance(), (const WCHAR*) m_path,
+			oldPassword, oldPasswordLen, newPassword, newPasswordLen);
+		},
+		pb.Password(), pb.PasswordLength());
 
 	dlg.DoModal();
 }

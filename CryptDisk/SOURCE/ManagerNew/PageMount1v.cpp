@@ -64,7 +64,14 @@ END_MESSAGE_MAP()
 
 void PageMount1v::OnBnClickedButtonChangePassword()
 {
-	AfxMessageBox(_T("Not implemented yet..."), MB_ICONWARNING);
+	MountWizardModel& m = static_cast<MountWizardModel&>(m_document);
+
+	PropagateToModel();
+
+	if (ValidateData())
+	{
+		m.ChangePassword();
+	}
 }
 
 

@@ -10,25 +10,20 @@
 #include "AppMemory.h"
 #include "PasswordBuilder.h"
 #include "CryptDiskHelpers.h"
-#include "AppRandom.h"
 #include "PWTools.h"
+#include "AppRandom.h"
 
 namespace fs = boost::filesystem;
-// DialogChangePassword dialog
 
 IMPLEMENT_DYNAMIC(DialogChangePassword, CDialogEx)
 
-DialogChangePassword::DialogChangePassword(const std::wstring& imagePath, const unsigned char* password, size_t passwordLength, CWnd* pParent /*=NULL*/)
+DialogChangePassword::DialogChangePassword(ProcessFunc procFunc, const unsigned char* password, size_t passwordLength, CWnd* pParent /*=NULL*/)
 	: CDialogEx(DialogChangePassword::IDD, pParent)
-	, m_imagePath(imagePath)
+	, m_processFunc(procFunc)
 	, m_passwordLength(passwordLength)
 	, m_password(AllocPasswordBuffer(passwordLength + 1))
 	, m_strengthText(_T(""))
 {
-	if(!fs::exists(imagePath))
-	{
-		throw std::invalid_argument("The image file does not exists");
-	}
 	std::copy_n(password, passwordLength, stdext::checked_array_iterator<char*>(m_password.get(), passwordLength + 1));
 
 	AppRandom::instance().InitRandomUI();
@@ -114,10 +109,18 @@ void DialogChangePassword::OnBnClickedOk()
 
 	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(passwordBuff.get()), passwordLength);
 
+	try
+	{
+		m_processFunc(reinterpret_cast<unsigned char*>(m_password.get()), m_passwordLength, pb.Password(), pb.PasswordLength());
+		CDialogEx::OnOK();
+	}
+	catch (const std::exception ex)
+	{
+	}
+	/*
 	CryptDiskHelpers::ChangePassword(&AppRandom::instance(), m_imagePath.c_str(),
 		reinterpret_cast<unsigned char*>(m_password.get()), m_passwordLength, pb.Password(), pb.PasswordLength());
-
-	CDialogEx::OnOK();
+	*/
 }
 
 bool DialogChangePassword::CheckPassword()

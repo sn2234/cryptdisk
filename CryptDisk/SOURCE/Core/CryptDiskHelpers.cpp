@@ -153,6 +153,44 @@ namespace
 		return bResult;
 
 	}
+
+	void ChangeHeaderPassowrd(CryptoLib::IRandomGenerator* pRndGen, const unsigned char* password, size_t passwordLength,
+		const unsigned char* passwordNew, size_t passwordNewLength, vector<unsigned char>& headerBuff)
+	{
+		// Decipher disk header
+		DiskHeaderTools::CIPHER_INFO cipherInfo;
+		if (!DiskHeaderTools::Decipher(&headerBuff[0], password, static_cast<ULONG>(passwordLength), &cipherInfo))
+		{
+			throw logic_error("Wrong password");
+		}
+
+		SCOPE_EXIT{
+			RtlSecureZeroMemory(&cipherInfo, sizeof(cipherInfo));
+		};
+
+		// Encipher with new password
+		switch (cipherInfo.versionInfo.formatVersion)
+		{
+		case DISK_VERSION_3:
+		{
+			DISK_HEADER_V3 *pHeader = reinterpret_cast<DISK_HEADER_V3*>(&headerBuff[0]);
+			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
+			DiskHeaderTools::Encipher(pHeader, passwordNew, static_cast<ULONG>(passwordNewLength), cipherInfo.diskCipher);
+		}
+		break;
+		case DISK_VERSION_4:
+		{
+			DISK_HEADER_V4 *pHeader = reinterpret_cast<DISK_HEADER_V4*>(&headerBuff[0]);
+			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
+			DiskHeaderTools::Encipher(pHeader, passwordNew, static_cast<ULONG>(passwordNewLength), cipherInfo.diskCipher);
+		}
+		break;
+		default:
+			throw logic_error("Wrong passrwod");
+			break;
+		}
+
+	}
 }
 
 void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength, ULONG mountOptions )
@@ -454,40 +492,59 @@ bool CryptDiskHelpers::CheckVolume(const WCHAR* volumeId, const unsigned char* p
 	return CheckHeader(headerBuff, password, passwordLength);
 }
 
+void CryptDiskHelpers::ChangePasswordVolume(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* volumeId, const unsigned char* password, size_t passwordLength,
+	const unsigned char* passwordNew, size_t passwordNewLength)
+{
+	std::wstring volumeName = VolumeTools::prepareVolumeName(volumeId);
+
+	vector<unsigned char> headerBuff((ReadImageHeader(volumeName.c_str())));
+
+	SCOPE_EXIT{
+		RtlSecureZeroMemory(&headerBuff[0], headerBuff.size());
+	};
+
+	ChangeHeaderPassowrd(pRndGen, password, passwordLength, passwordNew, passwordNewLength, headerBuff);
+
+	HANDLE hFile = ::CreateFileW(volumeName.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
+	}
+
+	SCOPE_EXIT{ ::CloseHandle(hFile); };
+
+	// Lock
+	DWORD dwResult;
+	if (!::DeviceIoControl(hFile, FSCTL_LOCK_VOLUME, NULL, 0, NULL, 0, &dwResult, NULL))
+	{
+		throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
+	}
+
+	SCOPE_EXIT{
+		DWORD dwResult;
+		::DeviceIoControl(hFile, FSCTL_UNLOCK_VOLUME, NULL, 0, NULL, 0, &dwResult, NULL);
+	};
+
+	DWORD bytesWritten;
+	BOOL result = WriteFile(hFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWritten, NULL);
+	if (!result)
+	{
+		int err = GetLastError();
+		throw winapi_exception("Error writing disk header", err);
+	}
+}
+
 void CryptDiskHelpers::ChangePassword( CryptoLib::IRandomGenerator* pRndGen, const WCHAR* imagePath, const unsigned char* password, size_t passwordLength,
 	const unsigned char* passwordNew, size_t passwordNewLength )
 {
 	// Read disk header
 	vector<unsigned char> headerBuff((ReadImageHeader(imagePath)));
 
-	// Decipher disk header
-	DiskHeaderTools::CIPHER_INFO cipherInfo;
-	if(!DiskHeaderTools::Decipher(&headerBuff[0], password, static_cast<ULONG>(passwordLength), &cipherInfo))
-	{
-		throw logic_error("Wrong password");
-	}
+	SCOPE_EXIT{
+		RtlSecureZeroMemory(&headerBuff[0], headerBuff.size());
+	};
 
-	// Encipher with new password
-	switch (cipherInfo.versionInfo.formatVersion)
-	{
-	case DISK_VERSION_3:
-		{
-			DISK_HEADER_V3 *pHeader = reinterpret_cast<DISK_HEADER_V3*>(&headerBuff[0]);
-			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
-			DiskHeaderTools::Encipher(pHeader, passwordNew, static_cast<ULONG>(passwordNewLength), cipherInfo.diskCipher);
-		}
-		break;
-	case DISK_VERSION_4:
-		{
-			DISK_HEADER_V4 *pHeader = reinterpret_cast<DISK_HEADER_V4*>(&headerBuff[0]);
-			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
-			DiskHeaderTools::Encipher(pHeader, passwordNew, static_cast<ULONG>(passwordNewLength), cipherInfo.diskCipher);
-		}
-		break;
-	default:
-		throw logic_error("Wrong passrwod");
-		break;
-	}
+	ChangeHeaderPassowrd(pRndGen, password, passwordLength, passwordNew, passwordNewLength, headerBuff);
 
 	// Write header
 	HANDLE hFile = CreateFileW(imagePath, GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
@@ -496,19 +553,17 @@ void CryptDiskHelpers::ChangePassword( CryptoLib::IRandomGenerator* pRndGen, con
 		throw winapi_exception("Error opening image for write");
 	}
 
+	SCOPE_EXIT{
+		CloseHandle(hFile);
+	};
+
 	DWORD bytesWritten;
 	BOOL result = WriteFile(hFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWritten, NULL);
 	if(!result)
 	{
 		int err = GetLastError();
-		CloseHandle(hFile);
 		throw winapi_exception("Error writing disk header", err);
 	}
-	CloseHandle(hFile);
-
-
-	RtlSecureZeroMemory(&cipherInfo, sizeof(cipherInfo));
-	RtlSecureZeroMemory(&headerBuff[0], headerBuff.size());
 }
 
 std::vector<unsigned char> CryptDiskHelpers::ReadImageHeader( const WCHAR* imagePath )
