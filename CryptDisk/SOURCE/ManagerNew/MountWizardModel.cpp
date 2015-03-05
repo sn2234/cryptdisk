@@ -102,7 +102,7 @@ void MountWizardModel::ChangePassword()
 			CryptDiskHelpers::ChangePasswordVolume(&AppRandom::instance(),
 				conv.from_bytes(m_volumeDescriptor->deviceId).c_str(),
 				oldPassword, oldPasswordLen, newPassword, newPasswordLen);
-		},
+			},
 			pb.Password(), pb.PasswordLength());
 
 		dlg.DoModal();
