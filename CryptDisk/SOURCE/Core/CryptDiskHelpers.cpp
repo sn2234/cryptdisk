@@ -13,6 +13,7 @@ using namespace std;
 using namespace CryptoLib;
 using namespace boost;
 namespace bsys = boost::system;
+namespace bfs = boost::filesystem;
 
 namespace
 {
@@ -588,6 +589,58 @@ std::vector<unsigned char> CryptDiskHelpers::ReadImageHeader( const WCHAR* image
 	}
 	
 	return headerBuff;
+}
+
+void CryptDiskHelpers::RestoreImageHeader(const std::string& imageFile, const std::string& backupFile)
+{
+	if (!bfs::exists(imageFile))
+	{
+		throw logic_error("Image file doesn't exist");
+	}
+
+	if (!bfs::exists(backupFile))
+	{
+		throw logic_error("Backup file doesn't exist");
+	}
+
+	HANDLE hBackupFile = CreateFileA(backupFile.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hBackupFile == INVALID_HANDLE_VALUE)
+	{
+		AfxMessageBox(_T("Unable to open backup file"), MB_ICONERROR);
+		return;
+	}
+
+	SCOPE_EXIT { CloseHandle(hBackupFile); };
+
+
+	HANDLE hImageFile = CreateFileA(imageFile.c_str(), GENERIC_WRITE, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hImageFile == INVALID_HANDLE_VALUE)
+	{
+		throw logic_error("Unable to open image file");
+	}
+
+	SCOPE_EXIT { CloseHandle(hImageFile); };
+
+	size_t backupFileSize = GetFileSize(hBackupFile, NULL);
+
+	std::vector<unsigned char> backupBuff(backupFileSize);
+	{
+		DWORD bytesRead;
+		BOOL result = ReadFile(hBackupFile, &backupBuff[0], static_cast<DWORD>(backupBuff.size()), &bytesRead, NULL);
+		if (!result || !(bytesRead == backupFileSize))
+		{
+			throw logic_error("Unable to read data");
+		}
+	}
+
+	{
+		DWORD bytesWrite;
+		BOOL result = WriteFile(hImageFile, &backupBuff[0], static_cast<DWORD>(backupBuff.size()), &bytesWrite, NULL);
+		if (!result || !(bytesWrite == backupFileSize))
+		{
+			throw logic_error("Unable to write data");
+		}
+	}
 }
 
 void CryptDiskHelpers::EncryptVolume(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* volumeName, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, bool fillImageWithRandom, std::function<bool(double)> callback)
