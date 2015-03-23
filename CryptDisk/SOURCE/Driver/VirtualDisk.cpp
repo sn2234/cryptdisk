@@ -1119,7 +1119,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 		{
 			switch(pInfo->DiskFormatVersion)
 			{
-			case DISK_VERSION_3:
+			case DISK_VERSION::DISK_VERSION_3:
 				{
 					DISK_HEADER_V3* pHeader = reinterpret_cast<DISK_HEADER_V3*>(diskHeaderBuff);
 
@@ -1130,7 +1130,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 					{
 						switch(static_cast<DISK_CIPHER>(pInfo->wAlgoId))
 						{
-						case DISK_CIPHER_AES:
+						case DISK_CIPHER::DISK_CIPHER_AES:
 							{
 								PVOID pCipherbuff = ExAllocatePoolWithTag(PagedPool, sizeof(DiscCipherAesV3), MEM_TAG);
 
@@ -1148,7 +1148,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 							}
 							break;
 
-						case DISK_CIPHER_TWOFISH:
+						case DISK_CIPHER::DISK_CIPHER_TWOFISH:
 							{
 								PVOID pCipherbuff = ExAllocatePoolWithTag(PagedPool, sizeof(DiskCipherTwofishV3), MEM_TAG);
 
@@ -1173,7 +1173,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 					}
 				}
 				break;
-			case DISK_VERSION_4:
+			case DISK_VERSION::DISK_VERSION_4:
 				{
 					DISK_HEADER_V4* pHeader = reinterpret_cast<DISK_HEADER_V4*>(diskHeaderBuff);
 
@@ -1183,7 +1183,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 					{
 						switch(static_cast<DISK_CIPHER>(pInfo->wAlgoId))
 						{
-						case DISK_CIPHER_AES:
+						case DISK_CIPHER::DISK_CIPHER_AES:
 							{
 								PVOID pCipherbuff = ExAllocatePoolWithTag(PagedPool, sizeof(DiskCipherV4<RijndaelEngine>), MEM_TAG);
 
@@ -1203,7 +1203,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 							}
 							break;
 
-						case DISK_CIPHER_TWOFISH:
+						case DISK_CIPHER::DISK_CIPHER_TWOFISH:
 							{
 								PVOID pCipherbuff = ExAllocatePoolWithTag(PagedPool, sizeof(DiskCipherV4<TwofishEngine>), MEM_TAG);
 

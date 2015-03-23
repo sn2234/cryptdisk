@@ -171,14 +171,14 @@ namespace
 		// Encipher with new password
 		switch (cipherInfo.versionInfo.formatVersion)
 		{
-		case DISK_VERSION_3:
+		case DISK_VERSION::DISK_VERSION_3:
 		{
 			DISK_HEADER_V3 *pHeader = reinterpret_cast<DISK_HEADER_V3*>(&headerBuff[0]);
 			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
 			DiskHeaderTools::Encipher(pHeader, passwordNew, static_cast<ULONG>(passwordNewLength), cipherInfo.diskCipher);
 		}
 		break;
-		case DISK_VERSION_4:
+		case DISK_VERSION::DISK_VERSION_4:
 		{
 			DISK_HEADER_V4 *pHeader = reinterpret_cast<DISK_HEADER_V4*>(&headerBuff[0]);
 			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
@@ -222,7 +222,7 @@ void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* 
 	pInfo->DiskFormatVersion = cipherInfo.versionInfo.formatVersion;
 	copy(begin(cipherInfo.initVector), end(cipherInfo.initVector), pInfo->InitVector);
 	copy(begin(cipherInfo.userKey), end(cipherInfo.userKey), pInfo->UserKey);
-	pInfo->wAlgoId = cipherInfo.diskCipher;
+	pInfo->wAlgoId = static_cast<USHORT>(cipherInfo.diskCipher);
 
 	RtlSecureZeroMemory(&cipherInfo, sizeof(cipherInfo));
 	RtlSecureZeroMemory(&headerBuff[0], headerBuff.size());
@@ -267,7 +267,7 @@ void CryptDiskHelpers::MountVolume(DNDriverControl& driverControl, const WCHAR* 
 	pInfo->DiskFormatVersion = cipherInfo.versionInfo.formatVersion;
 	copy(begin(cipherInfo.initVector), end(cipherInfo.initVector), pInfo->InitVector);
 	copy(begin(cipherInfo.userKey), end(cipherInfo.userKey), pInfo->UserKey);
-	pInfo->wAlgoId = cipherInfo.diskCipher;
+	pInfo->wAlgoId = static_cast<USHORT>(cipherInfo.diskCipher);
 
 	RtlSecureZeroMemory(&cipherInfo, sizeof(cipherInfo));
 	RtlSecureZeroMemory(&headerBuff[0], headerBuff.size());

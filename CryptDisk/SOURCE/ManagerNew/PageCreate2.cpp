@@ -54,10 +54,10 @@ void PageCreate2::OnDocumentUpdate()
 
 	switch(m.CipherAlgorithm())
 	{
-	case DISK_CIPHER_AES:
+	case DISK_CIPHER::DISK_CIPHER_AES:
 		m_comboCipher.SetCurSel(0);
 		break;
-	case DISK_CIPHER_TWOFISH:
+	case DISK_CIPHER::DISK_CIPHER_TWOFISH:
 		m_comboCipher.SetCurSel(1);
 		break;
 	}
@@ -191,10 +191,10 @@ void PageCreate2::PropagateToModel()
 	switch(m_comboCipher.GetCurSel())
 	{
 	case 0:
-		m.CipherAlgorithm(DISK_CIPHER_AES);
+		m.CipherAlgorithm(DISK_CIPHER::DISK_CIPHER_AES);
 		break;
 	case 1:
-		m.CipherAlgorithm(DISK_CIPHER_TWOFISH);
+		m.CipherAlgorithm(DISK_CIPHER::DISK_CIPHER_TWOFISH);
 		break;
 	}
 }

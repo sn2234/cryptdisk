@@ -10,7 +10,7 @@
 
 CreateWizardModel::CreateWizardModel(const VolumeDesk* descriptor)
 	: m_bUseRecentDocuments(false)
-	, m_cipherAlgorithm(DISK_CIPHER_AES)
+	, m_cipherAlgorithm(DISK_CIPHER::DISK_CIPHER_AES)
 	, m_bQuickFormat(false)
 	, m_imageSize(0)
 	, m_volumeDescriptor(descriptor != nullptr ? std::make_unique<VolumeDesk>(*descriptor) : nullptr)

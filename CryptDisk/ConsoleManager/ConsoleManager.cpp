@@ -93,11 +93,11 @@ namespace
 
 		if (_stricmp(algoName.c_str(), "aes") == 0)
 		{
-			algo = DISK_CIPHER_AES;
+			algo = DISK_CIPHER::DISK_CIPHER_AES;
 		}
 		else if (_stricmp(algoName.c_str(), "twofish") == 0)
 		{
-			algo = DISK_CIPHER_TWOFISH;
+			algo = DISK_CIPHER::DISK_CIPHER_TWOFISH;
 		}
 		else
 		{
@@ -148,11 +148,11 @@ namespace
 
 		if (_stricmp(algoName.c_str(), "aes") == 0)
 		{
-			algo = DISK_CIPHER_AES;
+			algo = DISK_CIPHER::DISK_CIPHER_AES;
 		}
 		else if (_stricmp(algoName.c_str(), "twofish") == 0)
 		{
-			algo = DISK_CIPHER_TWOFISH;
+			algo = DISK_CIPHER::DISK_CIPHER_TWOFISH;
 		}
 		else
 		{

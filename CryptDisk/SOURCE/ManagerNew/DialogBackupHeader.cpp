@@ -101,20 +101,20 @@ void DialogBackupHeader::OnBnClickedButtonOpen()
 		// Set version and algorithm
 		switch(info.versionInfo.formatVersion)
 		{
-		case DISK_VERSION_3:
+		case DISK_VERSION::DISK_VERSION_3:
 			m_versionCombo.SetCurSel(1);
 			break;
-		case DISK_VERSION_4:
+		case DISK_VERSION::DISK_VERSION_4:
 			m_versionCombo.SetCurSel(2);
 			break;
 		}
 
 		switch(info.diskCipher)
 		{
-		case DISK_CIPHER_AES:
+		case DISK_CIPHER::DISK_CIPHER_AES:
 			m_algorithmCombo.SetCurSel(1);
 			break;
-		case DISK_CIPHER_TWOFISH:
+		case DISK_CIPHER::DISK_CIPHER_TWOFISH:
 			m_algorithmCombo.SetCurSel(2);
 			break;
 		}

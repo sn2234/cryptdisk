@@ -86,7 +86,7 @@ bool DiskHeaderTools::DecipherV3( DISK_HEADER_V3* pHeader, const UCHAR* password
 			header.TweakKey);
 
 		// Check version first
-		if((header.DiskVersion.formatVersion != DISK_VERSION_3))
+		if ((header.DiskVersion.formatVersion != static_cast<UCHAR>(DISK_VERSION::DISK_VERSION_3)))
 		{
 			goto try_twofish;
 		}
@@ -101,7 +101,7 @@ bool DiskHeaderTools::DecipherV3( DISK_HEADER_V3* pHeader, const UCHAR* password
 		}
 
 		// Copy header and return true
-		*pDiskCipher = DISK_CIPHER_AES;
+		*pDiskCipher = DISK_CIPHER::DISK_CIPHER_AES;
 		*pDiskVersion = header.DiskVersion;
 		memcpy(pHeader, &header, sizeof(DISK_HEADER_V3));
 		memcpy(pUserKey, userKey, sizeof(userKey));
@@ -122,7 +122,7 @@ try_twofish:
 			header.TweakKey);
 
 		// Check version first
-		if((header.DiskVersion.formatVersion != DISK_VERSION_3))
+		if ((header.DiskVersion.formatVersion != static_cast<UCHAR>(DISK_VERSION::DISK_VERSION_3)))
 		{
 			return false;
 		}
@@ -134,7 +134,7 @@ try_twofish:
 		if(!memcmp(header.MagicHash, didgest, SHA256_DIDGEST_SIZE))
 		{
 			// Copy header and return true
-			*pDiskCipher=DISK_CIPHER_TWOFISH;
+			*pDiskCipher = DISK_CIPHER::DISK_CIPHER_TWOFISH;
 			*pDiskVersion = header.DiskVersion;
 			memcpy(pHeader, &header, sizeof(DISK_HEADER_V3));
 			memcpy(pUserKey, userKey, sizeof(userKey));
@@ -184,7 +184,7 @@ bool DiskHeaderTools::DecipherV4( DISK_HEADER_V4* pHeader, const UCHAR* password
 		if(!memcmp(header.MagicHash, didgest, SHA256_DIDGEST_SIZE))
 		{
 			// Copy header and return true
-			*pDiskCipher=DISK_CIPHER_AES;
+			*pDiskCipher = DISK_CIPHER::DISK_CIPHER_AES;
 			*pDiskVersion = header.DiskVersion;
 			memcpy(pHeader, &header, sizeof(header));
 			memcpy(pUserKey, usedEncData.userKey, sizeof(usedEncData.userKey));
@@ -220,7 +220,7 @@ bool DiskHeaderTools::DecipherV4( DISK_HEADER_V4* pHeader, const UCHAR* password
 		if(!memcmp(header.MagicHash, didgest, SHA256_DIDGEST_SIZE))
 		{
 			// Copy header and return true
-			*pDiskCipher=DISK_CIPHER_TWOFISH;
+			*pDiskCipher = DISK_CIPHER::DISK_CIPHER_TWOFISH;
 			*pDiskVersion = header.DiskVersion;
 			memcpy(pHeader, &header, sizeof(header));
 			memcpy(pUserKey, usedEncData.userKey, sizeof(usedEncData.userKey));
@@ -248,7 +248,7 @@ bool DiskHeaderTools::Initialize( DISK_HEADER_V3* pHeader, CryptoLib::IRandomGen
 	}
 
 	// Set disk version number
-	pHeader->DiskVersion.formatVersion = DISK_VERSION_3;
+	pHeader->DiskVersion.formatVersion = static_cast<UCHAR>(DISK_VERSION::DISK_VERSION_3);
 
 	// Calculate hash of magic value
 	hash.Init();
@@ -270,7 +270,7 @@ bool DiskHeaderTools::Initialize( DISK_HEADER_V4* pHeader, CryptoLib::IRandomGen
 	}
 
 	// Set disk version number
-	pHeader->DiskVersion.formatVersion = DISK_VERSION_4;
+	pHeader->DiskVersion.formatVersion = static_cast<UCHAR>(DISK_VERSION::DISK_VERSION_4);
 
 	// Calculate hash of magic value
 	hash.Init();
@@ -290,7 +290,7 @@ void DiskHeaderTools::Encipher( DISK_HEADER_V3* pHeader, const UCHAR* passwordDa
 
 	switch(algoId)
 	{
-	case DISK_CIPHER_AES:
+	case DISK_CIPHER::DISK_CIPHER_AES:
 		{
 			DNAES	cipher;
 
@@ -305,7 +305,7 @@ void DiskHeaderTools::Encipher( DISK_HEADER_V3* pHeader, const UCHAR* passwordDa
 
 		}
 		break;
-	case DISK_CIPHER_TWOFISH:
+	case DISK_CIPHER::DISK_CIPHER_TWOFISH:
 		{
 			DNTwofish	cipher;
 
@@ -337,7 +337,7 @@ void DiskHeaderTools::Encipher( DISK_HEADER_V4* pHeader, const UCHAR* passwordDa
 
 	switch(algoId)
 	{
-	case DISK_CIPHER_AES:
+	case DISK_CIPHER::DISK_CIPHER_AES:
 		{
 			RijndaelEngine engine;
 
@@ -350,7 +350,7 @@ void DiskHeaderTools::Encipher( DISK_HEADER_V4* pHeader, const UCHAR* passwordDa
 			EncipherDataCbc(engine, DISK_HEADER_ENC_PASS_SIZE_V4/RijndaelEngine::BlockSize, usedEncData.userIV, pHeader->DiskKey);
 		}
 		break;
-	case DISK_CIPHER_TWOFISH:
+	case DISK_CIPHER::DISK_CIPHER_TWOFISH:
 		{
 			TwofishEngine engine;
 
@@ -380,7 +380,7 @@ bool DiskHeaderTools::Decipher( DISK_HEADER_V3* pHeader, const UCHAR* pUserKey, 
 
 	switch(algoId)
 	{
-	case DISK_CIPHER_AES:
+	case DISK_CIPHER::DISK_CIPHER_AES:
 		{
 			DNAES* pCipher = (DNAES*)ExAllocatePoolWithTag(PagedPool, sizeof(DNAES), MEM_TAG);
 			if(!pCipher)
@@ -396,7 +396,7 @@ bool DiskHeaderTools::Decipher( DISK_HEADER_V3* pHeader, const UCHAR* pUserKey, 
 				pHeader->TweakKey);
 
 			// Check version first
-			if((pHeader->DiskVersion.formatVersion == DISK_VERSION_3))
+			if((pHeader->DiskVersion.formatVersion == static_cast<UCHAR>(DISK_VERSION::DISK_VERSION_3)))
 			{
 				// Check hash
 				hash.Init();
@@ -413,7 +413,7 @@ bool DiskHeaderTools::Decipher( DISK_HEADER_V3* pHeader, const UCHAR* pUserKey, 
 			RtlSecureZeroMemory(didgest, sizeof(didgest));
 		}
 		break;
-	case DISK_CIPHER_TWOFISH:
+	case DISK_CIPHER::DISK_CIPHER_TWOFISH:
 		{
 			DNTwofish* pCipher = (DNTwofish*)ExAllocatePoolWithTag(PagedPool, sizeof(DNTwofish), MEM_TAG);
 			if(!pCipher)
@@ -429,7 +429,7 @@ bool DiskHeaderTools::Decipher( DISK_HEADER_V3* pHeader, const UCHAR* pUserKey, 
 				pHeader->TweakKey);
 
 			// Check version first
-			if((pHeader->DiskVersion.formatVersion == DISK_VERSION_3))
+			if((pHeader->DiskVersion.formatVersion == static_cast<UCHAR>(DISK_VERSION::DISK_VERSION_3)))
 			{
 				// Check hash
 				hash.Init();
@@ -456,7 +456,7 @@ bool DiskHeaderTools::Decipher( DISK_HEADER_V4* pHeader, const UCHAR* pUserKey, 
 
 	switch(algoId)
 	{
-	case DISK_CIPHER_AES:
+	case DISK_CIPHER::DISK_CIPHER_AES:
 		{
 			// Create a copy of pHeaderBuff
 			DISK_HEADER_V4 *pHeaderBuff = (DISK_HEADER_V4*)ExAllocatePoolWithTag(PagedPool, sizeof(DISK_HEADER_V4), MEM_TAG);
@@ -500,7 +500,7 @@ bool DiskHeaderTools::Decipher( DISK_HEADER_V4* pHeader, const UCHAR* pUserKey, 
 			ExFreePoolWithTag(pEngine, MEM_TAG);
 		}
 		break;
-	case DISK_CIPHER_TWOFISH:
+	case DISK_CIPHER::DISK_CIPHER_TWOFISH:
 		{
 			// Create a copy of pHeaderBuff
 			DISK_HEADER_V4 *pHeaderBuff = (DISK_HEADER_V4*)ExAllocatePoolWithTag(PagedPool, sizeof(DISK_HEADER_V4), MEM_TAG);
