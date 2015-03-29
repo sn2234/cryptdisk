@@ -50,7 +50,11 @@ public:
 	static void EncryptVolume(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* volumeName, DISK_CIPHER cipherAlgorithm,
 		const unsigned char* password, size_t passwordLength, bool fillImageWithRandom, std::function<bool(double)> callback);
 
+	static std::vector<unsigned char> ReadVolumeHeader(const WCHAR* volumeId);
+
 	static std::vector<unsigned char> ReadImageHeader(const WCHAR* imagePath);
 
 	static void RestoreImageHeader(const std::string& imageFile, const std::string& backupFile);
+
+	static void RestoreVolumeHeader(const std::wstring& volumeId, const std::string& backupFile);
 };

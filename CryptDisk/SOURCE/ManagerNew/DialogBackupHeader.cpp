@@ -26,6 +26,15 @@ DialogBackupHeader::DialogBackupHeader(const std::wstring& imagePath, CWnd* pPar
 
 }
 
+DialogBackupHeader::DialogBackupHeader(const VolumeDesk& volumeDescriptor, CWnd* pParent /*= NULL*/)
+	: CDialogEx(DialogBackupHeader::IDD, pParent)
+	, m_backupPath(_T(""))
+	, m_imageOpenedSuccessfully(false)
+	, m_volumeDescriptor(std::make_shared<VolumeDesk>(volumeDescriptor))
+{
+
+}
+
 DialogBackupHeader::~DialogBackupHeader()
 {
 }
@@ -93,11 +102,16 @@ void DialogBackupHeader::OnBnClickedButtonOpen()
 
 	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(passwordBuff.get()), passwordLength);
 
-	auto headerBuff = CryptDiskHelpers::ReadImageHeader(m_imagePath);
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+	auto headerBuff = m_volumeDescriptor ?
+		CryptDiskHelpers::ReadVolumeHeader(conv.from_bytes(m_volumeDescriptor->deviceId).c_str())
+		: CryptDiskHelpers::ReadImageHeader(m_imagePath);
 
 	DiskHeaderTools::CIPHER_INFO info;
 	if(DiskHeaderTools::Decipher(&headerBuff[0], pb.Password(), static_cast<ULONG>(pb.PasswordLength()), &info))
 	{
+		SCOPE_EXIT{ RtlSecureZeroMemory(&headerBuff[0], headerBuff.size()); };
+
 		// Set version and algorithm
 		switch(info.versionInfo.formatVersion)
 		{
@@ -141,67 +155,60 @@ void DialogBackupHeader::OnBnClickedButtonKeyFiles()
 
 void DialogBackupHeader::OnBnClickedOk()
 {
-	if(m_versionCombo.GetCurSel() == 0)
+	try
 	{
-		AfxMessageBox(_T("Open image first or select version manually"), MB_OK | MB_ICONWARNING);
-		return;
-	}
-
-	size_t headerSize = 0;
-
-	switch(m_versionCombo.GetCurSel())
-	{
-	case 1:
-		headerSize = sizeof(DISK_HEADER_V3);
-		break;
-	case 2:
-		headerSize = sizeof(DISK_HEADER_V4) * 2;
-		break;
-	}
-	ASSERT(headerSize);
-	
-	std::vector<unsigned char> headerBuff(headerSize);
-
-	
-	HANDLE hImageFile(CreateFileW(m_imagePath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
-	if (hImageFile == INVALID_HANDLE_VALUE)
-	{
-		AfxMessageBox(_T("Unable to open image file"), MB_ICONERROR);
-		return;
-	}
-
-	SCOPE_EXIT{ CloseHandle(hImageFile); };
-
-	{
-		DWORD bytesRead;
-		BOOL result = ReadFile(hImageFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesRead, NULL);
-		if(!result || !(bytesRead == headerSize))
+		if (m_versionCombo.GetCurSel() == 0)
 		{
-			AfxMessageBox(_T("Unable to read data"), MB_ICONERROR);
-			return;
+			throw std::logic_error("Open image first or select version manually");
 		}
-	}
 
-	HANDLE hBackupFile(CreateFileW(m_backupPath, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL));
-	if (hBackupFile == INVALID_HANDLE_VALUE)
-	{
-		AfxMessageBox(_T("Unable to open backup file"), MB_ICONERROR);
-		return;
-	}
+		size_t headerSize = 0;
 
-	SCOPE_EXIT{ CloseHandle(hBackupFile); };
-
-	{
-		DWORD bytesWrite;
-		BOOL result = WriteFile(hBackupFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWrite, NULL);
-		if(!result || !(bytesWrite == headerSize))
+		switch (m_versionCombo.GetCurSel())
 		{
-			AfxMessageBox(_T("Unable to write data"), MB_ICONERROR);
-			return;
+		case 1:
+			headerSize = sizeof(DISK_HEADER_V3);
+			break;
+		case 2:
+			headerSize = sizeof(DISK_HEADER_V4) * 2;
+			break;
 		}
-	}
+		ASSERT(headerSize);
 
-	CDialogEx::OnOK();
+		std::vector<unsigned char> headerBuff(headerSize);
+
+		{
+			std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+			auto headerBuffTmp = m_volumeDescriptor ?
+				CryptDiskHelpers::ReadVolumeHeader(conv.from_bytes(m_volumeDescriptor->deviceId).c_str())
+				: CryptDiskHelpers::ReadImageHeader(m_imagePath);
+
+			std::copy_n(std::cbegin(headerBuffTmp), headerBuff.size(), std::begin(headerBuff));
+		}
+
+		HANDLE hBackupFile(CreateFileW(m_backupPath, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL));
+		if (hBackupFile == INVALID_HANDLE_VALUE)
+		{
+			throw std::logic_error("Unable to open backup file");
+		}
+
+		SCOPE_EXIT{ CloseHandle(hBackupFile); };
+
+		{
+			DWORD bytesWrite;
+			BOOL result = WriteFile(hBackupFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWrite, NULL);
+			if (!result || !(bytesWrite == headerSize))
+			{
+				throw std::logic_error("Unable to write data");
+			}
+		}
+
+		CDialogEx::OnOK();
+	}
+	catch (const std::exception& ex)
+	{
+		AfxMessageBox(CString(ex.what()), MB_ICONERROR);
+	}
 }
 
 

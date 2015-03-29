@@ -1,5 +1,6 @@
 #pragma once
 #include "afxwin.h"
+#include "VolumeTools.h"
 
 
 // DialogBackupHeader dialog
@@ -9,7 +10,8 @@ class DialogBackupHeader : public CDialogEx
 	DECLARE_DYNAMIC(DialogBackupHeader)
 
 public:
-	DialogBackupHeader(const std::wstring& imagePath, CWnd* pParent = NULL);   // standard constructor
+	DialogBackupHeader(const std::wstring& imagePath, CWnd* pParent = NULL);
+	DialogBackupHeader(const VolumeDesk& volumeDescriptor, CWnd* pParent = NULL);
 	virtual ~DialogBackupHeader();
 
 // Dialog Data
@@ -27,6 +29,8 @@ public:
 
 	bool m_imageOpenedSuccessfully;
 	std::vector<std::wstring>	m_keyFiles;
+
+	std::shared_ptr<VolumeDesk> m_volumeDescriptor;
 
 	afx_msg void OnBnClickedButtonBrowse();
 	afx_msg void OnBnClickedButtonOpen();

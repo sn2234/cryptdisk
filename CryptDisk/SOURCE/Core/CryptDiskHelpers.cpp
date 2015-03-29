@@ -330,7 +330,7 @@ std::vector<MountedImageInfo> CryptDiskHelpers::ListMountedImages( DNDriverContr
 		}
 	}
 
-	return tmp;
+	return std::move(tmp);
 }
 
 void CryptDiskHelpers::UnmountImage( DNDriverControl& driverControl, ULONG id, bool forceUnmount )
@@ -567,6 +567,13 @@ void CryptDiskHelpers::ChangePassword( CryptoLib::IRandomGenerator* pRndGen, con
 	}
 }
 
+std::vector<unsigned char> CryptDiskHelpers::ReadVolumeHeader(const WCHAR* volumeId)
+{
+	std::wstring volumeName = VolumeTools::prepareVolumeName(volumeId);
+
+	return ReadImageHeader(volumeName.c_str());
+}
+
 std::vector<unsigned char> CryptDiskHelpers::ReadImageHeader( const WCHAR* imagePath )
 {
 	size_t headerSize = max(sizeof(DISK_HEADER_V3), sizeof(DISK_HEADER_V4));
@@ -588,7 +595,7 @@ std::vector<unsigned char> CryptDiskHelpers::ReadImageHeader( const WCHAR* image
 		throw winapi_exception("Error reading disk header", err);
 	}
 	
-	return headerBuff;
+	return std::move(headerBuff);
 }
 
 void CryptDiskHelpers::RestoreImageHeader(const std::string& imageFile, const std::string& backupFile)
@@ -606,8 +613,7 @@ void CryptDiskHelpers::RestoreImageHeader(const std::string& imageFile, const st
 	HANDLE hBackupFile = CreateFileA(backupFile.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hBackupFile == INVALID_HANDLE_VALUE)
 	{
-		AfxMessageBox(_T("Unable to open backup file"), MB_ICONERROR);
-		return;
+		throw logic_error("Unable to open backup file");
 	}
 
 	SCOPE_EXIT { CloseHandle(hBackupFile); };
@@ -636,6 +642,67 @@ void CryptDiskHelpers::RestoreImageHeader(const std::string& imageFile, const st
 	{
 		DWORD bytesWrite;
 		BOOL result = WriteFile(hImageFile, &backupBuff[0], static_cast<DWORD>(backupBuff.size()), &bytesWrite, NULL);
+		if (!result || !(bytesWrite == backupFileSize))
+		{
+			throw logic_error("Unable to write data");
+		}
+	}
+}
+
+void CryptDiskHelpers::RestoreVolumeHeader(const std::wstring& volumeId, const std::string& backupFile)
+{
+	// Open and read backup file
+	if (!bfs::exists(backupFile))
+	{
+		throw logic_error("Backup file doesn't exist");
+	}
+
+	HANDLE hBackupFile = CreateFileA(backupFile.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hBackupFile == INVALID_HANDLE_VALUE)
+	{
+		throw logic_error("Unable to open backup file");
+	}
+
+	SCOPE_EXIT{ CloseHandle(hBackupFile); };
+
+	size_t backupFileSize = GetFileSize(hBackupFile, NULL);
+
+	std::vector<unsigned char> backupBuff(backupFileSize);
+	{
+		DWORD bytesRead;
+		BOOL result = ReadFile(hBackupFile, &backupBuff[0], static_cast<DWORD>(backupBuff.size()), &bytesRead, NULL);
+		if (!result || !(bytesRead == backupFileSize))
+		{
+			throw logic_error("Unable to read data");
+		}
+	}
+
+	// Open volume
+	HANDLE hVolumeFile = ::CreateFileW(volumeId.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+	if (hVolumeFile == INVALID_HANDLE_VALUE)
+	{
+		throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
+	}
+
+	SCOPE_EXIT{ ::CloseHandle(hVolumeFile); };
+
+
+	// Lock
+	DWORD dwResult;
+	if (!::DeviceIoControl(hVolumeFile, FSCTL_LOCK_VOLUME, NULL, 0, NULL, 0, &dwResult, NULL))
+	{
+		throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
+	}
+
+	SCOPE_EXIT{
+		DWORD dwResult;
+		::DeviceIoControl(hVolumeFile, FSCTL_UNLOCK_VOLUME, NULL, 0, NULL, 0, &dwResult, NULL);
+	};
+
+	// Write header from backup file
+	{
+		DWORD bytesWrite;
+		BOOL result = WriteFile(hVolumeFile, &backupBuff[0], static_cast<DWORD>(backupBuff.size()), &bytesWrite, NULL);
 		if (!result || !(bytesWrite == backupFileSize))
 		{
 			throw logic_error("Unable to write data");

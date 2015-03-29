@@ -9,6 +9,8 @@
 #include "AppMemory.h"
 #include "CommonTools.h"
 #include "KeyFilesDialog.h"
+#include "CryptDiskHelpers.h"
+#include "DialogBackupHeader.h"
 
 namespace fs = boost::filesystem;
 
@@ -90,13 +92,66 @@ void PageMount1v::OnBnClickedButtonKeyFiles()
 
 void PageMount1v::OnBnClickedButtonBackup()
 {
-	AfxMessageBox(_T("Not implemented yet..."), MB_ICONWARNING);
+	UpdateData(TRUE);
+
+	PropagateToModel();
+
+	const MountWizardModel& m = static_cast<const MountWizardModel&>(m_document);
+
+	DialogBackupHeader dlg(m.VolumeDescriptor());
+
+	dlg.DoModal();
 }
 
 
 void PageMount1v::OnBnClickedButtonRestore()
 {
-	AfxMessageBox(_T("Not implemented yet..."), MB_ICONWARNING);
+	try
+	{
+		UpdateData(TRUE);
+
+		PropagateToModel();
+
+		const MountWizardModel& m = static_cast<const MountWizardModel&>(m_document);
+
+ 		if (AfxMessageBox(_T("Do you want to backup current header first?"), MB_ICONQUESTION | MB_YESNO) == IDYES)
+ 		{
+ 			DialogBackupHeader dlg(m.VolumeDescriptor());
+ 
+ 			if (dlg.DoModal() == IDCANCEL)
+ 			{
+ 				return;
+ 			}
+ 		}
+
+		OPENFILENAME	ofn;
+		TCHAR			filePath[MAX_PATH];
+
+		memset(&ofn, 0, sizeof(ofn));
+		memset(&filePath, 0, sizeof(filePath));
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hInstance = AfxGetApp()->m_hInstance;
+		ofn.hwndOwner = GetSafeHwnd();
+		ofn.lpstrFilter = _T("Backup files\0*.imghdr\0All files\0*.*\0\0");
+		ofn.lpstrFile = filePath;
+		ofn.nMaxFile = sizeof(filePath);
+		ofn.lpstrTitle = _T("Open image backup header");
+		ofn.Flags |= OFN_DONTADDTORECENT;
+		if (GetOpenFileName(&ofn))
+		{
+			if (fs::exists(filePath))
+			{
+				std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+				CryptDiskHelpers::RestoreVolumeHeader(conv.from_bytes(m.VolumeDescriptor().deviceId), conv.to_bytes(filePath));
+
+				AfxMessageBox(_T("Image header has been restored successfully"), MB_OK);
+			}
+		}
+	}
+	catch (const std::exception& ex)
+	{
+		AfxMessageBox(CString(ex.what()), MB_ICONERROR);
+	}
 }
 
 void PageMount1v::OnDocumentUpdate()
