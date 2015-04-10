@@ -49,6 +49,8 @@ public:
 	std::vector<VolumeDesk> enumVolumes();
 
 	static std::wstring prepareVolumeName(const std::wstring& rawVolumeName);
+
+	static std::string formatDriveType(unsigned int driveType);
 private:
 	CComPtr<IWbemServices> m_pIWbemServices;
 };

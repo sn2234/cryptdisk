@@ -192,6 +192,61 @@ namespace
 		}
 
 	}
+
+	size_t getHeaderSize(DISK_VERSION diskVersion)
+	{
+		size_t headerSize = 0;
+
+		switch (diskVersion)
+		{
+		case DISK_VERSION::DISK_VERSION_3:
+			headerSize = sizeof(DISK_HEADER_V3);
+			break;
+		case DISK_VERSION::DISK_VERSION_4:
+			headerSize = sizeof(DISK_HEADER_V4) * 2;
+			break;
+		}
+		assert(headerSize);
+
+		return headerSize;
+	}
+
+	void performBackup(HANDLE hImage, const std::string& backupFile, DISK_VERSION diskVersion)
+	{
+		// Read header
+		size_t headerSize = getHeaderSize(diskVersion);
+		vector<unsigned char> headerBuff(headerSize);
+
+		{
+			DWORD bytesRead;
+			BOOL result = ReadFile(hImage, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesRead, NULL);
+			if (!result || !(bytesRead == headerSize))
+			{
+				int err = GetLastError();
+				throw winapi_exception("Error reading disk header", err);
+			}
+		}
+
+		// Write backup
+		{
+			HANDLE hBackupFile(CreateFileA(backupFile.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL));
+			if (hBackupFile == INVALID_HANDLE_VALUE)
+			{
+				int err = GetLastError();
+				throw winapi_exception("Unable to open backup file", err);
+			}
+
+			SCOPE_EXIT{ CloseHandle(hBackupFile); };
+
+			DWORD bytesWrite;
+			BOOL result = WriteFile(hBackupFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWrite, NULL);
+			if (!result || !(bytesWrite == headerSize))
+			{
+				int err = GetLastError();
+				throw winapi_exception("Unable to write data", err);
+			}
+		}
+	}
 }
 
 void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength, ULONG mountOptions )
@@ -678,7 +733,8 @@ void CryptDiskHelpers::RestoreVolumeHeader(const std::wstring& volumeId, const s
 	}
 
 	// Open volume
-	HANDLE hVolumeFile = ::CreateFileW(volumeId.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+	std::wstring volumeFileName(VolumeTools::prepareVolumeName(volumeId.c_str()));
+	HANDLE hVolumeFile = ::CreateFileW(volumeFileName.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
 	if (hVolumeFile == INVALID_HANDLE_VALUE)
 	{
 		throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
@@ -705,12 +761,41 @@ void CryptDiskHelpers::RestoreVolumeHeader(const std::wstring& volumeId, const s
 		BOOL result = WriteFile(hVolumeFile, &backupBuff[0], static_cast<DWORD>(backupBuff.size()), &bytesWrite, NULL);
 		if (!result || !(bytesWrite == backupFileSize))
 		{
-			throw logic_error("Unable to write data");
+			throw winapi_exception("Unable to write data");
 		}
 	}
 }
 
-void CryptDiskHelpers::EncryptVolume(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* volumeName, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, bool fillImageWithRandom, std::function<bool(double)> callback)
+void CryptDiskHelpers::BackupImageHeader(const std::string& imageFile, const std::string& backupFile, DISK_VERSION diskVersion)
+{
+	HANDLE hFile = CreateFileA(imageFile.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		throw winapi_exception("Error opening image");
+	}
+
+	SCOPE_EXIT{ ::CloseHandle(hFile); };
+
+	performBackup(hFile, backupFile, diskVersion);
+}
+
+void CryptDiskHelpers::BackupVolumeHeader(const std::wstring& volumeId, const std::string& backupFile, DISK_VERSION diskVersion)
+{
+	std::wstring volumeName = VolumeTools::prepareVolumeName(volumeId);
+
+	HANDLE hFile = CreateFileW(volumeName.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hFile == INVALID_HANDLE_VALUE)
+	{
+		throw winapi_exception("Error opening image");
+	}
+
+	SCOPE_EXIT{ ::CloseHandle(hFile); };
+
+	performBackup(hFile, backupFile, diskVersion);
+}
+
+void CryptDiskHelpers::EncryptVolume(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* volumeName, DISK_CIPHER cipherAlgorithm,
+	const unsigned char* password, size_t passwordLength, bool fillImageWithRandom, std::function<bool(double)> callback)
 {
 	// Open
 	HANDLE hFile = ::CreateFileW(volumeName, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);

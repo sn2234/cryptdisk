@@ -162,45 +162,28 @@ void DialogBackupHeader::OnBnClickedOk()
 			throw std::logic_error("Open image first or select version manually");
 		}
 
-		size_t headerSize = 0;
-
+		DISK_VERSION diskVersion;
 		switch (m_versionCombo.GetCurSel())
 		{
 		case 1:
-			headerSize = sizeof(DISK_HEADER_V3);
+			diskVersion = DISK_VERSION::DISK_VERSION_3;
 			break;
 		case 2:
-			headerSize = sizeof(DISK_HEADER_V4) * 2;
+			diskVersion = DISK_VERSION::DISK_VERSION_4;
 			break;
 		}
-		ASSERT(headerSize);
 
-		std::vector<unsigned char> headerBuff(headerSize);
-
+		if (m_volumeDescriptor)
 		{
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
-			auto headerBuffTmp = m_volumeDescriptor ?
-				CryptDiskHelpers::ReadVolumeHeader(conv.from_bytes(m_volumeDescriptor->deviceId).c_str())
-				: CryptDiskHelpers::ReadImageHeader(m_imagePath);
-
-			std::copy_n(std::cbegin(headerBuffTmp), headerBuff.size(), std::begin(headerBuff));
+			CryptDiskHelpers::BackupVolumeHeader(conv.from_bytes(m_volumeDescriptor->deviceId),
+				conv.to_bytes(static_cast<const wchar_t*>(m_backupPath)), diskVersion);
 		}
-
-		HANDLE hBackupFile(CreateFileW(m_backupPath, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL));
-		if (hBackupFile == INVALID_HANDLE_VALUE)
+		else
 		{
-			throw std::logic_error("Unable to open backup file");
-		}
-
-		SCOPE_EXIT{ CloseHandle(hBackupFile); };
-
-		{
-			DWORD bytesWrite;
-			BOOL result = WriteFile(hBackupFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWrite, NULL);
-			if (!result || !(bytesWrite == headerSize))
-			{
-				throw std::logic_error("Unable to write data");
-			}
+			std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+			CryptDiskHelpers::BackupImageHeader(conv.to_bytes(static_cast<const wchar_t*>(m_imagePath)),
+				conv.to_bytes(static_cast<const wchar_t*>(m_backupPath)), diskVersion);
 		}
 
 		CDialogEx::OnOK();

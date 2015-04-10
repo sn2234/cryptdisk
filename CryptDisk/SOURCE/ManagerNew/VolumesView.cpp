@@ -67,7 +67,7 @@ void VolumesView::OnDocumentUpdate()
 		m_listVolumes.SetItemText(nItem, 1, FormatSize(v.capacity).c_str());
 		m_listVolumes.SetItemText(nItem, 2, conv.from_bytes(v.driveLetter).c_str());
 		m_listVolumes.SetItemText(nItem, 3, conv.from_bytes(v.fileSystem).c_str());
-		m_listVolumes.SetItemText(nItem, 4, conv.from_bytes(v.driveType).c_str());
+		m_listVolumes.SetItemText(nItem, 4, conv.from_bytes(VolumeTools::formatDriveType(v.driveType)).c_str());
 		nItem++;
 	}
 }

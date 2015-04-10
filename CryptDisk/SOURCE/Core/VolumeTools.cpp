@@ -134,7 +134,7 @@ namespace
 				tmp.diskType = var.uintVal;
 			}
 
-			return tmp;
+			return std::move(tmp);
 		});
 	}
 
@@ -248,7 +248,7 @@ std::vector<VolumeDesk> VolumeTools::enumVolumes()
 
 		}
 
-		return tmp;
+		return std::move(tmp);
 	});
 
 	return volumes;
@@ -257,4 +257,27 @@ std::vector<VolumeDesk> VolumeTools::enumVolumes()
 std::wstring VolumeTools::prepareVolumeName(const std::wstring& rawVolumeName)
 {
 	return std::wstring(L"\\??\\") + extractVolumeId(rawVolumeName);
+}
+
+std::string VolumeTools::formatDriveType(unsigned int driveType)
+{
+	switch (driveType)
+	{
+	case 0:
+		return "Unknown";
+	case 1:
+		return "No Root Directory";
+	case 2:
+		return "Removable Disk";
+	case 3:
+		return "Local Disk";
+	case 4:
+		return "Network Drive";
+	case 5:
+		return "Compact Disk";
+	case 6:
+		return "RAM Disk";
+	default:
+		return "Unknown";
+	}
 }

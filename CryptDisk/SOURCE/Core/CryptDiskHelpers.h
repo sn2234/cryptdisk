@@ -57,4 +57,8 @@ public:
 	static void RestoreImageHeader(const std::string& imageFile, const std::string& backupFile);
 
 	static void RestoreVolumeHeader(const std::wstring& volumeId, const std::string& backupFile);
+
+	static void BackupImageHeader(const std::string& imageFile, const std::string& backupFile, DISK_VERSION diskVersion);
+
+	static void BackupVolumeHeader(const std::wstring& volumeId, const std::string& backupFile, DISK_VERSION diskVersion);
 };
