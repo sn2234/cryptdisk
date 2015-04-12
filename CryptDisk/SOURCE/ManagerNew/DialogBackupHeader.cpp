@@ -96,6 +96,8 @@ void DialogBackupHeader::OnBnClickedButtonBrowse()
 
 void DialogBackupHeader::OnBnClickedButtonOpen()
 {
+	UpdateData(TRUE);
+
 	size_t passwordLength = GetWindowTextLengthA(GetDlgItem(IDC_EDIT_PASSWORD)->GetSafeHwnd());
 	boost::shared_array<char> passwordBuff(AllocPasswordBuffer(passwordLength + 1));
 	GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, passwordBuff.get(), static_cast<int>(passwordLength+1));
@@ -155,6 +157,8 @@ void DialogBackupHeader::OnBnClickedButtonKeyFiles()
 
 void DialogBackupHeader::OnBnClickedOk()
 {
+	UpdateData(TRUE);
+
 	try
 	{
 		if (m_versionCombo.GetCurSel() == 0)
