@@ -21,7 +21,8 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 
 	DECLARE_MESSAGE_MAP()
-public:
+private:
+	CString m_staticBoxName;
 	CString m_imagePath;
 	CString m_backupPath;
 	CComboBox m_versionCombo;
@@ -31,6 +32,8 @@ public:
 	std::vector<std::wstring>	m_keyFiles;
 
 	std::shared_ptr<VolumeDesk> m_volumeDescriptor;
+
+public:
 
 	afx_msg void OnBnClickedButtonBrowse();
 	afx_msg void OnBnClickedButtonOpen();

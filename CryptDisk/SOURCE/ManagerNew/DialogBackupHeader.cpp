@@ -22,6 +22,7 @@ DialogBackupHeader::DialogBackupHeader(const std::wstring& imagePath, CWnd* pPar
 	, m_imagePath(imagePath.c_str())
 	, m_backupPath(_T(""))
 	, m_imageOpenedSuccessfully(false)
+	, m_staticBoxName(_T(""))
 {
 
 }
@@ -29,8 +30,10 @@ DialogBackupHeader::DialogBackupHeader(const std::wstring& imagePath, CWnd* pPar
 DialogBackupHeader::DialogBackupHeader(const VolumeDesk& volumeDescriptor, CWnd* pParent /*= NULL*/)
 	: CDialogEx(DialogBackupHeader::IDD, pParent)
 	, m_backupPath(_T(""))
+	, m_imagePath(volumeDescriptor.deviceId.c_str())
 	, m_imageOpenedSuccessfully(false)
 	, m_volumeDescriptor(std::make_shared<VolumeDesk>(volumeDescriptor))
+	, m_staticBoxName(_T("Volume"))
 {
 
 }
@@ -46,6 +49,7 @@ void DialogBackupHeader::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_BACKUP_PATH, m_backupPath);
 	DDX_Control(pDX, IDC_COMBO_VERSION, m_versionCombo);
 	DDX_Control(pDX, IDC_COMBO_ALGORITHM, m_algorithmCombo);
+	DDX_Text(pDX, IDC_STATIC_BOX, m_staticBoxName);
 }
 
 
