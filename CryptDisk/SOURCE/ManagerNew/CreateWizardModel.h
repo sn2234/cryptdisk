@@ -33,6 +33,8 @@ public:
 	void CipherAlgorithm(DISK_CIPHER val) { m_cipherAlgorithm = val; }
 
 	bool IsVolume() const { return m_isVolume; }
+
+	const VolumeDesk& VolumeDescriptor() const { return *m_volumeDescriptor; }
 private:
 	// Image file specific
 	std::wstring				m_imageFilePath;

@@ -243,6 +243,7 @@
     <ClInclude Include="MountWizard.h" />
     <ClInclude Include="MountWizardModel.h" />
     <ClInclude Include="PageCreate1.h" />
+    <ClInclude Include="PageCreate1v.h" />
     <ClInclude Include="PageCreate2.h" />
     <ClInclude Include="PageMount1.h" />
     <ClInclude Include="PageMount1v.h" />
@@ -290,6 +291,7 @@
     <ClCompile Include="MountWizard.cpp" />
     <ClCompile Include="MountWizardModel.cpp" />
     <ClCompile Include="PageCreate1.cpp" />
+    <ClCompile Include="PageCreate1v.cpp" />
     <ClCompile Include="PageCreate2.cpp" />
     <ClCompile Include="PageMount1.cpp" />
     <ClCompile Include="PageMount1v.cpp" />

@@ -117,18 +117,21 @@ void VolumesView::OnBnClickedButtonMount()
 
 void VolumesView::OnBnClickedButtonEncipher()
 {
-	// Get selected volume
-	int selectedRow = m_listVolumes.GetSelectionMark();
-
-	if (selectedRow != -1)
+	if (AfxMessageBox(_T("Enciphering volume will erase all information. Are you sure?"), MB_ICONWARNING | MB_YESNO) == IDYES)
 	{
-		if (selectedRow < m_volumeDescriptors.size())
+		// Get selected volume
+		int selectedRow = m_listVolumes.GetSelectionMark();
+
+		if (selectedRow != -1)
 		{
-			const auto* selectedVolume = &m_volumeDescriptors[selectedRow];
+			if (selectedRow < m_volumeDescriptors.size())
+			{
+				const auto* selectedVolume = &m_volumeDescriptors[selectedRow];
 
-			CreateWizard dlg(selectedVolume, _T("Encipher Volume"), this);
+				CreateWizard dlg(selectedVolume, _T("Encipher Volume"), this);
 
-			dlg.DoModal();
+				dlg.DoModal();
+			}
 		}
 	}
 }

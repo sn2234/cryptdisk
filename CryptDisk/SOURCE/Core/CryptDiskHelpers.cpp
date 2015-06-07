@@ -99,7 +99,6 @@ namespace
 			{
 				cipher.EncipherBlock(buffer, &writeBuffer[0] + i * RijndaelEngine::BlockSize);
 				counter++;
-				bytesFilled += RijndaelEngine::BlockSize;
 			}
 
 			if (callbackCounter++ > 255)
@@ -118,10 +117,12 @@ namespace
 					(bytesFilled > bytesToFill ? bytesFilled - bytesToFill : 0));
 
 				if (!WriteFile(hVolume, static_cast<LPCVOID>(&writeBuffer[0]),
-					bytesToWrite, &dwResult, nullptr))
+					bytesToWrite, &dwResult, nullptr) || dwResult != bytesToWrite)
 				{
 					throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
 				}
+
+				bytesFilled += bytesToWrite;
 			}
 
 		} while (bytesFilled < bytesToFill);

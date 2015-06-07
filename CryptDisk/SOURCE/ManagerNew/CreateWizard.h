@@ -4,6 +4,7 @@
 #include "PageCreate1.h"
 #include "PageCreate2.h"
 #include "VolumeTools.h"
+#include "PageCreate1v.h"
 
 // CreateWizard
 
@@ -20,6 +21,7 @@ public:
 private:
 	CreateWizardModel					m_model;
 	std::unique_ptr<PageCreate1>		m_page1;
+	std::unique_ptr<PageCreate1v>		m_page1v;
 	std::unique_ptr<PageCreate2>		m_page2;
 	bool								m_createVolume;
 protected:

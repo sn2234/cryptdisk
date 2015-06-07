@@ -16,6 +16,7 @@ CreateWizard::CreateWizard(const VolumeDesk* descriptor, UINT nIDCaption, CWnd* 
 	, m_model(descriptor)
 	, m_createVolume(descriptor != nullptr)
 	, m_page1(std::make_unique<PageCreate1>(m_model))
+	, m_page1v(std::make_unique<PageCreate1v>(m_model))
 	, m_page2(std::make_unique<PageCreate2>(m_model))
 {
 	DoInit();
@@ -26,6 +27,7 @@ CreateWizard::CreateWizard(const VolumeDesk* descriptor, LPCTSTR pszCaption, CWn
 	, m_model(descriptor)
 	, m_createVolume(descriptor != nullptr)
 	, m_page1(std::make_unique<PageCreate1>(m_model))
+	, m_page1v(std::make_unique<PageCreate1v>(m_model))
 	, m_page2(std::make_unique<PageCreate2>(m_model))
 {
 	DoInit();
@@ -46,6 +48,10 @@ void CreateWizard::DoInit()
 	if (!m_createVolume)
 	{
 		AddPage(m_page1.get());
+	}
+	else
+	{
+		AddPage(m_page1v.get());
 	}
 
 	AddPage(m_page2.get());
