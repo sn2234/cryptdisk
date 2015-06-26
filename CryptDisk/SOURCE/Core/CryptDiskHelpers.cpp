@@ -822,3 +822,27 @@ void CryptDiskHelpers::EncryptVolume(CryptoLib::IRandomGenerator* pRndGen, const
 
 	DoEncrypt(hFile, GetVolumeLength(hFile), pRndGen, cipherAlgorithm, password, passwordLength, fillImageWithRandom, callback);
 }
+
+boost::optional<long long> CryptDiskHelpers::getVolumeCapacity(const std::string& volumeId)
+{
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+	std::wstring volumeFileName(VolumeTools::prepareVolumeName(conv.from_bytes(volumeId)));
+
+	HANDLE hVolumeFile = ::CreateFileW(volumeFileName.c_str(), GENERIC_READ,
+		FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+	if (hVolumeFile == INVALID_HANDLE_VALUE)
+	{
+		return boost::none;
+	}
+
+	SCOPE_EXIT{ ::CloseHandle(hVolumeFile); };
+
+	try
+	{
+		return GetVolumeLength(hVolumeFile);
+	}
+	catch (const std::exception&)
+	{
+		return boost::none;
+	}
+}

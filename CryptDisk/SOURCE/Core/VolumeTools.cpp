@@ -3,6 +3,7 @@
 
 #include "VolumeTools.h"
 #include "ComHelpers.h"
+#include "CryptDiskHelpers.h"
 
 namespace bsys = boost::system;
 
@@ -225,9 +226,21 @@ std::vector<VolumeDesk> VolumeTools::enumVolumes()
 		HResult hRes;
 
 		tmp.deviceId = getStringParameter(x, _T("DeviceID"));
-		tmp.capacity = getStringParameter(x, _T("Capacity"));
 		tmp.driveLetter = getStringParameter(x, _T("DriveLetter"));
 		tmp.fileSystem = getStringParameter(x, _T("FileSystem"));
+
+		tmp.capacity = getStringParameter(x, _T("Capacity"));
+		if (tmp.capacity.empty())
+		{
+			// Adjust with the actual capacity
+
+			auto cap = CryptDiskHelpers::getVolumeCapacity(tmp.deviceId);
+
+			if (cap)
+			{
+				tmp.capacity = boost::lexical_cast<std::string>(cap.get());
+			}
+		}
 
 		// driveType
 		{

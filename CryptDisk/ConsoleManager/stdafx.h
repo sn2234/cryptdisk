@@ -18,6 +18,8 @@
 #include <vector>
 #include <algorithm>
 #include <regex>
+#include <locale>
+#include <codecvt>
 
 // Boost
 #include <boost/program_options.hpp>
