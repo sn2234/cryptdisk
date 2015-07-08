@@ -101,7 +101,7 @@ namespace
 				counter++;
 			}
 
-			if (callbackCounter++ > 255)
+			if (callbackCounter++ > 10)
 			{
 				if (!callback(min((double) bytesFilled / (double) bytesToFill, 1.0)))
 				{
@@ -113,8 +113,16 @@ namespace
 			{
 				DWORD dwResult;
 
-				DWORD bytesToWrite = static_cast<DWORD>(min(bytesToFill, writeBuffer.size()) -
-					(bytesFilled > bytesToFill ? bytesFilled - bytesToFill : 0));
+				DWORD bytesToWrite = static_cast<DWORD>(min(bytesToFill, writeBuffer.size()));
+
+				if (bytesFilled > bytesToFill)
+				{
+					bytesToWrite -= static_cast<DWORD>(bytesFilled - bytesToFill);
+				}
+				else if ((bytesFilled + writeBuffer.size()) > bytesToFill)
+				{
+					bytesToWrite = static_cast<DWORD>(bytesToFill - bytesFilled);
+				}
 
 				if (!WriteFile(hVolume, static_cast<LPCVOID>(&writeBuffer[0]),
 					bytesToWrite, &dwResult, nullptr) || dwResult != bytesToWrite)

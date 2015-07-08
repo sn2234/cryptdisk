@@ -26,8 +26,8 @@ CreateWizard::CreateWizard(const VolumeDesk* descriptor, LPCTSTR pszCaption, CWn
 	:CPropertySheet(pszCaption, pParentWnd, iSelectPage)
 	, m_model(descriptor)
 	, m_createVolume(descriptor != nullptr)
-	, m_page1(std::make_unique<PageCreate1>(m_model))
-	, m_page1v(std::make_unique<PageCreate1v>(m_model))
+	, m_page1(descriptor != nullptr ? nullptr : std::make_unique<PageCreate1>(m_model))
+	, m_page1v(descriptor != nullptr ? std::make_unique<PageCreate1v>(m_model) : nullptr)
 	, m_page2(std::make_unique<PageCreate2>(m_model))
 {
 	DoInit();
