@@ -58,27 +58,34 @@ END_MESSAGE_MAP()
 
 void DialogMountFavorite::OnBnClickedButtonChangePassword()
 {
-	int passwordLength = GetWindowTextLengthA(GetDlgItem(IDC_EDIT_PASSWORD)->GetSafeHwnd());
-	auto passwordBuffer = AllocPasswordBuffer(passwordLength+1);
-
-	GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, &passwordBuffer[0], passwordLength+1);
-
-	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(&passwordBuffer[0]), passwordLength);
-
-	if(!CryptDiskHelpers::CheckImage(m_path, pb.Password(), pb.PasswordLength()))
+	try
 	{
-		AfxMessageBox(_T("Unable to open image"), MB_ICONERROR);
-		return;
-	}
+		int passwordLength = GetWindowTextLengthA(GetDlgItem(IDC_EDIT_PASSWORD)->GetSafeHwnd());
+		auto passwordBuffer = AllocPasswordBuffer(passwordLength + 1);
 
-	DialogChangePassword dlg(
-		[this](const unsigned char* oldPassword, size_t oldPasswordLen, const unsigned char* newPassword, size_t newPasswordLen){
-		CryptDiskHelpers::ChangePassword(&AppRandom::instance(), (const WCHAR*) m_path,
-			oldPassword, oldPasswordLen, newPassword, newPasswordLen);
+		GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, &passwordBuffer[0], passwordLength + 1);
+
+		PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(&passwordBuffer[0]), passwordLength);
+
+		if (!CryptDiskHelpers::CheckImage(m_path, pb.Password(), pb.PasswordLength()))
+		{
+			AfxMessageBox(_T("Unable to open image"), MB_ICONERROR);
+			return;
+		}
+
+		DialogChangePassword dlg(
+			[this](const unsigned char* oldPassword, size_t oldPasswordLen, const unsigned char* newPassword, size_t newPasswordLen){
+			CryptDiskHelpers::ChangePassword(&AppRandom::instance(), (const WCHAR*) m_path,
+				oldPassword, oldPasswordLen, newPassword, newPasswordLen);
 		},
-		pb.Password(), pb.PasswordLength());
+			pb.Password(), pb.PasswordLength());
 
-	dlg.DoModal();
+		dlg.DoModal();
+	}
+	catch (const std::exception& e)
+	{
+		AfxMessageBox(CString(e.what()), MB_ICONERROR);
+	}
 }
 
 
