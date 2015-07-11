@@ -15,7 +15,7 @@ public:
 		return m_sig.connect(subscriber);
 	}
 
-	void disconnect(connection_t subscriber)
+	void disconnect(const connection_t& subscriber)
 	{
 		subscriber.disconnect();
 	}

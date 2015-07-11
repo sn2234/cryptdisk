@@ -97,6 +97,7 @@ void DialogMountFavorite::OnOK()
 {
 	try
 	{
+		UpdateData(TRUE);
 
 		int passwordLength = GetWindowTextLengthA(GetDlgItem(IDC_EDIT_PASSWORD)->GetSafeHwnd());
 		auto passwordBuffer = AllocPasswordBuffer(passwordLength+1);
