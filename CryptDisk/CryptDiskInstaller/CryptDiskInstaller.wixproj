@@ -69,6 +69,14 @@
     <Compile Include="Product.wxs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ConsoleManager\ConsoleManager.vcxproj">
+      <Name>ConsoleManager</Name>
+      <Project>{a6aee6ef-f5d6-4946-96de-ac86cccceeba}</Project>
+      <Private>True</Private>
+      <DoNotHarvest>True</DoNotHarvest>
+      <RefProjectOutputGroups>Binaries;Content;Satellites</RefProjectOutputGroups>
+      <RefTargetDir>INSTALLFOLDER</RefTargetDir>
+    </ProjectReference>
     <ProjectReference Include="..\SOURCE\Driver\CryptDisk40-Package\CryptDisk40-Package.vcxproj">
       <Name>CryptDiskDriver-Package</Name>
       <Project>{d48182db-6f88-4aa3-920e-ab21c480f436}</Project>
