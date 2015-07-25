@@ -199,7 +199,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="res\ManagerNew.ico" />
-    <None Include="res\ManagerNew.rc2" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Core\CryptDiskHelpers.h" />
