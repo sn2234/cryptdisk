@@ -2,6 +2,7 @@
 #pragma once
 
 #include "PageMount1.h"
+#include "PageMount1v.h"
 #include "PageMount2.h"
 #include "MountWizardModel.h"
 
@@ -10,17 +11,18 @@
 class MountWizard : public CPropertySheet
 {
 	DECLARE_DYNAMIC(MountWizard)
-
+	typedef std::shared_ptr<CPropertyPage> PPropertyPage;
 public:
-	MountWizard(UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
-	MountWizard(LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+	MountWizard(const VolumeDesk* descriptor, UINT nIDCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
+	MountWizard(const VolumeDesk* descriptor, LPCTSTR pszCaption, CWnd* pParentWnd = NULL, UINT iSelectPage = 0);
 	virtual ~MountWizard();
 
 	void DoInit();
 private:
 	MountWizardModel	m_model;
-	PageMount1			m_page1;
-	PageMount2			m_page2;
+
+	PPropertyPage	m_page1;
+	PPropertyPage	m_page2;
 protected:
 	DECLARE_MESSAGE_MAP()
 };

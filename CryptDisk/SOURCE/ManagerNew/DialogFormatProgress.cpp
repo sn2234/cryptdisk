@@ -14,20 +14,16 @@
 
 IMPLEMENT_DYNAMIC(DialogFormatProgress, CDialogEx)
 
-DialogFormatProgress::DialogFormatProgress( const WCHAR* imagePath, INT64 imageSize,
-	DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, bool quickFormat, CWnd* pParent /*= NULL*/ )
+//, const WCHAR* imagePath, INT64 imageSize,
+// DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, bool quickFormat,
+
+DialogFormatProgress::DialogFormatProgress(std::function<void(std::function<bool(double)>)> processfunc, CWnd* pParent /*= NULL*/ )
 	: CDialogEx(DialogFormatProgress::IDD, pParent)
-	, m_imagePath(imagePath)
-	, m_passwordLength(passwordLength)
-	, m_imageSize(imageSize)
-	, m_cipherAlgorithm(cipherAlgorithm)
-	, m_bQuickFormat(quickFormat)
-	, m_password(AllocPasswordBuffer(passwordLength + 1))
+	, m_processfunc(processfunc)
 	, m_cancel(false)
 	, m_progressHwnd(NULL)
+	, m_progressResult(0.0)
 {
-	std::copy_n(password, passwordLength, stdext::checked_array_iterator<char*>(m_password.get(), passwordLength + 1));
-
 	m_tasks.run(static_cast<const std::function<void(void)>>(std::bind(&DialogFormatProgress::WorkerTask, this)));
 	m_tasks.run(static_cast<const std::function<void(void)>>(std::bind(&DialogFormatProgress::WatcherTask, this)));
 }
@@ -35,6 +31,7 @@ DialogFormatProgress::DialogFormatProgress( const WCHAR* imagePath, INT64 imageS
 DialogFormatProgress::~DialogFormatProgress()
 {
 	m_tasks.cancel();
+	m_progressSignal.set();
 	m_tasks.wait();
 }
 
@@ -72,24 +69,42 @@ BOOL DialogFormatProgress::OnInitDialog()
 
 void DialogFormatProgress::WorkerTask()
 {
-	Concurrency::asend(m_progressResult, 0.0);
+	try
+	{
+		m_progressResult = 0.0;
+		m_progressSignal.set();
 
-	CryptDiskHelpers::CreateImage(&AppRandom::instance(), m_imagePath.c_str(), m_imageSize, m_cipherAlgorithm,
-		reinterpret_cast<const unsigned char*>(m_password.get()), m_passwordLength,	!m_bQuickFormat,
-		[this](double x) -> bool{
-			Concurrency::asend(m_progressResult, x);
+		m_processfunc([this](double x) -> bool{
+			TRACE("Progress asend :[%f]\n", x);
+			m_progressResult = x;
+			m_progressSignal.set();
 			return !Concurrency::is_current_task_group_canceling();
-	});
+		});
 
-	PostMessage(WM_COMMAND, IDOK, 0);
-	m_tasks.cancel();
+		::PostMessage(GetSafeHwnd(), WM_COMMAND, IDOK, 0);
+		m_tasks.cancel();
+		m_progressSignal.set();
+	}
+	catch (...)
+	{
+		::PostMessage(GetSafeHwnd(), WM_COMMAND, IDCANCEL, 0);
+		throw;
+	}
 }
 
 void DialogFormatProgress::WatcherTask()
 {
 	while (!Concurrency::is_current_task_group_canceling())
 	{
-		double p = Concurrency::receive(m_progressResult);
+		m_progressSignal.wait();
+		if (Concurrency::is_current_task_group_canceling())
+		{
+			break;
+		}
+
+		double p = m_progressResult;
+
+		m_progressSignal.reset();
 
 		if(m_progressHwnd)
 		{

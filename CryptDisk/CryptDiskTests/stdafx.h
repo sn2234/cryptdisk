@@ -18,6 +18,7 @@
 // STL
 #include <algorithm>
 #include <vector>
+#include <iostream>
 
 // Boost
 #define BOOST_TEST_MODULE CryptDiskTests

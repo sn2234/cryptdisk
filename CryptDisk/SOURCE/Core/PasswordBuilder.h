@@ -1,6 +1,7 @@
 #pragma once
+#include <boost/noncopyable.hpp>
 
-class PasswordBuilder
+class PasswordBuilder : private boost::noncopyable
 {
 public:
 	PasswordBuilder(const std::vector<std::wstring>& keyFilesList, const unsigned char *password, size_t passwordLength, ULONG keyFileDataLength=0x1000);

@@ -37,6 +37,10 @@
 
 #include <afxcontrolbars.h>     // MFC support for ribbons and control bars
 
+#include <comdef.h>
+#include <initguid.h>
+#include <wbemidl.h>
+
 #include <Windows.h>
 #include <WinIoCtl.h>
 #include <Dbt.h>
@@ -59,6 +63,8 @@
 #include <vector>
 #include <locale>
 #include <codecvt>
+#include <algorithm>
+#include <regex>
 
 // Boost
 #include <boost/program_options.hpp>
@@ -72,6 +78,9 @@
 #include <boost/thread.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_array.hpp>
+#include <boost/system/system_error.hpp>
+#include <boost/format.hpp>
+#include <boost/algorithm/string.hpp>
 
 #include "CryptoLib.h"
 #include <afxdlgs.h>
@@ -80,11 +89,12 @@
 #include <Pdh.h>
 #include <PdhMsg.h>
 
-#include "..\scope_exit.h"
+#include "../Core/scope_exit.h"
 
 // Definitions
 #define USER_MODE
 #define _USER_MODE_
+#define NOMINMAX
 
 #ifdef _UNICODE
 #if defined _M_IX86

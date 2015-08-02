@@ -92,13 +92,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE;$(SolutionDir)SOURCE\Driver;$(SolutionDir)SOURCE\ManagerNew;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\$(PlatformShortName)\Crypto_d.lib;pdh.lib;$(OutDir)TiCPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\$(PlatformShortName)\Crypto_d.lib;pdh.lib;$(OutDir)TiCPP.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <Midl>
@@ -115,16 +115,15 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE;$(SolutionDir)SOURCE\Driver;$(SolutionDir)SOURCE\ManagerNew;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>Level3</WarningLevel>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\$(PlatformShortName)\Crypto_x64d.lib;pdh.lib;$(OutDir)TiCPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\$(PlatformShortName)\Crypto_x64d.lib;pdh.lib;$(OutDir)TiCPP.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <Midl>
@@ -144,7 +143,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE;$(SolutionDir)SOURCE\Driver;$(SolutionDir)SOURCE\ManagerNew;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -152,7 +151,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\$(PlatformShortName)\Crypto.lib;pdh.lib;$(OutDir)TiCPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\$(PlatformShortName)\Crypto.lib;pdh.lib;$(OutDir)TiCPP.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <Midl>
@@ -173,7 +172,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE;$(SolutionDir)SOURCE\Driver;$(SolutionDir)SOURCE\ManagerNew;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>-Zm200 %(AdditionalOptions)</AdditionalOptions>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
@@ -182,7 +181,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\$(PlatformShortName)\Crypto_x64.lib;pdh.lib;$(OutDir)TiCPP.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\$(PlatformShortName)\Crypto_x64.lib;pdh.lib;$(OutDir)TiCPP.lib;wbemuuid.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
     </Link>
     <Midl>
@@ -200,11 +199,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="res\ManagerNew.ico" />
-    <None Include="res\ManagerNew.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Core\CryptDiskHelpers.h" />
+    <ClInclude Include="..\Core\DNDriverControl.h" />
+    <ClInclude Include="..\Core\PasswordBuilder.h" />
+    <ClInclude Include="..\Core\PdhCounter.h" />
+    <ClInclude Include="..\Core\PdhQuery.h" />
+    <ClInclude Include="..\Core\PWTools.h" />
+    <ClInclude Include="..\Core\RandomGenerator.h" />
+    <ClInclude Include="..\Core\SafeHandle.h" />
+    <ClInclude Include="..\Core\scope_exit.h" />
+    <ClInclude Include="..\Core\SecureHeap.h" />
+    <ClInclude Include="..\Core\Singleton.h" />
+    <ClInclude Include="..\Core\VolumeTools.h" />
+    <ClInclude Include="..\Core\winapi_exception.h" />
     <ClInclude Include="..\Driver\DiskHeaderTools.h" />
-    <ClInclude Include="..\scope_exit.h" />
     <ClInclude Include="AppFavorites.h" />
     <ClInclude Include="AppMemory.h" />
     <ClInclude Include="AppRandom.h" />
@@ -212,14 +222,12 @@
     <ClInclude Include="CommonTools.h" />
     <ClInclude Include="CreateWizard.h" />
     <ClInclude Include="CreateWizardModel.h" />
-    <ClInclude Include="CryptDiskHelpers.h" />
     <ClInclude Include="DialogBackupHeader.h" />
     <ClInclude Include="DialogChangePassword.h" />
     <ClInclude Include="DialogFormatProgress.h" />
     <ClInclude Include="DialogGenPassword.h" />
     <ClInclude Include="DialogMountFavorite.h" />
     <ClInclude Include="DialogRandom.h" />
-    <ClInclude Include="DNDriverControl.h" />
     <ClInclude Include="Document.h" />
     <ClInclude Include="DriverTools.h" />
     <ClInclude Include="Favorites.h" />
@@ -234,24 +242,28 @@
     <ClInclude Include="MountWizard.h" />
     <ClInclude Include="MountWizardModel.h" />
     <ClInclude Include="PageCreate1.h" />
+    <ClInclude Include="PageCreate1v.h" />
     <ClInclude Include="PageCreate2.h" />
     <ClInclude Include="PageMount1.h" />
+    <ClInclude Include="PageMount1v.h" />
     <ClInclude Include="PageMount2.h" />
-    <ClInclude Include="PasswordBuilder.h" />
-    <ClInclude Include="PdhCounter.h" />
-    <ClInclude Include="PdhQuery.h" />
-    <ClInclude Include="PWTools.h" />
-    <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="SafeHandle.h" />
-    <ClInclude Include="SecureHeap.h" />
-    <ClInclude Include="Singleton.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="View.h" />
-    <ClInclude Include="winapi_exception.h" />
+    <ClInclude Include="VolumesModel.h" />
+    <ClInclude Include="VolumesView.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Core\CryptDiskHelpers.cpp" />
+    <ClCompile Include="..\Core\DNDriverControl.cpp" />
+    <ClCompile Include="..\Core\PasswordBuilder.cpp" />
+    <ClCompile Include="..\Core\PdhCounter.cpp" />
+    <ClCompile Include="..\Core\PdhQuery.cpp" />
+    <ClCompile Include="..\Core\PWTools.cpp" />
+    <ClCompile Include="..\Core\RandomGenerator.cpp" />
+    <ClCompile Include="..\Core\SecureHeap.cpp" />
+    <ClCompile Include="..\Core\VolumeTools.cpp" />
     <ClCompile Include="..\Driver\DiskHeaderTools.cpp" />
     <ClCompile Include="AppFavorites.cpp" />
     <ClCompile Include="AppRandom.cpp" />
@@ -259,14 +271,12 @@
     <ClCompile Include="CommonTools.cpp" />
     <ClCompile Include="CreateWizard.cpp" />
     <ClCompile Include="CreateWizardModel.cpp" />
-    <ClCompile Include="CryptDiskHelpers.cpp" />
     <ClCompile Include="DialogBackupHeader.cpp" />
     <ClCompile Include="DialogChangePassword.cpp" />
     <ClCompile Include="DialogFormatProgress.cpp" />
     <ClCompile Include="DialogGenPassword.cpp" />
     <ClCompile Include="DialogMountFavorite.cpp" />
     <ClCompile Include="DialogRandom.cpp" />
-    <ClCompile Include="DNDriverControl.cpp" />
     <ClCompile Include="DriverTools.cpp" />
     <ClCompile Include="Favorites.cpp" />
     <ClCompile Include="FavoritesModel.cpp" />
@@ -280,21 +290,19 @@
     <ClCompile Include="MountWizard.cpp" />
     <ClCompile Include="MountWizardModel.cpp" />
     <ClCompile Include="PageCreate1.cpp" />
+    <ClCompile Include="PageCreate1v.cpp" />
     <ClCompile Include="PageCreate2.cpp" />
     <ClCompile Include="PageMount1.cpp" />
+    <ClCompile Include="PageMount1v.cpp" />
     <ClCompile Include="PageMount2.cpp" />
-    <ClCompile Include="PasswordBuilder.cpp" />
-    <ClCompile Include="PdhCounter.cpp" />
-    <ClCompile Include="PdhQuery.cpp" />
-    <ClCompile Include="PWTools.cpp" />
-    <ClCompile Include="RandomGenerator.cpp" />
-    <ClCompile Include="SecureHeap.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="VolumesModel.cpp" />
+    <ClCompile Include="VolumesView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ManagerNew.rc" />

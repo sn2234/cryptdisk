@@ -316,6 +316,7 @@
     <MessageCompile Include="@(McSourceFiles)" Exclude="@(MessageCompile)" />
     <MASM Include="@(AsmSourceFiles)" Exclude="@(MASM)" />
     <GenerateBmf Include="@(MofSourceFiles)" Exclude="@(GenerateBmf)" />
+    <ResourceCompile Include="CryptDiskDriver.rc" />
   </ItemGroup>
   <!-- Set default environment variables, e.g. for stampinf -->
   <ItemGroup>

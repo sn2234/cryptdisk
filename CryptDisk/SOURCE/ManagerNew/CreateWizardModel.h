@@ -1,14 +1,15 @@
 #pragma once
 #include "document.h"
 #include "DiskFormat.h"
+#include "VolumeTools.h"
 
 class CreateWizardModel : public Document
 {
 public:
-	CreateWizardModel(void);
-	~CreateWizardModel(void);
+	CreateWizardModel(const VolumeDesk* descriptor);
+	~CreateWizardModel() = default;
 
-	void DoCreateImage();
+	void DoCreate();
 
 	const std::wstring& ImageFilePath() const { return m_imageFilePath; }
 	void ImageFilePath(const std::wstring& val) { m_imageFilePath = val; }
@@ -31,12 +32,20 @@ public:
 	DISK_CIPHER CipherAlgorithm() const { return m_cipherAlgorithm; }
 	void CipherAlgorithm(DISK_CIPHER val) { m_cipherAlgorithm = val; }
 
+	bool IsVolume() const { return m_isVolume; }
+
+	const VolumeDesk& VolumeDescriptor() const { return *m_volumeDescriptor; }
 private:
+	// Image file specific
 	std::wstring				m_imageFilePath;
+
 	std::vector<std::wstring>	m_keyFiles;
 	std::string					m_password;
 	bool						m_bUseRecentDocuments;
 	unsigned __int64			m_imageSize;
 	bool						m_bQuickFormat;
 	DISK_CIPHER					m_cipherAlgorithm;
+
+	bool						m_isVolume;
+	std::unique_ptr<VolumeDesk>	m_volumeDescriptor;
 };

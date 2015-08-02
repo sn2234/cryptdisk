@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
   <Product Id="34ea659a-6cca-4bfc-9f16-c34ca8f0a30e"
-           Name="CryptDisk 4.h" Language="1033" Version="4.0.0.0" Manufacturer="CryptDisk 4.h" UpgradeCode="3b928c38-3e66-4cee-b6aa-121ef9d048cf">
-    <Package InstallerVersion="300" Compressed="yes" />
+           Name="CryptDisk 4.h" Language="1033" Version="4.1.0.0" Manufacturer="CryptDisk 4.h" UpgradeCode="3b928c38-3e66-4cee-b6aa-121ef9d048cf">
+    <Package InstallerVersion="500" Compressed="yes" />
 
     <?if $(var.Platform) = "x86"?>
     <?define ProgramFilesDir="ProgramFilesFolder"?>
@@ -50,11 +50,15 @@
             <File Id="DrvTool" Name="$(var.DrvTool.TargetFileName)" Source="$(var.DrvTool.TargetPath)" KeyPath="yes"></File>
           </Component>
           <Component Id="DiskDriver" Guid="D74198E6-28CE-4FEC-A90D-4C4606A6F52D">
-            <File Id="DiskDriver" Name="$(var.Driver.TargetFileName)" Source="$(var.Driver.TargetPath)" KeyPath="yes"></File>
+            <File Id="DiskDriver" Name="$(var.CryptDiskDriver.TargetFileName)"
+                  Source="$(var.CryptDiskDriver-Package.TargetDir)Package\$(var.CryptDiskDriver.TargetFileName)" KeyPath="yes"></File>
           </Component>
-
-          <Merge Id="VCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC100_$(var.ModuleConfig)CRT_$(var.Platform).msm" DiskId="1" Language="0"/>
-          <Merge Id="MFCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC100_$(var.ModuleConfig)MFC_$(var.Platform).msm" DiskId="1" Language="0"/>
+          <Component Id="ConsoleManager" Guid="72095B89-D6E2-43B4-831E-F6BC7BDE636D">
+            <File Id="ConsoleManager" Name="$(var.ConsoleManager.TargetFileName)"
+                  Source="$(var.ConsoleManager.TargetPath)"/>
+          </Component>
+          <Merge Id="VCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC120_$(var.ModuleConfig)CRT_$(var.Platform).msm" DiskId="1" Language="0"/>
+          <Merge Id="MFCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC120_$(var.ModuleConfig)MFC_$(var.Platform).msm" DiskId="1" Language="0"/>
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder"></Directory>
@@ -67,8 +71,9 @@
       <ComponentRef Id="MainProgram" />
       <ComponentRef Id="DriverTool" />
       <ComponentRef Id="DiskDriver" />
+      <ComponentRef Id="ConsoleManager" />
       <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
-      <ComponentGroupRef Id="Product.Generated" />
+      <!--<ComponentGroupRef Id="Product.Generated" />-->
     </Feature>
     <Feature Id="VCRedist" Title="Visual C++ Runtime" AllowAdvertise="no" Display="hidden" Level="1">
       <MergeRef Id="VCRedist"/>

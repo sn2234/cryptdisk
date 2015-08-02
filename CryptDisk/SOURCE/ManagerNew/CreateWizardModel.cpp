@@ -8,25 +8,41 @@
 #include "PasswordBuilder.h"
 
 
-CreateWizardModel::CreateWizardModel(void)
+CreateWizardModel::CreateWizardModel(const VolumeDesk* descriptor)
 	: m_bUseRecentDocuments(false)
-	, m_cipherAlgorithm(DISK_CIPHER_AES)
+	, m_cipherAlgorithm(DISK_CIPHER::DISK_CIPHER_AES)
 	, m_bQuickFormat(false)
 	, m_imageSize(0)
+	, m_volumeDescriptor(descriptor != nullptr ? std::make_unique<VolumeDesk>(*descriptor) : nullptr)
+	, m_isVolume(descriptor != nullptr)
 {
 }
 
-
-CreateWizardModel::~CreateWizardModel(void)
+void CreateWizardModel::DoCreate()
 {
-}
+	std::shared_ptr<PasswordBuilder> pb =
+		std::make_shared<PasswordBuilder>(m_keyFiles, reinterpret_cast<const unsigned char*>(m_password.c_str()), m_password.size());
 
-void CreateWizardModel::DoCreateImage()
-{
-	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(m_password.c_str()), m_password.size());
+	std::function<void(std::function<bool(double)>)> processFunc;
 
-	DialogFormatProgress dlg(ImageFilePath().c_str(), ImageSize(), CipherAlgorithm(),
-		pb.Password(), pb.PasswordLength(), QuickFormat());
+	if (m_isVolume)
+	{
+		processFunc = [this, pb](std::function<bool(double)> f){
+			std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+			CryptDiskHelpers::EncryptVolume(&AppRandom::instance(),
+				VolumeTools::prepareVolumeName(conv.from_bytes(m_volumeDescriptor->deviceId).c_str()).c_str(),
+				CipherAlgorithm(), pb->Password(), pb->PasswordLength(), !QuickFormat(), f);
+		};
+	}
+	else
+	{
+		processFunc = [this, pb](std::function<bool(double)> f){
+			CryptDiskHelpers::CreateImage(&AppRandom::instance(), ImageFilePath().c_str(), ImageSize(), CipherAlgorithm(),
+				pb->Password(), pb->PasswordLength(), !QuickFormat(), f);
+		};
+	}
+
+	DialogFormatProgress dlg(processFunc, NULL);
 
 	dlg.DoModal();
 }

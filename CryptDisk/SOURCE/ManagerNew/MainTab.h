@@ -5,6 +5,10 @@
 
 #include "FavoritesView.h"
 #include "FavoritesModel.h"
+
+#include "VolumesView.h"
+#include "VolumesModel.h"
+
 // MainTab
 
 class MainTab : public CTabCtrl
@@ -26,6 +30,9 @@ private:
 
 	FavoritesModel	m_favoritesModel;
 	FavoritesView	m_favoritesView;
+
+	VolumesModel	m_volumesModel;
+	VolumesView		m_volumesView;
 
 protected:
 	DECLARE_MESSAGE_MAP()

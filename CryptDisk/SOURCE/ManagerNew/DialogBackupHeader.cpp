@@ -10,7 +10,6 @@
 #include "AppMemory.h"
 #include "PasswordBuilder.h"
 #include "DiskHeaderTools.h"
-#include "ManagerNew\SafeHandle.h"
 
 namespace fs = boost::filesystem;
 
@@ -23,6 +22,18 @@ DialogBackupHeader::DialogBackupHeader(const std::wstring& imagePath, CWnd* pPar
 	, m_imagePath(imagePath.c_str())
 	, m_backupPath(_T(""))
 	, m_imageOpenedSuccessfully(false)
+	, m_staticBoxName(_T(""))
+{
+
+}
+
+DialogBackupHeader::DialogBackupHeader(const VolumeDesk& volumeDescriptor, CWnd* pParent /*= NULL*/)
+	: CDialogEx(DialogBackupHeader::IDD, pParent)
+	, m_backupPath(_T(""))
+	, m_imagePath(volumeDescriptor.deviceId.c_str())
+	, m_imageOpenedSuccessfully(false)
+	, m_volumeDescriptor(std::make_shared<VolumeDesk>(volumeDescriptor))
+	, m_staticBoxName(_T("Volume"))
 {
 
 }
@@ -38,6 +49,7 @@ void DialogBackupHeader::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT_BACKUP_PATH, m_backupPath);
 	DDX_Control(pDX, IDC_COMBO_VERSION, m_versionCombo);
 	DDX_Control(pDX, IDC_COMBO_ALGORITHM, m_algorithmCombo);
+	DDX_Text(pDX, IDC_STATIC_BOX, m_staticBoxName);
 }
 
 
@@ -88,34 +100,41 @@ void DialogBackupHeader::OnBnClickedButtonBrowse()
 
 void DialogBackupHeader::OnBnClickedButtonOpen()
 {
+	UpdateData(TRUE);
+
 	size_t passwordLength = GetWindowTextLengthA(GetDlgItem(IDC_EDIT_PASSWORD)->GetSafeHwnd());
 	boost::shared_array<char> passwordBuff(AllocPasswordBuffer(passwordLength + 1));
 	GetDlgItemTextA(GetSafeHwnd(), IDC_EDIT_PASSWORD, passwordBuff.get(), static_cast<int>(passwordLength+1));
 
 	PasswordBuilder pb(m_keyFiles, reinterpret_cast<const unsigned char*>(passwordBuff.get()), passwordLength);
 
-	auto headerBuff = CryptDiskHelpers::ReadImageHeader(m_imagePath);
+	std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+	auto headerBuff = m_volumeDescriptor ?
+		CryptDiskHelpers::ReadVolumeHeader(conv.from_bytes(m_volumeDescriptor->deviceId).c_str())
+		: CryptDiskHelpers::ReadImageHeader(m_imagePath);
 
 	DiskHeaderTools::CIPHER_INFO info;
 	if(DiskHeaderTools::Decipher(&headerBuff[0], pb.Password(), static_cast<ULONG>(pb.PasswordLength()), &info))
 	{
+		SCOPE_EXIT{ RtlSecureZeroMemory(&headerBuff[0], headerBuff.size()); };
+
 		// Set version and algorithm
 		switch(info.versionInfo.formatVersion)
 		{
-		case DISK_VERSION_3:
+		case DISK_VERSION::DISK_VERSION_3:
 			m_versionCombo.SetCurSel(1);
 			break;
-		case DISK_VERSION_4:
+		case DISK_VERSION::DISK_VERSION_4:
 			m_versionCombo.SetCurSel(2);
 			break;
 		}
 
 		switch(info.diskCipher)
 		{
-		case DISK_CIPHER_AES:
+		case DISK_CIPHER::DISK_CIPHER_AES:
 			m_algorithmCombo.SetCurSel(1);
 			break;
-		case DISK_CIPHER_TWOFISH:
+		case DISK_CIPHER::DISK_CIPHER_TWOFISH:
 			m_algorithmCombo.SetCurSel(2);
 			break;
 		}
@@ -142,63 +161,45 @@ void DialogBackupHeader::OnBnClickedButtonKeyFiles()
 
 void DialogBackupHeader::OnBnClickedOk()
 {
-	if(m_versionCombo.GetCurSel() == 0)
-	{
-		AfxMessageBox(_T("Open image first or select version manually"), MB_OK | MB_ICONWARNING);
-		return;
-	}
+	UpdateData(TRUE);
 
-	size_t headerSize = 0;
-
-	switch(m_versionCombo.GetCurSel())
+	try
 	{
-	case 1:
-		headerSize = sizeof(DISK_HEADER_V3);
-		break;
-	case 2:
-		headerSize = sizeof(DISK_HEADER_V4) * 2;
-		break;
-	}
-	ASSERT(headerSize);
-	
-	std::vector<unsigned char> headerBuff(headerSize);
-
-	
-	SafeHandle hImageFile(CreateFileW(m_imagePath, GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL));
-	if (hImageFile == INVALID_HANDLE_VALUE)
-	{
-		AfxMessageBox(_T("Unable to open image file"), MB_ICONERROR);
-		return;
-	}
-
-	{
-		DWORD bytesRead;
-		BOOL result = ReadFile(hImageFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesRead, NULL);
-		if(!result || !(bytesRead == headerSize))
+		if (m_versionCombo.GetCurSel() == 0)
 		{
-			AfxMessageBox(_T("Unable to read data"), MB_ICONERROR);
-			return;
+			throw std::logic_error("Open image first or select version manually");
 		}
-	}
 
-	SafeHandle hBackupFile(CreateFileW(m_backupPath, GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL));
-	if (hBackupFile == INVALID_HANDLE_VALUE)
-	{
-		AfxMessageBox(_T("Unable to open backup file"), MB_ICONERROR);
-		return;
-	}
-
-	{
-		DWORD bytesWrite;
-		BOOL result = WriteFile(hBackupFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWrite, NULL);
-		if(!result || !(bytesWrite == headerSize))
+		DISK_VERSION diskVersion;
+		switch (m_versionCombo.GetCurSel())
 		{
-			AfxMessageBox(_T("Unable to write data"), MB_ICONERROR);
-			return;
+		case 1:
+			diskVersion = DISK_VERSION::DISK_VERSION_3;
+			break;
+		case 2:
+			diskVersion = DISK_VERSION::DISK_VERSION_4;
+			break;
 		}
-	}
 
-	CDialogEx::OnOK();
+		if (m_volumeDescriptor)
+		{
+			std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+			CryptDiskHelpers::BackupVolumeHeader(conv.from_bytes(m_volumeDescriptor->deviceId),
+				conv.to_bytes(static_cast<const wchar_t*>(m_backupPath)), diskVersion);
+		}
+		else
+		{
+			std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
+			CryptDiskHelpers::BackupImageHeader(conv.to_bytes(static_cast<const wchar_t*>(m_imagePath)),
+				conv.to_bytes(static_cast<const wchar_t*>(m_backupPath)), diskVersion);
+		}
+
+		CDialogEx::OnOK();
+	}
+	catch (const std::exception& ex)
+	{
+		AfxMessageBox(CString(ex.what()), MB_ICONERROR);
+	}
 }
 
 

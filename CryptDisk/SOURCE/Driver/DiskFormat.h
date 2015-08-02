@@ -13,7 +13,7 @@
 #pragma pack(push)
 #pragma pack(1)
 
-enum DISK_CIPHER
+enum class DISK_CIPHER : unsigned char
 {
 	DISK_CIPHER_AES=1,
 	DISK_CIPHER_TWOFISH=2,
@@ -21,7 +21,7 @@ enum DISK_CIPHER
 	MAX_DISK_CIPHER
 };
 
-enum DISK_VERSION
+enum class DISK_VERSION : unsigned char
 {
 	DISK_VERSION_3 = 1,
 	DISK_VERSION_4 = 2,
