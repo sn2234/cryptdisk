@@ -10,6 +10,10 @@ void __cdecl operator delete(void *ptr, unsigned char* pBuff)
 {
 }
 
+void __cdecl operator delete(void *ptr, unsigned __int64)
+{
+}
+
 void __cdecl operator delete(void *ptr)
 {
 }
