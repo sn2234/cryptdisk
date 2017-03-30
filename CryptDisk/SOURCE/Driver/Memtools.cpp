@@ -14,6 +14,10 @@ void __cdecl operator delete(void *ptr, unsigned __int64)
 {
 }
 
+void __cdecl operator delete(void *ptr, unsigned int)
+{
+}
+
 void __cdecl operator delete(void *ptr)
 {
 }

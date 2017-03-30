@@ -3,10 +3,10 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <IncludePath>M:\SDKs\boost_1_59_0;$(IncludePath)</IncludePath>
+    <IncludePath>M:\SDKs\boost_1_60_0;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup>
-    <LibraryPath>M:\SDKs\boost_1_59_0\stage64\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>M:\SDKs\boost_1_60_0\stage64\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup />
   <ItemGroup />

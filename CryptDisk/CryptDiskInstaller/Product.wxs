@@ -57,8 +57,8 @@
             <File Id="ConsoleManager" Name="$(var.ConsoleManager.TargetFileName)"
                   Source="$(var.ConsoleManager.TargetPath)"/>
           </Component>
-          <Merge Id="VCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC120_$(var.ModuleConfig)CRT_$(var.Platform).msm" DiskId="1" Language="0"/>
-          <Merge Id="MFCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC120_$(var.ModuleConfig)MFC_$(var.Platform).msm" DiskId="1" Language="0"/>
+          <!--<Merge Id="VCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC140_$(var.ModuleConfig)CRT_$(var.Platform).msm" DiskId="1" Language="0"/>
+          <Merge Id="MFCRedist" SourceFile="$(env.CommonProgramFiles)\Merge Modules\Microsoft_VC140_$(var.ModuleConfig)MFC_$(var.Platform).msm" DiskId="1" Language="0"/>-->
         </Directory>
       </Directory>
       <Directory Id="ProgramMenuFolder"></Directory>
@@ -75,10 +75,10 @@
       <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
       <!--<ComponentGroupRef Id="Product.Generated" />-->
     </Feature>
-    <Feature Id="VCRedist" Title="Visual C++ Runtime" AllowAdvertise="no" Display="hidden" Level="1">
+    <!--<Feature Id="VCRedist" Title="Visual C++ Runtime" AllowAdvertise="no" Display="hidden" Level="1">
       <MergeRef Id="VCRedist"/>
       <MergeRef Id="MFCRedist"/>
-    </Feature>
+    </Feature>-->
 
     <!--<Binary Id="CmdProcessor" SourceFile="C:\windows\System32\cmd.exe" />-->
 
