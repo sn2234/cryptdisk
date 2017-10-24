@@ -1,38 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
     <Filter Include="Primitives">
-      <UniqueIdentifier>{d8729b96-f9b1-4e5e-85ea-7f01d9644cea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BaseCrypt">
-      <UniqueIdentifier>{732a9f47-f530-44d4-bdd6-c774734e5b6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Random">
-      <UniqueIdentifier>{cde56f27-cf04-4f41-9322-ddbb7d6d7a1c}</UniqueIdentifier>
+      <UniqueIdentifier>{ad9f6d95-a402-447e-a8f0-ee3309007741}</UniqueIdentifier>
     </Filter>
     <Filter Include="Primitives\x64">
-      <UniqueIdentifier>{87a6b5c0-bf25-4141-811b-b0cd5dfd7cca}</UniqueIdentifier>
+      <UniqueIdentifier>{12f4f6c7-d084-4ff1-aa61-e056f34a4d72}</UniqueIdentifier>
     </Filter>
     <Filter Include="Primitives\x86">
-      <UniqueIdentifier>{41023866-4d85-45e3-8916-4f15aa7ed965}</UniqueIdentifier>
+      <UniqueIdentifier>{36c925a4-0688-4e06-a381-90a9e86cf295}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <MASM Include="SOURCE\Primitives\x86\LRWMath.asm">
-      <Filter>Primitives\x86</Filter>
-    </MASM>
-    <MASM Include="SOURCE\Primitives\x86\rj_opt.asm">
-      <Filter>Primitives\x86</Filter>
-    </MASM>
-    <MASM Include="SOURCE\Primitives\x86\Twofish.asm">
-      <Filter>Primitives\x86</Filter>
-    </MASM>
-  </ItemGroup>
-  <ItemGroup>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="SOURCE\Primitives\LRWMath.h">
       <Filter>Primitives</Filter>
     </ClInclude>
     <ClInclude Include="SOURCE\Primitives\rc4.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\Rijndael.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\sha2.h">
+      <Filter>Primitives</Filter>
+    </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\ShaWrapper.h">
       <Filter>Primitives</Filter>
     </ClInclude>
     <ClInclude Include="SOURCE\Primitives\Tools.h">
@@ -41,73 +48,6 @@
     <ClInclude Include="SOURCE\Primitives\Twofish.h">
       <Filter>Primitives</Filter>
     </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\DeriveKey.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\DNAES.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\DNTwofish.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\EncryptionModes.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\Hmac.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\LRWAES.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\LRWMode.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\LRWTwofish.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\ModeCbc.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\ModeEcb.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\ModeXts.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\Pkcs5.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\RC4_CIPHER_ENGINE.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\RijndaelEngine.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\SHA256_HASH.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\SymmetricCipher.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\SymmetricCipherLRW.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\BaseCrypt\TwofishEngine.h">
-      <Filter>BaseCrypt</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Random\Random.h">
-      <Filter>Random</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Random\RndGenerator.h">
-      <Filter>Random</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Random\RndPool.h">
-      <Filter>Random</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Random\RndSampler.h">
-      <Filter>Random</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\CryptoLib.h" />
     <ClInclude Include="SOURCE\Primitives\x64\aes.h">
       <Filter>Primitives\x64</Filter>
     </ClInclude>
@@ -117,26 +57,20 @@
     <ClInclude Include="SOURCE\Primitives\x64\aestab.h">
       <Filter>Primitives\x64</Filter>
     </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\x64\AesWrapper.h">
+      <Filter>Primitives\x64</Filter>
+    </ClInclude>
     <ClInclude Include="SOURCE\Primitives\x64\brg_endian.h">
       <Filter>Primitives\x64</Filter>
     </ClInclude>
     <ClInclude Include="SOURCE\Primitives\x64\brg_types.h">
       <Filter>Primitives\x64</Filter>
     </ClInclude>
-    <ClInclude Include="SOURCE\Primitives\Rijndael.h">
-      <Filter>Primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Primitives\x86\rj_opt.h">
-      <Filter>Primitives\x86</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Primitives\x64\AesWrapper.h">
+    <ClInclude Include="SOURCE\Primitives\x64\LrwTools.h">
       <Filter>Primitives\x64</Filter>
     </ClInclude>
-    <ClInclude Include="SOURCE\Primitives\ShaWrapper.h">
-      <Filter>Primitives</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Primitives\sha2.h">
-      <Filter>Primitives</Filter>
+    <ClInclude Include="SOURCE\Primitives\x64\PlatformHelpers.h">
+      <Filter>Primitives\x64</Filter>
     </ClInclude>
     <ClInclude Include="SOURCE\Primitives\x64\tomcrypt_macros.h">
       <Filter>Primitives\x64</Filter>
@@ -147,21 +81,47 @@
     <ClInclude Include="SOURCE\Primitives\x64\twofish_tab.h">
       <Filter>Primitives\x64</Filter>
     </ClInclude>
+    <ClInclude Include="SOURCE\Primitives\x86\rj_opt.h">
+      <Filter>Primitives\x86</Filter>
+    </ClInclude>
     <ClInclude Include="SOURCE\Primitives\x86\twofish_asm.h">
       <Filter>Primitives\x86</Filter>
     </ClInclude>
-    <ClInclude Include="SOURCE\Primitives\x64\PlatformHelpers.h">
+    <ClInclude Include="SOURCE\CryptoLib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SOURCE\Primitives\rc4.c">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\sha2.c">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\Tools.cpp">
+      <Filter>Primitives</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\aeskey.c">
       <Filter>Primitives\x64</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Primitives\x64\LrwTools.h">
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\aestab.c">
       <Filter>Primitives\x64</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Random\IRandomGenerator.h">
-      <Filter>Random</Filter>
-    </ClInclude>
-    <ClInclude Include="SOURCE\Random\RandomGeneratorBase.h">
-      <Filter>Random</Filter>
-    </ClInclude>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\AesWrapper.c">
+      <Filter>Primitives\x64</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\LRWMath.c">
+      <Filter>Primitives\x64</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\LrwTools.c">
+      <Filter>Primitives\x64</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\twofish.c">
+      <Filter>Primitives\x64</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Primitives\x64\TwofishWrapper.c">
+      <Filter>Primitives\x64</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SOURCE\Primitives\x86\LrwMath.inc">
@@ -173,59 +133,23 @@
     <None Include="SOURCE\Primitives\x86\rj_tables.inc">
       <Filter>Primitives\x86</Filter>
     </None>
-    <None Include="SOURCE\Primitives\x86\twotables.inc">
+    <None Include="SOURCE\Primitives\x86\twofish.inc">
       <Filter>Primitives\x86</Filter>
     </None>
-    <None Include="SOURCE\Primitives\x86\twofish.inc">
+    <None Include="SOURCE\Primitives\x86\twotables.inc">
       <Filter>Primitives\x86</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SOURCE\Primitives\Tools.cpp">
-      <Filter>Primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\BaseCrypt\DeriveKey.cpp">
-      <Filter>BaseCrypt</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Random\Random.cpp">
-      <Filter>Random</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Random\RndGenerator.cpp">
-      <Filter>Random</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Random\RndPool.cpp">
-      <Filter>Random</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Primitives\x64\aeskey.c">
-      <Filter>Primitives\x64</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Primitives\x64\aestab.c">
-      <Filter>Primitives\x64</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Primitives\x64\AesWrapper.c">
-      <Filter>Primitives\x64</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Primitives\sha2.c">
-      <Filter>Primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Primitives\rc4.c">
-      <Filter>Primitives</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Primitives\x64\twofish.c">
-      <Filter>Primitives\x64</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Primitives\x64\TwofishWrapper.c">
-      <Filter>Primitives\x64</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Primitives\x64\LrwTools.c">
-      <Filter>Primitives\x64</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Primitives\x64\LRWMath.c">
-      <Filter>Primitives\x64</Filter>
-    </ClCompile>
-    <ClCompile Include="SOURCE\Random\RandomGeneratorBase.cpp">
-      <Filter>Random</Filter>
-    </ClCompile>
+    <MASM Include="SOURCE\Primitives\x86\Twofish.asm">
+      <Filter>Primitives\x86</Filter>
+    </MASM>
+    <MASM Include="SOURCE\Primitives\x86\rj_opt.asm">
+      <Filter>Primitives\x86</Filter>
+    </MASM>
+    <MASM Include="SOURCE\Primitives\x86\LRWMath.asm">
+      <Filter>Primitives\x86</Filter>
+    </MASM>
   </ItemGroup>
   <ItemGroup>
     <YASM Include="SOURCE\Primitives\x64\aes_amd64.asm">
