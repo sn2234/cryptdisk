@@ -181,12 +181,12 @@ RSMul	proc	uses ecx edx, a:DWORD,b:DWORD
 RSMul	endp
 
 align 16
-RSEnc	proc	uses ebx edi esi,	k0:dword,k1:dword
-;RS-encode two bytes k0 and k1
+RSEncProc	proc	uses ebx edi esi,	k0_:dword, k1_:dword
+;RS-encode two bytes k0_ and k1_
 
 ;Registers: eax,ecx,edx
 		
-		mov		ecx,k0
+		mov		ecx,k0_
 		
 		push		0A402A401h	;01A402A4h
 		push		ecx
@@ -211,7 +211,7 @@ RSEnc	proc	uses ebx edi esi,	k0:dword,k1:dword
 		call		RSMul
 		xor		edx,eax
 		
-		mov		ecx,k1
+		mov		ecx,k1_
 		
 		push		58471E5AH	;5A1E4758h
 		push		ecx
@@ -238,7 +238,7 @@ RSEnc	proc	uses ebx edi esi,	k0:dword,k1:dword
 		
 		mov		eax,edx
 		ret
-RSEnc	endp
+RSEncProc	endp
 
 H_ROUND	macro	p0,p1,p2,p3,n
 
@@ -333,7 +333,7 @@ I=0
 		
 		push		ebx
 		push		eax
-		call		RSEnc
+		call		RSEncProc
 		mov		KeyS[4*3-I*2],eax
 I=I+2
 	endm
