@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DrvTool", "SOURCE\Tools\DrvTool\DrvTool.vcxproj", "{5850E1DF-338A-4816-977C-16E74CE3A71E}"
 EndProject
@@ -9,11 +9,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleManager", "ConsoleManager\ConsoleManager.vcxproj", "{A6AEE6EF-F5D6-4946-96DE-AC86CCCCEEBA}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ManagerNew", "SOURCE\ManagerNew\ManagerNew.vcxproj", "{12DF4807-FBB5-4718-A975-3639BE9C9CCC}"
-	ProjectSection(ProjectDependencies) = postProject
-		{10227ADB-0AB0-9843-AFD5-B08472A19479} = {10227ADB-0AB0-9843-AFD5-B08472A19479}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TiCPP", "SOURCE\ticpp\TiCPP.vcxproj", "{10227ADB-0AB0-9843-AFD5-B08472A19479}"
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "CryptDiskInstaller", "CryptDiskInstaller\CryptDiskInstaller.wixproj", "{50D68976-D7BC-4206-9A41-34504DBEA6C0}"
 EndProject
@@ -195,44 +190,6 @@ Global
 		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Win8.1 Release|x64.ActiveCfg = Release|x64
 		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Win8.1 Release|x64.Build.0 = Release|x64
 		{12DF4807-FBB5-4718-A975-3639BE9C9CCC}.Win8.1 Release|x64.Deploy.0 = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Debug|Win32.ActiveCfg = Debug|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Debug|Win32.Build.0 = Debug|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Debug|x64.ActiveCfg = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Debug|x64.Build.0 = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Release|Win32.ActiveCfg = Release|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Release|Win32.Build.0 = Release|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Release|x64.ActiveCfg = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Release|x64.Build.0 = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win7 Debug|Win32.ActiveCfg = Debug|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win7 Debug|Win32.Build.0 = Debug|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win7 Debug|x64.ActiveCfg = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win7 Debug|x64.Build.0 = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win7 Debug|x64.Deploy.0 = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win7 Release|Win32.ActiveCfg = Release|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win7 Release|Win32.Build.0 = Release|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win7 Release|x64.ActiveCfg = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win7 Release|x64.Build.0 = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win7 Release|x64.Deploy.0 = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8 Debug|Win32.ActiveCfg = Debug|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8 Debug|Win32.Build.0 = Debug|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8 Debug|x64.ActiveCfg = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8 Debug|x64.Build.0 = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8 Debug|x64.Deploy.0 = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8 Release|Win32.ActiveCfg = Release|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8 Release|Win32.Build.0 = Release|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8 Release|x64.ActiveCfg = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8 Release|x64.Build.0 = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8 Release|x64.Deploy.0 = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8.1 Debug|Win32.ActiveCfg = Debug|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8.1 Debug|Win32.Build.0 = Debug|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8.1 Debug|x64.ActiveCfg = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8.1 Debug|x64.Build.0 = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8.1 Debug|x64.Deploy.0 = Debug|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8.1 Release|Win32.ActiveCfg = Release|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8.1 Release|Win32.Build.0 = Release|Win32
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8.1 Release|x64.ActiveCfg = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8.1 Release|x64.Build.0 = Release|x64
-		{10227ADB-0AB0-9843-AFD5-B08472A19479}.Win8.1 Release|x64.Deploy.0 = Release|x64
 		{50D68976-D7BC-4206-9A41-34504DBEA6C0}.Debug|Win32.ActiveCfg = Debug|x86
 		{50D68976-D7BC-4206-9A41-34504DBEA6C0}.Debug|Win32.Build.0 = Debug|x86
 		{50D68976-D7BC-4206-9A41-34504DBEA6C0}.Debug|x64.ActiveCfg = Debug|x64
@@ -352,6 +309,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0CA26498-791E-4A65-A453-5786329F6B22} = {0E04B6E8-FBB7-4EAD-9769-DDEE881A10B3}
 		{D48182DB-6F88-4AA3-920E-AB21C480F436} = {0E04B6E8-FBB7-4EAD-9769-DDEE881A10B3}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {299BE2F0-1F23-4B40-91C9-A6156A985947}
 	EndGlobalSection
 	GlobalSection(PowerDesigner) = preSolution
 		HasSWS = 1
