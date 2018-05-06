@@ -24,7 +24,7 @@
 
 #include "stdafx.h"
 
-#include "..\Version.h"
+#include "..\..\Version.h"
 #include "format.h"
 
 #include "main.h"
@@ -49,8 +49,8 @@ NTSTATUS DisksManager::Init(DISKS_MANAGER_INIT_INFO *Info)
 	DisksCountMax=Info->MaxDisks;
 	DisksCount=0;
 
-	if(VirtualDisks=(PDEVICE_OBJECT*)ExAllocatePoolWithTag(NonPagedPool,
-		DisksCountMax*sizeof(PDEVICE_OBJECT), MEM_TAG))
+	VirtualDisks = (PDEVICE_OBJECT*) ExAllocatePoolWithTag(NonPagedPool, DisksCountMax * sizeof(PDEVICE_OBJECT), MEM_TAG);
+	if(VirtualDisks)
 	{
 		memset(VirtualDisks,0,DisksCountMax*sizeof(PDEVICE_OBJECT));
 		Initialized=1;
@@ -100,8 +100,8 @@ NTSTATUS DisksManager::MountDisk(PUNICODE_STRING pusSymLinkName,PUNICODE_STRING 
 		int								structSize;
 		structSize=sizeof(pTargetName->DeviceNameLength)+pusDeviceName->Length;
 
-		if(pTargetName=(PMOUNTMGR_TARGET_NAME)
-			ExAllocatePoolWithTag(PagedPool, structSize+4*sizeof(WCHAR), MEM_TAG))
+		pTargetName = (PMOUNTMGR_TARGET_NAME) ExAllocatePoolWithTag(PagedPool, structSize + 4 * sizeof(WCHAR), MEM_TAG);
+		if(pTargetName)
 		{
 			memset(pTargetName,0,structSize);
 			pTargetName->DeviceNameLength=pusDeviceName->Length;
@@ -123,8 +123,8 @@ NTSTATUS DisksManager::MountDisk(PUNICODE_STRING pusSymLinkName,PUNICODE_STRING 
 				pusSymLinkName->Length+
 				sizeof(MOUNTMGR_CREATE_POINT_INPUT);
 
-			if(pCreatePoint=(PMOUNTMGR_CREATE_POINT_INPUT)
-				ExAllocatePoolWithTag(PagedPool, structSize+4*sizeof(WCHAR), MEM_TAG))
+			pCreatePoint = (PMOUNTMGR_CREATE_POINT_INPUT) ExAllocatePoolWithTag(PagedPool, structSize + 4 * sizeof(WCHAR), MEM_TAG);
+			if(pCreatePoint)
 			{
 				memset(pCreatePoint,0,structSize);
 
@@ -241,7 +241,8 @@ NTSTATUS DisksManager::UnmountDisk(DISK_DELETE_INFO *Info)
 					if(pMountPoint)
 					{
 						// Allocate buffer for output
-						if(pBuff=ExAllocatePoolWithTag(PagedPool, PAGE_SIZE, MEM_TAG))
+						pBuff = ExAllocatePoolWithTag(PagedPool, PAGE_SIZE, MEM_TAG);
+						if(pBuff)
 						{
 							memset(pMountPoint,0,structSize+2*sizeof(WCHAR));
 
@@ -434,7 +435,7 @@ NTSTATUS DisksManager::UninstallDisk(DISK_DELETE_INFO *Info)
 	{
 		if(VirtualDisks[i])
 		{
-			if(((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_nDiskNumber==Info->DiskId)
+			if(static_cast<ULONG>(((VirtualDisk*)(VirtualDisks[i]->DeviceExtension))->m_nDiskNumber) == Info->DiskId)
 			{
 				break;
 			}

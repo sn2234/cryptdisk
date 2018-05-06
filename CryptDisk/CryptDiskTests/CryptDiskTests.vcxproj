@@ -93,7 +93,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver\CryptDiskDriver;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -115,7 +115,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver\CryptDiskDriver;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -141,7 +141,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver\CryptDiskDriver;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -161,7 +161,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver\CryptDiskDriver;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
@@ -178,9 +178,9 @@
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\SOURCE\Driver\DiskCipherAesV3.cpp" />
-    <ClCompile Include="..\SOURCE\Driver\DiskCipherTwofishV3.cpp" />
-    <ClCompile Include="..\SOURCE\Driver\DiskHeaderTools.cpp" />
+    <ClCompile Include="..\SOURCE\Driver\CryptDiskDriver\DiskCipherAesV3.cpp" />
+    <ClCompile Include="..\SOURCE\Driver\CryptDiskDriver\DiskCipherTwofishV3.cpp" />
+    <ClCompile Include="..\SOURCE\Driver\CryptDiskDriver\DiskHeaderTools.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -192,16 +192,15 @@
     <ClCompile Include="TestDiskHeader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\SOURCE\Driver\DiskCipherAesV3.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskCipherV4.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskCipherTwofishV3.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskCipherTwofishV4.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskCipherAesV3.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskCipherTwofishV3.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskCipherV4.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskHeaderTools.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskParamatersV3.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskParametersV4.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\IDiskCipher.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\IDiskParameters.h" />
     <ClInclude Include="..\SOURCE\Driver\DiskFormat.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskHeaderTools.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskParamatersV3.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskParametersV4.h" />
-    <ClInclude Include="..\SOURCE\Driver\IDiskCipher.h" />
-    <ClInclude Include="..\SOURCE\Driver\IDiskParameters.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

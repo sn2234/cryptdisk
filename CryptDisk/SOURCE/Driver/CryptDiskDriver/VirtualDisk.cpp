@@ -24,7 +24,7 @@
 
 #include "stdafx.h"
 
-#include "..\Version.h"
+#include "..\..\Version.h"
 #include "format.h"
 
 #include "DriverProtocol.h"
@@ -41,6 +41,8 @@
 #include <BaseCrypt\TwofishEngine.h>
 
 using namespace CryptoLib;
+
+#pragma warning( disable : 4101) 
 
 extern "C"
 NTSYSAPI
@@ -364,7 +366,7 @@ NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PPARTITION_INFORMATION)Buffer)->HiddenSectors = 1;
 			((PPARTITION_INFORMATION)Buffer)->PartitionLength.QuadPart =
 				pDisk->m_pDiskInfo->FileSize.QuadPart - pDisk->ImageDataOffset();
-			((PPARTITION_INFORMATION)Buffer)->PartitionNumber = -1;
+			((PPARTITION_INFORMATION)Buffer)->PartitionNumber = ~0U;
 			((PPARTITION_INFORMATION)Buffer)->PartitionType = 0;
 			((PPARTITION_INFORMATION)Buffer)->RecognizedPartition = TRUE;
 			((PPARTITION_INFORMATION)Buffer)->RewritePartition = 0;
@@ -525,7 +527,7 @@ NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PPARTITION_INFORMATION_EX)Buffer)->StartingOffset.QuadPart=0;
 			((PPARTITION_INFORMATION_EX)Buffer)->PartitionLength.QuadPart=
 				pDisk->m_pDiskInfo->FileSize.QuadPart - pDisk->ImageDataOffset();
-			((PPARTITION_INFORMATION_EX)Buffer)->PartitionNumber=-1;
+			((PPARTITION_INFORMATION_EX)Buffer)->PartitionNumber = ~0U;
 			((PPARTITION_INFORMATION_EX)Buffer)->RewritePartition=FALSE;
 			((PPARTITION_INFORMATION_EX)Buffer)->Mbr.PartitionType=PARTITION_FAT_16;
 			((PPARTITION_INFORMATION_EX)Buffer)->Mbr.BootIndicator=FALSE;
@@ -552,7 +554,7 @@ NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].StartingOffset.QuadPart=0;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].PartitionLength.QuadPart=
 				pDisk->m_pDiskInfo->FileSize.QuadPart - pDisk->ImageDataOffset();
-			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].PartitionNumber=-1;
+			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].PartitionNumber = ~0U;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].RewritePartition=FALSE;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].Mbr.BootIndicator=FALSE;
 			((PDRIVE_LAYOUT_INFORMATION_EX)Buffer)->PartitionEntry[0].Mbr.PartitionType=PARTITION_FAT_16;
@@ -575,7 +577,7 @@ NTSTATUS	VirtualDisk::ThreadIoControl(PDEVICE_OBJECT DeviceObject,PIRP Irp)
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->Signature=12345678;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].PartitionLength.QuadPart=
 				pDisk->m_pDiskInfo->FileSize.QuadPart - pDisk->ImageDataOffset();
-			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].PartitionNumber=-1;
+			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].PartitionNumber = ~0U;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].RewritePartition=FALSE;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].StartingOffset.QuadPart=0;
 			((PDRIVE_LAYOUT_INFORMATION)Buffer)->PartitionEntry[0].BootIndicator=FALSE;
@@ -803,8 +805,8 @@ IO_STATUS_BLOCK VirtualDisk::ProcessDiskRead( const IoParameters& ioParameters )
 	}
 	else
 	{
-		UCHAR	*buffer;
-		if(buffer = (UCHAR*)ExAllocatePoolWithTag(PagedPool, ioParameters.requestLength, MEM_TAG))
+		UCHAR *buffer = (UCHAR*) ExAllocatePoolWithTag(PagedPool, ioParameters.requestLength, MEM_TAG);
+		if(buffer)
 		{
 			NTSTATUS status = ZwReadFile(m_hImageFile,NULL,NULL,NULL,
 				&IoStatus, buffer, ioParameters.requestLength, const_cast<PLARGE_INTEGER>(&ioParameters.fileOffset), NULL);
@@ -881,17 +883,17 @@ IO_STATUS_BLOCK VirtualDisk::ProcessDiskWrite( const IoParameters& ioParameters 
 	}
 	else
 	{
-		UCHAR	*Buff;
+		UCHAR	*pBuffer = (UCHAR*) ExAllocatePoolWithTag(PagedPool, ioParameters.requestLength, MEM_TAG);
 
 		// Allocate buffer
-		if(Buff=(UCHAR*)ExAllocatePoolWithTag(PagedPool, ioParameters.requestLength, MEM_TAG))
+		if(pBuffer)
 		{
-			m_pDiskCipher->EncipherDataBlocks(ioParameters.beginSector, ioParameters.sectors, ioParameters.dataBuffer, Buff);
+			m_pDiskCipher->EncipherDataBlocks(ioParameters.beginSector, ioParameters.sectors, ioParameters.dataBuffer, pBuffer);
 
 			NTSTATUS status;
 
 			if(NT_SUCCESS(status=ZwWriteFile(m_hImageFile, NULL, NULL, NULL,
-				&IoStatus, Buff, ioParameters.requestLength, const_cast<PLARGE_INTEGER>(&ioParameters.fileOffset), NULL)))
+				&IoStatus, pBuffer, ioParameters.requestLength, const_cast<PLARGE_INTEGER>(&ioParameters.fileOffset), NULL)))
 			{
 				if(status==STATUS_PENDING)
 				{
@@ -904,8 +906,8 @@ IO_STATUS_BLOCK VirtualDisk::ProcessDiskWrite( const IoParameters& ioParameters 
 				IoStatus.Status=status;
 			}
 
-			RtlSecureZeroMemory(Buff, ioParameters.requestLength);
-			ExFreePoolWithTag(Buff, MEM_TAG);
+			RtlSecureZeroMemory(pBuffer, ioParameters.requestLength);
+			ExFreePoolWithTag(pBuffer, MEM_TAG);
 		}
 		else
 		{

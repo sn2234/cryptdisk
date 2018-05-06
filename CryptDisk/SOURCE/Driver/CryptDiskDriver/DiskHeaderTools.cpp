@@ -1,7 +1,7 @@
 
 #include "StdAfx.h"
 
-#include "..\Version.h"
+#include "..\..\Version.h"
 #include "DiskHeaderTools.h"
 
 #if	defined(_USER_MODE_) || defined(_TEST_MODE_)
