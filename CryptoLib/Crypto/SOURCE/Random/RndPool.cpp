@@ -24,8 +24,7 @@
 
 #include <Windows.h>
 
-#include "SHA256_HASH.h"
-#include "DNAES.h"
+#include "CryptoLib.h"
 
 #include "RndPool.h"
 

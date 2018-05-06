@@ -2,7 +2,7 @@
 #include "stdafx.h"
 #include "Favorites.h"
 
-#include "ticpp/ticpp.h"
+#include <tinyxml2.h>
 #include "CommonTools.h"
 
 namespace fs = boost::filesystem;
@@ -24,23 +24,25 @@ std::vector<FavoriteImage> Favorites::Load( const std::wstring& filePath )
 
 	fs::path p(filePath);
 
-	ticpp::Document doc;
+	tinyxml2::XMLDocument doc;
 
-	doc.LoadFile(p.string(), TIXML_ENCODING_UTF8);
+	doc.LoadFile(p.string().c_str());
 
 	//	ticpp::Element* pFavNode = doc.FirstChildElement("Favorites")->FirstChildElement("Favorite");
-	if(doc.FirstChildElement("Favorites", false) && doc.FirstChildElement("Favorites", false)->FirstChildElement("Favorite", false))
+	if(doc.FirstChildElement("Favorites") && doc.FirstChildElement("Favorites")->FirstChildElement("Favorite"))
 	{
-		for (ticpp::Element* p = doc.FirstChildElement("Favorites")->FirstChildElement("Favorite"); p; p = p->NextSiblingElement("Favorite", false))
+		for (tinyxml2::XMLElement* p = doc.FirstChildElement("Favorites")->FirstChildElement("Favorite");
+			p;
+			p = p->NextSiblingElement("Favorite"))
 		{
 			std::wstring_convert<std::codecvt_utf8<wchar_t>> conv;
 
 			FavoriteImage x(conv.from_bytes(p->FirstChildElement("ImagePath")->GetText()),
 				conv.from_bytes(p->FirstChildElement("DriveLetter")->GetText()).at(0),
-				_stricmp(p->FirstChildElement("ReadOnly")->GetText().c_str(), "true") == 0,
-				_stricmp(p->FirstChildElement("Removable")->GetText().c_str(), "true") == 0,
-				_stricmp(p->FirstChildElement("MountManager")->GetText().c_str(), "true") == 0,
-				_stricmp(p->FirstChildElement("PreserveTimestamp")->GetText().c_str(), "true") == 0);
+				_stricmp(p->FirstChildElement("ReadOnly")->GetText(), "true") == 0,
+				_stricmp(p->FirstChildElement("Removable")->GetText(), "true") == 0,
+				_stricmp(p->FirstChildElement("MountManager")->GetText(), "true") == 0,
+				_stricmp(p->FirstChildElement("PreserveTimestamp")->GetText(), "true") == 0);
 
 			tmp.push_back(x);
 		}
@@ -53,7 +55,7 @@ std::vector<FavoriteImage> Favorites::Load( const std::wstring& filePath )
 void Favorites::Save( const std::wstring& filePath, const std::vector<FavoriteImage>& favorites )
 {
 	std::ofstream out(filePath);
-	out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << std::endl;
+	out << R"(<?xml version="1.0" encoding="UTF-8"?>)" << std::endl;
 	out << "<Favorites>" << std::endl;
 
 	std::for_each(favorites.cbegin(), favorites.cend(), [&out](const FavoriteImage& i){

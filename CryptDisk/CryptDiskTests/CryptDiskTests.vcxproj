@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -22,30 +22,30 @@
     <ProjectGuid>{EDF1DDF0-BA55-4536-9B65-0B0AF6F73CF9}</ProjectGuid>
     <RootNamespace>CryptDiskTests</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.10240.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -93,7 +93,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver\CryptDiskDriver;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -104,17 +104,18 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\$(PlatformShortName)\Crypto_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <TargetMachine>MachineX86</TargetMachine>
       <AdditionalLibraryDirectories>C:\SDKs\boost_1_43_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver\CryptDiskDriver;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -125,10 +126,11 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\$(PlatformShortName)\Crypto_x64d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\$(PlatformShortName)\debug\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <AdditionalLibraryDirectories>C:\SDKs\boost_1_43_0\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -139,15 +141,16 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver\CryptDiskDriver;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\$(PlatformShortName)\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <TargetMachine>MachineX86</TargetMachine>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,25 +161,26 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;$(SolutionDir)SOURCE\Driver\CryptDiskDriver;$(SolutionDir)SOURCE\Core;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\$(PlatformShortName)\Crypto_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)..\CryptoLib\$(PlatformShortName)\release\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\SOURCE\Driver\DiskCipherAesV3.cpp" />
-    <ClCompile Include="..\SOURCE\Driver\DiskCipherTwofishV3.cpp" />
-    <ClCompile Include="..\SOURCE\Driver\DiskHeaderTools.cpp" />
+    <ClCompile Include="..\SOURCE\Driver\CryptDiskDriver\DiskCipherAesV3.cpp" />
+    <ClCompile Include="..\SOURCE\Driver\CryptDiskDriver\DiskCipherTwofishV3.cpp" />
+    <ClCompile Include="..\SOURCE\Driver\CryptDiskDriver\DiskHeaderTools.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -188,16 +192,15 @@
     <ClCompile Include="TestDiskHeader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\SOURCE\Driver\DiskCipherAesV3.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskCipherV4.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskCipherTwofishV3.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskCipherTwofishV4.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskCipherAesV3.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskCipherTwofishV3.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskCipherV4.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskHeaderTools.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskParamatersV3.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\DiskParametersV4.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\IDiskCipher.h" />
+    <ClInclude Include="..\SOURCE\Driver\CryptDiskDriver\IDiskParameters.h" />
     <ClInclude Include="..\SOURCE\Driver\DiskFormat.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskHeaderTools.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskParamatersV3.h" />
-    <ClInclude Include="..\SOURCE\Driver\DiskParametersV4.h" />
-    <ClInclude Include="..\SOURCE\Driver\IDiskCipher.h" />
-    <ClInclude Include="..\SOURCE\Driver\IDiskParameters.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />

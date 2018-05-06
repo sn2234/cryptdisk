@@ -28,8 +28,8 @@ public:
 	virtual void DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pPlainData, PVOID pCipherData);
 
 	// Placement new
-	void* operator new(size_t size, void* pBuff) throw() { return pBuff; }
-	void operator delete(void *ptr, void* pBuff) throw() { }
+	void* operator new(size_t size, void* pBuff) noexcept { return pBuff; }
+	void operator delete(void *ptr, void* pBuff) noexcept { }
 
 //private:
 	static void AddToInt128(unsigned char* i128, UINT64 x);

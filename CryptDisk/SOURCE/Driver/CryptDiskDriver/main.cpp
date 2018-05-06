@@ -24,13 +24,7 @@
 
 #include "stdafx.h"
 
-#ifdef POOL_TAGGING
-#pragma message("************************************************************")
-#pragma message("*** NT 4.0 incompatibility because of using pool tagging ***")
-#pragma message("************************************************************")
-#endif
-
-#include "..\Version.h"
+#include "..\..\Version.h"
 #include "format.h"
 
 #include "VirtualDisk.h"
@@ -56,10 +50,10 @@ DRIVER_INITIALIZE DriverEntry;
 
 
 // private functions
-static void DriverUnload(PDRIVER_OBJECT DriverObject);
-static NTSTATUS DispatchControl(IN PDEVICE_OBJECT DeviceObject, IN PIRP Irp);
-static NTSTATUS DispatchCreateClose(IN PDEVICE_OBJECT DeviceObject, IN PIRP Irp);
-static NTSTATUS DispatchReadWrite(IN PDEVICE_OBJECT DeviceObject, IN PIRP Irp);
+void DriverUnload(PDRIVER_OBJECT DriverObject);
+NTSTATUS DispatchControl(IN PDEVICE_OBJECT DeviceObject, IN PIRP Irp);
+NTSTATUS DispatchCreateClose(IN PDEVICE_OBJECT DeviceObject, IN PIRP Irp);
+NTSTATUS DispatchReadWrite(IN PDEVICE_OBJECT DeviceObject, IN PIRP Irp);
 
 // public vars
 PDRIVER_OBJECT		pDriverObj;

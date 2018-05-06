@@ -34,7 +34,7 @@ extern "C"{
 //#include "..\ntifs.h"
 };
 
-#include <platform.h>
+#include "platform.h"
 
 #pragma hdrstop
 #include <ntstrsafe.h>

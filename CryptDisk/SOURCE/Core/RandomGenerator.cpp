@@ -31,7 +31,7 @@ RandomGenerator::RandomGenerator(const std::wstring& seedFileName)
 	m_slowPollThread.reset(new boost::thread(std::bind(&RandomGenerator::SlowPollThread, this)));
 	m_fastPollThread.reset(new boost::thread(std::bind(&RandomGenerator::FastPollThread, this)));
 
-	HINSTANCE hInst = (HINSTANCE)GetModuleHandle(NULL);
+	HINSTANCE hInst = (HINSTANCE)GetModuleHandle(nullptr);
 
 	m_hMouseHook=SetWindowsHookEx(WH_MOUSE, &MouseHookProc, hInst, GetCurrentThreadId());
 	m_hKeyboardHook=SetWindowsHookEx(WH_KEYBOARD, &KeyboardHookProc, hInst, GetCurrentThreadId());
