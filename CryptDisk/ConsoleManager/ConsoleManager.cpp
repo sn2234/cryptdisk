@@ -78,12 +78,12 @@ namespace
 
 		vector<MountedImageInfo> images(CryptDiskHelpers::ListMountedImages(*driverControl));
 
-		for (vector<MountedImageInfo>::iterator it = images.begin(); it != images.end(); ++it)
+		for (auto const & image : images)
 		{
-			wcout << "DiskId:\t" << (*it).diskId << endl
-				<< "Letter:\t" << (*it).driveLetter << endl
-				<< "Size:\t" << (*it).size << endl
-				<< "Image:\t" << (*it).imageFilePath << endl;
+			wcout << "DiskId:\t" << image.diskId << endl
+				<< "Letter:\t" << image.driveLetter << endl
+				<< "Size:\t" << image.size << endl
+				<< "Image:\t" << image.imageFilePath << endl;
 		}
 	}
 
@@ -127,7 +127,7 @@ namespace
 
 			for (auto e : i.diskExtents)
 			{
-				std::cout << "\\\\.\\PHYSICALDRIVE" << e.DiskNumber << "\n\t";
+				std::cout << R"(\\.\PHYSICALDRIVE)" << e.DiskNumber << "\n\t";
 			}
 		}
 	}
@@ -173,11 +173,11 @@ int wmain(int argc, WCHAR* argv[])
 
 	try
 	{
-		CoInitializeEx(NULL, COINIT_MULTITHREADED);
+		CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 
 		SCOPE_EXIT{ CoUninitialize(); };
-		CoInitializeSecurity(NULL, -1, NULL,
-			NULL, RPC_C_AUTHN_LEVEL_PKT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL,
+		CoInitializeSecurity(nullptr, -1, nullptr,
+			nullptr, RPC_C_AUTHN_LEVEL_PKT, RPC_C_IMP_LEVEL_IMPERSONATE, NULL,
 			EOAC_NONE, 0);
 
 		wstring imagePath;

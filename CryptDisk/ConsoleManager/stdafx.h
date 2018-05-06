@@ -51,5 +51,4 @@
 #include "../SOURCE/Core/scope_exit.h"
 
 // Definitions
-#define USER_MODE
 #define NOMINMAX

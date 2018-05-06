@@ -122,6 +122,21 @@
     <ClCompile Include="SOURCE\Primitives\x64\TwofishWrapper.c">
       <Filter>Primitives\x64</Filter>
     </ClCompile>
+    <ClCompile Include="SOURCE\BaseCrypt\DeriveKey.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Random\random.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Random\RandomGeneratorBase.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Random\RndGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SOURCE\Random\RndPool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="SOURCE\Primitives\x86\LrwMath.inc">

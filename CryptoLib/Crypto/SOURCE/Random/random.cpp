@@ -26,10 +26,7 @@
 #include <Windows.h>
 #include <string.h>
 
-#include "DNAES.h"
-#include "SHA256_HASH.h"
-
-#include "EncryptionModes.h"
+#include "CryptoLib.h"
 
 #include "RndGenerator.h"
 #include "RndSampler.h"
