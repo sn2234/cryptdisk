@@ -23,7 +23,7 @@
     <ProjectGuid>{5CE4BF41-F6F0-47D7-A0BF-260D019B0BF2}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>CryptoLibTest</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

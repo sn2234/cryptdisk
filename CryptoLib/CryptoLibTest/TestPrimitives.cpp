@@ -447,12 +447,12 @@ void Rc4Test(const RC4_TEST& testData)
 	unsigned char *tmp = new unsigned char[testData.textLength];
 
 	RC4_CIPHER_ENGINE cipher;
-	cipher.SetupKey(testData.keyData, testData.keyLength);
+	cipher.SetupKey(testData.keyData, static_cast<int>(testData.keyLength));
 
 	std::copy(testData.plainText, testData.plainText + testData.textLength,
 		checked_array_iterator<unsigned char*>(tmp, testData.textLength));
 
-	cipher.Xor(tmp, testData.textLength);
+	cipher.Xor(tmp, static_cast<int>(testData.textLength));
 
 	BOOST_CHECK(std::equal(testData.cipherText, testData.cipherText + testData.textLength,
 		checked_array_iterator<unsigned char*>(tmp, testData.textLength)));
