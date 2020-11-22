@@ -63,4 +63,6 @@ public:
 	static void BackupImageHeader(const std::string& imageFile, const std::string& backupFile, DISK_VERSION diskVersion);
 
 	static void BackupVolumeHeader(const std::wstring& volumeId, const std::string& backupFile, DISK_VERSION diskVersion);
+
+	static void DecryptImage(const std::wstring& imagePath, const std::wstring& outputImagePath, const std::string& password);
 };

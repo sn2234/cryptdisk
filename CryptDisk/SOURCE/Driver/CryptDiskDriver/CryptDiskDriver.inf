@@ -6,8 +6,8 @@
 Signature="$WINDOWS NT$"
 Class=System
 ClassGuid={4d36e97d-e325-11ce-bfc1-08002be10318}
-Provider=%ManufacturerName%
-DriverVer=
+Provider=CryptDisk.4h
+DriverVer=,4.5.0.0
 CatalogFile=CryptDiskDriver.cat
 
 [DestinationDirs]
@@ -15,18 +15,38 @@ DefaultDestDir = 12
 
 
 [SourceDisksNames]
-1 = %DiskName%,,,""
+1 = 
 
 [SourceDisksFiles]
 
-
-[Manufacturer]
-%ManufacturerName%=Standard,NT$ARCH$
 
 [Standard.NT$ARCH$]
 
 
 [Strings]
-ManufacturerName="nobody" ;TODO: Replace with your manufacturer name
 ClassName=""
 DiskName="CryptDiskDriver Source Disk"
+
+[DefaultInstall.NTamd64]
+CopyFiles = 
+AddReg = 
+
+[DefaultInstall.NTamd64.Services]
+AddService = CryptDiskService,, CryptDiskService.Service
+
+[DefaultInstall.NTx86]
+CopyFiles = 
+AddReg = 
+
+[DefaultInstall.NTx86.Services]
+AddService = CryptDiskService,, CryptDiskService.Service
+
+[CryptDiskService.Service]
+DisplayName    = "CryptDiskDriver"
+Description    = "CryptDiskDriver"
+ServiceBinary  = CryptDiskDriver.sys
+ServiceType    = 1 ;    SERVICE_KERNEL_DRIVER
+StartType      = 3 ;    SERVICE_DEMAND_START
+ErrorControl   = 1 ;    SERVICE_ERROR_NORMAL
+LoadOrderGroup = 
+AddReg         = 

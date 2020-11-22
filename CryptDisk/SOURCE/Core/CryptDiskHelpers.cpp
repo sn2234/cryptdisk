@@ -48,7 +48,8 @@ namespace
 		SendMessageTimeout(HWND_BROADCAST, WM_DEVICECHANGE, message, (LPARAM) (&data), SMTO_ABORTIFHUNG, 1000, &dwResult);
 	}
 
-	void DoEncrypt(HANDLE hVolume, __int64 length, CryptoLib::IRandomGenerator* pRndGen, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, bool fillImageWithRandom, std::function<bool(double)> callback)
+	void DoEncrypt(HANDLE hVolume, __int64 length, CryptoLib::IRandomGenerator* pRndGen, DISK_CIPHER cipherAlgorithm,
+		const unsigned char* password, size_t passwordLength, bool fillImageWithRandom, std::function<bool(double)> callback)
 	{
 		// Prepare disk header
 		DISK_HEADER_V4 header;
@@ -258,7 +259,8 @@ namespace
 	}
 }
 
-void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength, ULONG mountOptions )
+void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* imagePath, WCHAR driveLetter, const unsigned char* password,
+	size_t passwordLength, ULONG mountOptions )
 {
 	size_t	structSize = sizeof(DISK_ADD_INFO) + sizeof(pathPrefix) + wcslen(imagePath)*sizeof(WCHAR) + sizeof(WCHAR);
 
@@ -302,7 +304,8 @@ void CryptDiskHelpers::MountImage( DNDriverControl& driverControl, const WCHAR* 
 	SendBroadcastMessage(DBT_DEVICEARRIVAL, driveLetter);
 }
 
-void CryptDiskHelpers::MountVolume(DNDriverControl& driverControl, const WCHAR* volumePath, WCHAR driveLetter, const unsigned char* password, size_t passwordLength, ULONG mountOptions)
+void CryptDiskHelpers::MountVolume(DNDriverControl& driverControl, const WCHAR* volumePath, WCHAR driveLetter,
+	const unsigned char* password, size_t passwordLength, ULONG mountOptions)
 {
 	std::wstring volumeName = VolumeTools::prepareVolumeName(volumePath);
 
@@ -428,7 +431,8 @@ void CryptDiskHelpers::UnmountImage( DNDriverControl& driverControl, ULONG id, b
 }
 
 void CryptDiskHelpers::CreateImage( CryptoLib::IRandomGenerator* pRndGen,
-	const WCHAR* imagePath, INT64 imageSize, DISK_CIPHER cipherAlgorithm, const unsigned char* password, size_t passwordLength, bool fillImageWithRandom,
+	const WCHAR* imagePath, INT64 imageSize, DISK_CIPHER cipherAlgorithm,
+	const unsigned char* password, size_t passwordLength, bool fillImageWithRandom,
 	std::function<bool (double)> callback)
 {
 	// Prepare disk header
@@ -557,7 +561,8 @@ bool CryptDiskHelpers::CheckVolume(const WCHAR* volumeId, const unsigned char* p
 	return CheckHeader(headerBuff, password, passwordLength);
 }
 
-void CryptDiskHelpers::ChangePasswordVolume(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* volumeId, const unsigned char* password, size_t passwordLength,
+void CryptDiskHelpers::ChangePasswordVolume(CryptoLib::IRandomGenerator* pRndGen, const WCHAR* volumeId,
+	const unsigned char* password, size_t passwordLength,
 	const unsigned char* passwordNew, size_t passwordNewLength)
 {
 	std::wstring volumeName = VolumeTools::prepareVolumeName(volumeId);
@@ -599,7 +604,8 @@ void CryptDiskHelpers::ChangePasswordVolume(CryptoLib::IRandomGenerator* pRndGen
 	}
 }
 
-void CryptDiskHelpers::ChangePassword( CryptoLib::IRandomGenerator* pRndGen, const WCHAR* imagePath, const unsigned char* password, size_t passwordLength,
+void CryptDiskHelpers::ChangePassword( CryptoLib::IRandomGenerator* pRndGen, const WCHAR* imagePath,
+	const unsigned char* password, size_t passwordLength,
 	const unsigned char* passwordNew, size_t passwordNewLength )
 {
 	// Read disk header
@@ -743,7 +749,10 @@ void CryptDiskHelpers::RestoreVolumeHeader(const std::wstring& volumeId, const s
 
 	// Open volume
 	std::wstring volumeFileName(VolumeTools::prepareVolumeName(volumeId.c_str()));
-	HANDLE hVolumeFile = ::CreateFileW(volumeFileName.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ | FILE_SHARE_WRITE, NULL, OPEN_EXISTING, 0, NULL);
+	HANDLE hVolumeFile = ::CreateFileW(volumeFileName.c_str(),
+		GENERIC_READ | GENERIC_WRITE,
+		FILE_SHARE_READ | FILE_SHARE_WRITE,
+		NULL, OPEN_EXISTING, 0, NULL);
 	if (hVolumeFile == INVALID_HANDLE_VALUE)
 	{
 		throw bsys::system_error(bsys::error_code(::GetLastError(), bsys::system_category()));
@@ -853,4 +862,22 @@ boost::optional<long long> CryptDiskHelpers::getVolumeCapacity(const std::string
 	{
 		return boost::none;
 	}
+}
+
+void CryptDiskHelpers::DecryptImage(const std::wstring& imagePath, const std::wstring& outputImagePath, const std::string& password)
+{
+	// Read image header
+	vector<unsigned char> headerBuff((ReadImageHeader(imagePath.c_str())));
+
+	// Decipher disk header
+	DiskHeaderTools::CIPHER_INFO cipherInfo;
+	if (!DiskHeaderTools::Decipher(&headerBuff[0],
+		reinterpret_cast<const UCHAR*>(password.c_str()),
+		static_cast<ULONG>(password.size()),
+		&cipherInfo))
+	{
+		throw logic_error("Wrong password");
+	}
+
+
 }

@@ -10,6 +10,7 @@
 #include "VolumeTools.h"
 
 #include <Random/Random.h>
+#include "ConsoleManager.h"
 
 namespace po = boost::program_options;
 
@@ -165,6 +166,11 @@ namespace
 			VolumeTools::prepareVolumeName(volumeName).c_str(), algo, reinterpret_cast<const unsigned char*>(password.c_str()), password.size(), true,
 			[](double progress){ return true; });
 	}
+
+	void DecryptImage(const wstring& imagePath, const wstring& outputImagePath, const string& password)
+	{
+		CryptDiskHelpers::DecryptImage(imagePath, outputImagePath, password);
+	}
 }
 
 int wmain(int argc, WCHAR* argv[])
@@ -181,6 +187,7 @@ int wmain(int argc, WCHAR* argv[])
 			EOAC_NONE, 0);
 
 		wstring imagePath;
+		wstring outputImagePath;
 		wstring driveLetter;
 		wstring volumeName;
 		bool forceUnmount;
@@ -204,8 +211,10 @@ int wmain(int argc, WCHAR* argv[])
 				"\n\t chp - change password"
 				"\n\t lv - list volumes"
 				"\n\t mv - mount volume"
-				"\n\t ev - encrypt volume")
+				"\n\t ev - encrypt volume"
+				"\n\t di - decrypt image")
 			("image", po::wvalue<wstring>(&imagePath), "Path to image file to be mounted or created")
+			("imageOut", po::wvalue<wstring>(&outputImagePath), "Path to decrypted image for di command")
 			("letter", po::wvalue<wstring>(&driveLetter), "Drive letter")
 			("id", po::value<ULONG>(&diskId), "Disk id to unmount")
 			("size", po::value<INT64>(&imageSize), "Image size")
@@ -321,6 +330,17 @@ int wmain(int argc, WCHAR* argv[])
 			}
 
 			EncryptVolume(volumeName, algoName, password);
+		}
+		else if (operation == _T("di"))
+		{
+			// Encrypt volume
+			if (!vm.count("image") || !vm.count("imageOut") || !vm.count("password"))
+			{
+				cout << desc;
+				return 0;
+			}
+
+			DecryptImage(imagePath, outputImagePath, password);
 		}
 		else
 		{
