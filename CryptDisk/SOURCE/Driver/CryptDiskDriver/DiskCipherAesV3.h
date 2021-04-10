@@ -26,9 +26,23 @@ public:
 	virtual void DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, PVOID pData);
 	virtual void DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pCipherData, PVOID pPlainData);
 
+#if	!defined(_USER_MODE_)
 	// Placement new
 	void* operator new(size_t size, void* pBuff) throw() { return pBuff; }
 	void operator delete(void *ptr, void* pBuff) throw() { }
+#endif
+
+#if 0	//defined(_USER_MODE_)
+	void* operator new(size_t size) throw()
+	{
+		void* pvTemp = malloc(size);
+		if (pvTemp != 0)
+			memset(pvTemp, 0, size);
+		return pvTemp;
+	}
+
+	void operator delete(void* ptr) noexcept { delete ptr; };
+#endif
 
 private:
 	CryptoLib::LRWAES	m_cipher;

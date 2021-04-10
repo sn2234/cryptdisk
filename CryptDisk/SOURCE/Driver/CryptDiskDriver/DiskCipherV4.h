@@ -27,9 +27,23 @@ public:
 	virtual void DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, PVOID pData);
 	virtual void DecipherDataBlocks(UINT64 firstBlockIndex, UINT32 blocksCount, const PVOID pPlainData, PVOID pCipherData);
 
+#if	!defined(_USER_MODE_)
 	// Placement new
 	void* operator new(size_t size, void* pBuff) noexcept { return pBuff; }
 	void operator delete(void *ptr, void* pBuff) noexcept { }
+#endif
+
+#if	0//defined(_USER_MODE_)
+	void* operator new(size_t size) throw()
+	{
+		void* pvTemp = malloc(size);
+		if (pvTemp != 0)
+			memset(pvTemp, 0, size);
+		return pvTemp;
+	}
+
+	void operator delete(void* ptr) noexcept { delete ptr; };
+#endif
 
 //private:
 	static void AddToInt128(unsigned char* i128, UINT64 x);

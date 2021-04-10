@@ -9,6 +9,12 @@
 #include "DNDriverControl.h"
 #include "VolumeTools.h"
 
+#include "IDiskCipher.h"
+#include "DiskCipherAesV3.h"
+#include "DiskCipherTwofishV3.h"
+#include "DiskCipherV4.h"
+#include "DiskFormat.h"
+
 using namespace std;
 using namespace CryptoLib;
 using namespace boost;
@@ -182,14 +188,14 @@ namespace
 		// Encipher with new password
 		switch (cipherInfo.versionInfo.formatVersion)
 		{
-		case DISK_VERSION::DISK_VERSION_3:
+		case static_cast<uint_8t>(DISK_VERSION::DISK_VERSION_3):
 		{
 			DISK_HEADER_V3 *pHeader = reinterpret_cast<DISK_HEADER_V3*>(&headerBuff[0]);
 			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
 			DiskHeaderTools::Encipher(pHeader, passwordNew, static_cast<ULONG>(passwordNewLength), cipherInfo.diskCipher);
 		}
 		break;
-		case DISK_VERSION::DISK_VERSION_4:
+		case static_cast<uint_8t>(DISK_VERSION::DISK_VERSION_4):
 		{
 			DISK_HEADER_V4 *pHeader = reinterpret_cast<DISK_HEADER_V4*>(&headerBuff[0]);
 			pRndGen->GenerateRandomBytes(pHeader->DiskSalt, sizeof(pHeader->DiskSalt));
@@ -864,6 +870,39 @@ boost::optional<long long> CryptDiskHelpers::getVolumeCapacity(const std::string
 	}
 }
 
+std::unique_ptr<IDiskCipher> MakeDiskCipher(const DiskHeaderTools::CIPHER_INFO& cipherInfo, const void* headerBuff)
+{
+	switch (cipherInfo.versionInfo.formatVersion)
+	{
+		case static_cast<UCHAR>(DISK_VERSION::DISK_VERSION_3):
+		{
+			const DISK_HEADER_V3* header = static_cast<const DISK_HEADER_V3*>(headerBuff);
+			switch (cipherInfo.diskCipher)
+			{
+			case DISK_CIPHER::DISK_CIPHER_AES:
+				return std::make_unique<DiscCipherAesV3>(DiskParamatersV3{ header->DiskKey, header->TweakKey });
+			case DISK_CIPHER::DISK_CIPHER_TWOFISH:
+				return std::make_unique<DiskCipherTwofishV3>(DiskParamatersV3{ header->DiskKey, header->TweakKey });
+			}
+		}
+		break;
+		case static_cast<UCHAR>(DISK_VERSION::DISK_VERSION_4) :
+		{
+			const DISK_HEADER_V4* header = static_cast<const DISK_HEADER_V4*>(headerBuff);
+			switch (cipherInfo.diskCipher)
+			{
+			case DISK_CIPHER::DISK_CIPHER_AES:
+				return std::make_unique<DiskCipherV4<RijndaelEngine>>(
+					DiskParametersV4{ header->DiskKey, header->TweakKey, header->TweakNumber, header->DiskSectorSize });
+			case DISK_CIPHER::DISK_CIPHER_TWOFISH:
+				return std::make_unique<DiskCipherV4<TwofishEngine>>(
+					DiskParametersV4{ header->DiskKey, header->TweakKey, header->TweakNumber, header->DiskSectorSize });
+			}
+		}
+		break;
+	}
+}
+
 void CryptDiskHelpers::DecryptImage(const std::wstring& imagePath, const std::wstring& outputImagePath, const std::string& password)
 {
 	// Read image header
@@ -876,8 +915,25 @@ void CryptDiskHelpers::DecryptImage(const std::wstring& imagePath, const std::ws
 		static_cast<ULONG>(password.size()),
 		&cipherInfo))
 	{
-		throw logic_error("Wrong password");
+		throw logic_error("Wrong password or damaged header");
 	}
 
+	HANDLE hDecryptedFile{ ::CreateFileW(outputImagePath.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL) };
+	if (hDecryptedFile == INVALID_HANDLE_VALUE)
+	{
+		int err = GetLastError();
+		throw winapi_exception("Unable to create decypted image file", err);
+	}
 
+	SCOPE_EXIT{ CloseHandle(hDecryptedFile); };
+
+
+	/*
+	DWORD bytesWrite;
+	BOOL result = WriteFile(hBackupFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWrite, NULL);
+	if (!result || !(bytesWrite == headerSize))
+	{
+		int err = GetLastError();
+		throw winapi_exception("Unable to write data", err);
+	}*/
 }
