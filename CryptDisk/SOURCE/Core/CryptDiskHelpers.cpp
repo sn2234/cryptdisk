@@ -901,6 +901,27 @@ std::unique_ptr<IDiskCipher> MakeDiskCipher(const DiskHeaderTools::CIPHER_INFO& 
 		}
 		break;
 	}
+
+	throw logic_error("Unsupported disk format");
+}
+
+size_t constexpr CalculateHeaderSize(const DiskHeaderTools::CIPHER_INFO& cipherInfo)
+{
+	switch (cipherInfo.versionInfo.formatVersion)
+	{
+		case static_cast<UCHAR>(DISK_VERSION::DISK_VERSION_3) :
+		{
+			return sizeof(DISK_HEADER_V3);
+		}
+		break;
+		case static_cast<UCHAR>(DISK_VERSION::DISK_VERSION_4) :
+		{
+			return sizeof(DISK_HEADER_V4) * 2;
+		}
+		break;
+	}
+
+	throw logic_error("Unsupported disk format");
 }
 
 void CryptDiskHelpers::DecryptImage(const std::wstring& imagePath, const std::wstring& outputImagePath, const std::string& password)
@@ -918,7 +939,15 @@ void CryptDiskHelpers::DecryptImage(const std::wstring& imagePath, const std::ws
 		throw logic_error("Wrong password or damaged header");
 	}
 
-	HANDLE hDecryptedFile{ ::CreateFileW(outputImagePath.c_str(), GENERIC_WRITE, FILE_SHARE_READ, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL) };
+	HANDLE hOriginalFile = CreateFileW(imagePath.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+	if (hOriginalFile == INVALID_HANDLE_VALUE)
+	{
+		throw winapi_exception("Error opening image");
+	}
+
+	SCOPE_EXIT{ CloseHandle(hOriginalFile); };
+
+	HANDLE hDecryptedFile{ ::CreateFileW(outputImagePath.c_str(), GENERIC_WRITE, 0, NULL, CREATE_NEW, FILE_ATTRIBUTE_NORMAL, NULL) };
 	if (hDecryptedFile == INVALID_HANDLE_VALUE)
 	{
 		int err = GetLastError();
@@ -928,12 +957,61 @@ void CryptDiskHelpers::DecryptImage(const std::wstring& imagePath, const std::ws
 	SCOPE_EXIT{ CloseHandle(hDecryptedFile); };
 
 
-	/*
-	DWORD bytesWrite;
-	BOOL result = WriteFile(hBackupFile, &headerBuff[0], static_cast<DWORD>(headerBuff.size()), &bytesWrite, NULL);
-	if (!result || !(bytesWrite == headerSize))
+	std::unique_ptr<IDiskCipher> diskCipher = MakeDiskCipher(cipherInfo, headerBuff.data());
+
+	size_t headerSize = CalculateHeaderSize(cipherInfo);
+
+	LARGE_INTEGER imageDataOffset;
+	imageDataOffset.QuadPart = headerSize;
+
+	if (!::SetFilePointerEx(hOriginalFile, imageDataOffset, nullptr, FILE_BEGIN))
 	{
 		int err = GetLastError();
-		throw winapi_exception("Unable to write data", err);
-	}*/
+		throw winapi_exception("File seek error", err);
+	}
+
+	vector<uint8_t> dataBuffer(0xFFFF);
+	uint64_t blockIndex = 0;
+
+	for (;;)
+	{
+		DWORD bytesRead;
+		{
+			BOOL result = ReadFile(hOriginalFile, dataBuffer.data(), static_cast<DWORD>(dataBuffer.size()), &bytesRead, NULL);
+			if (!result)
+			{
+				int err = GetLastError();
+				throw winapi_exception("Error reading disk header", err);
+			}
+		}
+
+		if (bytesRead == 0)
+		{
+			// We've reached the end of file
+			break;
+		}
+
+		// bytesRead contains the number of bytes read from file, it might be less than size of buffer,
+		//  but it must contain a whole number of blocks
+		if ((bytesRead % 512) == 0)
+		{
+			throw logic_error("Bad image size");
+		}
+
+		uint64_t numberOfBlocks = bytesRead / 512;
+
+		diskCipher->DecipherDataBlocks(blockIndex, numberOfBlocks, dataBuffer.data());
+
+		{
+			DWORD bytesWrite;
+			BOOL result = WriteFile(hDecryptedFile, dataBuffer.data(), bytesRead, &bytesWrite, NULL);
+			if (!result || !(bytesWrite == bytesRead))
+			{
+				int err = GetLastError();
+				throw winapi_exception("Unable to write data", err);
+			}
+		}
+
+		blockIndex += numberOfBlocks;
+	}
 }

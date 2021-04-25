@@ -33,18 +33,6 @@ public:
 	void operator delete(void *ptr, void* pBuff) noexcept { }
 #endif
 
-#if	0//defined(_USER_MODE_)
-	void* operator new(size_t size) throw()
-	{
-		void* pvTemp = malloc(size);
-		if (pvTemp != 0)
-			memset(pvTemp, 0, size);
-		return pvTemp;
-	}
-
-	void operator delete(void* ptr) noexcept { delete ptr; };
-#endif
-
 //private:
 	static void AddToInt128(unsigned char* i128, UINT64 x);
 	static void IncInt128(unsigned char* i128);
