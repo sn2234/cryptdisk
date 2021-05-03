@@ -939,6 +939,7 @@ void CryptDiskHelpers::DecryptImage(const std::wstring& imagePath, const std::ws
 		throw logic_error("Wrong password or damaged header");
 	}
 
+	// Open files
 	HANDLE hOriginalFile = CreateFileW(imagePath.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
 	if (hOriginalFile == INVALID_HANDLE_VALUE)
 	{
@@ -956,7 +957,7 @@ void CryptDiskHelpers::DecryptImage(const std::wstring& imagePath, const std::ws
 
 	SCOPE_EXIT{ CloseHandle(hDecryptedFile); };
 
-
+	// Init disk cipher
 	std::unique_ptr<IDiskCipher> diskCipher = MakeDiskCipher(cipherInfo, headerBuff.data());
 
 	size_t headerSize = CalculateHeaderSize(cipherInfo);
@@ -964,13 +965,19 @@ void CryptDiskHelpers::DecryptImage(const std::wstring& imagePath, const std::ws
 	LARGE_INTEGER imageDataOffset;
 	imageDataOffset.QuadPart = headerSize;
 
+	// Adjust data pointer
 	if (!::SetFilePointerEx(hOriginalFile, imageDataOffset, nullptr, FILE_BEGIN))
 	{
 		int err = GetLastError();
 		throw winapi_exception("File seek error", err);
 	}
 
-	vector<uint8_t> dataBuffer(0xFFFF);
+	// Do decryption
+	vector<uint8_t> dataBuffer(0x10000);
+	SCOPE_EXIT{
+		RtlSecureZeroMemory(&dataBuffer[0], dataBuffer.size());
+	};
+
 	uint64_t blockIndex = 0;
 
 	for (;;)
@@ -993,12 +1000,17 @@ void CryptDiskHelpers::DecryptImage(const std::wstring& imagePath, const std::ws
 
 		// bytesRead contains the number of bytes read from file, it might be less than size of buffer,
 		//  but it must contain a whole number of blocks
-		if ((bytesRead % 512) == 0)
+		if ((bytesRead % 512) != 0)
 		{
 			throw logic_error("Bad image size");
 		}
 
 		uint64_t numberOfBlocks = bytesRead / 512;
+
+		if (numberOfBlocks * 512 != bytesRead)
+		{
+			throw logic_error("Image decryt error");
+		}
 
 		diskCipher->DecipherDataBlocks(blockIndex, numberOfBlocks, dataBuffer.data());
 
