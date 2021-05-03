@@ -84,6 +84,8 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)..\CryptoLib\debug\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -93,6 +95,8 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)..\CryptoLib\release\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -103,6 +107,8 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)..\CryptoLib\$(PlatformShortName)\debug\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -112,6 +118,8 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)..\CryptoLib\Crypto\SOURCE;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100;4101;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
     </ClCompile>
     <Link>
       <AdditionalDependencies>$(SolutionDir)..\CryptoLib\$(PlatformShortName)\release\Crypto.lib;%(AdditionalDependencies)</AdditionalDependencies>

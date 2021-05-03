@@ -1121,7 +1121,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 		{
 			switch(pInfo->DiskFormatVersion)
 			{
-			case DISK_VERSION::DISK_VERSION_3:
+			case static_cast<int>(DISK_VERSION::DISK_VERSION_3):
 				{
 					DISK_HEADER_V3* pHeader = reinterpret_cast<DISK_HEADER_V3*>(diskHeaderBuff);
 
@@ -1175,7 +1175,7 @@ NTSTATUS VirtualDisk::InitCipher(DISK_ADD_INFO *pInfo)
 					}
 				}
 				break;
-			case DISK_VERSION::DISK_VERSION_4:
+			case static_cast<int>(DISK_VERSION::DISK_VERSION_4):
 				{
 					DISK_HEADER_V4* pHeader = reinterpret_cast<DISK_HEADER_V4*>(diskHeaderBuff);
 

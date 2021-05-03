@@ -20,6 +20,7 @@
 #include <regex>
 #include <locale>
 #include <codecvt>
+#include <span>
 
 // Boost
 #include <boost/program_options.hpp>

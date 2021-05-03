@@ -10,6 +10,13 @@
 #include "DiskCipherAesV3.h"
 #include "format.h"
 
+#if	defined(_USER_MODE_)
+#include <assert.h>
+#if !defined(ASSERT)
+#define ASSERT assert
+#endif
+#endif
+
 DiscCipherAesV3::~DiscCipherAesV3()
 {
 	m_cipher.Clear();

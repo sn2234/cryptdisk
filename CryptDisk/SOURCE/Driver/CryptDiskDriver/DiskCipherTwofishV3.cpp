@@ -10,6 +10,13 @@
 #include "DiskCipherTwofishV3.h"
 #include "format.h"
 
+#if	defined(_USER_MODE_)
+#include <assert.h>
+#if !defined(ASSERT)
+#define ASSERT assert
+#endif
+#endif
+
 DiskCipherTwofishV3::~DiskCipherTwofishV3()
 {
 	m_cipher.Clear();
