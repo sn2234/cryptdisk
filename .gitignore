@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/CryptDisk/.vs/
+/CryptoLib/.vs/
+/CryptDisk/UpgradeLog.htm
+/CryptoLib/Crypto/Debug
+/CryptoLib/Crypto/Release
+/CryptoLib/Crypto/x64
+/CryptoLib/CryptoLibTest/Debug
+/CryptoLib/CryptoLibTest/Release
+/CryptoLib/CryptoLibTest/x64
+*.user
+/CryptoLib/Debug
+/CryptoLib/Release
+/CryptoLib/x64
